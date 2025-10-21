@@ -1,22 +1,15 @@
 import { Box, Chip, Stack, Typography } from "@mui/material";
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
-import {
-  Link as RouterLink,
-  Route,
-  Routes,
-  MemoryRouter,
-  useLocation,
-} from 'react-router';
 import PageLinks from "../components/PageLinks";
+import Carousel, { CarouselItem } from "../components/Carousel";
 
 interface ProjectInfo {
   name: string
   description: string
 }
 
-export default function HomePage() {
-  
+export default function HomePage(this: any) {
   const projects: ProjectInfo[] = [
     {
       name: 'Finska',
@@ -38,8 +31,37 @@ export default function HomePage() {
       name: 'Cellular Tracking',
       description: 'A game game game'
     },
+    {
+      name: 'Cellular Tracking',
+      description: 'A game game game'
+    },
+    {
+      name: 'Cellular Tracking',
+      description: 'A game game game'
+    },
   ]
-  
+
+  const items: CarouselItem[] = projects.map((project, i) => (
+    {
+      id: i,
+      content: (
+        <Box
+          sx={{
+            height: '200px',
+            width: '100%',
+            flexShrink: 0, 
+            padding: '10px',
+            backgroundColor: 'red',
+            borderRadius: '10px',
+          }}
+        >
+          <Typography>{project.name}</Typography>
+          <Typography>{project.description}</Typography>
+        </Box>
+      )
+    }
+  ))
+
   return (
     <Box
       component="section"
@@ -82,6 +104,7 @@ export default function HomePage() {
           </Box>
         ))}
       </Stack>
+      
       <Box>
         <Chip
           label="TypeScript"
@@ -105,6 +128,14 @@ export default function HomePage() {
             fontWeight: 600,
           }}
         />
+      </Box>
+      <Box
+        sx={{
+          paddingLeft: '20px',
+          paddingRight: '20px',
+        }}
+      >
+        <Carousel items={items} defaultWidth={400} gap={16} />
       </Box>
     </Box>
   )
