@@ -7,6 +7,17 @@ import Home from './pages/Home'
 import Contact from './pages/Contact'
 import { Box, ThemeProvider, CssBaseline } from '@mui/material';
 import { lightTheme, darkTheme } from "./styles/theme";
+import FinksaOverview from './pages/finska/Overview';
+import FinksaDesign from './pages/finska/Design';
+import FinksaRoadmap from './pages/finska/Roadmap';
+import FinksaReleases from './pages/finska/Releases';
+import GymJunkieOverview from './pages/gym_junkie/Overview';
+import GymJunkieFunctionality from './pages/gym_junkie/Functionality';
+import GymJunkieRoadmap from './pages/gym_junkie/Roadmap';
+import GymJunkieReleases from './pages/gym_junkie/Releases';
+import OtherAll from './pages/other/All';
+import OtherDownerHelper from './pages/other/DownerHelper';
+import OtherCellularTracking from './pages/other/CellularTracking';
 
 function App() {
   const [isDark, setIsDark] = useState(true);
@@ -15,12 +26,39 @@ function App() {
     <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
       <CssBaseline />
       <Router>
-        <Box sx={{ display: "flex", flexDirection: "column", height: "100vh" }}>
+        <Box 
+          sx={{ 
+            display: "flex", 
+            flexDirection: "column", 
+            height: "100vh",
+            alignItems: 'center'
+          }}
+        >
           <AppToolbar isDark={isDark} setIsDark={setIsDark}/>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/contact" element={<Contact />} />
-          </Routes>
+          <Box
+            sx={{
+              width: '100%',
+              maxWidth: 1200,
+              paddingTop: '20px',
+            }}
+          >
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/finska" element={<FinksaOverview />} />
+              <Route path="/finska/design" element={<FinksaDesign />} />
+              <Route path="/finska/roadmap" element={<FinksaRoadmap />} />
+              <Route path="/finska/releases" element={<FinksaReleases />} />
+              <Route path="/gym-junkie" element={<GymJunkieOverview />} />
+              <Route path="/gym-junkie/functionality" element={<GymJunkieFunctionality />} />
+              <Route path="/gym-junkie/roadmap" element={<GymJunkieRoadmap />} />
+              <Route path="/gym-junkie/releases" element={<GymJunkieReleases />} />
+              <Route path="/other" element={<OtherAll />} />
+              <Route path="/other/downer-helper" element={<OtherDownerHelper />} />
+              <Route path="/other/cellular-tracking" element={<OtherCellularTracking />} />
+
+            </Routes>
+          </Box>
         </Box>
       </Router>
     </ThemeProvider>

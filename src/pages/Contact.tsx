@@ -7,6 +7,7 @@ import discordLogo from '../assets/discord-logo.png';
 // import resume from '../assets/marcus_oates_resume.pdf';
 import CopyButton from "../components/CopyButton";
 import DownloadIcon from '@mui/icons-material/Download';
+import PageLinks from "../components/PageLinks";
 
 export default function ContactPage() {
   return (
@@ -30,9 +31,7 @@ export default function ContactPage() {
           gap: '10px',
         }}
       >
-        {/* <Typography variant="h6">
-          Socials
-        </Typography> */}
+        <PageLinks />
         <Box
           sx={{
             display: 'flex',

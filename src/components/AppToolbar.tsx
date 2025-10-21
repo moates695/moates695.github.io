@@ -22,7 +22,7 @@ export default function AppToolbar(props: AppToolbarProps) {
 
   return (
     <AppBar position="static">
-      <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+      <Toolbar sx={{ display: "flex", justifyContent: "space-between", maxWidth: 1200, width: '100%', alignSelf: 'center' }}>
         <Box sx={{ display: "flex", gap: 3, justifyContent: "center", flexGrow: 1 }}>
           <Button color="inherit" component={Link} to="/">Home</Button>
           <Button
@@ -74,14 +74,14 @@ export default function AppToolbar(props: AppToolbarProps) {
         >
           <MenuItem
             component={Link}
-            to="/finska/overview"
+            to="/finska"
             onClick={() => setFinskaAnchor(null)}
           >
             Overview
           </MenuItem>
           <MenuItem
             component={Link}
-            to="/finska/functionality"
+            to="/finska/design"
             onClick={() => setFinskaAnchor(null)}
           >
             Design
@@ -109,7 +109,7 @@ export default function AppToolbar(props: AppToolbarProps) {
         >
           <MenuItem
             component={Link}
-            to="/gym-junkie/overview"
+            to="/gym-junkie"
             onClick={() => setGymAnchor(null)}
           >
             Overview
@@ -144,6 +144,13 @@ export default function AppToolbar(props: AppToolbarProps) {
         >
           <MenuItem
             component={Link}
+            to="/other"
+            onClick={() => setCodeAnchor(null)}
+          >
+            All
+          </MenuItem>
+          <MenuItem
+            component={Link}
             to="/other/downer-helper"
             onClick={() => setCodeAnchor(null)}
           >
@@ -151,7 +158,7 @@ export default function AppToolbar(props: AppToolbarProps) {
           </MenuItem>
           <MenuItem
             component={Link}
-            to="/other/cells-cv"
+            to="/other/cellular-tracking"
             onClick={() => setCodeAnchor(null)}
           >
             Cellular Tracking
