@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Chip, Stack, Typography } from "@mui/material";
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
 import {
@@ -10,7 +10,36 @@ import {
 } from 'react-router';
 import PageLinks from "../components/PageLinks";
 
+interface ProjectInfo {
+  name: string
+  description: string
+}
+
 export default function HomePage() {
+  
+  const projects: ProjectInfo[] = [
+    {
+      name: 'Finska',
+      description: 'A game game game'
+    },
+    {
+      name: 'Gym Junkie',
+      description: 'A game game game'
+    },
+    {
+      name: 'Downer Helper',
+      description: 'A game game game'
+    },
+    {
+      name: 'Cellular Tracking',
+      description: 'A game game game'
+    },
+    {
+      name: 'Cellular Tracking',
+      description: 'A game game game'
+    },
+  ]
+  
   return (
     <Box
       component="section"
@@ -32,6 +61,51 @@ export default function HomePage() {
       <Typography>
         Hey there, check out some of my projects!
       </Typography>
+      <Stack 
+        direction="row" 
+        spacing={2} 
+        sx={{ overflowX: "auto" }}
+      >
+        {projects.map((project) => (
+          <Box
+            sx={{
+              height: '200px',
+              width: '300px',
+              flexShrink: 0, 
+              padding: '10px',
+              backgroundColor: 'red',
+              borderRadius: '10px',
+            }}
+          >
+            <Typography>{project.name}</Typography>
+            <Typography>{project.description}</Typography>
+          </Box>
+        ))}
+      </Stack>
+      <Box>
+        <Chip
+          label="TypeScript"
+          variant="outlined"
+          sx={{
+            bgcolor: "#8b0000",
+            borderColor: "#ff1f1fff",
+            borderWidth: '2px',
+            color: "white",
+            fontWeight: 600,
+          }}
+        />
+        <Chip
+          label="React"
+          variant="outlined"
+          sx={{
+            bgcolor: "#d28800",
+            borderColor: "#ffad16ff",
+            borderWidth: '2px',
+            color: "white",
+            fontWeight: 600,
+          }}
+        />
+      </Box>
     </Box>
   )
 }

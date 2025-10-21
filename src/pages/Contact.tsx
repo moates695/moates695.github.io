@@ -19,7 +19,6 @@ export default function ContactPage() {
         flexDirection: 'column',
         justifyContent: 'flexStart',
         alignItems: 'center',
-        paddingTop: '20px',
       }}
     >
       <Box

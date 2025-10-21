@@ -45,18 +45,23 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/contact" element={<Contact />} />
-              <Route path="/finska" element={<FinksaOverview />} />
-              <Route path="/finska/design" element={<FinksaDesign />} />
-              <Route path="/finska/roadmap" element={<FinksaRoadmap />} />
-              <Route path="/finska/releases" element={<FinksaReleases />} />
-              <Route path="/gym-junkie" element={<GymJunkieOverview />} />
-              <Route path="/gym-junkie/functionality" element={<GymJunkieFunctionality />} />
-              <Route path="/gym-junkie/roadmap" element={<GymJunkieRoadmap />} />
-              <Route path="/gym-junkie/releases" element={<GymJunkieReleases />} />
-              <Route path="/other" element={<OtherAll />} />
-              <Route path="/other/downer-helper" element={<OtherDownerHelper />} />
-              <Route path="/other/cellular-tracking" element={<OtherCellularTracking />} />
-
+              <Route path="/finska">
+                <Route index element={<FinksaOverview />} />
+                <Route path="design" element={<FinksaDesign />} />
+                <Route path="roadmap" element={<FinksaRoadmap />} />
+                <Route path="releases" element={<FinksaReleases />} />
+              </Route>
+              <Route path="/gym-junkie">
+                <Route index element={<FinksaOverview />} />
+                <Route path="functionality" element={<GymJunkieFunctionality />} />
+                <Route path="roadmap" element={<GymJunkieRoadmap />} />
+                <Route path="releases" element={<GymJunkieReleases />} />
+              </Route>
+              <Route path="/other">
+                <Route index element={<OtherAll />} />
+                <Route path="downer-helper" element={<OtherDownerHelper />} />
+                <Route path="cellular-tracking" element={<OtherCellularTracking />} />
+              </Route>
             </Routes>
           </Box>
         </Box>

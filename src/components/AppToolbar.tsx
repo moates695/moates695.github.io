@@ -8,6 +8,7 @@ export interface AppToolbarProps {
   setIsDark: Dispatch<SetStateAction<boolean>>
 }
 
+// todo look for mui button badges for (alpha) text
 export default function AppToolbar(props: AppToolbarProps) {
   const { isDark, setIsDark } = props;
 
