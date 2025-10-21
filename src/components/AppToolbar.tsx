@@ -116,7 +116,7 @@ export default function AppToolbar(props: AppToolbarProps) {
           </MenuItem>
           <MenuItem
             component={Link}
-            to="/gym-junkie/design"
+            to="/gym-junkie/functionality"
             onClick={() => setGymAnchor(null)}
           >
             Functionality
