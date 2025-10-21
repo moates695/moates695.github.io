@@ -21,6 +21,8 @@ export default function AppToolbar(props: AppToolbarProps) {
   const [codeAnchor, setCodeAnchor] = useState<null | HTMLElement>(null);
   const codeOpen = Boolean(codeAnchor);
 
+  
+
   return (
     <AppBar position="static">
       <Toolbar sx={{ display: "flex", justifyContent: "space-between", maxWidth: 1200, width: '100%', alignSelf: 'center' }}>

@@ -1,70 +1,92 @@
-import { Box, Chip, Stack, Typography } from "@mui/material";
+import { Box, Chip, IconButton, Stack, Typography } from "@mui/material";
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
 import PageLinks from "../components/PageLinks";
 import Carousel, { CarouselItem } from "../components/Carousel";
 import EmblaCarousel from "../components/EmblaCarousel";
+import '../css/embla.css';
+import { useMemo, useState } from "react";
+import LinkIcon from '@mui/icons-material/Link';
+import React from "react";
+import { useNavigate } from 'react-router-dom';
 
 interface ProjectInfo {
   name: string
   description: string
+  link: string
 }
 
+const projects: ProjectInfo[] = [
+  {
+    name: 'Finska',
+    description: 'A game game game',
+    link: '/finska'
+  },
+  {
+    name: 'Gym Junkie',
+    description: 'A game game game',
+    link: '/gym-junkie'
+  },
+  {
+    name: 'Downer Helper',
+    description: 'A game game game',
+    link: '/other/downer-helper'
+  },
+  {
+    name: 'Cellular Tracking',
+    description: 'A game game game',
+    link: '/other/cellular-tracking'
+  }
+]
+
 export default function HomePage(this: any) {
-  const projects: ProjectInfo[] = [
-    {
-      name: 'Finska',
-      description: 'A game game game'
-    },
-    {
-      name: 'Gym Junkie',
-      description: 'A game game game'
-    },
-    {
-      name: 'Downer Helper',
-      description: 'A game game game'
-    },
-    {
-      name: 'Cellular Tracking',
-      description: 'A game game game'
-    },
-  ]
+  const navigate = useNavigate();
 
-  // const slides = projects.map((project, i) => (
-  //   <div
-  //     className="embla__slide"
-  //     style={{
-  //       borderColor: 'red',
-  //       borderWidth: '2px',
-  //       borderStyle: 'solid'
-  //     }}
-  //   >
-  //     <div>{project.name}</div>
-  //   </div>
-  // ))
+  const [hovered, setHovered] = useState<boolean[]>(Array(projects.length).fill(false));
+  
+  const handleHover = (index: number, value: boolean) => {
+    console.log(index)
+    setHovered(prev => {
+      const next = [...prev];
+      next[index] = value;
+      return next;
+    });
+  };
 
-  const slides = Array.from(Array(6).keys())
-
-  // const items: CarouselItem[] = projects.map((project, i) => (
-  //   {
-  //     id: i,
-  //     content: (
-  //       <Box
-  //         sx={{
-  //           height: '200px',
-  //           width: '100%',
-  //           flexShrink: 0, 
-  //           padding: '10px',
-  //           backgroundColor: 'red',
-  //           borderRadius: '10px',
-  //         }}
-  //       >
-  //         <Typography>{project.name}</Typography>
-  //         <Typography>{project.description}</Typography>
-  //       </Box>
-  //     )
-  //   }
-  // ))
+  const slides = useMemo(() => {
+    return projects.map((project, i) => (
+      <Box
+        key={i}
+        onMouseEnter={() => handleHover(i, true)}
+        onMouseLeave={() => handleHover(i, false)}
+        sx={{
+          height: 200,
+          padding: '10px',
+          // ml: 1,
+          borderColor: hovered[i] ? '#22ff00ff' : '#7d7d7dff',
+          borderWidth: 2,
+          borderStyle: 'solid',
+          borderRadius: 2,
+          transition: 'border-color 0.2s',
+        }}
+      >
+        <Box sx={{ display: 'flex', alignItems: 'center', height: '40px' }}>
+          <Typography variant="h6">{project.name}</Typography>
+          {hovered[i] && (
+            <IconButton
+              onClick={() => navigate(project.link)}
+              color="inherit" 
+              size="small"
+              sx={{marginLeft: '5px' }}
+            >
+              <LinkIcon />
+            </IconButton>
+          )}
+        </Box>
+        <Typography>{project.description}</Typography>
+      </Box>
+    ));
+  }, [projects, hovered, handleHover]);
 
   return (
     <Box
@@ -87,28 +109,7 @@ export default function HomePage(this: any) {
       <Typography>
         Hey there, check out some of my projects!
       </Typography>
-      {/* <Stack 
-        direction="row" 
-        spacing={2} 
-        sx={{ overflowX: "auto" }}
-      >
-        {projects.map((project) => (
-          <Box
-            sx={{
-              height: '200px',
-              width: '300px',
-              flexShrink: 0, 
-              padding: '10px',
-              backgroundColor: 'red',
-              borderRadius: '10px',
-            }}
-          >
-            <Typography>{project.name}</Typography>
-            <Typography>{project.description}</Typography>
-          </Box>
-        ))}
-      </Stack> */}
-      
+
       <Box>
         <Chip
           label="TypeScript"
@@ -118,7 +119,8 @@ export default function HomePage(this: any) {
             borderColor: "#ff1f1fff",
             borderWidth: '2px',
             color: "white",
-            fontWeight: 600,
+            fontWeight: 400,
+            fontSize: 12,
           }}
         />
         <Chip
@@ -129,17 +131,10 @@ export default function HomePage(this: any) {
             borderColor: "#ffad16ff",
             borderWidth: '2px',
             color: "white",
-            fontWeight: 600,
+            fontWeight: 400,
+            fontSize: 12,
           }}
         />
-      </Box>
-      <Box
-        sx={{
-          paddingLeft: '20px',
-          paddingRight: '20px',
-        }}
-      >
-        {/* <Carousel items={items} defaultWidth={400} gap={16} /> */}
       </Box>
       <EmblaCarousel slides={slides} options={{ loop: true }} />
     </Box>

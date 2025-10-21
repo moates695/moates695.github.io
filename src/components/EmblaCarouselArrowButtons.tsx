@@ -6,6 +6,7 @@ import React, {
 } from 'react'
 import { EmblaCarouselType } from 'embla-carousel'
 import '../css/embla.css';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
 type UsePrevNextButtonsType = {
   prevBtnDisabled: boolean
