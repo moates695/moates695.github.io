@@ -1,0 +1,117 @@
+import { Box, IconButton, Link, Typography } from "@mui/material";
+import githubLogo from "../assets/github-logo.png";
+import linkedInLogo from '../assets/linkedin-logo.jpg';
+import expoLogo from '../assets/expo-logo.webp';
+import pypiLogo from '../assets/pypi-logo.png';
+
+export default function ContactPage() {
+  return (
+    <Box 
+      component="section"
+      sx={{
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flexStart',
+        alignItems: 'center',
+        paddingTop: '20px',
+      }}
+    >
+      <Box
+        sx={{
+          width: '100%',
+          maxWidth: '400px',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '10px',
+        }}
+      >
+        {/* <Typography variant="h6">
+          Socials
+        </Typography> */}
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            width: '100%', 
+            justifyContent: 'center', 
+            gap: '10px',
+            // backgroundColor: 'red'
+          }}
+        >
+          <IconButton
+            component="a"
+            href="https://github.com/moates695"
+            target="_blank"
+            rel="noopener"
+          >
+            <Box
+              component="img"
+              src={githubLogo}
+              alt="GitHub"
+              sx={{ width: 40, height: 40, borderRadius: "50%" }}
+            />
+          </IconButton>
+          <IconButton
+            component="a"
+            href="https://www.linkedin.com/in/marcus-oates-52814a233/"
+            target="_blank"
+            rel="noopener"
+          >
+            <Box
+              component="img"
+              src={linkedInLogo}
+              alt="LinkedIn"
+              sx={{ width: 40, height: 40, borderRadius: "50%" }}
+            />
+          </IconButton>
+          <IconButton
+            component="a"
+            href="https://pypi.org/user/moates/"
+            target="_blank"
+            rel="noopener"
+          >
+            <Box
+              component="img"
+              src={expoLogo}
+              alt="Expo"
+              sx={{ width: 40, height: 40, borderRadius: "50%" }}
+            />
+          </IconButton>
+          <IconButton
+            component="a"
+            href="https://www.linkedin.com/in/marcus-oates-52814a233/"
+            target="_blank"
+            rel="noopener"
+          >
+            <Box
+              component="img"
+              src={pypiLogo}
+              alt="PyPi"
+              sx={{ width: 40, height: 40, borderRadius: "50%" }}
+            />
+          </IconButton>
+        </Box>
+        <Typography>
+          Email: 
+          <Link href="mailto:marcusjoates@gmail.com" underline="hover" sx={{marginLeft: '5px'}}>
+            marcusjoates@gmail.com
+          </Link>
+        </Typography>
+        <Typography>
+          Phone: 
+          <Link underline="hover" sx={{marginLeft: '5px'}}>
+            0428 211 020
+          </Link>
+        </Typography>
+        <Typography>
+          Gym Junkie Support: 
+          <Link href="mailto:gymtrackeraus@gmail.com" underline="hover" sx={{marginLeft: '5px'}}>
+            gymtrackeraus@gmail.com
+          </Link>
+        </Typography>
+
+      </Box>
+    </Box>
+  )
+}
