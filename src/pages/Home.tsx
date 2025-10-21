@@ -1,4 +1,4 @@
-import { Box, Chip, IconButton, Stack, Typography } from "@mui/material";
+import { Box, Chip, Grid, IconButton, Stack, Typography } from "@mui/material";
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
 import PageLinks from "../components/PageLinks";
@@ -9,40 +9,46 @@ import { useMemo, useState } from "react";
 import LinkIcon from '@mui/icons-material/Link';
 import React from "react";
 import { useNavigate } from 'react-router-dom';
+import { ChipKey, getChip } from "../middleware/chipMap";
 
 interface ProjectInfo {
   name: string
   description: string
   link: string
+  chipKeys: ChipKey[]
 }
 
-const projects: ProjectInfo[] = [
+const projectData: ProjectInfo[] = [
   {
     name: 'Finska',
     description: 'A game game game',
-    link: '/finska'
+    link: '/finska',
+    chipKeys: ['react_ts', 'client_side'],
   },
   {
     name: 'Gym Junkie',
     description: 'A game game game',
-    link: '/gym-junkie'
+    link: '/gym-junkie',
+    chipKeys: ['full_stack', 'react_ts', 'express', 'python', 'postgres', 'ai_ml'],
   },
   {
     name: 'Downer Helper',
     description: 'A game game game',
-    link: '/other/downer-helper'
+    link: '/other/downer-helper',
+    chipKeys: ['python', 'package'],
   },
   {
     name: 'Cellular Tracking',
     description: 'A game game game',
-    link: '/other/cellular-tracking'
+    link: '/other/cellular-tracking',
+    chipKeys: ['ai_ml', 'python'],
   }
 ]
 
 export default function HomePage(this: any) {
   const navigate = useNavigate();
 
-  const [hovered, setHovered] = useState<boolean[]>(Array(projects.length).fill(false));
+  const [hovered, setHovered] = useState<boolean[]>(Array(projectData.length).fill(false));
   
   const handleHover = (index: number, value: boolean) => {
     console.log(index)
@@ -54,15 +60,16 @@ export default function HomePage(this: any) {
   };
 
   const slides = useMemo(() => {
-    return projects.map((project, i) => (
+    return projectData.map((data, i) => (
       <Box
         key={i}
         onMouseEnter={() => handleHover(i, true)}
         onMouseLeave={() => handleHover(i, false)}
         sx={{
+          display: 'flex',
+          flexDirection: 'column',
           height: 200,
           padding: '10px',
-          // ml: 1,
           borderColor: hovered[i] ? '#22ff00ff' : '#7d7d7dff',
           borderWidth: 2,
           borderStyle: 'solid',
@@ -70,23 +77,63 @@ export default function HomePage(this: any) {
           transition: 'border-color 0.2s',
         }}
       >
-        <Box sx={{ display: 'flex', alignItems: 'center', height: '40px' }}>
-          <Typography variant="h6">{project.name}</Typography>
-          {hovered[i] && (
-            <IconButton
-              onClick={() => navigate(project.link)}
-              color="inherit" 
-              size="small"
-              sx={{marginLeft: '5px' }}
+        <Box 
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            height: '100%'
+          }}
+        >  
+          <Box 
+            sx={{
+              width: '75%', 
+              height: '100%'
+            }}
+          >
+            <Box 
+              sx={{ 
+                display: 'flex', 
+                alignItems: 'center', 
+                height: '40px' 
+              }}
             >
-              <LinkIcon />
-            </IconButton>
-          )}
+              <Typography variant="h6">
+                {data.name}
+              </Typography>
+              {hovered[i] && (
+                <IconButton
+                  onClick={() => navigate(data.link)}
+                  color="inherit" 
+                  size="small"
+                  sx={{marginLeft: '5px' }}
+                >
+                  <LinkIcon />
+                </IconButton>
+              )}
+            </Box>
+            <Typography>{data.description}</Typography>
+          </Box>
+          <Box sx={{width: '25%', height: '100%'}}>
+
+          </Box>
         </Box>
-        <Typography>{project.description}</Typography>
+        
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            gap: '4px',
+            marginTop: 'auto',
+            paddingTop: '5px',
+          }}
+        >
+          {data.chipKeys.map((key) => {
+            return getChip(key);
+          })}
+        </Box>
       </Box>
     ));
-  }, [projects, hovered, handleHover]);
+  }, [projectData, hovered, handleHover]);
 
   return (
     <Box
@@ -96,7 +143,6 @@ export default function HomePage(this: any) {
         flexDirection: 'column',
         height: '100%',
         width: '100%',
-        // maxWidth: 1200,
         alignSelf: 'center',
         gap: '10px'
       }}
@@ -109,33 +155,6 @@ export default function HomePage(this: any) {
       <Typography>
         Hey there, check out some of my projects!
       </Typography>
-
-      <Box>
-        <Chip
-          label="TypeScript"
-          variant="outlined"
-          sx={{
-            bgcolor: "#8b0000",
-            borderColor: "#ff1f1fff",
-            borderWidth: '2px',
-            color: "white",
-            fontWeight: 400,
-            fontSize: 12,
-          }}
-        />
-        <Chip
-          label="React"
-          variant="outlined"
-          sx={{
-            bgcolor: "#d28800",
-            borderColor: "#ffad16ff",
-            borderWidth: '2px',
-            color: "white",
-            fontWeight: 400,
-            fontSize: 12,
-          }}
-        />
-      </Box>
       <EmblaCarousel slides={slides} options={{ loop: true }} />
     </Box>
   )
