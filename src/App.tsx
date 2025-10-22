@@ -46,7 +46,7 @@ function App() {
               height: '100%',
               display: 'flex',
               flexDirection: 'column',
-              justifyContent: 'center',
+              // justifyContent: 'center',
               alignItems: 'center',
             }}
           >

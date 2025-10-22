@@ -10,10 +10,11 @@ import LinkIcon from '@mui/icons-material/Link';
 import React from "react";
 import { useNavigate } from 'react-router-dom';
 import { ChipKey, getChip } from "../middleware/chipMap";
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 
 const iconMap: Record<string, string> = {
   finska: '/finska-icon.png',
-  gym_junkie: '',
+  gym_junkie: '/gym-junkie-icon.png',
   downer_helper: '',
   cellular_tracking: '',
 }
@@ -79,6 +80,11 @@ const roadmapData: RoadmapData[] = [
     chipKey: 'feature'
   },
   {
+    icon: iconMap.gym_junkie,
+    message: 'add leaderboards, global & per exercise',
+    chipKey: 'feature'
+  },
+  {
     icon: iconMap.finska,
     message: 'create component tests to ensure game state',
     chipKey: 'improvement'
@@ -94,13 +100,27 @@ interface ReleaseData {
   icon: string
   message: string
   version: string
+  link: string
 }
 
 const releaseData: ReleaseData[] = [
   {
     icon: iconMap.finska,
     message: 'finska internal',
-    version: '0.0.1'
+    version: '0.0.1',
+    link: 'https://expo.dev/accounts/moates/projects/finska/builds/ff39d715-c47a-4e03-9e7b-67beb5ebae5c',
+  },
+  {
+    icon: iconMap.gym_junkie,
+    message: 'gym junkie internal',
+    version: '0.0.1',
+    link: 'https://expo.dev/accounts/moates/projects/gym-junkie/builds/a3a24607-c9df-445c-bc24-e3c91ae4c19b',
+  },
+  {
+    icon: iconMap.downer_helper,
+    message: 'downer helper latest',
+    version: '0.1.25',
+    link: 'https://pypi.org/project/downerhelper/',
   },
 ]
 
@@ -384,15 +404,20 @@ export default function HomePage(this: any) {
                         }}
                       />
                     </Grid>
-                    <Grid size={10}>
+                    <Grid size={9}>
                       <Typography sx={{justifySelf: 'center'}}>
                         {data.message}
                       </Typography>
                     </Grid>
-                    <Grid size="grow" sx={{alignItems: 'flex-end'}}>
+                    <Grid size="grow" >
                       <Typography sx={{justifySelf: 'center'}}>
                         {data.version}
                       </Typography>
+                    </Grid>
+                    <Grid size="grow">
+                      <IconButton href={data.link} target="_blank" rel="noopener">
+                        <OpenInNewIcon />
+                      </IconButton>
                     </Grid>
                   </Grid>
                 )

@@ -1,0 +1,8 @@
+export const githubLink = "https://github.com/moates-downer";
+export const finskaGithubLink = "https://github.com/moates695/finska";
+export const gymJunkieAppGithubLink = "https://github.com/moates695/gym_tracker";
+export const gymJunkieServerGithubLink = "https://github.com/moates695/gym_tracker_server";
+export const expoLink = "https://expo.dev/accounts/moates";
+export const finskaExpoLink = "https://expo.dev/accounts/moates/projects/finska";
+export const gymJunkieExpoLink = "https://expo.dev/accounts/moates/projects/gym-junkie";
+export const pypiLink = "https://pypi.org/user/moates/";
