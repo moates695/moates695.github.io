@@ -1,10 +1,12 @@
-import { Avatar, Box, Button, Link, Typography } from "@mui/material";
+import { Avatar, Box, Button, Link, ListItemIcon, ListItemText, Typography } from "@mui/material";
 import PageLinks from "../../components/PageLinks";
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import githubLogo from "../../assets/github-logo.png";
 import expoLogo from "../../assets/expo-logo.webp";
 import { finskaExpoLink, finskaGithubLink } from "../../middleware/links";
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import { buildBulletPoints } from "../../middleware/helpers";
 
 export default function FinksaOverview() {
   return (
@@ -34,23 +36,11 @@ export default function FinksaOverview() {
       <Typography>
         So I whipped up this Finska Tracker app,
       </Typography>
-      <List dense sx={{marginTop: '-10px'}}>
-        <ListItem>
-          <Typography>
-            {'\u2022'} Download and go, no sign in required
-          </Typography>
-        </ListItem>
-        <ListItem>
-          <Typography>
-            {'\u2022'} Edit game rules and play your way 
-          </Typography>
-        </ListItem>
-        <ListItem>
-          <Typography>
-            {'\u2022'} Lightweight React TS 
-          </Typography>
-        </ListItem>
-      </List>
+      {buildBulletPoints([
+        'Download and go, no sign in required',
+        'Edit game rules and play your way',
+        'Lightweight React TS',
+      ])}
       <Box
         sx={{
           display: 'flex',

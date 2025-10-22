@@ -1,4 +1,4 @@
-import { Avatar, Box, Chip, Grid, IconButton, Stack, Typography } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Avatar, Box, Chip, Grid, IconButton, List, Stack, Typography } from "@mui/material";
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
 import PageLinks from "../components/PageLinks";
@@ -11,6 +11,8 @@ import React from "react";
 import { useNavigate } from 'react-router-dom';
 import { ChipKey, getChip } from "../middleware/chipMap";
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { buildBulletPoints } from "../middleware/helpers";
 
 const iconMap: Record<string, string> = {
   finska: '/finska-icon.png',
@@ -50,8 +52,8 @@ const projectData: ProjectInfo[] = [
   {
     icon: iconMap.downer_helper,
     name: 'Downer Helper',
-    description: 'A PyPi package to help reduce code repetition across projects. Open source and \
-    deployed straight from GitHub.',
+    description: 'A PyPi package to help reduce code repetition across projects.\
+    Available for anyone to use, deployed straight from GitHub.',
     link: '/other/downer-helper',
     chipKeys: ['python', 'package'],
     highlight: ''
@@ -71,28 +73,39 @@ interface RoadmapData {
   icon: string
   message: string
   chipKey: ChipKey
+  dotPoints: string[]
 }
 
 const roadmapData: RoadmapData[] = [
   {
     icon: iconMap.finska,
     message: 'add edit leaderboard functionality',
-    chipKey: 'feature'
+    chipKey: 'feature',
+    dotPoints: [
+      'dot point1',
+      'dot point2',
+      'dot point3',
+      'dot point4',
+      'dot point5',
+    ],
   },
   {
     icon: iconMap.gym_junkie,
     message: 'add leaderboards, global & per exercise',
-    chipKey: 'feature'
+    chipKey: 'feature',
+    dotPoints: [],
   },
   {
     icon: iconMap.finska,
     message: 'create component tests to ensure game state',
-    chipKey: 'improvement'
+    chipKey: 'improvement',
+    dotPoints: [],
   },
   {
     icon: iconMap.finska,
     message: 'save games & show history',
-    chipKey: 'feature'
+    chipKey: 'feature',
+    dotPoints: [],
   },
 ]
 
@@ -101,6 +114,7 @@ interface ReleaseData {
   message: string
   version: string
   link: string
+  dotPoints: string[]
 }
 
 const releaseData: ReleaseData[] = [
@@ -109,18 +123,21 @@ const releaseData: ReleaseData[] = [
     message: 'finska internal',
     version: '0.0.1',
     link: 'https://expo.dev/accounts/moates/projects/finska/builds/ff39d715-c47a-4e03-9e7b-67beb5ebae5c',
+    dotPoints: [],
   },
   {
     icon: iconMap.gym_junkie,
     message: 'gym junkie internal',
     version: '0.0.1',
     link: 'https://expo.dev/accounts/moates/projects/gym-junkie/builds/a3a24607-c9df-445c-bc24-e3c91ae4c19b',
+    dotPoints: [],
   },
   {
     icon: iconMap.downer_helper,
     message: 'downer helper latest',
     version: '0.1.25',
     link: 'https://pypi.org/project/downerhelper/',
+    dotPoints: [],
   },
 ]
 
@@ -286,42 +303,47 @@ export default function HomePage(this: any) {
             >
               {roadmapData.map((data, i) => {
                 return (
-                  <Grid 
-                    container 
-                    spacing={2}
-                    key={i}
-                    sx={{
-                      height: 50,
-                      backgroundColor: '#0d0d0dff',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      paddingLeft: '10px',
-                      paddingRight: '10px',
-                      borderRadius: '10px',
-                    }}
-                  >
-                    <Grid size="auto">
-                      <Avatar 
-                        alt="icon" 
-                        src={data.icon}
-                        sx={{ 
-                          width: 24, 
-                          height: 24, 
+                  <Accordion>
+                    <AccordionSummary
+                      expandIcon={<ExpandMoreIcon />}
+                    >
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                          width: '100%',
                         }}
-                      />
-                    </Grid>
-                    <Grid size={8.8}>
-                      <Typography sx={{justifySelf: 'center'}}>
-                        {data.message}
-                      </Typography>
-                    </Grid>
-                    <Grid size="grow" sx={{alignItems: 'flex-end'}}>
-                      <Box sx={{justifySelf: 'flex-end'}}>
-                        {getChip(data.chipKey)}
+                      >
+                        <Box
+                          sx={{
+                            display: 'flex',
+                            justifyContent: 'flex-start',
+                            alignItems: 'center',
+                          }}
+                        >
+                          <Avatar 
+                            alt="icon" 
+                            src={data.icon}
+                            sx={{ 
+                              width: 24, 
+                              height: 24, 
+                              marginRight: 1.5,
+                            }}
+                          />
+                          <Typography>
+                            {data.message}
+                          </Typography>
+                        </Box>
+                        <Box sx={{marginRight: 0.5}}>
+                          {getChip(data.chipKey)}
+                        </Box>
                       </Box>
-                    </Grid>
-                  </Grid>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      {buildBulletPoints(data.dotPoints)}
+                    </AccordionDetails>
+                  </Accordion>
                 )
               })}
             </Stack>
@@ -352,74 +374,66 @@ export default function HomePage(this: any) {
             >
               {releaseData.map((data, i) => {
                 return (
-                  // <Box
-                  //   key={i}
-                  //   sx={{
-                  //     height: 50,
-                  //     backgroundColor: '#0d0d0dff',
-                  //     display: 'flex',
-                  //     alignItems: 'center',
-                  //     justifyContent: 'space-between',
-                  //     paddingLeft: '10px',
-                  //     paddingRight: '10px',
-                  //     // borderColor: 'black',
-                  //     // borderWidth: '2px',
-                  //     // borderStyle: 'solid',
-                  //     borderRadius: 1,
-                  //   }}
-                  // >
-                  //   <Avatar 
-                  //     alt="icon" 
-                  //     src={data.icon}
-                  //     sx={{ 
-                  //       width: 24, 
-                  //       height: 24, 
-                  //     }}
-                  //   />
-                  //   <Typography>{data.message}</Typography>
-                  //   <Typography>{data.version}</Typography>
-                  // </Box>
-                  <Grid 
-                    container 
-                    spacing={2}
-                    key={i}
-                    sx={{
-                      height: 50,
-                      backgroundColor: '#0d0d0dff',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      paddingLeft: '10px',
-                      paddingRight: '10px',
-                      borderRadius: '10px',
-                    }}
-                  >
-                    <Grid size="auto">
-                      <Avatar 
-                        alt="icon" 
-                        src={data.icon}
-                        sx={{ 
-                          width: 24, 
-                          height: 24, 
+                  <Accordion>
+                    <AccordionSummary
+                      expandIcon={<ExpandMoreIcon />}
+                    >
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          width: '100%',
                         }}
-                      />
-                    </Grid>
-                    <Grid size={9}>
-                      <Typography sx={{justifySelf: 'center'}}>
-                        {data.message}
-                      </Typography>
-                    </Grid>
-                    <Grid size="grow" >
-                      <Typography sx={{justifySelf: 'center'}}>
-                        {data.version}
-                      </Typography>
-                    </Grid>
-                    <Grid size="grow">
-                      <IconButton href={data.link} target="_blank" rel="noopener">
-                        <OpenInNewIcon />
-                      </IconButton>
-                    </Grid>
-                  </Grid>
+                      >
+                        <Box
+                          sx={{
+                            display: 'flex',
+                            justifyContent: 'flex-start',
+                            alignItems: 'center',
+                          }}
+                        >
+                          <Avatar 
+                            alt="icon" 
+                            src={data.icon}
+                            sx={{ 
+                              width: 24, 
+                              height: 24, 
+                              marginRight: 1.5,
+                            }}
+                          />
+                          <Typography>
+                            {data.message}
+                          </Typography>
+                        </Box>
+                        <Box
+                          sx={{
+                            display: 'flex',
+                            justifyContent: 'flex-start',
+                            alignItems: 'center',
+                            marginRight: 1,
+                          }}
+                        >
+                          <Typography sx={{marginRight: 1}}>
+                            {data.version}
+                          </Typography>
+                          <IconButton 
+                            href={data.link} 
+                            target="_blank" 
+                            rel="noopener"
+                            sx={{
+                              width: 20,
+                              height: 20,
+                            }}
+                          >
+                            <OpenInNewIcon sx={{ fontSize: 20 }}/>
+                          </IconButton>
+                        </Box>
+                      </Box>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      {buildBulletPoints(data.dotPoints)}
+                    </AccordionDetails>
+                  </Accordion>
                 )
               })}
             </Stack>
