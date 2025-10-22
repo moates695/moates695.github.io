@@ -8,6 +8,7 @@ import {
 } from './EmblaCarouselArrowButtons'
 import useEmblaCarousel from 'embla-carousel-react'
 import '../css/embla.css';
+import Autoplay from 'embla-carousel-autoplay'
 
 type PropType = {
   slides: JSX.Element[]
@@ -16,7 +17,7 @@ type PropType = {
 
 const EmblaCarousel: React.FC<PropType> = (props) => {
   const { slides, options } = props
-  const [emblaRef, emblaApi] = useEmblaCarousel(options)
+  const [emblaRef, emblaApi] = useEmblaCarousel(options, [Autoplay({stopOnInteraction: false, stopOnMouseEnter: true})])
 
   const { selectedIndex, scrollSnaps, onDotButtonClick } =
     useDotButton(emblaApi)

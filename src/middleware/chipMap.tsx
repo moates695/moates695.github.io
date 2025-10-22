@@ -65,8 +65,8 @@ const chipData = {
   },
   feature: {
     label: 'Feature',
-    color: '#dd9700ff',
-    borderColor: '#ffb81fff',
+    color: '#12dd00ff',
+    borderColor: '#3dff2cff',
     textColor: 'white',
   },
   improvement: {

@@ -49,7 +49,8 @@ const projectData: ProjectInfo[] = [
   {
     icon: iconMap.downer_helper,
     name: 'Downer Helper',
-    description: '',
+    description: 'A PyPi package to help reduce code repetition across projects. Open source and \
+    deployed straight from GitHub.',
     link: '/other/downer-helper',
     chipKeys: ['python', 'package'],
     highlight: ''
@@ -164,7 +165,7 @@ export default function HomePage(this: any) {
                 sx={{ 
                   width: 32, 
                   height: 32, 
-                  marginRight: '5px'
+                  marginRight: '10px'
                 }}
               />
               <Typography variant="h6">
