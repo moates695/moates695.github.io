@@ -75,18 +75,18 @@ interface RoadmapData {
 const roadmapData: RoadmapData[] = [
   {
     icon: iconMap.finska,
-    message: 'roadmap idea 1',
+    message: 'add edit leaderboard functionality',
     chipKey: 'feature'
   },
   {
-    icon: iconMap.gym_junkie,
-    message: 'roadmap idea 2',
+    icon: iconMap.finska,
+    message: 'create component tests to ensure game state',
     chipKey: 'improvement'
   },
   {
     icon: iconMap.finska,
-    message: 'roadmap idea 3',
-    chipKey: 'bug_fix'
+    message: 'save games & show history',
+    chipKey: 'feature'
   },
 ]
 
@@ -99,7 +99,7 @@ interface ReleaseData {
 const releaseData: ReleaseData[] = [
   {
     icon: iconMap.finska,
-    message: 'roadmap idea 1',
+    message: 'finska internal',
     version: '0.0.1'
   },
 ]
@@ -266,33 +266,6 @@ export default function HomePage(this: any) {
             >
               {roadmapData.map((data, i) => {
                 return (
-                  // <Box
-                  //   key={i}
-                  //   sx={{
-                  //     height: 50,
-                  //     backgroundColor: '#0d0d0dff',
-                  //     display: 'flex',
-                  //     alignItems: 'center',
-                  //     justifyContent: 'space-between',
-                  //     paddingLeft: '10px',
-                  //     paddingRight: '10px',
-                  //     // borderColor: 'black',
-                  //     // borderWidth: '2px',
-                  //     // borderStyle: 'solid',
-                  //     borderRadius: 1,
-                  //   }}
-                  // >
-                  //   <Avatar 
-                  //     alt="icon" 
-                  //     src={data.icon}
-                  //     sx={{ 
-                  //       width: 24, 
-                  //       height: 24, 
-                  //     }}
-                  //   />
-                  //   <Typography>{data.message}</Typography>
-                  //   {getChip(data.chipKey)}
-                  // </Box>
                   <Grid 
                     container 
                     spacing={2}
@@ -305,10 +278,7 @@ export default function HomePage(this: any) {
                       justifyContent: 'space-between',
                       paddingLeft: '10px',
                       paddingRight: '10px',
-                      // borderColor: 'black',
-                      // borderWidth: '2px',
-                      // borderStyle: 'solid',
-                      borderRadius: 1,
+                      borderRadius: '10px',
                     }}
                   >
                     <Grid size="auto">
@@ -328,7 +298,7 @@ export default function HomePage(this: any) {
                     </Grid>
                     <Grid size="grow" sx={{alignItems: 'flex-end'}}>
                       <Box sx={{justifySelf: 'flex-end'}}>
-                      {getChip(data.chipKey)}
+                        {getChip(data.chipKey)}
                       </Box>
                     </Grid>
                   </Grid>
@@ -362,7 +332,36 @@ export default function HomePage(this: any) {
             >
               {releaseData.map((data, i) => {
                 return (
-                  <Box
+                  // <Box
+                  //   key={i}
+                  //   sx={{
+                  //     height: 50,
+                  //     backgroundColor: '#0d0d0dff',
+                  //     display: 'flex',
+                  //     alignItems: 'center',
+                  //     justifyContent: 'space-between',
+                  //     paddingLeft: '10px',
+                  //     paddingRight: '10px',
+                  //     // borderColor: 'black',
+                  //     // borderWidth: '2px',
+                  //     // borderStyle: 'solid',
+                  //     borderRadius: 1,
+                  //   }}
+                  // >
+                  //   <Avatar 
+                  //     alt="icon" 
+                  //     src={data.icon}
+                  //     sx={{ 
+                  //       width: 24, 
+                  //       height: 24, 
+                  //     }}
+                  //   />
+                  //   <Typography>{data.message}</Typography>
+                  //   <Typography>{data.version}</Typography>
+                  // </Box>
+                  <Grid 
+                    container 
+                    spacing={2}
                     key={i}
                     sx={{
                       height: 50,
@@ -372,23 +371,30 @@ export default function HomePage(this: any) {
                       justifyContent: 'space-between',
                       paddingLeft: '10px',
                       paddingRight: '10px',
-                      // borderColor: 'black',
-                      // borderWidth: '2px',
-                      // borderStyle: 'solid',
-                      borderRadius: 1,
+                      borderRadius: '10px',
                     }}
                   >
-                    <Avatar 
-                      alt="icon" 
-                      src={data.icon}
-                      sx={{ 
-                        width: 24, 
-                        height: 24, 
-                      }}
-                    />
-                    <Typography>{data.message}</Typography>
-                    <Typography>{data.version}</Typography>
-                  </Box>
+                    <Grid size="auto">
+                      <Avatar 
+                        alt="icon" 
+                        src={data.icon}
+                        sx={{ 
+                          width: 24, 
+                          height: 24, 
+                        }}
+                      />
+                    </Grid>
+                    <Grid size={10}>
+                      <Typography sx={{justifySelf: 'center'}}>
+                        {data.message}
+                      </Typography>
+                    </Grid>
+                    <Grid size="grow" sx={{alignItems: 'flex-end'}}>
+                      <Typography sx={{justifySelf: 'center'}}>
+                        {data.version}
+                      </Typography>
+                    </Grid>
+                  </Grid>
                 )
               })}
             </Stack>
