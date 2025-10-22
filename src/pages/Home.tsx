@@ -1,4 +1,4 @@
-import { Box, Chip, Grid, IconButton, Stack, Typography } from "@mui/material";
+import { Avatar, Box, Chip, Grid, IconButton, Stack, Typography } from "@mui/material";
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
 import PageLinks from "../components/PageLinks";
@@ -11,38 +11,96 @@ import React from "react";
 import { useNavigate } from 'react-router-dom';
 import { ChipKey, getChip } from "../middleware/chipMap";
 
+const iconMap: Record<string, string> = {
+  finska: '/finska-icon.png',
+  gym_junkie: '',
+  downer_helper: '',
+  cellular_tracking: '',
+}
+
 interface ProjectInfo {
+  icon: string
   name: string
   description: string
   link: string
-  chipKeys: ChipKey[]
+  chipKeys: ChipKey[],
+  highlight: string
 }
 
 const projectData: ProjectInfo[] = [
   {
+    icon: iconMap.finska,
     name: 'Finska',
-    description: 'A game game game',
+    description: 'A simple, lightweight client side app to track a game of Finska.\
+    \nDownload and go, no sign in required!',
     link: '/finska',
-    chipKeys: ['react_ts', 'client_side'],
+    chipKeys: ['client_side', 'react_ts'],
+    highlight: '/finska-highlight.png'
   },
   {
+    icon: iconMap.gym_junkie,
     name: 'Gym Junkie',
-    description: 'A game game game',
+    description: 'A free gym workout tracker, with advanced data analytics and graphing capabilites.\
+    Compare lifts with previous sessions or climb the leaderboards.',
     link: '/gym-junkie',
     chipKeys: ['full_stack', 'react_ts', 'express', 'python', 'postgres', 'ai_ml'],
+    highlight: '/gym-junkie-highlight.png'
   },
   {
+    icon: iconMap.downer_helper,
     name: 'Downer Helper',
-    description: 'A game game game',
+    description: '',
     link: '/other/downer-helper',
     chipKeys: ['python', 'package'],
+    highlight: ''
   },
   {
+    icon: iconMap.cellular_tracking,
     name: 'Cellular Tracking',
-    description: 'A game game game',
+    description: 'Major computer vision project for segmenting cells, tracking and displaying their paths\
+    and identifying divisions.',
     link: '/other/cellular-tracking',
     chipKeys: ['ai_ml', 'python'],
+    highlight: ''
   }
+]
+
+interface RoadmapData {
+  icon: string
+  message: string
+  chipKey: ChipKey
+}
+
+const roadmapData: RoadmapData[] = [
+  {
+    icon: iconMap.finska,
+    message: 'roadmap idea 1',
+    chipKey: 'feature'
+  },
+  {
+    icon: iconMap.gym_junkie,
+    message: 'roadmap idea 2',
+    chipKey: 'improvement'
+  },
+  {
+    icon: iconMap.finska,
+    message: 'roadmap idea 3',
+    chipKey: 'bug_fix'
+  },
+]
+
+interface ReleaseData {
+  icon: string
+  message: string
+  version: string
+}
+
+const releaseData: ReleaseData[] = [
+  {
+    icon: iconMap.finska,
+    message: 'roadmap idea 1',
+    version: '0.0.1'
+  },
 ]
 
 export default function HomePage(this: any) {
@@ -67,7 +125,7 @@ export default function HomePage(this: any) {
         onMouseLeave={() => handleHover(i, false)}
         sx={{
           display: 'flex',
-          flexDirection: 'column',
+          flexDirection: 'row',
           height: 200,
           padding: '10px',
           borderColor: hovered[i] ? '#22ff00ff' : '#7d7d7dff',
@@ -81,22 +139,34 @@ export default function HomePage(this: any) {
           sx={{
             display: 'flex',
             flexDirection: 'row',
-            height: '100%'
+            height: '100%',
+            width: '100%',
           }}
         >  
           <Box 
             sx={{
-              width: '75%', 
-              height: '100%'
+              display: 'flex',
+              flexDirection: 'column',
+              // width: '75%', 
+              height: '100%',
             }}
           >
             <Box 
               sx={{ 
                 display: 'flex', 
                 alignItems: 'center', 
-                height: '40px' 
+                height: '40px'
               }}
             >
+              <Avatar 
+                alt="icon" 
+                src={data.icon}
+                sx={{ 
+                  width: 32, 
+                  height: 32, 
+                  marginRight: '5px'
+                }}
+              />
               <Typography variant="h6">
                 {data.name}
               </Typography>
@@ -111,26 +181,32 @@ export default function HomePage(this: any) {
                 </IconButton>
               )}
             </Box>
-            <Typography>{data.description}</Typography>
-          </Box>
-          <Box sx={{width: '25%', height: '100%'}}>
-
+            <Typography sx={{whiteSpace: 'pre-line'}}>
+              {data.description}
+            </Typography>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                gap: '4px',
+                marginTop: 'auto',
+              }}
+            >
+              {data.chipKeys.map((key) => {
+                return getChip(key);
+              })}
+            </Box>
           </Box>
         </Box>
-        
-        <Box
+        <Box 
           sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            gap: '4px',
-            marginTop: 'auto',
-            paddingTop: '5px',
+            height: '100%',
+            objectFit: 'contain',
+            objectPosition: 'center',
           }}
-        >
-          {data.chipKeys.map((key) => {
-            return getChip(key);
-          })}
-        </Box>
+          component="img"
+          src={data.highlight}
+        />
       </Box>
     ));
   }, [projectData, hovered, handleHover]);
@@ -143,19 +219,181 @@ export default function HomePage(this: any) {
         flexDirection: 'column',
         height: '100%',
         width: '100%',
-        alignSelf: 'center',
-        gap: '10px'
+        gap: '10px',
       }}
     >
       <PageLinks />
-
       <Typography variant="h5">
         Marcus Oates
       </Typography>
       <Typography>
         Hey there, check out some of my projects!
       </Typography>
-      <EmblaCarousel slides={slides} options={{ loop: true }} />
+      <Box>
+        <EmblaCarousel slides={slides} options={{ loop: true }} />
+      </Box>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          width: '100%',
+        }}
+      >
+        <Box
+          sx={{
+            height: 'auto',
+            padding: 1,
+            width: '50%',
+          }}
+        >
+          <Typography variant="h6" sx={{paddingBottom: '5px'}}>
+            Roadmap
+          </Typography>
+          <Box
+            sx={{
+              maxHeight: 300,
+              overflowY: 'auto',
+              '&::-webkit-scrollbar': {
+                display: 'none',
+              },
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none',
+            }}
+          >
+            <Stack
+              spacing={1.5}
+            >
+              {roadmapData.map((data, i) => {
+                return (
+                  // <Box
+                  //   key={i}
+                  //   sx={{
+                  //     height: 50,
+                  //     backgroundColor: '#0d0d0dff',
+                  //     display: 'flex',
+                  //     alignItems: 'center',
+                  //     justifyContent: 'space-between',
+                  //     paddingLeft: '10px',
+                  //     paddingRight: '10px',
+                  //     // borderColor: 'black',
+                  //     // borderWidth: '2px',
+                  //     // borderStyle: 'solid',
+                  //     borderRadius: 1,
+                  //   }}
+                  // >
+                  //   <Avatar 
+                  //     alt="icon" 
+                  //     src={data.icon}
+                  //     sx={{ 
+                  //       width: 24, 
+                  //       height: 24, 
+                  //     }}
+                  //   />
+                  //   <Typography>{data.message}</Typography>
+                  //   {getChip(data.chipKey)}
+                  // </Box>
+                  <Grid 
+                    container 
+                    spacing={2}
+                    key={i}
+                    sx={{
+                      height: 50,
+                      backgroundColor: '#0d0d0dff',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      paddingLeft: '10px',
+                      paddingRight: '10px',
+                      // borderColor: 'black',
+                      // borderWidth: '2px',
+                      // borderStyle: 'solid',
+                      borderRadius: 1,
+                    }}
+                  >
+                    <Grid size="auto">
+                      <Avatar 
+                        alt="icon" 
+                        src={data.icon}
+                        sx={{ 
+                          width: 24, 
+                          height: 24, 
+                        }}
+                      />
+                    </Grid>
+                    <Grid size={8.8}>
+                      <Typography sx={{justifySelf: 'center'}}>
+                        {data.message}
+                      </Typography>
+                    </Grid>
+                    <Grid size="grow" sx={{alignItems: 'flex-end'}}>
+                      <Box sx={{justifySelf: 'flex-end'}}>
+                      {getChip(data.chipKey)}
+                      </Box>
+                    </Grid>
+                  </Grid>
+                )
+              })}
+            </Stack>
+          </Box>
+        </Box>
+        <Box
+          sx={{
+            padding: 1,
+            width: '50%',
+          }}
+        >
+          <Typography variant="h6" sx={{paddingBottom: '5px'}}>
+            Releases
+          </Typography>
+          <Box
+            sx={{
+              maxHeight: 300,
+              overflowY: 'auto',
+              '&::-webkit-scrollbar': {
+                display: 'none',
+              },
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none',
+            }}
+          >
+            <Stack
+              spacing={1.5}
+            >
+              {releaseData.map((data, i) => {
+                return (
+                  <Box
+                    key={i}
+                    sx={{
+                      height: 50,
+                      backgroundColor: '#0d0d0dff',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      paddingLeft: '10px',
+                      paddingRight: '10px',
+                      // borderColor: 'black',
+                      // borderWidth: '2px',
+                      // borderStyle: 'solid',
+                      borderRadius: 1,
+                    }}
+                  >
+                    <Avatar 
+                      alt="icon" 
+                      src={data.icon}
+                      sx={{ 
+                        width: 24, 
+                        height: 24, 
+                      }}
+                    />
+                    <Typography>{data.message}</Typography>
+                    <Typography>{data.version}</Typography>
+                  </Box>
+                )
+              })}
+            </Stack>
+          </Box>
+        </Box>
+      </Box>
     </Box>
   )
 }
