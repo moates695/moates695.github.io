@@ -31,15 +31,23 @@ function App() {
             display: "flex", 
             flexDirection: "column", 
             height: "100vh",
-            alignItems: 'center'
+            alignItems: 'center',
+            justifyContent: 'flex-start'
           }}
         >
           <AppToolbar isDark={isDark} setIsDark={setIsDark}/>
           <Box
             sx={{
               width: '100%',
-              maxWidth: 1200,
-              paddingTop: '20px',
+              maxWidth: 1220,
+              paddingTop: '10px',
+              paddingLeft: '20px',
+              paddingRight: '20px',
+              height: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              // justifyContent: 'center',
+              alignItems: 'center',
             }}
           >
             <Routes>

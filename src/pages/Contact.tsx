@@ -8,6 +8,7 @@ import discordLogo from '../assets/discord-logo.png';
 import CopyButton from "../components/CopyButton";
 import DownloadIcon from '@mui/icons-material/Download';
 import PageLinks from "../components/PageLinks";
+import { expoLink, githubLink, pypiLink } from "../middleware/links";
 
 export default function ContactPage() {
   return (
@@ -43,7 +44,7 @@ export default function ContactPage() {
         >
           <IconButton
             component="a"
-            href="https://github.com/moates695"
+            href={githubLink}
             target="_blank"
             rel="noopener"
           >
@@ -69,7 +70,7 @@ export default function ContactPage() {
           </IconButton>
           <IconButton
             component="a"
-            href="https://expo.dev/accounts/moates"
+            href={expoLink}
             target="_blank"
             rel="noopener"
           >
@@ -82,7 +83,7 @@ export default function ContactPage() {
           </IconButton>
           <IconButton
             component="a"
-            href="https://pypi.org/user/moates/"
+            href={pypiLink}
             target="_blank"
             rel="noopener"
           >
