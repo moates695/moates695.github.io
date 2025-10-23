@@ -91,17 +91,10 @@ export default function AppToolbar(props: AppToolbarProps) {
           </MenuItem>
           <MenuItem
             component={Link}
-            to="/finska/roadmap"
+            to="/finska/changes"
             onClick={() => setFinskaAnchor(null)}
           >
-            Roadmap
-          </MenuItem>
-          <MenuItem
-            component={Link}
-            to="/finska/releases"
-            onClick={() => setFinskaAnchor(null)}
-          >
-            Releases
+            Changes
           </MenuItem>
         </Menu>
 

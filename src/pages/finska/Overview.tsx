@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Link, ListItemIcon, ListItemText, Typography } from "@mui/material";
+import { Avatar, Box, Button, Card, Link, ListItemIcon, ListItemText, Typography } from "@mui/material";
 import PageLinks from "../../components/PageLinks";
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -7,6 +7,7 @@ import expoLogo from "../../assets/expo-logo.webp";
 import { finskaExpoLink, finskaGithubLink } from "../../middleware/links";
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import { buildBulletPoints } from "../../middleware/helpers";
+import BottomNavigation from "../../components/BottomNavigation";
 
 export default function FinksaOverview() {
   return (
@@ -25,10 +26,10 @@ export default function FinksaOverview() {
         Overview
       </Typography>
       <Typography>
-        When the sun is out and the weather is good, <Link href="https://www.finska.com.au/" target="_blank" rel="noopener">Finska</Link> is the game of choice my family to play.
+        When the sun is out and the weather is good, <Link href="https://www.finska.com.au/" target="_blank" rel="noopener">Finska</Link> is the game of choice for my family to play.
       </Typography>
       <Typography>
-        But after we exhausted the included score cards, we had to resort to using the notes app to keep score.
+        But after we exhausted the included score cards, we had to use the notes app to keep score.
       </Typography>
       <Typography>
         Not ideal.
@@ -41,6 +42,14 @@ export default function FinksaOverview() {
         'Edit game rules and play your way',
         'Lightweight React TS',
       ])}
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          gap: 1
+        }}
+      >
+      </Box>
       <Box
         sx={{
           display: 'flex',
@@ -91,6 +100,12 @@ export default function FinksaOverview() {
           </Button>
         </Box>
       </Box>
+      {BottomNavigation({
+        right: {
+          text: 'Design',
+          link: '/finska/design'
+        }
+      })}
     </Box>
   )
 }

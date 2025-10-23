@@ -14,7 +14,9 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { buildBulletPoints } from "../middleware/helpers";
 
-const iconMap: Record<string, string> = {
+export type Project = 'finska' | 'gym_junkie' | 'downer_helper' | 'cellular_tracking';
+
+export const iconMap: Record<Project, string> = {
   finska: '/finska-icon.png',
   gym_junkie: '/gym-junkie-icon.png',
   downer_helper: '',
@@ -69,19 +71,22 @@ const projectData: ProjectInfo[] = [
   }
 ]
 
-interface RoadmapData {
+export interface ChangeData {
   icon: string
-  message: string
+  header: string
+  points: string[]
+}
+
+export interface RoadmapData extends ChangeData {
   chipKey: ChipKey
-  dotPoints: string[]
 }
 
 const roadmapData: RoadmapData[] = [
   {
     icon: iconMap.finska,
-    message: 'add edit leaderboard functionality',
+    header: 'add edit leaderboard functionality',
     chipKey: 'feature',
-    dotPoints: [
+    points: [
       'dot point1',
       'dot point2',
       'dot point3',
@@ -91,53 +96,50 @@ const roadmapData: RoadmapData[] = [
   },
   {
     icon: iconMap.gym_junkie,
-    message: 'add leaderboards, global & per exercise',
+    header: 'add leaderboards, global & per exercise',
     chipKey: 'feature',
-    dotPoints: [],
+    points: [],
   },
   {
     icon: iconMap.finska,
-    message: 'create component tests to ensure game state',
+    header: 'create component tests to ensure game state',
     chipKey: 'improvement',
-    dotPoints: [],
+    points: [],
   },
   {
     icon: iconMap.finska,
-    message: 'save games & show history',
+    header: 'save games & show history',
     chipKey: 'feature',
-    dotPoints: [],
+    points: [],
   },
 ]
 
-interface ReleaseData {
-  icon: string
-  message: string
+export interface ReleaseData extends ChangeData {
   version: string
   link: string
-  dotPoints: string[]
 }
 
 const releaseData: ReleaseData[] = [
   {
     icon: iconMap.finska,
-    message: 'finska internal',
+    header: 'finska internal',
     version: '0.0.1',
     link: 'https://expo.dev/accounts/moates/projects/finska/builds/ff39d715-c47a-4e03-9e7b-67beb5ebae5c',
-    dotPoints: [],
+    points: [],
   },
   {
     icon: iconMap.gym_junkie,
-    message: 'gym junkie internal',
+    header: 'gym junkie internal',
     version: '0.0.1',
     link: 'https://expo.dev/accounts/moates/projects/gym-junkie/builds/a3a24607-c9df-445c-bc24-e3c91ae4c19b',
-    dotPoints: [],
+    points: [],
   },
   {
     icon: iconMap.downer_helper,
-    message: 'downer helper latest',
+    header: 'downer helper latest',
     version: '0.1.25',
     link: 'https://pypi.org/project/downerhelper/',
-    dotPoints: [],
+    points: [],
   },
 ]
 
@@ -332,7 +334,7 @@ export default function HomePage(this: any) {
                             }}
                           />
                           <Typography>
-                            {data.message}
+                            {data.header}
                           </Typography>
                         </Box>
                         <Box sx={{marginRight: 0.5}}>
@@ -341,7 +343,7 @@ export default function HomePage(this: any) {
                       </Box>
                     </AccordionSummary>
                     <AccordionDetails>
-                      {buildBulletPoints(data.dotPoints)}
+                      {buildBulletPoints(data.points)}
                     </AccordionDetails>
                   </Accordion>
                 )
@@ -402,7 +404,7 @@ export default function HomePage(this: any) {
                             }}
                           />
                           <Typography>
-                            {data.message}
+                            {data.header}
                           </Typography>
                         </Box>
                         <Box
@@ -431,7 +433,7 @@ export default function HomePage(this: any) {
                       </Box>
                     </AccordionSummary>
                     <AccordionDetails>
-                      {buildBulletPoints(data.dotPoints)}
+                      {buildBulletPoints(data.points)}
                     </AccordionDetails>
                   </Accordion>
                 )

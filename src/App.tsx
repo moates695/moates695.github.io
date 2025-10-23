@@ -18,6 +18,7 @@ import GymJunkieReleases from './pages/gym_junkie/Releases';
 import OtherAll from './pages/other/All';
 import OtherDownerHelper from './pages/other/DownerHelper';
 import OtherCellularTracking from './pages/other/CellularTracking';
+import FinksaChanges from './pages/finska/FinskaChanges';
 
 function App() {
   const [isDark, setIsDark] = useState(true);
@@ -56,11 +57,10 @@ function App() {
               <Route path="/finska">
                 <Route index element={<FinksaOverview />} />
                 <Route path="design" element={<FinksaDesign />} />
-                <Route path="roadmap" element={<FinksaRoadmap />} />
-                <Route path="releases" element={<FinksaReleases />} />
+                <Route path="changes" element={<FinksaChanges />} />
               </Route>
               <Route path="/gym-junkie">
-                <Route index element={<FinksaOverview />} />
+                <Route index element={<GymJunkieOverview />} />
                 <Route path="functionality" element={<GymJunkieFunctionality />} />
                 <Route path="roadmap" element={<GymJunkieRoadmap />} />
                 <Route path="releases" element={<GymJunkieReleases />} />
