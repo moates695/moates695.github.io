@@ -6,3 +6,4 @@ export const expoLink = "https://expo.dev/accounts/moates";
 export const finskaExpoLink = "https://expo.dev/accounts/moates/projects/finska";
 export const gymJunkieExpoLink = "https://expo.dev/accounts/moates/projects/gym-junkie";
 export const pypiLink = "https://pypi.org/user/moates/";
+export const stravaLink = "https://www.strava.com/athletes/46665081"

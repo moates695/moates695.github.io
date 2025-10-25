@@ -8,7 +8,8 @@ import discordLogo from '../assets/discord-logo.png';
 import CopyButton from "../components/CopyButton";
 import DownloadIcon from '@mui/icons-material/Download';
 import PageLinks from "../components/PageLinks";
-import { expoLink, githubLink, pypiLink } from "../middleware/links";
+import { expoLink, githubLink, pypiLink, stravaLink } from "../middleware/links";
+import stravaLogo from "../assets/strava-icon.png"
 
 export default function ContactPage() {
   return (
@@ -65,6 +66,19 @@ export default function ContactPage() {
               component="img"
               src={linkedInLogo}
               alt="LinkedIn"
+              sx={{ width: 40, height: 40, borderRadius: "50%" }}
+            />
+          </IconButton>
+          <IconButton
+            component="a"
+            href={stravaLink}
+            target="_blank"
+            rel="noopener"
+          >
+            <Box
+              component="img"
+              src={stravaLogo}
+              alt="Strava"
               sx={{ width: 40, height: 40, borderRadius: "50%" }}
             />
           </IconButton>
@@ -134,6 +148,10 @@ export default function ContactPage() {
             gymtrackeraus@gmail.com
           </Link>
           <CopyButton text={'gymtrackeraus@gmail.com'}/>
+        </Typography>
+        <Typography>
+          ABN: 50261161443 
+          <CopyButton text={'50261161443'}/>
         </Typography>
         <Typography
           fontSize={14}

@@ -1,9 +1,7 @@
 import { Box, Button, Typography } from "@mui/material";
 import PageLinks from "../../components/PageLinks";
-import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
-import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
-import { useNavigate } from "react-router-dom";
 import BottomNavigation from "../../components/BottomNavigation";
+import { buildProjectChange } from "../../components/Changes";
 
 export default function FinksaChanges() {
   return (
@@ -21,27 +19,7 @@ export default function FinksaChanges() {
       <Typography variant="h5">
         Changes
       </Typography>
-      <Box
-        sx={{
-          display: 'flex',
-          width: '100%',
-        }}
-      >
-        <Box
-          sx={{
-            width: '50%',
-          }}
-        >
-
-        </Box>
-        <Box
-          sx={{
-            width: '50%',
-          }}
-        >
-
-        </Box>
-      </Box>
+      {buildProjectChange('finska')}
       {BottomNavigation({
         left:  {
           text: 'Design',

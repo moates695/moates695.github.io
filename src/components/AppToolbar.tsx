@@ -64,11 +64,11 @@ export default function AppToolbar(props: AppToolbarProps) {
           </Button>
           <Button color="inherit" component={Link} to="/contact">Contact</Button>
         </Box>
-        <Box sx={{ display: 'inline-flex' }}>
+        {/* <Box sx={{ display: 'inline-flex' }}>
           <IconButton onClick={() => setIsDark(!isDark)} color="inherit">
             {isDark ? <Brightness7 /> : <Brightness4 />}
           </IconButton>
-        </Box>
+        </Box> */}
         
         <Menu 
           anchorEl={finskaAnchor}
@@ -119,17 +119,10 @@ export default function AppToolbar(props: AppToolbarProps) {
           </MenuItem>
           <MenuItem
             component={Link}
-            to="/gym-junkie/roadmap"
+            to="/gym-junkie/changes"
             onClick={() => setGymAnchor(null)}
           >
-            Roadmap
-          </MenuItem>
-          <MenuItem
-            component={Link}
-            to="/gym-junkie/releases"
-            onClick={() => setGymAnchor(null)}
-          >
-            Releases
+            Changes
           </MenuItem>
         </Menu>
 
