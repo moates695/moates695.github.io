@@ -203,7 +203,18 @@ export default function HomePage(this: any) {
         <EmblaCarousel slides={slides} options={{ loop: true }} />
       </Box>
       {buildAllChange(300)}
-      {contactButtons}
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        {contactButtons}
+        <Typography fontSize={12}>
+          quick links
+        </Typography>
+      </Box>
     </Box>
   )
 }

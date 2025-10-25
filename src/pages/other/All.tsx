@@ -18,10 +18,13 @@ export default function OtherAll() {
       <Typography variant="h5">
         Other Projects
       </Typography>
+      <Typography>
+        Click through to see some of my other coding projects.
+      </Typography>
       {BottomNavigation({
         right:  {
-          text: 'Downer Helper',
-          link: '/other/downer-helper'
+          text: 'Cellular Tracking',
+          link: '/other/cellular-tracking'
         }
       })}
     </Box>

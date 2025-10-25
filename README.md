@@ -1,3 +1,3 @@
 # moates695.github.io
 
-A simple page for my projects.
+A page for my projects, visit it [here](https://moates.com.au).

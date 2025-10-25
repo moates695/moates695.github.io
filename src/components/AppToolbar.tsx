@@ -140,17 +140,17 @@ export default function AppToolbar(props: AppToolbarProps) {
           </MenuItem>
           <MenuItem
             component={Link}
-            to="/other/downer-helper"
-            onClick={() => setCodeAnchor(null)}
-          >
-            Downer Helper
-          </MenuItem>
-          <MenuItem
-            component={Link}
             to="/other/cellular-tracking"
             onClick={() => setCodeAnchor(null)}
           >
             Cellular Tracking
+          </MenuItem>
+          <MenuItem
+            component={Link}
+            to="/other/downer-helper"
+            onClick={() => setCodeAnchor(null)}
+          >
+            Downer Helper
           </MenuItem>
         </Menu>
 

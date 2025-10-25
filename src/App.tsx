@@ -9,8 +9,6 @@ import { Box, ThemeProvider, CssBaseline } from '@mui/material';
 import { lightTheme, darkTheme } from "./styles/theme";
 import FinksaOverview from './pages/finska/Overview';
 import FinksaDesign from './pages/finska/Design';
-import FinksaRoadmap from './pages/finska/Roadmap';
-import FinksaReleases from './pages/finska/Releases';
 import GymJunkieOverview from './pages/gym_junkie/Overview';
 import GymJunkieFunctionality from './pages/gym_junkie/Functionality';
 import OtherAll from './pages/other/All';

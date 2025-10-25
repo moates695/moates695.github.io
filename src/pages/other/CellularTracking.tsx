@@ -1,7 +1,9 @@
-import { Box, Typography } from "@mui/material";
+import { Avatar, Box, Button, Typography } from "@mui/material";
 import PageLinks from "../../components/PageLinks";
 import BottomNavigation from "../../components/BottomNavigation";
 import { buildBulletPoints } from "../../middleware/helpers";
+import { cellularTrackingGithubLink } from "../../middleware/links";
+import githubLogo from "../../assets/github-logo.png";
 
 export default function OtherCellularTracking() {
   return (
@@ -19,6 +21,27 @@ export default function OtherCellularTracking() {
       <Typography variant="h5">
         Cellular Tracking
       </Typography>
+      <Box>
+        <Button 
+          variant="outlined"
+          href={cellularTrackingGithubLink}
+          target="_blank"
+          rel="noopener"
+          startIcon={
+            <Avatar
+              alt="github icon" 
+              src={githubLogo}
+              sx={{ 
+                width: 32, 
+                height: 32, 
+                marginRight: '10px'
+              }}
+            />
+          }
+        >
+          GitHub
+        </Button>
+      </Box>
       <Typography>
         This group project for UNSW's COMP9517 (Computer Vision) course set the
         challenge of segmenting cells and tracking their position, size and divisions
@@ -156,11 +179,15 @@ export default function OtherCellularTracking() {
           more aggressive segmentation, in an attempt to locate these faint cells'
         ])}
       </Typography>
-      {BottomNavigation({
+       {BottomNavigation({
         left:  {
+          text: 'Other Projects',
+          link: '/other'
+        },
+        right:  {
           text: 'Downer Helper',
           link: '/other/downer-helper'
-        },
+        }
       })}
     </Box>
   )
