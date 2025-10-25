@@ -14,6 +14,7 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { buildBulletPoints } from "../middleware/helpers";
 import { buildAllChange } from "../components/Changes";
+import { contactButtons } from "./Contact";
 
 export type Project = 'finska' | 'gym_junkie' | 'downer_helper' | 'cellular_tracking';
 
@@ -202,6 +203,7 @@ export default function HomePage(this: any) {
         <EmblaCarousel slides={slides} options={{ loop: true }} />
       </Box>
       {buildAllChange(300)}
+      {contactButtons}
     </Box>
   )
 }

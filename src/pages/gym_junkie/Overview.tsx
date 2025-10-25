@@ -18,6 +18,9 @@ export default function GymJunkieOverview() {
       <Typography variant="h5">
         Overview
       </Typography>
+      <Typography>
+        Filling this out soon...
+      </Typography>
       {BottomNavigation({
         right:  {
           text: 'Functionality',

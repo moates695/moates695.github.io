@@ -11,6 +11,98 @@ import PageLinks from "../components/PageLinks";
 import { expoLink, githubLink, pypiLink, stravaLink } from "../middleware/links";
 import stravaLogo from "../assets/strava-icon.png"
 
+export const contactButtons = (
+  <Box
+    sx={{
+      display: 'flex',
+      flexDirection: 'row',
+      width: '100%', 
+      justifyContent: 'center', 
+      gap: '10px',
+      // backgroundColor: 'red'
+    }}
+  >
+    <IconButton
+      component="a"
+      href={githubLink}
+      target="_blank"
+      rel="noopener"
+    >
+      <Box
+        component="img"
+        src={githubLogo}
+        alt="GitHub"
+        sx={{ width: 40, height: 40, borderRadius: "50%" }}
+      />
+    </IconButton>
+    <IconButton
+      component="a"
+      href="https://www.linkedin.com/in/marcus-oates-52814a233/"
+      target="_blank"
+      rel="noopener"
+    >
+      <Box
+        component="img"
+        src={linkedInLogo}
+        alt="LinkedIn"
+        sx={{ width: 40, height: 40, borderRadius: "50%" }}
+      />
+    </IconButton>
+    <IconButton
+      component="a"
+      href={stravaLink}
+      target="_blank"
+      rel="noopener"
+    >
+      <Box
+        component="img"
+        src={stravaLogo}
+        alt="Strava"
+        sx={{ width: 40, height: 40, borderRadius: "50%" }}
+      />
+    </IconButton>
+    <IconButton
+      component="a"
+      href={expoLink}
+      target="_blank"
+      rel="noopener"
+    >
+      <Box
+        component="img"
+        src={expoLogo}
+        alt="Expo"
+        sx={{ width: 40, height: 40, borderRadius: "50%" }}
+      />
+    </IconButton>
+    <IconButton
+      component="a"
+      href={pypiLink}
+      target="_blank"
+      rel="noopener"
+    >
+      <Box
+        component="img"
+        src={pypiLogo}
+        alt="PyPi"
+        sx={{ width: 40, height: 40, borderRadius: "50%" }}
+      />
+    </IconButton>
+    <IconButton
+      component="a"
+      href="https://discord.gg/uUd8hJNvzM"
+      target="_blank"
+      rel="noopener"
+    >
+      <Box
+        component="img"
+        src={discordLogo}
+        alt="Discord"
+        sx={{ width: 40, height: 40, borderRadius: "50%" }}
+      />
+    </IconButton>
+  </Box>
+)
+
 export default function ContactPage() {
   return (
     <Box 
@@ -33,95 +125,7 @@ export default function ContactPage() {
         }}
       >
         <PageLinks />
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            width: '100%', 
-            justifyContent: 'center', 
-            gap: '10px',
-            // backgroundColor: 'red'
-          }}
-        >
-          <IconButton
-            component="a"
-            href={githubLink}
-            target="_blank"
-            rel="noopener"
-          >
-            <Box
-              component="img"
-              src={githubLogo}
-              alt="GitHub"
-              sx={{ width: 40, height: 40, borderRadius: "50%" }}
-            />
-          </IconButton>
-          <IconButton
-            component="a"
-            href="https://www.linkedin.com/in/marcus-oates-52814a233/"
-            target="_blank"
-            rel="noopener"
-          >
-            <Box
-              component="img"
-              src={linkedInLogo}
-              alt="LinkedIn"
-              sx={{ width: 40, height: 40, borderRadius: "50%" }}
-            />
-          </IconButton>
-          <IconButton
-            component="a"
-            href={stravaLink}
-            target="_blank"
-            rel="noopener"
-          >
-            <Box
-              component="img"
-              src={stravaLogo}
-              alt="Strava"
-              sx={{ width: 40, height: 40, borderRadius: "50%" }}
-            />
-          </IconButton>
-          <IconButton
-            component="a"
-            href={expoLink}
-            target="_blank"
-            rel="noopener"
-          >
-            <Box
-              component="img"
-              src={expoLogo}
-              alt="Expo"
-              sx={{ width: 40, height: 40, borderRadius: "50%" }}
-            />
-          </IconButton>
-          <IconButton
-            component="a"
-            href={pypiLink}
-            target="_blank"
-            rel="noopener"
-          >
-            <Box
-              component="img"
-              src={pypiLogo}
-              alt="PyPi"
-              sx={{ width: 40, height: 40, borderRadius: "50%" }}
-            />
-          </IconButton>
-          <IconButton
-            component="a"
-            href="https://discord.gg/uUd8hJNvzM"
-            target="_blank"
-            rel="noopener"
-          >
-            <Box
-              component="img"
-              src={discordLogo}
-              alt="Discord"
-              sx={{ width: 40, height: 40, borderRadius: "50%" }}
-            />
-          </IconButton>
-        </Box>
+        {contactButtons}
         <Box>
           <Button
             variant="contained" startIcon={<DownloadIcon />}
