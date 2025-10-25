@@ -5,9 +5,10 @@ import { Accordion, AccordionDetails, AccordionSummary, Avatar, Box, IconButton,
 import { buildBulletPoints } from "../middleware/helpers"
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { downerhelperLink, pypiLink } from "../middleware/links"
 
 type Subset<T, U extends T> = U;
-export type ChangeProject = Subset<Project, 'finska' | 'gym_junkie'>
+export type ChangeProject = Subset<Project, 'finska' | 'gym_junkie' | 'downer_helper'>
 
 export interface ChangeData {
   header: string
@@ -49,21 +50,39 @@ export const roadmapMap: RoadmapMap = {
     {
       header: 'save games & show history',
       chipKey: 'feature',
-      points: [],
+      points: [
+        'save game to device storage',
+        'in settings click through to previous games modal',
+      ],
     },
   ],
   gym_junkie: [
     {
       header: 'add leaderboards, global & per exercise',
       chipKey: 'feature',
-      points: [],
+      points: [
+        'overall volume, sets, reps, time, num exercises',
+        'leaderboards for each muscle group, target',
+        'leaderboards for each exercise'
+      ],
     },
     {
       header: 'custom exercises',
       chipKey: 'feature',
-      points: [],
+      points: [
+        'allow users to create custom exercises',
+        'allow users to create variants of default exercises'
+      ],
     },
-  ]
+    {
+      header: 'frequency data',
+      chipKey: 'bug_fix',
+      points: [
+        'frequency chart does not load in',
+      ],
+    },
+  ],
+  downer_helper: []
 }
 
 export interface ReleaseBareData extends ChangeData {
@@ -83,7 +102,9 @@ export const releaseMap: ReleaseMap = {
       header: 'finska internal',
       version: '0.0.1',
       link: 'https://expo.dev/accounts/moates/projects/finska/builds/ff39d715-c47a-4e03-9e7b-67beb5ebae5c',
-      points: [],
+      points: [
+        'internal dev release'
+      ],
     },
   ],
   gym_junkie: [
@@ -91,9 +112,21 @@ export const releaseMap: ReleaseMap = {
       header: 'gym junkie internal',
       version: '0.0.1',
       link: 'https://expo.dev/accounts/moates/projects/gym-junkie/builds/a3a24607-c9df-445c-bc24-e3c91ae4c19b',
-      points: [],
+      points: [
+        'internal dev release'
+      ],
     },
   ],
+  downer_helper: [
+    {
+      header: 'downer helper : latest',
+      version: '0.1.25',
+      link: downerhelperLink,
+      points: [
+        'internal dev release'
+      ],
+    },
+  ]
 }
 
 interface ChangeRow {
