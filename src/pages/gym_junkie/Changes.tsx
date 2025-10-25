@@ -1,8 +1,9 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import PageLinks from "../../components/PageLinks";
 import BottomNavigation from "../../components/BottomNavigation";
+import { buildProjectChange } from "../../components/Changes";
 
-export default function GymJunkieOverview() {
+export default function GymJunkieChanges() {
   return (
     <Box
       component="section"
@@ -16,10 +17,11 @@ export default function GymJunkieOverview() {
     >
       <PageLinks />
       <Typography variant="h5">
-        Overview
+        Changes
       </Typography>
+      {buildProjectChange('gym_junkie')}
       {BottomNavigation({
-        right:  {
+        left:  {
           text: 'Functionality',
           link: '/gym-junkie/functionality'
         }
