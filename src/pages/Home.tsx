@@ -54,6 +54,15 @@ const projectData: ProjectInfo[] = [
     highlight: '/gym-junkie-highlight.png'
   },
   {
+    icon: iconMap.cellular_tracking,
+    name: 'Cellular Tracking',
+    description: 'Major computer vision project for segmenting cells, tracking and displaying their paths\
+    and identifying divisions.',
+    link: '/other/cellular-tracking',
+    chipKeys: ['ai_ml', 'python'],
+    highlight: ''
+  },
+  {
     icon: iconMap.downer_helper,
     name: 'Downer Helper',
     description: 'A PyPi package to help reduce code repetition across projects.\
@@ -62,15 +71,6 @@ const projectData: ProjectInfo[] = [
     chipKeys: ['python', 'package'],
     highlight: ''
   },
-  {
-    icon: iconMap.cellular_tracking,
-    name: 'Cellular Tracking',
-    description: 'Major computer vision project for segmenting cells, tracking and displaying their paths\
-    and identifying divisions.',
-    link: '/other/cellular-tracking',
-    chipKeys: ['ai_ml', 'python'],
-    highlight: ''
-  }
 ]
 
 export default function HomePage(this: any) {
@@ -197,7 +197,7 @@ export default function HomePage(this: any) {
         Marcus Oates
       </Typography>
       <Typography>
-        Hey there, check out some of my projects!
+        Hello there, check out some of my projects!
       </Typography>
       <Box>
         <EmblaCarousel slides={slides} options={{ loop: true }} />
