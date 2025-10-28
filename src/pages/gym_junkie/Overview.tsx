@@ -32,6 +32,9 @@ export default function GymJunkieOverview() {
         So I am in the process of making Gym Junkie, a free fitness app built on a data
         analytics and tracking.
         <br/>
+        Whether your an ego lifter or science based bro, this app should have something
+        for you.
+        <br/><br/>
         Yes, the frontend is clutered with buttons and data, and you can tell it was built
         by a backend engineer, but thats kind of the point. In my workouts I want to just
         enter data with no fuss, or have the capability to bring up comparisions and

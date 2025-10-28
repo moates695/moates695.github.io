@@ -1,4 +1,4 @@
-import { Accordion, AccordionDetails, AccordionSummary, Avatar, Box, Chip, Grid, IconButton, List, Stack, Typography } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Avatar, Box, Chip, Grid, IconButton, List, Stack, Typography, useTheme } from "@mui/material";
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
 import PageLinks from "../components/PageLinks";
@@ -75,6 +75,8 @@ const projectData: ProjectInfo[] = [
 
 export default function HomePage(this: any) {
   const navigate = useNavigate();
+
+  const theme = useTheme();
 
   const [hovered, setHovered] = useState<boolean[]>(Array(projectData.length).fill(false));
   
@@ -190,30 +192,36 @@ export default function HomePage(this: any) {
         height: '100%',
         width: '100%',
         gap: '10px',
+        justifyContent: 'space-between'
       }}
     >
-      <PageLinks />
-      <Typography variant="h5">
-        Marcus Oates
-      </Typography>
-      <Typography>
-        Hello there, check out some of my projects!
-      </Typography>
       <Box>
-        <EmblaCarousel slides={slides} options={{ loop: true }} />
-      </Box>
-      {buildAllChange(300)}
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
-        {contactButtons}
-        <Typography fontSize={12}>
-          quick links
+        <PageLinks />
+        <Typography variant="h5">
+          Marcus Oates
         </Typography>
+        <Typography>
+          Hello there, check out some of my projects!
+        </Typography>
+        <Box>
+          <EmblaCarousel slides={slides} options={{ loop: true }} />
+        </Box>
+        {buildAllChange(500)}
+      </Box>
+      <Box>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            // justifySelf: 'flex-end',
+          }}
+        >
+          {contactButtons}
+          <Typography fontSize={12}>
+            quick links
+          </Typography>
+        </Box>
       </Box>
     </Box>
   )

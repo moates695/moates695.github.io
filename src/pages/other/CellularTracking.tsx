@@ -53,6 +53,9 @@ export default function OtherCellularTracking() {
         The solution leverages included Python ML libraries like OpenCV, scikit-image, matplotlib and SciPy,
         and additional custom functions to better suit the problem.
         <br/>
+        While we were allowed to transfer learn using existing neural networks,
+        because this was a CV course the project mark would have been capped
+        at a distinction, hence why this solution uses custom methods.
       </Typography>
       <Typography>
         <Typography variant="h6">
@@ -158,10 +161,6 @@ export default function OtherCellularTracking() {
         controls
         sx={{ maxWidth: "50%", borderRadius: 2, alignSelf: 'center' }}
       />
-      {/* <video width="100%" height="auto" controls>
-        <source src="/videos/output1.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video> */}
       <Typography>
         <Typography variant="h6">
           Improvements
