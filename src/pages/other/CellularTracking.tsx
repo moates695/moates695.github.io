@@ -42,6 +42,16 @@ export default function OtherCellularTracking() {
           GitHub
         </Button>
       </Box>
+      {BottomNavigation({
+        left:  {
+          text: 'Other Projects',
+          link: '/other'
+        },
+        right:  {
+          text: 'Downer Helper',
+          link: '/other/downer-helper'
+        }
+      })}
       <Typography>
         This group project for UNSW's COMP9517 (Computer Vision) course set the
         challenge of segmenting cells and tracking their position, size and divisions

@@ -49,6 +49,66 @@ export default function GymJunkieOverview() {
       <Box
         sx={{
           display: 'flex',
+          gap: 4,
+          width: '100%',
+          justifyContent: 'center',
+        }}
+      >
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center'
+          }}
+        >
+          <Box
+            component="img"
+            src="/gymJunkieWorkout.png"
+            alt="workout screen"
+            sx={{width: 200}}
+          />
+          <Typography>
+            Workout Screen
+          </Typography>
+        </Box>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center'
+          }}
+        >
+          <Box
+            component="img"
+            src="/gymJunkieHistoryData.png"
+            alt="exercise history data"
+            sx={{width: 200}}
+          />
+          <Typography>
+            Exercise History Data
+          </Typography>
+        </Box>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center'
+          }}
+        >
+          <Box
+            component="img"
+            src="/gymJunkieOverviewCurrent.png"
+            alt="current workout overview"
+            sx={{width: 200}}
+          />
+          <Typography>
+            Current Workout Overview
+          </Typography>
+        </Box>
+      </Box>
+      <Box
+        sx={{
+          display: 'flex',
           flexDirection: 'row',
           gap: 1
         }}

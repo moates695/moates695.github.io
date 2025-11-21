@@ -9,3 +9,4 @@ export const pypiLink = "https://pypi.org/user/moates/";
 export const downerhelperLink = "https://pypi.org/project/downerhelper/"
 export const stravaLink = "https://www.strava.com/athletes/46665081"
 export const cellularTrackingGithubLink = "https://github.com/moates695/cs9517_Group_Project"
+export const postgresDeployLink = "https://pypi.org/project/postgresdeploy/"

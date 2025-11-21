@@ -45,6 +45,66 @@ export default function FinksaOverview() {
       <Box
         sx={{
           display: 'flex',
+          gap: 4,
+          width: '100%',
+          justifyContent: 'center',
+        }}
+      >
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center'
+          }}
+        >
+          <Box
+            component="img"
+            src="/finskaSetup.png"
+            alt="setup screen"
+            sx={{width: 200}}
+          />
+          <Typography>
+            Setup Screen
+          </Typography>
+        </Box>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center'
+          }}
+        >
+          <Box
+            component="img"
+            src="/finskaGame.png"
+            alt="game screen"
+            sx={{width: 200}}
+          />
+          <Typography>
+            Game Screen
+          </Typography>
+        </Box>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center'
+          }}
+        >
+          <Box
+            component="img"
+            src="/finskaSettings.png"
+            alt="settings screen"
+            sx={{width: 200}}
+          />
+          <Typography>
+            Settings Screen
+          </Typography>
+        </Box>
+      </Box>
+      <Box
+        sx={{
+          display: 'flex',
           flexDirection: 'row',
           gap: 1
         }}

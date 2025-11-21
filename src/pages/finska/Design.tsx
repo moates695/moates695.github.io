@@ -22,6 +22,16 @@ export default function FinksaDesign() {
       <Typography variant="h5">
         Design
       </Typography>
+      {BottomNavigation({
+        left:  {
+          text: 'Overview',
+          link: '/finska'
+        },
+        right: {
+          text: 'Changes',
+          link: '/finska/changes'
+        }
+      })}
       <Typography>
         The Finska Tracker has to be easy to use, since players will likely be 
         downloading and setting up their games on the fly.

@@ -312,6 +312,16 @@ The following snippet shows incorrect usage. Modules must be declared and import
           PyPi Package
         </Button>
       </Box>
+      {BottomNavigation({
+        left:  {
+          text: 'Cellular Tracking',
+          link: '/other/cellular-tracking'
+        },
+        right: {
+          text: 'Postgres Deploy',
+          link: '/other/postgres-deploy'
+        }
+      })}
       <Typography>
         This project is a Python module that bundles common wrapper functions I found
         that I was copy and pasting between each project.
@@ -330,6 +340,10 @@ The following snippet shows incorrect usage. Modules must be declared and import
           text: 'Cellular Tracking',
           link: '/other/cellular-tracking'
         },
+        right: {
+          text: 'Postgres Deploy',
+          link: '/other/postgres-deploy'
+        }
       })}
     </Box>
   )

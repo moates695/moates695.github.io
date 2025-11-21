@@ -20,9 +20,7 @@ export default function AppToolbar(props: AppToolbarProps) {
 
   const [codeAnchor, setCodeAnchor] = useState<null | HTMLElement>(null);
   const codeOpen = Boolean(codeAnchor);
-
   
-
   return (
     <AppBar position="static">
       <Toolbar sx={{ display: "flex", justifyContent: "space-between", maxWidth: 1200, width: '100%', alignSelf: 'center' }}>
@@ -151,6 +149,13 @@ export default function AppToolbar(props: AppToolbarProps) {
             onClick={() => setCodeAnchor(null)}
           >
             Downer Helper
+          </MenuItem>
+          <MenuItem
+            component={Link}
+            to="/other/postgres-deploy"
+            onClick={() => setCodeAnchor(null)}
+          >
+            Postgres Deploy
           </MenuItem>
         </Menu>
 

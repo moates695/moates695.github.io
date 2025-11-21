@@ -16,6 +16,7 @@ import OtherDownerHelper from './pages/other/DownerHelper';
 import OtherCellularTracking from './pages/other/CellularTracking';
 import FinksaChanges from './pages/finska/Changes';
 import GymJunkieChanges from './pages/gym_junkie/Changes';
+import OtherPostgresDeploy from './pages/other/PostgresDeploy';
 
 function App() {
   const [isDark, setIsDark] = useState(true);
@@ -65,6 +66,7 @@ function App() {
                 <Route index element={<OtherAll />} />
                 <Route path="downer-helper" element={<OtherDownerHelper />} />
                 <Route path="cellular-tracking" element={<OtherCellularTracking />} />
+                <Route path="postgres-deploy" element={<OtherPostgresDeploy />} />
               </Route>
             </Routes>
           </Box>

@@ -35,6 +35,7 @@ const breadcrumbNameMap: { [key: string]: string } = {
   '/other': 'Other Projects',
   '/other/downer-helper': 'Downer Helper',
   '/other/cellular-tracking': 'Cellular Tracking',
+  '/other/postgres-deploy': 'Postgres Deploy',
   '/contact': 'Contact'
 };
 

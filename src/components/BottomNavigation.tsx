@@ -41,7 +41,7 @@ export default function BottomNavigation(props: BottomNavigationProps) {
         display: 'flex',
         width: '100%',
         justifyContent: justify,
-        paddingBottom: 2,
+        // paddingBottom: 2,
       }}
     >
       {left &&
