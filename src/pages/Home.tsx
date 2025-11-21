@@ -16,13 +16,14 @@ import { buildBulletPoints } from "../middleware/helpers";
 import { buildAllChange } from "../components/Changes";
 import { contactButtons } from "./Contact";
 
-export type Project = 'finska' | 'gym_junkie' | 'downer_helper' | 'cellular_tracking';
+export type Project = 'finska' | 'gym_junkie' | 'downer_helper' | 'cellular_tracking' | 'postgres_deploy';
 
 export const iconMap: Record<Project, string> = {
   finska: '/finska-icon.png',
   gym_junkie: '/gym-junkie-icon.png',
   downer_helper: '/pypi-logo.png',
   cellular_tracking: '/cells-logo.png',
+  postgres_deploy: '/pypi-logo.png',
 }
 
 interface ProjectInfo {
@@ -68,6 +69,15 @@ const projectData: ProjectInfo[] = [
     description: 'A PyPi package to help reduce code repetition across projects.\
     Available for anyone to use, deployed straight from GitHub.',
     link: '/other/downer-helper',
+    chipKeys: ['python', 'package'],
+    highlight: ''
+  },
+  {
+    icon: iconMap.postgres_deploy,
+    name: 'Postgres Deploy',
+    description: 'A PyPi package that deploys/updates Postgres schemas from a \
+    set of configuration files. Helps projects with different db environments.',
+    link: '/other/postgres-deploy',
     chipKeys: ['python', 'package'],
     highlight: ''
   },

@@ -43,7 +43,9 @@ export default function OtherAll() {
       <List>
         {links.map((link) => (
           <ListItem key={link.href} style={{ display: 'list-item' }}>
-            <Link href={link.href} target="_blank" rel="noopener noreferrer">
+            <Link 
+              href={link.href} 
+            >
               {link.label}
             </Link>
           </ListItem>
