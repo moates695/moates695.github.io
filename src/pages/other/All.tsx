@@ -4,8 +4,11 @@ import BottomNavigation from "../../components/BottomNavigation";
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Link from '@mui/material/Link';
+import { useNavigate } from 'react-router-dom';
 
 export default function OtherAll() {
+  const navigate = useNavigate();
+
   const links = [
     {
       label: 'Cellular Tracking',
@@ -44,7 +47,8 @@ export default function OtherAll() {
         {links.map((link) => (
           <ListItem key={link.href} style={{ display: 'list-item' }}>
             <Link 
-              href={link.href} 
+              // href={link.href} 
+              onClick={() => navigate(link.href)}
             >
               {link.label}
             </Link>
