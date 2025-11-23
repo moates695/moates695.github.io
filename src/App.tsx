@@ -31,7 +31,7 @@ function App() {
             flexDirection: "column", 
             height: "100vh",
             alignItems: 'center',
-            justifyContent: 'flex-start'
+            justifyContent: 'flex-start',
           }}
         >
           <AppToolbar isDark={isDark} setIsDark={setIsDark}/>

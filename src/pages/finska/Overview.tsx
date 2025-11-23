@@ -8,6 +8,7 @@ import { finskaExpoLink, finskaGithubLink } from "../../middleware/links";
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import { buildBulletPoints } from "../../middleware/helpers";
 import BottomNavigation from "../../components/BottomNavigation";
+import DownloadIcon from '@mui/icons-material/Download';
 
 export default function FinksaOverview() {
   return (
@@ -117,6 +118,24 @@ export default function FinksaOverview() {
           gap: 1
         }}
       >
+       <Box>
+          <Button 
+            variant="contained"
+            href="finska_internal.apk"
+            download
+            startIcon={
+              <DownloadIcon 
+                sx={{ 
+                  width: 32, 
+                  height: 32, 
+                  marginRight: '10px'
+                }}
+              />
+            }
+          >
+            Android APK
+          </Button>
+        </Box>
         <Box>
           <Button 
             variant="outlined"
@@ -138,7 +157,7 @@ export default function FinksaOverview() {
             GitHub
           </Button>
         </Box>
-        <Box>
+        {/* <Box>
           <Button 
             variant="outlined"
             href={finskaExpoLink}
@@ -158,7 +177,7 @@ export default function FinksaOverview() {
           >
             Expo
           </Button>
-        </Box>
+        </Box> */}
       </Box>
       {BottomNavigation({
         right: {
