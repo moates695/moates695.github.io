@@ -81,6 +81,21 @@ export const roadmapMap: RoadmapMap = {
         'frequency chart does not load in',
       ],
     },
+    {
+      header: 'exercise shift up/down',
+      chipKey: 'bug_fix',
+      points: [
+        'all data moves with shift except for exercise weight',
+      ],
+    },
+    {
+      header: 'fill in home screen',
+      chipKey: 'improvement',
+      points: [
+        'show current workout stats for past X days (week, month, etc)',
+        'based on current plan suggest workout or target',
+      ],
+    },
   ],
   downer_helper: []
 }

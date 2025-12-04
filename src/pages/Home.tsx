@@ -216,7 +216,7 @@ export default function HomePage(this: any) {
         <Box>
           <EmblaCarousel slides={slides} options={{ loop: true }} />
         </Box>
-        {buildAllChange(500)}
+        {buildAllChange(375)}
       </Box>
       <Box>
         <Box

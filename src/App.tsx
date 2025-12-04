@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { HashRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
@@ -20,6 +20,15 @@ import OtherPostgresDeploy from './pages/other/PostgresDeploy';
 
 function App() {
   const [isDark, setIsDark] = useState(true);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 800);
+  
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  console.log(isMobile)
 
   return (
     <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
