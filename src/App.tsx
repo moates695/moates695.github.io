@@ -17,6 +17,7 @@ import OtherCellularTracking from './pages/other/CellularTracking';
 import FinksaChanges from './pages/finska/Changes';
 import GymJunkieChanges from './pages/gym_junkie/Changes';
 import OtherPostgresDeploy from './pages/other/PostgresDeploy';
+import PrivacyPolicy from './pages/finska/PrivacyPolicy';
 
 function App() {
   const [isDark, setIsDark] = useState(true);
@@ -65,6 +66,7 @@ function App() {
                 <Route index element={<FinksaOverview />} />
                 <Route path="design" element={<FinksaDesign />} />
                 <Route path="changes" element={<FinksaChanges />} />
+                <Route path="privacy" element={<PrivacyPolicy />} />
               </Route>
               <Route path="/gym-junkie">
                 <Route index element={<GymJunkieOverview />} />
