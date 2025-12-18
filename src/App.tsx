@@ -19,6 +19,7 @@ import GymJunkieChanges from './pages/gym_junkie/Changes';
 import OtherPostgresDeploy from './pages/other/PostgresDeploy';
 import FinskaPrivacyPolicy from './pages/finska/PrivacyPolicy';
 import GymJunkiePrivacyPolicy from './pages/gym_junkie/PrivacyPolicy';
+import DeleteMe from './pages/gym_junkie/DeleteMe';
 
 function App() {
   const [isDark, setIsDark] = useState(true);
@@ -74,6 +75,7 @@ function App() {
                 <Route path="functionality" element={<GymJunkieFunctionality />} />
                 <Route path="changes" element={<GymJunkieChanges />} />
                 <Route path="privacy" element={<GymJunkiePrivacyPolicy />} />
+                <Route path="delete-me" element={<DeleteMe />} />
               </Route>
               <Route path="/other">
                 <Route index element={<OtherAll />} />
