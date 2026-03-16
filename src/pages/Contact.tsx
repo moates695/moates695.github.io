@@ -8,7 +8,8 @@ import discordLogo from '../assets/discord-logo.png';
 import CopyButton from "../components/CopyButton";
 import DownloadIcon from '@mui/icons-material/Download';
 import PageLinks from "../components/PageLinks";
-import { expoLink, githubLink, pypiLink, stravaLink } from "../middleware/links";
+import { expoLink, githubLink, paypalLink, pypiLink, stravaLink } from "../middleware/links";
+import LocalCafeIcon from '@mui/icons-material/LocalCafe';
 import stravaLogo from "../assets/strava-icon.png"
 
 const iconButtonHoverSx = {
@@ -243,6 +244,40 @@ export default function ContactPage() {
             <Typography variant="caption" color="text.secondary">
               Australian Business Number
             </Typography>
+          </Paper>
+
+          {/* Support */}
+          <Paper
+            variant="outlined"
+            sx={{
+              p: 2,
+              flex: '1 1 280px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '8px',
+              backgroundColor: 'transparent',
+              borderColor: 'rgba(255, 255, 255, 0.12)',
+            }}
+          >
+            <Typography variant="overline" color="text.secondary">
+              Support
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Hosting apps isn't free :(
+            </Typography>
+            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 1 }}>
+              <Button
+                variant="contained"
+                color="primary"
+                startIcon={<LocalCafeIcon />}
+                href={paypalLink}
+                target="_blank"
+                rel="noopener"
+                sx={{ fontWeight: 600 }}
+              >
+                Buy Me a Coffee
+              </Button>
+            </Box>
           </Paper>
         </Box>
 
