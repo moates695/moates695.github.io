@@ -5,6 +5,12 @@ import { gymJunkieAppGithubLink, gymJunkieExpoLink, gymJunkieServerGithubLink } 
 import githubLogo from "../../assets/github-logo.png";
 import expoLogo from "../../assets/expo-logo.webp";
 
+const screenshots = [
+  { src: "/gymJunkieWorkout.png", label: "Workout Screen" },
+  { src: "/gymJunkieHistoryData.png", label: "Exercise History Data" },
+  { src: "/gymJunkieOverviewCurrent.png", label: "Current Workout Overview" },
+];
+
 export default function GymJunkieOverview() {
   return (
     <Box
@@ -22,11 +28,11 @@ export default function GymJunkieOverview() {
         Overview
       </Typography>
       <Typography>
-        I like to go to the gym, and recording reps and weight per set is essential 
+        I like to go to the gym, and recording reps and weight per set is essential
         for progressive overload.
         <br/>
-        What I don't particularly like is the idea of paying yet another subscription, 
-        just for a fitness tracker that doesn't have all the features and customisation 
+        What I don't particularly like is the idea of paying yet another subscription,
+        just for a fitness tracker that doesn't have all the features and customisation
         that I reckon should be included for the price.
         <br/>
         So I am in the process of making Gym Junkie, a free fitness app built on a data
@@ -35,76 +41,46 @@ export default function GymJunkieOverview() {
         Whether your an ego lifter or science based bro, this app should have something
         for you.
         <br/><br/>
-        Yes, the frontend is clutered with buttons and data, and you can tell it was built
+        Yes, the frontend is cluttered with buttons and data, and you can tell it was built
         by a backend engineer, but thats kind of the point. In my workouts I want to just
         enter data with no fuss, or have the capability to bring up comparisions and
         analytics without pressing through a bunch of menus.
         <br/>
-        I am planning on adding friends to this in future, but without likes or comments. 
+        I am planning on adding friends to this in future, but without likes or comments.
         You can check up on what your mates are up to if you want, and compare your workouts
         to theirs, but the focus should be on you and your fitness journey.
         <br/>
-        Check out the next pages for more detail about the app, and what's coming next. 
+        Check out the next pages for more detail about the app, and what's coming next.
       </Typography>
       <Box
         sx={{
           display: 'flex',
+          flexWrap: 'wrap',
           gap: 4,
           width: '100%',
           justifyContent: 'center',
         }}
       >
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center'
-          }}
-        >
+        {screenshots.map(({ src, label }) => (
           <Box
-            component="img"
-            src="/gymJunkieWorkout.png"
-            alt="workout screen"
-            sx={{width: 200}}
-          />
-          <Typography>
-            Workout Screen
-          </Typography>
-        </Box>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center'
-          }}
-        >
-          <Box
-            component="img"
-            src="/gymJunkieHistoryData.png"
-            alt="exercise history data"
-            sx={{width: 200}}
-          />
-          <Typography>
-            Exercise History Data
-          </Typography>
-        </Box>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center'
-          }}
-        >
-          <Box
-            component="img"
-            src="/gymJunkieOverviewCurrent.png"
-            alt="current workout overview"
-            sx={{width: 200}}
-          />
-          <Typography>
-            Current Workout Overview
-          </Typography>
-        </Box>
+            key={src}
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center'
+            }}
+          >
+            <Box
+              component="img"
+              src={src}
+              alt={label}
+              sx={{ width: 200, maxWidth: '40vw', height: 'auto' }}
+            />
+            <Typography>
+              {label}
+            </Typography>
+          </Box>
+        ))}
       </Box>
       <Box
         sx={{
@@ -114,18 +90,18 @@ export default function GymJunkieOverview() {
         }}
       >
         <Box>
-          <Button 
-            variant="outlined"
+          <Button
+            variant="contained"
             href={gymJunkieAppGithubLink}
             target="_blank"
             rel="noopener"
             startIcon={
               <Avatar
-                alt="github icon" 
+                alt="github icon"
                 src={githubLogo}
-                sx={{ 
-                  width: 32, 
-                  height: 32, 
+                sx={{
+                  width: 32,
+                  height: 32,
                   marginRight: '10px'
                 }}
               />
@@ -135,18 +111,18 @@ export default function GymJunkieOverview() {
           </Button>
         </Box>
         <Box>
-          <Button 
+          <Button
             variant="outlined"
             href={gymJunkieServerGithubLink}
             target="_blank"
             rel="noopener"
             startIcon={
               <Avatar
-                alt="github icon" 
+                alt="github icon"
                 src={githubLogo}
-                sx={{ 
-                  width: 32, 
-                  height: 32, 
+                sx={{
+                  width: 32,
+                  height: 32,
                   marginRight: '10px'
                 }}
               />
@@ -156,18 +132,18 @@ export default function GymJunkieOverview() {
           </Button>
         </Box>
         <Box>
-          <Button 
+          <Button
             variant="outlined"
             href={gymJunkieExpoLink}
             target="_blank"
             rel="noopener"
             startIcon={
               <Avatar
-                alt="expo icon" 
+                alt="expo icon"
                 src={expoLogo}
-                sx={{ 
-                  width: 32, 
-                  height: 32, 
+                sx={{
+                  width: 32,
+                  height: 32,
                   marginRight: '10px'
                 }}
               />
@@ -184,6 +160,6 @@ export default function GymJunkieOverview() {
         }
       })}
     </Box>
-    
+
   )
 }

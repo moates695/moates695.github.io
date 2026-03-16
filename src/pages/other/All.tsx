@@ -45,9 +45,8 @@ export default function OtherAll() {
 
       <List>
         {links.map((link) => (
-          <ListItem key={link.href} style={{ display: 'list-item' }}>
-            <Link 
-              // href={link.href} 
+          <ListItem key={link.href}>
+            <Link
               onClick={() => navigate(link.href)}
             >
               {link.label}

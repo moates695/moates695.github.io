@@ -1,4 +1,4 @@
-import { Box, Button, IconButton, Link, Typography } from "@mui/material";
+import { Box, Button, IconButton, Link, Paper, Typography } from "@mui/material";
 import githubLogo from "../assets/github-logo.png";
 import linkedInLogo from '../assets/linkedin-logo.jpg';
 import expoLogo from '../assets/expo-logo.webp';
@@ -11,15 +11,20 @@ import PageLinks from "../components/PageLinks";
 import { expoLink, githubLink, pypiLink, stravaLink } from "../middleware/links";
 import stravaLogo from "../assets/strava-icon.png"
 
+const iconButtonHoverSx = {
+  '&:hover': {
+    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+  },
+};
+
 export const contactButtons = (
   <Box
     sx={{
       display: 'flex',
       flexDirection: 'row',
-      width: '100%', 
-      justifyContent: 'center', 
+      width: '100%',
+      justifyContent: 'center',
       gap: '10px',
-      // backgroundColor: 'red'
     }}
   >
     <IconButton
@@ -27,12 +32,13 @@ export const contactButtons = (
       href={githubLink}
       target="_blank"
       rel="noopener"
+      sx={iconButtonHoverSx}
     >
       <Box
         component="img"
         src={githubLogo}
         alt="GitHub"
-        sx={{ width: 40, height: 40, borderRadius: "50%" }}
+        sx={{ width: 48, height: 48, borderRadius: "50%" }}
       />
     </IconButton>
     <IconButton
@@ -40,12 +46,13 @@ export const contactButtons = (
       href="https://www.linkedin.com/in/marcus-oates-52814a233/"
       target="_blank"
       rel="noopener"
+      sx={iconButtonHoverSx}
     >
       <Box
         component="img"
         src={linkedInLogo}
         alt="LinkedIn"
-        sx={{ width: 40, height: 40, borderRadius: "50%" }}
+        sx={{ width: 48, height: 48, borderRadius: "50%" }}
       />
     </IconButton>
     <IconButton
@@ -53,12 +60,13 @@ export const contactButtons = (
       href={stravaLink}
       target="_blank"
       rel="noopener"
+      sx={iconButtonHoverSx}
     >
       <Box
         component="img"
         src={stravaLogo}
         alt="Strava"
-        sx={{ width: 40, height: 40, borderRadius: "50%" }}
+        sx={{ width: 48, height: 48, borderRadius: "50%" }}
       />
     </IconButton>
     <IconButton
@@ -66,12 +74,13 @@ export const contactButtons = (
       href={expoLink}
       target="_blank"
       rel="noopener"
+      sx={iconButtonHoverSx}
     >
       <Box
         component="img"
         src={expoLogo}
         alt="Expo"
-        sx={{ width: 40, height: 40, borderRadius: "50%" }}
+        sx={{ width: 48, height: 48, borderRadius: "50%" }}
       />
     </IconButton>
     <IconButton
@@ -79,12 +88,13 @@ export const contactButtons = (
       href={pypiLink}
       target="_blank"
       rel="noopener"
+      sx={iconButtonHoverSx}
     >
       <Box
         component="img"
         src={pypiLogo}
         alt="PyPi"
-        sx={{ width: 40, height: 40, borderRadius: "50%" }}
+        sx={{ width: 48, height: 48, borderRadius: "50%" }}
       />
     </IconButton>
     <IconButton
@@ -92,12 +102,13 @@ export const contactButtons = (
       href="https://discord.gg/uUd8hJNvzM"
       target="_blank"
       rel="noopener"
+      sx={iconButtonHoverSx}
     >
       <Box
         component="img"
         src={discordLogo}
         alt="Discord"
-        sx={{ width: 40, height: 40, borderRadius: "50%" }}
+        sx={{ width: 48, height: 48, borderRadius: "50%" }}
       />
     </IconButton>
   </Box>
@@ -105,66 +116,144 @@ export const contactButtons = (
 
 export default function ContactPage() {
   return (
-    <Box 
+    <Box
       component="section"
       sx={{
-        height: '100%',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'flexStart',
-        alignItems: 'center',
+        height: '100%',
+        width: '100%',
+        gap: '10px',
       }}
     >
-      <Box
-        sx={{
-          width: '100%',
-          maxWidth: '400px',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '10px',
-        }}
-      >
         <PageLinks />
-        {contactButtons}
-        <Box>
-          <Button
-            variant="contained" startIcon={<DownloadIcon />}
-            href="marcus_oates_resume.pdf"
-            download
+        <Typography variant="h5">Contact</Typography>
+
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
+          {/* Left column: socials + resume */}
+          <Paper
+            variant="outlined"
+            sx={{
+              p: 2,
+              flex: '1 1 280px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 1.5,
+              backgroundColor: 'transparent',
+              borderColor: 'rgba(255, 255, 255, 0.12)',
+            }}
           >
-            resume
-          </Button>
+            <Typography variant="overline" color="text.secondary">
+              Socials
+            </Typography>
+            {contactButtons}
+            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 1 }}>
+              <Button
+                variant="contained"
+                color="primary"
+                startIcon={<DownloadIcon />}
+                href="marcus_oates_resume.pdf"
+                download
+                sx={{ fontWeight: 600 }}
+              >
+                Resume
+              </Button>
+            </Box>
+          </Paper>
+
+          {/* Right column: personal contact */}
+          <Paper
+            variant="outlined"
+            sx={{
+              p: 2,
+              flex: '1 1 280px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '8px',
+              backgroundColor: 'transparent',
+              borderColor: 'rgba(255, 255, 255, 0.12)',
+            }}
+          >
+            <Typography variant="overline" color="text.secondary">
+              Personal
+            </Typography>
+            <Typography>
+              Email:
+              <Link href="mailto:marcusjoates@gmail.com" underline="hover" sx={{marginLeft: '5px'}}>
+                marcusjoates@gmail.com
+              </Link>
+              <CopyButton text={'marcusjoates@gmail.com'}/>
+            </Typography>
+            <Typography>
+              Phone:
+              <Link href="tel:0428211020" underline="hover" sx={{marginLeft: '5px'}}>
+                0428 211 020
+              </Link>
+              <CopyButton text={'0428211020'}/>
+            </Typography>
+          </Paper>
         </Box>
-        <Typography>
-          Email: 
-          <Link href="mailto:marcusjoates@gmail.com" underline="hover" sx={{marginLeft: '5px'}}>
-            marcusjoates@gmail.com
-          </Link>
-          <CopyButton text={'marcusjoates@gmail.com'}/>
-        </Typography>
-        <Typography>
-          Phone: 0428 211 020
-          <CopyButton text={'0428211020'}/>
-        </Typography>
-        <Typography>
-          Gym Junkie Support: 
-          <Link href="mailto:gymtrackeraus@gmail.com" underline="hover" sx={{marginLeft: '5px'}}>
-            gymtrackeraus@gmail.com
-          </Link>
-          <CopyButton text={'gymtrackeraus@gmail.com'}/>
-        </Typography>
-        <Typography>
-          ABN: 50261161443 
-          <CopyButton text={'50261161443'}/>
-        </Typography>
+
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
+          {/* Gym Junkie Support */}
+          <Paper
+            variant="outlined"
+            sx={{
+              p: 2,
+              flex: '1 1 280px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '8px',
+              backgroundColor: 'transparent',
+              borderColor: 'rgba(255, 255, 255, 0.12)',
+            }}
+          >
+            <Typography variant="overline" color="text.secondary">
+              Gym Junkie Support
+            </Typography>
+            <Typography>
+              Email:
+              <Link href="mailto:gymtrackeraus@gmail.com" underline="hover" sx={{marginLeft: '5px'}}>
+                gymtrackeraus@gmail.com
+              </Link>
+              <CopyButton text={'gymtrackeraus@gmail.com'}/>
+            </Typography>
+          </Paper>
+
+          {/* Business */}
+          <Paper
+            variant="outlined"
+            sx={{
+              p: 2,
+              flex: '1 1 280px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '8px',
+              backgroundColor: 'transparent',
+              borderColor: 'rgba(255, 255, 255, 0.12)',
+            }}
+          >
+            <Typography variant="overline" color="text.secondary">
+              Business
+            </Typography>
+            <Typography>
+              ABN: 50261161443
+              <CopyButton text={'50261161443'}/>
+            </Typography>
+            <Typography variant="caption" color="text.secondary">
+              Australian Business Number
+            </Typography>
+          </Paper>
+        </Box>
+
         <Typography
           fontSize={14}
+          sx={{ mt: 1, color: 'text.secondary' }}
         >
           Feel free to reach out using one of the methods above.<br/>
           Suggestions, improvements or bugfixes are welcome. <br/>
-          I don't pickup on unkown numbers, so pls leave a message.
+          I don't pickup on unknown numbers, so pls leave a message.
         </Typography>
-      </Box>
     </Box>
   )
 }

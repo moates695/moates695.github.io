@@ -1,11 +1,8 @@
 import { Avatar, Box, Button, Typography } from "@mui/material";
 import PageLinks from "../../components/PageLinks";
 import BottomNavigation from "../../components/BottomNavigation";
-import { buildBulletPoints } from "../../middleware/helpers";
-import { cellularTrackingGithubLink, postgresDeployLink } from "../../middleware/links";
-import githubLogo from "../../assets/github-logo.png";
+import { postgresDeployLink } from "../../middleware/links";
 import pypiLogo from "../../assets/pypi-logo.png";
-import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 

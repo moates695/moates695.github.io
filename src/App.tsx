@@ -5,6 +5,7 @@ import { HashRouter as Router, Routes, Route, useNavigate } from "react-router-d
 import AppToolbar from './components/AppToolbar'
 import Home from './pages/Home'
 import Contact from './pages/Contact'
+import About from './pages/About'
 import { Box, ThemeProvider, CssBaseline } from '@mui/material';
 import { lightTheme, darkTheme } from "./styles/theme";
 import FinksaOverview from './pages/finska/Overview';
@@ -63,6 +64,7 @@ function App() {
           >
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/finska">
                 <Route index element={<FinksaOverview />} />

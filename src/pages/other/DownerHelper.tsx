@@ -332,9 +332,11 @@ The following snippet shows incorrect usage. Modules must be declared and import
         <br/>
         The following is the usage guide from the package.
       </Typography>
-      <ReactMarkdown>
-        {markdown}
-      </ReactMarkdown>
+      <Box sx={{ overflow: 'auto', maxWidth: '100%' }}>
+        <ReactMarkdown>
+          {markdown}
+        </ReactMarkdown>
+      </Box>
       {BottomNavigation({
         left:  {
           text: 'Cellular Tracking',

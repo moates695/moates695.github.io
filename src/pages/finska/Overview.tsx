@@ -1,11 +1,7 @@
-import { Avatar, Box, Button, Card, Link, ListItemIcon, ListItemText, Typography } from "@mui/material";
+import { Avatar, Box, Button, Link, Typography } from "@mui/material";
 import PageLinks from "../../components/PageLinks";
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
 import githubLogo from "../../assets/github-logo.png";
-import expoLogo from "../../assets/expo-logo.webp";
-import { finskaExpoLink, finskaGithubLink } from "../../middleware/links";
-import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import { finskaGithubLink } from "../../middleware/links";
 import { buildBulletPoints } from "../../middleware/helpers";
 import BottomNavigation from "../../components/BottomNavigation";
 import DownloadIcon from '@mui/icons-material/Download';
@@ -46,6 +42,7 @@ export default function FinksaOverview() {
       <Box
         sx={{
           display: 'flex',
+          flexWrap: 'wrap',
           gap: 4,
           width: '100%',
           justifyContent: 'center',
@@ -62,7 +59,7 @@ export default function FinksaOverview() {
             component="img"
             src="/finskaSetup.png"
             alt="setup screen"
-            sx={{width: 200}}
+            sx={{ width: 200, maxWidth: '40vw', height: 'auto' }}
           />
           <Typography>
             Setup Screen
@@ -79,7 +76,7 @@ export default function FinksaOverview() {
             component="img"
             src="/finskaGame.png"
             alt="game screen"
-            sx={{width: 200}}
+            sx={{ width: 200, maxWidth: '40vw', height: 'auto' }}
           />
           <Typography>
             Game Screen
@@ -96,7 +93,7 @@ export default function FinksaOverview() {
             component="img"
             src="/finskaSettings.png"
             alt="settings screen"
-            sx={{width: 200}}
+            sx={{ width: 200, maxWidth: '40vw', height: 'auto' }}
           />
           <Typography>
             Settings Screen
@@ -107,77 +104,46 @@ export default function FinksaOverview() {
         sx={{
           display: 'flex',
           flexDirection: 'row',
-          gap: 1
+          gap: 1,
+          justifyContent: 'center',
+          flexWrap: 'wrap',
         }}
       >
-      </Box>
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          gap: 1
-        }}
-      >
-       <Box>
-          <Button 
-            variant="contained"
-            href="finska_internal.apk"
-            download
-            startIcon={
-              <DownloadIcon 
-                sx={{ 
-                  width: 32, 
-                  height: 32, 
-                  marginRight: '10px'
-                }}
-              />
-            }
-          >
-            Android APK
-          </Button>
-        </Box>
-        <Box>
-          <Button 
-            variant="outlined"
-            href={finskaGithubLink}
-            target="_blank"
-            rel="noopener"
-            startIcon={
-              <Avatar
-                alt="github icon" 
-                src={githubLogo}
-                sx={{ 
-                  width: 32, 
-                  height: 32, 
-                  marginRight: '10px'
-                }}
-              />
-            }
-          >
-            GitHub
-          </Button>
-        </Box>
-        {/* <Box>
-          <Button 
-            variant="outlined"
-            href={finskaExpoLink}
-            target="_blank"
-            rel="noopener"
-            startIcon={
-              <Avatar
-                alt="expo icon" 
-                src={expoLogo}
-                sx={{ 
-                  width: 32, 
-                  height: 32, 
-                  marginRight: '10px'
-                }}
-              />
-            }
-          >
-            Expo
-          </Button>
-        </Box> */}
+        <Button
+          variant="contained"
+          href="finska_internal.apk"
+          download
+          startIcon={
+            <DownloadIcon
+              sx={{
+                width: 32,
+                height: 32,
+                marginRight: '10px'
+              }}
+            />
+          }
+        >
+          Android APK
+        </Button>
+        <Button
+          variant="outlined"
+          href={finskaGithubLink}
+          target="_blank"
+          rel="noopener"
+          startIcon={
+            <Avatar
+              alt="github icon"
+              src={githubLogo}
+              sx={{
+                width: 32,
+                height: 32,
+                marginRight: '10px'
+              }}
+            />
+          }
+        >
+          GitHub
+        </Button>
       </Box>
       {BottomNavigation({
         right: {

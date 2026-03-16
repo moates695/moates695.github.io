@@ -1,24 +1,34 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Paper, Typography } from "@mui/material";
 import ReactMarkdown from "react-markdown";
-
+import PageLinks from "../../components/PageLinks";
 
 export default function PrivacyPolicy() {
   return (
     <Box
-      component="pre"
+      component="section"
       sx={{
-        // backgroundColor: '#f5f5f5',
-        padding: 2,
-        borderRadius: 1,
-        overflow: 'auto',
-        fontFamily: 'monospace',
-        whiteSpace: 'pre-wrap'
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%',
+        width: '100%',
+        gap: '10px',
       }}
     >
-      <ReactMarkdown>
-        {`# Privacy Policy
-
-**Last updated:** 18/12/25
+      <PageLinks />
+      <Typography variant="h5">
+        Privacy Policy
+      </Typography>
+      <Paper
+        elevation={0}
+        sx={{
+          p: 3,
+          bgcolor: 'background.paper',
+          borderRadius: 2,
+          overflow: 'auto',
+        }}
+      >
+        <ReactMarkdown>
+          {`**Last updated:** 18/12/25
 
 This Privacy Policy explains how **Gym Junkie** ("we", "our", or "us") collects, uses, discloses, and protects your information when you use our mobile application and related services (the "App").
 
@@ -134,7 +144,7 @@ To exercise these rights, contact us using the details below.
 
 ---
 
-## 8. Children’s Privacy
+## 8. Children's Privacy
 
 The App is not intended for use by individuals under the age of 13 (or the minimum age required in your jurisdiction). We do not knowingly collect personal data from children.
 
@@ -163,7 +173,8 @@ If you have questions, concerns, or requests regarding this Privacy Policy or yo
 **Email:** marcusjoates@gmail.com
 
 **Entity name:** Gym Junkie`}
-      </ReactMarkdown>
+        </ReactMarkdown>
+      </Paper>
     </Box>
   )
 }

@@ -1,28 +1,95 @@
 // theme.ts
 import { createTheme } from "@mui/material/styles";
 
+const sharedTypography = {
+  fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+  h1: { fontWeight: 700, letterSpacing: "-0.02em" },
+  h2: { fontWeight: 700, letterSpacing: "-0.01em" },
+  h3: { fontWeight: 600, letterSpacing: "-0.01em" },
+  h4: { fontWeight: 600 },
+  h5: { fontWeight: 600 },
+  h6: { fontWeight: 600 },
+  subtitle1: { fontWeight: 500 },
+  subtitle2: { fontWeight: 500 },
+  body1: { fontWeight: 400, lineHeight: 1.7 },
+  body2: { fontWeight: 400, lineHeight: 1.6 },
+  button: { fontWeight: 600, letterSpacing: "0.02em" },
+};
+
 export const lightTheme = createTheme({
   palette: {
     mode: "light",
-    primary: { main: "#1976d2" },
-    secondary: { main: "#9c27b0" },
-    background: { 
-      default: "#f5f5f5", 
-      paper: "#fff" 
+    primary: { main: "#0e9aa7", light: "#4dd0e1", dark: "#00796b" },
+    secondary: { main: "#f59e0b", light: "#ffb74d", dark: "#e65100" },
+    background: {
+      default: "#f8f9fb",
+      paper: "#ffffff",
     },
-    text: { primary: "#000" },
+    text: {
+      primary: "#1a1a2e",
+      secondary: "#4a4a68",
+    },
+  },
+  typography: sharedTypography,
+  shape: { borderRadius: 12 },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: "none",
+          borderRadius: 8,
+        },
+      },
+    },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          backgroundImage: "none",
+        },
+      },
+    },
   },
 });
 
 export const darkTheme = createTheme({
   palette: {
     mode: "dark",
-    primary: { main: "#90caf9" },
-    secondary: { main: "#ce93d8" },
-    background: { 
-      default: "#1b1b1bff", 
-      paper: "#1d1d1d" 
+    primary: { main: "#4dd0e1", light: "#80deea", dark: "#26c6da" },
+    secondary: { main: "#ffb74d", light: "#ffd180", dark: "#f59e0b" },
+    background: {
+      default: "#0f0f14",
+      paper: "#1a1a24",
     },
-    text: { primary: "#fff" },
+    text: {
+      primary: "#e8e8f0",
+      secondary: "#9999b0",
+    },
+    divider: "rgba(255, 255, 255, 0.08)",
+  },
+  typography: sharedTypography,
+  shape: { borderRadius: 12 },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: "none",
+          borderRadius: 8,
+        },
+      },
+    },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          backgroundImage: "none",
+        },
+      },
+    },
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          backgroundImage: "none",
+        },
+      },
+    },
   },
 });

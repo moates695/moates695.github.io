@@ -1,4 +1,4 @@
-import { Accordion, AccordionDetails, AccordionSummary, Avatar, Box, Chip, Grid, IconButton, List, Stack, Typography, useTheme } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Avatar, Box, Chip, Divider, Grid, IconButton, List, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
 import PageLinks from "../components/PageLinks";
@@ -108,13 +108,15 @@ export default function HomePage(this: any) {
         sx={{
           display: 'flex',
           flexDirection: 'row',
-          height: 200,
+          minHeight: 200,
           padding: '10px',
-          borderColor: hovered[i] ? '#22ff00ff' : '#7d7d7dff',
+          borderColor: hovered[i] ? '#4dd0e1' : '#2a2a35',
           borderWidth: 2,
           borderStyle: 'solid',
           borderRadius: 2,
-          transition: 'border-color 0.2s',
+          transition: 'border-color 0.3s ease, box-shadow 0.3s ease',
+          boxShadow: hovered[i] ? '0 0 16px rgba(77, 208, 225, 0.15)' : 'none',
+          maxWidth: '85vw',
         }}
       >
         <Box 
@@ -163,13 +165,14 @@ export default function HomePage(this: any) {
                 </IconButton>
               )}
             </Box>
-            <Typography sx={{whiteSpace: 'pre-line'}}>
+            <Typography variant="body2" sx={{ whiteSpace: 'pre-line', color: 'rgba(255, 255, 255, 0.75)', mt: 0.5 }}>
               {data.description}
             </Typography>
             <Box
               sx={{
                 display: 'flex',
                 flexDirection: 'row',
+                flexWrap: 'wrap',
                 gap: '4px',
                 marginTop: 'auto',
               }}
@@ -180,18 +183,24 @@ export default function HomePage(this: any) {
             </Box>
           </Box>
         </Box>
-        <Box 
-          sx={{
-            height: '100%',
-            objectFit: 'contain',
-            objectPosition: 'center',
-          }}
-          component="img"
-          src={data.highlight}
-        />
+        {data.highlight && (
+          <Box
+            sx={{
+              maxWidth: '35%',
+              maxHeight: 200,
+              objectFit: 'contain',
+              objectPosition: 'center right',
+              flexShrink: 0,
+            }}
+            component="img"
+            src={data.highlight}
+          />
+        )}
       </Box>
     ));
   }, [projectData, hovered, handleHover]);
+
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
     <Box
@@ -207,28 +216,49 @@ export default function HomePage(this: any) {
     >
       <Box>
         <PageLinks />
-        <Typography variant="h5">
-          Marcus Oates
-        </Typography>
-        <Typography>
-          Hello there, check out some of my projects!
-        </Typography>
+        <Box sx={{ mb: 2 }}>
+          <Typography variant="h4" sx={{ fontWeight: 700, letterSpacing: '-0.5px' }}>
+            Marcus Oates
+          </Typography>
+          <Typography
+            variant="subtitle1"
+            sx={{
+              fontWeight: 300,
+              color: 'rgba(255, 255, 255, 0.6)',
+              mt: 0.5,
+            }}
+          >
+            Full stack developer &mdash; check out some of my projects below.
+          </Typography>
+        </Box>
         <Box>
           <EmblaCarousel slides={slides} options={{ loop: true }} />
         </Box>
-        {buildAllChange(375)}
+        <Box
+          sx={{
+            '& > .MuiBox-root': {
+              flexWrap: isMobile ? 'wrap' : 'nowrap',
+            },
+            '& > .MuiBox-root > .MuiBox-root': {
+              width: isMobile ? '100%' : '50%',
+            },
+          }}
+        >
+          {buildAllChange(375)}
+        </Box>
       </Box>
       <Box>
+        <Divider sx={{ mb: 2, borderColor: 'rgba(255, 255, 255, 0.08)' }} />
         <Box
           sx={{
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            // justifySelf: 'flex-end',
+            pb: 2,
           }}
         >
           {contactButtons}
-          <Typography fontSize={12}>
+          <Typography fontSize={12} sx={{ mt: 0.5, color: 'rgba(255, 255, 255, 0.4)' }}>
             quick links
           </Typography>
         </Box>

@@ -5,75 +5,75 @@ interface ChipData {
   label: string
   color: string
   borderColor: string
-  textColor: 'white' | 'white'
+  textColor: string
 }
 
 const chipData = {
   python: {
     label: 'Python',
-    color: '#0088ddff',
-    borderColor: '#15a5ffff',
-    textColor: 'white',
+    color: 'transparent',
+    borderColor: '#64b5f6',
+    textColor: '#42a5f5',
   },
   react_ts: {
     label: 'React TS',
-    color: '#00c3ddff',
-    borderColor: '#28e6ffff',
-    textColor: 'white',
+    color: 'transparent',
+    borderColor: '#4dd0e1',
+    textColor: '#26c6da',
   },
   express: {
     label: 'Express',
-    color: '#00dd3fff',
-    borderColor: '#1aff5bff',
-    textColor: 'white',
+    color: 'transparent',
+    borderColor: '#66bb6a',
+    textColor: '#4caf50',
   },
   postgres: {
     label: 'Postgres',
-    color: '#002cddff',
-    borderColor: '#1e4bffff',
-    textColor: 'white',
+    color: 'transparent',
+    borderColor: '#7986cb',
+    textColor: '#5c6bc0',
   },
   client_side: {
     label: 'Client Side',
-    color: '#00dd90ff',
-    borderColor: '#20ffb1ff',
-    textColor: 'white',
+    color: 'transparent',
+    borderColor: '#4db6ac',
+    textColor: '#26a69a',
   },
   full_stack: {
     label: 'Full Stack',
-    color: '#dda600ff',
-    borderColor: '#ffc71eff',
-    textColor: 'white',
+    color: 'transparent',
+    borderColor: '#ffb74d',
+    textColor: '#ffa726',
   },
   ai_ml: {
     label: 'AI/ML',
-    color: '#dd00cbff',
-    borderColor: '#ff17ecff',
-    textColor: 'white',
+    color: 'transparent',
+    borderColor: '#f06292',
+    textColor: '#ec407a',
   },
   package: {
     label: 'Package',
-    color: '#ddc000ff',
-    borderColor: '#ffe11fff',
-    textColor: 'white',
+    color: 'transparent',
+    borderColor: '#ffd54f',
+    textColor: '#ffca28',
   },
   bug_fix: {
     label: 'Bug Fix',
-    color: '#dd0000ff',
-    borderColor: '#ff1f1fff',
-    textColor: 'white',
+    color: 'transparent',
+    borderColor: '#ef9a9a',
+    textColor: '#ef5350',
   },
   feature: {
     label: 'Feature',
-    color: '#12dd00ff',
-    borderColor: '#3dff2cff',
-    textColor: 'white',
+    color: 'transparent',
+    borderColor: '#81c784',
+    textColor: '#66bb6a',
   },
   improvement: {
     label: 'Improvement',
-    color: '#6b00ddff',
-    borderColor: '#8c20ffff',
-    textColor: 'white',
+    color: 'transparent',
+    borderColor: '#b39ddb',
+    textColor: '#9575cd',
   },
 } satisfies Record<string, ChipData>;
 
@@ -87,11 +87,11 @@ export const getChip = (key: ChipKey): JSX.Element => {
       variant="outlined"
       size="small"
       sx={{
-        bgcolor: data.color,
+        bgcolor: `${data.borderColor}18`,
         borderColor: data.borderColor,
         borderWidth: '2px',
         color: data.textColor,
-        fontWeight: 500,
+        fontWeight: 600,
         fontSize: 12,
       }}
     />

@@ -26,16 +26,22 @@ interface ListItemLinkProps extends ListItemProps {
 const breadcrumbNameMap: { [key: string]: string } = {
   '/finska': 'Finska',
   '/finska/design': 'Design',
+  '/finska/changes': 'Changes',
+  '/finska/privacy': 'Privacy Policy',
   '/finska/roadmap': 'Roadmap',
   '/finska/releases': 'Releases',
   '/gym-junkie': 'Gym Junkie',
   '/gym-junkie/functionality': 'Functionality',
+  '/gym-junkie/changes': 'Changes',
+  '/gym-junkie/privacy': 'Privacy Policy',
+  '/gym-junkie/delete-me': 'Delete Account',
   '/gym-junkie/roadmap': 'Roadmap',
   '/gym-junkie/releases': 'Releases',
   '/other': 'Other Projects',
   '/other/downer-helper': 'Downer Helper',
   '/other/cellular-tracking': 'Cellular Tracking',
   '/other/postgres-deploy': 'Postgres Deploy',
+  '/about': 'About',
   '/contact': 'Contact'
 };
 

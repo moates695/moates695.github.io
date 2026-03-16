@@ -304,7 +304,7 @@ export const buildProjectChange = (project: ChangeProject, maxHeight?: number) =
     <Box
       sx={{
         display: 'flex',
-        flexDirection: 'row',
+        flexWrap: 'wrap',
         width: '100%',
       }}
     >
@@ -312,7 +312,8 @@ export const buildProjectChange = (project: ChangeProject, maxHeight?: number) =
         sx={{
           height: 'auto',
           padding: 1,
-          width: '50%',
+          flex: '1 1 300px',
+          minWidth: 0,
         }}
       >
         {buildChange('Roadmap', roadmapRows, maxHeight)}
@@ -321,7 +322,8 @@ export const buildProjectChange = (project: ChangeProject, maxHeight?: number) =
         sx={{
           height: 'auto',
           padding: 1,
-          width: '50%',
+          flex: '1 1 300px',
+          minWidth: 0,
         }}
       >
         {buildChange('Releases', releaseRows, maxHeight)}
@@ -360,7 +362,7 @@ export const buildAllChange = (maxHeight?: number) => {
     <Box
       sx={{
         display: 'flex',
-        flexDirection: 'row',
+        flexWrap: 'wrap',
         width: '100%',
       }}
     >
@@ -368,7 +370,8 @@ export const buildAllChange = (maxHeight?: number) => {
         sx={{
           height: 'auto',
           padding: 1,
-          width: '50%',
+          flex: '1 1 300px',
+          minWidth: 0,
         }}
       >
         {buildChange('Roadmap', roadmapRows, maxHeight)}
@@ -377,7 +380,8 @@ export const buildAllChange = (maxHeight?: number) => {
         sx={{
           height: 'auto',
           padding: 1,
-          width: '50%',
+          flex: '1 1 300px',
+          minWidth: 0,
         }}
       >
         {buildChange('Releases', releaseRows, maxHeight)}

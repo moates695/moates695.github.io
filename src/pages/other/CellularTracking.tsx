@@ -22,18 +22,18 @@ export default function OtherCellularTracking() {
         Cellular Tracking
       </Typography>
       <Box>
-        <Button 
+        <Button
           variant="outlined"
           href={cellularTrackingGithubLink}
           target="_blank"
           rel="noopener"
           startIcon={
             <Avatar
-              alt="github icon" 
+              alt="github icon"
               src={githubLogo}
-              sx={{ 
-                width: 32, 
-                height: 32, 
+              sx={{
+                width: 32,
+                height: 32,
                 marginRight: '10px'
               }}
             />
@@ -43,11 +43,11 @@ export default function OtherCellularTracking() {
         </Button>
       </Box>
       {BottomNavigation({
-        left:  {
+        left: {
           text: 'Other Projects',
           link: '/other'
         },
-        right:  {
+        right: {
           text: 'Downer Helper',
           link: '/other/downer-helper'
         }
@@ -57,7 +57,7 @@ export default function OtherCellularTracking() {
         challenge of segmenting cells and tracking their position, size and divisions
         in each of the four provided sequences.
         <br/>
-        I have included this in my personal projects because I happened to do 
+        I have included this in my personal projects because I happened to do
         most of the legwork, and I really enjoyed working on this project during lockdown.
         <br/>
         The solution leverages included Python ML libraries like OpenCV, scikit-image, matplotlib and SciPy,
@@ -67,20 +67,21 @@ export default function OtherCellularTracking() {
         because this was a CV course the project mark would have been capped
         at a distinction, hence why this solution uses custom methods.
       </Typography>
+      <Typography variant="h6">
+        Segmenting
+      </Typography>
       <Typography>
-        <Typography variant="h6">
-          Segmenting
-        </Typography>
         To segment the images from the background, for each image in a sequence,
-        <br/>
-        <Typography sx={{marginLeft: 2}}>
+      </Typography>
+      <Box sx={{marginLeft: 2}}>
+        <Typography>
           1. Apply CLAHE (Contrast Limited Adaptive Histogram Equalization) preprocessing <br/>
-          2. Calculate histogram with 257 bins, and iterate to find an intensity 
+          2. Calculate histogram with 257 bins, and iterate to find an intensity
           threshold where the histogram stops decreasing consistently <br/>
-          3. The selected intensity is scaled to form the final pixel 
+          3. The selected intensity is scaled to form the final pixel
           threshold value for segmentation <br/>
           4. Create a binary mask of pixels above the threshold <br/>
-          5. Apply a morphological open with a 5×5 rectangular kernel <br/>
+          5. Apply a morphological open with a 5×5 rectangular kernel
           to remove noise and small artifacts <br/>
           6. Flush cells that are touching the image border (to prevent erosion from image) <br/>
           7. Apply watershed to segment cells from each other <br/>
@@ -90,13 +91,14 @@ export default function OtherCellularTracking() {
           10. Delete small 'cells' (these are likely background noise or out of focus) <br/>
           11. Compare flushed cells with current cells to determine their inclusion <br/>
         </Typography>
-      </Typography>
+      </Box>
       <Box
         sx={{
           display: 'flex',
           gap: 1,
           width: '100%',
-          justifyContent: 'center'
+          justifyContent: 'center',
+          flexWrap: 'wrap'
         }}
       >
         <Box
@@ -110,7 +112,7 @@ export default function OtherCellularTracking() {
             component="img"
             src="/segBefore.png"
             alt="segment before"
-            sx={{width: 500}}
+            sx={{ width: 500, maxWidth: '90vw', height: 'auto' }}
           />
           <Typography>
             Original Image
@@ -126,31 +128,36 @@ export default function OtherCellularTracking() {
           <Box
             component="img"
             src="/segAfter.png"
-            alt="segment before"
-            sx={{width: 500}}
+            alt="segment after"
+            sx={{ width: 500, maxWidth: '90vw', height: 'auto' }}
           />
           <Typography>
             Segmented Image
           </Typography>
         </Box>
       </Box>
+      <Typography variant="h6">
+        Tracking
+      </Typography>
       <Typography>
-        <Typography variant="h6">
-          Tracking
-        </Typography>
         Now that the cells are segmented and labelled, they can be tracked in a sequence,
-        <br/>
-        <Typography sx={{marginLeft: 2}}>
+      </Typography>
+      <Box sx={{marginLeft: 2}}>
+        <Typography>
           1. Compute centroids for the first frame of the sequence <br/>
           2. Initialise tracking,
-          <Typography sx={{marginLeft: 2}}>
+        </Typography>
+        <Box sx={{marginLeft: 2}}>
+          <Typography>
             a. global label tracking across frames <br/>
             b. frame-specific centroid labels <br/>
             c: per-frame centroid displacement tracking <br/>
           </Typography>
+        </Box>
+        <Typography>
           3. For each frame, computer centroids for current and next frame, as well as
           the distance matrix between consecutive frames <br/>
-          4. Match centroids between frames with neareset neighbour, but only those within 
+          4. Match centroids between frames with neareset neighbour, but only those within
           a threshold (cells may appear in frame) <br/>
           5. Assign global labels to each cell in the sequence so they can be tracked
           between frames <br/>
@@ -158,26 +165,28 @@ export default function OtherCellularTracking() {
           and label these events (including previous frames) <br/>
           7. Filter out small cells and short lived cells as potential noise. <br/>
           8. For each frame,
-          <Typography sx={{marginLeft: 2}}>
+        </Typography>
+        <Box sx={{marginLeft: 2}}>
+          <Typography>
             a. outline each cell with a colour based on its label id <br/>
             b. highlight cell splitting events in white <br/>
             c: draw trajectories onto the image <br/>
           </Typography>
-        </Typography>
-      </Typography>
+        </Box>
+      </Box>
       <Box
         component="video"
         src="/videos/output1_encoded.mp4"
         controls
-        sx={{ maxWidth: "50%", borderRadius: 2, alignSelf: 'center' }}
+        sx={{ width: '50%', maxWidth: '90vw', height: 'auto', borderRadius: 2, alignSelf: 'center' }}
       />
+      <Typography variant="h6">
+        Improvements
+      </Typography>
       <Typography>
-        <Typography variant="h6">
-          Improvements
-        </Typography>
         Apparently just being able to segment some of the cells from the background
         was quite an achievement for this assignment, let alone tracking some of them
-        over time. 
+        over time.
         <br/>
         That being said, if I could go back in time, this is what I would change,
         {buildBulletPoints([
