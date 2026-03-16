@@ -108,7 +108,7 @@ export default function HomePage(this: any) {
         sx={{
           display: 'flex',
           flexDirection: 'row',
-          minHeight: 200,
+          height: 200,
           padding: '10px',
           borderColor: hovered[i] ? '#4dd0e1' : '#2a2a35',
           borderWidth: 2,
