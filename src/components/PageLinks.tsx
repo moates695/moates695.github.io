@@ -35,6 +35,7 @@ const breadcrumbNameMap: { [key: string]: string } = {
   '/gym-junkie/changes': 'Changes',
   '/gym-junkie/privacy': 'Privacy Policy',
   '/gym-junkie/delete-me': 'Delete Account',
+  '/gym-junkie/data-export': 'Data Export',
   '/gym-junkie/roadmap': 'Roadmap',
   '/gym-junkie/releases': 'Releases',
   '/other': 'Other Projects',

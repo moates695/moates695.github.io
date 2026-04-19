@@ -101,6 +101,9 @@ export default function AppToolbar(props: AppToolbarProps) {
               <ListItemButton sx={{ pl: 4 }} component={Link} to="/gym-junkie/changes" onClick={closeDrawer}>
                 <ListItemText primary="Changes" />
               </ListItemButton>
+              <ListItemButton sx={{ pl: 4 }} component={Link} to="/gym-junkie/data-export" onClick={closeDrawer}>
+                <ListItemText primary="Data Export" />
+              </ListItemButton>
             </List>
           </Collapse>
           <Divider />
@@ -255,6 +258,13 @@ export default function AppToolbar(props: AppToolbarProps) {
             onClick={() => setGymAnchor(null)}
           >
             Changes
+          </MenuItem>
+          <MenuItem
+            component={Link}
+            to="/gym-junkie/data-export"
+            onClick={() => setGymAnchor(null)}
+          >
+            Data Export
           </MenuItem>
         </Menu>
 
