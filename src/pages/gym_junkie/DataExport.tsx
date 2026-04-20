@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Alert,
   Box,
@@ -16,8 +16,13 @@ import {
   Typography,
 } from "@mui/material";
 import PageLinks from "../../components/PageLinks";
+import { clearSession, loadSession, saveSession } from "../../middleware/gymJunkieSession";
 
-const API_BASE = process.env.REACT_APP_GYM_JUNKIE_API_BASE ?? "https://gymjunkie.moates.com.au";
+const API_BASE =
+  process.env.REACT_APP_GYM_JUNKIE_API_BASE ??
+  (process.env.NODE_ENV === "development"
+    ? "http://localhost:8000"
+    : "https://gymjunkie.moates.com.au");
 
 type Step = "login" | "verify" | "list";
 
@@ -60,6 +65,8 @@ export default function DataExport() {
       headers: { Authorization: `Bearer ${token}` },
     });
     if (res.status === 401) {
+      clearSession();
+      setExportToken("");
       setStep("login");
       setError("Session expired. Please log in again.");
       return false;
@@ -67,6 +74,18 @@ export default function DataExport() {
     setWorkouts(await res.json());
     return true;
   };
+
+  useEffect(() => {
+    const saved = loadSession();
+    if (!saved) return;
+    setExportToken(saved.token);
+    setEmail(saved.email);
+    (async () => {
+      const ok = await fetchWorkouts(saved.token);
+      if (ok) setStep("list");
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleLogin = async () => {
     setError(null);
@@ -114,6 +133,7 @@ export default function DataExport() {
       }
       if (data.status === "verified" && data.export_token) {
         setExportToken(data.export_token);
+        saveSession({ token: data.export_token, email });
         const ok = await fetchWorkouts(data.export_token);
         if (ok) setStep("list");
       } else {
@@ -129,10 +149,12 @@ export default function DataExport() {
   const handleDownload = async (workout: Workout) => {
     setDownloading((prev) => new Set(prev).add(workout.id));
     try {
-      const res = await fetch(`${API_BASE}/export/workouts/${workout.id}/tcx`, {
+      const res = await fetch(`${API_BASE}/export/workouts/${workout.id}/fit`, {
         headers: { Authorization: `Bearer ${exportToken}` },
       });
       if (res.status === 401) {
+        clearSession();
+        setExportToken("");
         setStep("login");
         setError("Session expired. Please log in again.");
         return;
@@ -145,7 +167,7 @@ export default function DataExport() {
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `workout_${workout.started_at.slice(0, 10)}.tcx`;
+      a.download = `workout_${workout.started_at.slice(0, 10)}.fit`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -170,6 +192,7 @@ export default function DataExport() {
         height: "100%",
         width: "100%",
         gap: "10px",
+        pb: 2,
       }}
     >
       <PageLinks />
@@ -187,7 +210,7 @@ export default function DataExport() {
           sx={{ p: 3, bgcolor: "background.paper", borderRadius: 2, maxWidth: 400 }}
         >
           <Typography variant="body2" sx={{ mb: 2, color: "text.secondary" }}>
-            Download your Gym Junkie workout data as Garmin TCX files. A
+            Download your Gym Junkie workout data as Garmin FIT files. A
             verification code will be sent to your email.
           </Typography>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
@@ -263,7 +286,7 @@ export default function DataExport() {
         <>
           <Typography variant="body2" sx={{ color: "text.secondary" }}>
             {workouts.length} workout{workouts.length !== 1 ? "s" : ""} found.
-            Downloads are in Garmin TCX format.
+            Downloads are in Garmin FIT format.
           </Typography>
           {workouts.length === 0 ? (
             <Typography variant="body2">No workouts recorded yet.</Typography>
@@ -271,7 +294,13 @@ export default function DataExport() {
             <TableContainer
               component={Paper}
               elevation={0}
-              sx={{ bgcolor: "background.paper", borderRadius: 2 }}
+              sx={{
+                bgcolor: "background.paper",
+                borderRadius: 2,
+                flex: 1,
+                minHeight: 0,
+                overflow: "auto",
+              }}
             >
               <Table size="small">
                 <TableHead>
@@ -299,7 +328,7 @@ export default function DataExport() {
                           {downloading.has(w.id) ? (
                             <CircularProgress size={16} />
                           ) : (
-                            "TCX"
+                            ".FIT"
                           )}
                         </Button>
                       </TableCell>
@@ -321,6 +350,7 @@ export default function DataExport() {
                 setPage(0);
               }}
               rowsPerPageOptions={[10, 20, 50]}
+              sx={{ flexShrink: 0 }}
             />
           )}
         </>
