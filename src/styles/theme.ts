@@ -1,15 +1,41 @@
 // theme.ts
 import { createTheme } from "@mui/material/styles";
 
+const SM_DOWN = "@media (max-width:599.95px)";
+
 const sharedTypography = {
   fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-  h1: { fontWeight: 700, letterSpacing: "-0.02em" },
-  h2: { fontWeight: 700, letterSpacing: "-0.01em" },
-  h3: { fontWeight: 600, letterSpacing: "-0.01em" },
-  h4: { fontWeight: 600 },
-  h5: { fontWeight: 600 },
-  h6: { fontWeight: 600 },
-  subtitle1: { fontWeight: 500 },
+  h1: {
+    fontWeight: 700,
+    letterSpacing: "-0.02em",
+    [SM_DOWN]: { fontSize: "2.25rem" },
+  },
+  h2: {
+    fontWeight: 700,
+    letterSpacing: "-0.01em",
+    [SM_DOWN]: { fontSize: "1.85rem" },
+  },
+  h3: {
+    fontWeight: 600,
+    letterSpacing: "-0.01em",
+    [SM_DOWN]: { fontSize: "1.55rem" },
+  },
+  h4: {
+    fontWeight: 600,
+    [SM_DOWN]: { fontSize: "1.35rem" },
+  },
+  h5: {
+    fontWeight: 600,
+    [SM_DOWN]: { fontSize: "1.2rem" },
+  },
+  h6: {
+    fontWeight: 600,
+    [SM_DOWN]: { fontSize: "1.05rem" },
+  },
+  subtitle1: {
+    fontWeight: 500,
+    [SM_DOWN]: { fontSize: "0.95rem" },
+  },
   subtitle2: { fontWeight: 500 },
   body1: { fontWeight: 400, lineHeight: 1.7 },
   body2: { fontWeight: 400, lineHeight: 1.6 },

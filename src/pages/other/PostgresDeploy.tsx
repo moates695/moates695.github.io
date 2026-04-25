@@ -154,7 +154,8 @@ if __name__ == "__main__":
         style={oneDark}
         customStyle={{
           maxHeight: 'none',
-          overflow: 'visible',
+          overflowX: 'auto',
+          fontSize: '0.85rem',
         }}
       >
         {targetFolder}
@@ -169,7 +170,8 @@ if __name__ == "__main__":
         style={oneDark}
         customStyle={{
           maxHeight: 'none',
-          overflow: 'visible',
+          overflowX: 'auto',
+          fontSize: '0.85rem',
         }}
       >
         {tableJson}
@@ -182,7 +184,8 @@ if __name__ == "__main__":
         style={oneDark}
         customStyle={{
           maxHeight: 'none',
-          overflow: 'visible',
+          overflowX: 'auto',
+          fontSize: '0.85rem',
         }}
       >
         {codeString}

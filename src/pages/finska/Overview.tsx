@@ -43,7 +43,7 @@ export default function FinksaOverview() {
         sx={{
           display: 'flex',
           flexWrap: 'wrap',
-          gap: 4,
+          gap: { xs: 2, sm: 4 },
           width: '100%',
           justifyContent: 'center',
         }}
@@ -59,7 +59,7 @@ export default function FinksaOverview() {
             component="img"
             src="/finskaSetup.png"
             alt="setup screen"
-            sx={{ width: 200, maxWidth: '40vw', height: 'auto' }}
+            sx={{ width: { xs: 140, sm: 200 }, maxWidth: '42vw', height: 'auto' }}
           />
           <Typography>
             Setup Screen
@@ -76,7 +76,7 @@ export default function FinksaOverview() {
             component="img"
             src="/finskaGame.png"
             alt="game screen"
-            sx={{ width: 200, maxWidth: '40vw', height: 'auto' }}
+            sx={{ width: { xs: 140, sm: 200 }, maxWidth: '42vw', height: 'auto' }}
           />
           <Typography>
             Game Screen
@@ -93,7 +93,7 @@ export default function FinksaOverview() {
             component="img"
             src="/finskaSettings.png"
             alt="settings screen"
-            sx={{ width: 200, maxWidth: '40vw', height: 'auto' }}
+            sx={{ width: { xs: 140, sm: 200 }, maxWidth: '42vw', height: 'auto' }}
           />
           <Typography>
             Settings Screen

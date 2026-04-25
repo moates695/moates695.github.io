@@ -78,16 +78,6 @@ export default function AppToolbar(props: AppToolbarProps) {
 
           <ListItemButton onClick={() => setGymExpanded(!gymExpanded)}>
             <ListItemText primary="Gym Junkie" />
-            <Typography
-              variant="caption"
-              sx={{
-                fontSize: "0.6rem",
-                color: 'text.secondary',
-                mr: 1,
-              }}
-            >
-              alpha
-            </Typography>
             {gymExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
           </ListItemButton>
           <Collapse in={gymExpanded}>
@@ -170,28 +160,12 @@ export default function AppToolbar(props: AppToolbarProps) {
               >
                 Finska
               </Button>
-              <Box sx={{ position: "relative", display: "inline-block" }}>
-                <Button
-                  color="inherit"
-                  onClick={(e) => setGymAnchor(e.currentTarget)}
-                >
-                  Gym Junkie
-                </Button>
-                <Typography
-                  variant="caption"
-                  sx={{
-                    position: "absolute",
-                    top: 0,
-                    right: -16,
-                    fontSize: "0.6rem",
-                    color: 'text.secondary',
-                    opacity: 0.8,
-                    pointerEvents: "none",
-                  }}
-                >
-                  alpha
-                </Typography>
-              </Box>
+              <Button
+                color="inherit"
+                onClick={(e) => setGymAnchor(e.currentTarget)}
+              >
+                Gym Junkie
+              </Button>
               <Button
                 color="inherit"
                 onClick={(e) => setCodeAnchor(e.currentTarget)}

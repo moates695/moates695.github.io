@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
-import { HashRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import AppToolbar from './components/AppToolbar'
 import Home from './pages/Home'
 import Contact from './pages/Contact'
@@ -25,15 +24,6 @@ import DataExport from './pages/gym_junkie/DataExport';
 
 function App() {
   const [isDark, setIsDark] = useState(true);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 800);
-  
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  console.log(isMobile)
 
   return (
     <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
@@ -54,8 +44,8 @@ function App() {
               width: '100%',
               maxWidth: 1220,
               paddingTop: '10px',
-              paddingLeft: '20px',
-              paddingRight: '20px',
+              paddingLeft: { xs: '12px', sm: '20px' },
+              paddingRight: { xs: '12px', sm: '20px' },
               height: '100%',
               display: 'flex',
               flexDirection: 'column',

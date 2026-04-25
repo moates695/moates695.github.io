@@ -87,11 +87,11 @@ export default function HomePage(this: any) {
   const navigate = useNavigate();
 
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const [hovered, setHovered] = useState<boolean[]>(Array(projectData.length).fill(false));
-  
+
   const handleHover = (index: number, value: boolean) => {
-    console.log(index)
     setHovered(prev => {
       const next = [...prev];
       next[index] = value;
@@ -105,18 +105,21 @@ export default function HomePage(this: any) {
         key={i}
         onMouseEnter={() => handleHover(i, true)}
         onMouseLeave={() => handleHover(i, false)}
+        onClick={isMobile ? () => navigate(data.link) : undefined}
         sx={{
           display: 'flex',
           flexDirection: 'row',
-          height: 200,
+          height: { xs: 'auto', sm: 200 },
+          minHeight: { xs: 160, sm: 200 },
           padding: '10px',
-          borderColor: hovered[i] ? '#4dd0e1' : '#2a2a35',
+          borderColor: hovered[i] ? theme.palette.primary.main : theme.palette.divider,
           borderWidth: 2,
           borderStyle: 'solid',
           borderRadius: 2,
           transition: 'border-color 0.3s ease, box-shadow 0.3s ease',
           boxShadow: hovered[i] ? '0 0 16px rgba(77, 208, 225, 0.15)' : 'none',
           maxWidth: '85vw',
+          cursor: isMobile ? 'pointer' : 'default',
         }}
       >
         <Box 
@@ -165,7 +168,7 @@ export default function HomePage(this: any) {
                 </IconButton>
               )}
             </Box>
-            <Typography variant="body2" sx={{ whiteSpace: 'pre-line', color: 'rgba(255, 255, 255, 0.75)', mt: 0.5 }}>
+            <Typography variant="body2" sx={{ whiteSpace: 'pre-line', color: 'text.secondary', mt: 0.5 }}>
               {data.description}
             </Typography>
             <Box
@@ -186,6 +189,7 @@ export default function HomePage(this: any) {
         {data.highlight && (
           <Box
             sx={{
+              display: { xs: 'none', sm: 'block' },
               maxWidth: '35%',
               maxHeight: 200,
               objectFit: 'contain',
@@ -198,9 +202,7 @@ export default function HomePage(this: any) {
         )}
       </Box>
     ));
-  }, [projectData, hovered, handleHover]);
-
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  }, [hovered, isMobile, navigate, theme]);
 
   return (
     <Box
@@ -224,7 +226,7 @@ export default function HomePage(this: any) {
             variant="subtitle1"
             sx={{
               fontWeight: 300,
-              color: 'rgba(255, 255, 255, 0.6)',
+              color: 'text.secondary',
               mt: 0.5,
             }}
           >
@@ -244,11 +246,11 @@ export default function HomePage(this: any) {
             },
           }}
         >
-          {buildAllChange(375)}
+          {buildAllChange(isMobile ? 260 : 375)}
         </Box>
       </Box>
       <Box>
-        <Divider sx={{ mb: 2, borderColor: 'rgba(255, 255, 255, 0.08)' }} />
+        <Divider sx={{ mb: 2, borderColor: 'divider' }} />
         <Box
           sx={{
             display: 'flex',
@@ -258,7 +260,7 @@ export default function HomePage(this: any) {
           }}
         >
           {contactButtons}
-          <Typography fontSize={12} sx={{ mt: 0.5, color: 'rgba(255, 255, 255, 0.4)' }}>
+          <Typography fontSize={12} sx={{ mt: 0.5, color: 'text.disabled' }}>
             quick links
           </Typography>
         </Box>

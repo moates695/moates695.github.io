@@ -14,7 +14,7 @@ import stravaLogo from "../assets/strava-icon.png"
 
 const iconButtonHoverSx = {
   '&:hover': {
-    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+    backgroundColor: 'action.hover',
   },
 };
 
@@ -23,9 +23,10 @@ export const contactButtons = (
     sx={{
       display: 'flex',
       flexDirection: 'row',
+      flexWrap: 'wrap',
       width: '100%',
       justifyContent: 'center',
-      gap: '10px',
+      gap: { xs: '6px', sm: '10px' },
     }}
   >
     <IconButton
@@ -39,7 +40,7 @@ export const contactButtons = (
         component="img"
         src={githubLogo}
         alt="GitHub"
-        sx={{ width: 48, height: 48, borderRadius: "50%" }}
+        sx={{ width: { xs: 40, sm: 48 }, height: { xs: 40, sm: 48 }, borderRadius: "50%" }}
       />
     </IconButton>
     <IconButton
@@ -53,7 +54,7 @@ export const contactButtons = (
         component="img"
         src={linkedInLogo}
         alt="LinkedIn"
-        sx={{ width: 48, height: 48, borderRadius: "50%" }}
+        sx={{ width: { xs: 40, sm: 48 }, height: { xs: 40, sm: 48 }, borderRadius: "50%" }}
       />
     </IconButton>
     <IconButton
@@ -67,7 +68,7 @@ export const contactButtons = (
         component="img"
         src={stravaLogo}
         alt="Strava"
-        sx={{ width: 48, height: 48, borderRadius: "50%" }}
+        sx={{ width: { xs: 40, sm: 48 }, height: { xs: 40, sm: 48 }, borderRadius: "50%" }}
       />
     </IconButton>
     <IconButton
@@ -81,7 +82,7 @@ export const contactButtons = (
         component="img"
         src={expoLogo}
         alt="Expo"
-        sx={{ width: 48, height: 48, borderRadius: "50%" }}
+        sx={{ width: { xs: 40, sm: 48 }, height: { xs: 40, sm: 48 }, borderRadius: "50%" }}
       />
     </IconButton>
     <IconButton
@@ -95,7 +96,7 @@ export const contactButtons = (
         component="img"
         src={pypiLogo}
         alt="PyPi"
-        sx={{ width: 48, height: 48, borderRadius: "50%" }}
+        sx={{ width: { xs: 40, sm: 48 }, height: { xs: 40, sm: 48 }, borderRadius: "50%" }}
       />
     </IconButton>
     <IconButton
@@ -109,7 +110,7 @@ export const contactButtons = (
         component="img"
         src={discordLogo}
         alt="Discord"
-        sx={{ width: 48, height: 48, borderRadius: "50%" }}
+        sx={{ width: { xs: 40, sm: 48 }, height: { xs: 40, sm: 48 }, borderRadius: "50%" }}
       />
     </IconButton>
   </Box>
@@ -136,12 +137,12 @@ export default function ContactPage() {
             variant="outlined"
             sx={{
               p: 2,
-              flex: '1 1 280px',
+              flex: '1 1 250px',
               display: 'flex',
               flexDirection: 'column',
               gap: 1.5,
               backgroundColor: 'transparent',
-              borderColor: 'rgba(255, 255, 255, 0.12)',
+              borderColor: 'divider',
             }}
           >
             <Typography variant="overline" color="text.secondary">
@@ -167,12 +168,12 @@ export default function ContactPage() {
             variant="outlined"
             sx={{
               p: 2,
-              flex: '1 1 280px',
+              flex: '1 1 250px',
               display: 'flex',
               flexDirection: 'column',
               gap: '8px',
               backgroundColor: 'transparent',
-              borderColor: 'rgba(255, 255, 255, 0.12)',
+              borderColor: 'divider',
             }}
           >
             <Typography variant="overline" color="text.secondary">
@@ -201,12 +202,12 @@ export default function ContactPage() {
             variant="outlined"
             sx={{
               p: 2,
-              flex: '1 1 280px',
+              flex: '1 1 250px',
               display: 'flex',
               flexDirection: 'column',
               gap: '8px',
               backgroundColor: 'transparent',
-              borderColor: 'rgba(255, 255, 255, 0.12)',
+              borderColor: 'divider',
             }}
           >
             <Typography variant="overline" color="text.secondary">
@@ -226,12 +227,12 @@ export default function ContactPage() {
             variant="outlined"
             sx={{
               p: 2,
-              flex: '1 1 280px',
+              flex: '1 1 250px',
               display: 'flex',
               flexDirection: 'column',
               gap: '8px',
               backgroundColor: 'transparent',
-              borderColor: 'rgba(255, 255, 255, 0.12)',
+              borderColor: 'divider',
             }}
           >
             <Typography variant="overline" color="text.secondary">
@@ -251,12 +252,12 @@ export default function ContactPage() {
             variant="outlined"
             sx={{
               p: 2,
-              flex: '1 1 280px',
+              flex: '1 1 250px',
               display: 'flex',
               flexDirection: 'column',
               gap: '8px',
               backgroundColor: 'transparent',
-              borderColor: 'rgba(255, 255, 255, 0.12)',
+              borderColor: 'divider',
             }}
           >
             <Typography variant="overline" color="text.secondary">

@@ -40,24 +40,28 @@ export default function BottomNavigation(props: BottomNavigationProps) {
       sx={{
         display: 'flex',
         width: '100%',
+        flexWrap: 'wrap',
+        gap: 1,
         justifyContent: justify,
         paddingBottom: 3,
       }}
     >
       {left &&
-        <Button 
-          variant="outlined" 
+        <Button
+          variant="outlined"
           startIcon={<KeyboardDoubleArrowLeftIcon />}
           onClick={() => navigate(left.link)}
+          sx={{ fontSize: { xs: '0.8rem', sm: '0.875rem' } }}
         >
           {left.text}
         </Button>
       }
       {right &&
-        <Button 
-          variant="outlined" 
+        <Button
+          variant="outlined"
           endIcon={<KeyboardDoubleArrowRightIcon />}
           onClick={() => navigate(right.link)}
+          sx={{ fontSize: { xs: '0.8rem', sm: '0.875rem' } }}
         >
           {right.text}
         </Button>

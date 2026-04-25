@@ -42,13 +42,13 @@ export default function GymJunkieFunctionality() {
       <Typography>
         Coming soon, will fill out when everything is more concrete
         <br/>
-        In the meantime, here a some screenshots from an internal alpha build.
+        In the meantime, here a some screenshots from an internal build.
       </Typography>
       <Box
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          gap: '30px',
+          gap: { xs: '20px', sm: '30px' },
         }}
       >
         {screenshotRows.map((row, rowIndex) => (
@@ -57,7 +57,7 @@ export default function GymJunkieFunctionality() {
             sx={{
               display: 'flex',
               flexWrap: 'wrap',
-              gap: 4,
+              gap: { xs: 2, sm: 4 },
               width: '100%',
               justifyContent: 'center',
             }}
@@ -75,9 +75,9 @@ export default function GymJunkieFunctionality() {
                   component="img"
                   src={src}
                   alt={label}
-                  sx={{ width: 200, maxWidth: '40vw', height: 'auto' }}
+                  sx={{ width: { xs: 140, sm: 200 }, maxWidth: '42vw', height: 'auto' }}
                 />
-                <Typography>
+                <Typography variant="body2" sx={{ textAlign: 'center', mt: 0.5 }}>
                   {label}
                 </Typography>
               </Box>

@@ -122,10 +122,16 @@
   .embla {
     --slide-size: 90vw;
     --slide-spacing: 0.5rem;
+    --slide-height: auto;
   }
 
   .embla__controls {
     gap: 0.8rem;
+  }
+
+  .embla__button {
+    width: 1.6rem;
+    height: 1.6rem;
   }
 
   .embla__dot {

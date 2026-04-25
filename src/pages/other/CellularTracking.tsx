@@ -178,7 +178,7 @@ export default function OtherCellularTracking() {
         component="video"
         src="/videos/output1_encoded.mp4"
         controls
-        sx={{ width: '50%', maxWidth: '90vw', height: 'auto', borderRadius: 2, alignSelf: 'center' }}
+        sx={{ width: { xs: '95%', sm: '50%' }, maxWidth: '95vw', height: 'auto', borderRadius: 2, alignSelf: 'center' }}
       />
       <Typography variant="h6">
         Improvements

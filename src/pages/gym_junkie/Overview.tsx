@@ -55,7 +55,7 @@ export default function GymJunkieOverview() {
         sx={{
           display: 'flex',
           flexWrap: 'wrap',
-          gap: 4,
+          gap: { xs: 2, sm: 4 },
           width: '100%',
           justifyContent: 'center',
         }}
@@ -73,9 +73,9 @@ export default function GymJunkieOverview() {
               component="img"
               src={src}
               alt={label}
-              sx={{ width: 200, maxWidth: '40vw', height: 'auto' }}
+              sx={{ width: { xs: 140, sm: 200 }, maxWidth: '42vw', height: 'auto' }}
             />
-            <Typography>
+            <Typography variant="body2" sx={{ textAlign: 'center', mt: 0.5 }}>
               {label}
             </Typography>
           </Box>
