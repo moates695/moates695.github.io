@@ -1,9 +1,8 @@
-import { Avatar, Box, Button, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
+import ShopIcon from "@mui/icons-material/Shop";
 import PageLinks from "../../components/PageLinks";
 import BottomNavigation from "../../components/BottomNavigation";
-import { gymJunkieAppGithubLink, gymJunkieExpoLink, gymJunkieServerGithubLink } from "../../middleware/links";
-import githubLogo from "../../assets/github-logo.png";
-import expoLogo from "../../assets/expo-logo.webp";
+import { gymJunkiePlayStoreLink } from "../../middleware/links";
 
 const screenshots = [
   { src: "/gymJunkieWorkout.png", label: "Workout Screen" },
@@ -86,19 +85,18 @@ export default function GymJunkieOverview() {
         sx={{
           display: 'flex',
           flexDirection: 'row',
-          gap: 1
+          gap: 1,
+          flexWrap: 'wrap',
         }}
       >
         <Box>
           <Button
             variant="contained"
-            href={gymJunkieAppGithubLink}
+            href={gymJunkiePlayStoreLink}
             target="_blank"
             rel="noopener"
             startIcon={
-              <Avatar
-                alt="github icon"
-                src={githubLogo}
+              <ShopIcon
                 sx={{
                   width: 32,
                   height: 32,
@@ -107,49 +105,7 @@ export default function GymJunkieOverview() {
               />
             }
           >
-            App
-          </Button>
-        </Box>
-        <Box>
-          <Button
-            variant="outlined"
-            href={gymJunkieServerGithubLink}
-            target="_blank"
-            rel="noopener"
-            startIcon={
-              <Avatar
-                alt="github icon"
-                src={githubLogo}
-                sx={{
-                  width: 32,
-                  height: 32,
-                  marginRight: '10px'
-                }}
-              />
-            }
-          >
-            Server
-          </Button>
-        </Box>
-        <Box>
-          <Button
-            variant="outlined"
-            href={gymJunkieExpoLink}
-            target="_blank"
-            rel="noopener"
-            startIcon={
-              <Avatar
-                alt="expo icon"
-                src={expoLogo}
-                sx={{
-                  width: 32,
-                  height: 32,
-                  marginRight: '10px'
-                }}
-              />
-            }
-          >
-            Expo
+            Play Store
           </Button>
         </Box>
       </Box>

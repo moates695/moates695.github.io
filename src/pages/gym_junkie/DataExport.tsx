@@ -5,6 +5,13 @@ import {
   Button,
   CircularProgress,
   Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TablePagination,
+  TableRow,
   TextField,
   Typography,
 } from "@mui/material";
@@ -17,38 +24,67 @@ const API_BASE =
     ? "http://localhost:8000"
     : "https://gymjunkie.moates.com.au");
 
-type Step = "login" | "verify" | "confirm" | "done";
+type Step = "login" | "verify" | "list";
 
-export default function DeleteMe() {
+interface Workout {
+  id: string;
+  title: string | null;
+  started_at: string;
+  duration_secs: number;
+}
+
+function formatDuration(secs: number): string {
+  const h = Math.floor(secs / 3600);
+  const m = Math.floor((secs % 3600) / 60);
+  return h > 0 ? `${h}h ${m}m` : `${m}m`;
+}
+
+function formatDate(iso: string): string {
+  return new Date(iso).toLocaleDateString("en-AU", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+}
+
+export default function DataExport() {
   const [step, setStep] = useState<Step>("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [code, setCode] = useState("");
   const [exportToken, setExportToken] = useState("");
-  const [confirmEmail, setConfirmEmail] = useState("");
+  const [workouts, setWorkouts] = useState<Workout[]>([]);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(20);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [downloading, setDownloading] = useState<Set<string>>(new Set());
+
+  const fetchWorkouts = async (token: string): Promise<boolean> => {
+    const res = await fetch(`${API_BASE}/export/workouts/list`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (res.status === 401) {
+      clearSession();
+      setExportToken("");
+      setStep("login");
+      setError("Session expired. Please log in again.");
+      return false;
+    }
+    setWorkouts(await res.json());
+    return true;
+  };
 
   useEffect(() => {
     const saved = loadSession();
     if (!saved) return;
+    setExportToken(saved.token);
+    setEmail(saved.email);
     (async () => {
-      try {
-        const res = await fetch(`${API_BASE}/export/workouts/list`, {
-          headers: { Authorization: `Bearer ${saved.token}` },
-        });
-        if (res.status === 401) {
-          clearSession();
-          return;
-        }
-        if (!res.ok) return;
-        setExportToken(saved.token);
-        setEmail(saved.email);
-        setStep("confirm");
-      } catch {
-        // stay on login
-      }
+      const ok = await fetchWorkouts(saved.token);
+      if (ok) setStep("list");
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleLogin = async () => {
@@ -98,7 +134,8 @@ export default function DeleteMe() {
       if (data.status === "verified" && data.export_token) {
         setExportToken(data.export_token);
         saveSession({ token: data.export_token, email });
-        setStep("confirm");
+        const ok = await fetchWorkouts(data.export_token);
+        if (ok) setStep("list");
       } else {
         setError("Invalid or expired code.");
       }
@@ -109,12 +146,10 @@ export default function DeleteMe() {
     }
   };
 
-  const handleRequestDelete = async () => {
-    setError(null);
-    setLoading(true);
+  const handleDownload = async (workout: Workout) => {
+    setDownloading((prev) => new Set(prev).add(workout.id));
     try {
-      const res = await fetch(`${API_BASE}/export/account/delete-request`, {
-        method: "POST",
+      const res = await fetch(`${API_BASE}/export/workouts/${workout.id}/fit`, {
         headers: { Authorization: `Bearer ${exportToken}` },
       });
       if (res.status === 401) {
@@ -125,20 +160,28 @@ export default function DeleteMe() {
         return;
       }
       if (!res.ok) {
-        setError("Request failed. Please try again.");
+        setError("Download failed. Please try again.");
         return;
       }
-      setStep("done");
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `workout_${workout.started_at.slice(0, 10)}.fit`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
     } catch {
-      setError("Network error. Please try again.");
+      setError("Download failed. Please try again.");
     } finally {
-      setLoading(false);
+      setDownloading((prev) => {
+        const next = new Set(prev);
+        next.delete(workout.id);
+        return next;
+      });
     }
   };
-
-  const confirmMatches =
-    confirmEmail.trim().toLowerCase() === email.trim().toLowerCase() &&
-    confirmEmail.length > 0;
 
   return (
     <Box
@@ -149,10 +192,11 @@ export default function DeleteMe() {
         height: "100%",
         width: "100%",
         gap: "10px",
+        pb: 2,
       }}
     >
       <PageLinks />
-      <Typography variant="h5">Delete Account</Typography>
+      <Typography variant="h5">Data Export</Typography>
 
       {error && (
         <Alert severity="error" onClose={() => setError(null)}>
@@ -166,8 +210,8 @@ export default function DeleteMe() {
           sx={{ p: 3, bgcolor: "background.paper", borderRadius: 2, maxWidth: 400 }}
         >
           <Typography variant="body2" sx={{ mb: 2, color: "text.secondary" }}>
-            Request deletion of your Gym Junkie account. A verification code
-            will be sent to your email to confirm it's you.
+            Download your Gym Junkie workout data as Garmin FIT files. A
+            verification code will be sent to your email.
           </Typography>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             <TextField
@@ -238,58 +282,78 @@ export default function DeleteMe() {
         </Paper>
       )}
 
-      {step === "confirm" && (
-        <Paper
-          elevation={0}
-          sx={{ p: 3, bgcolor: "background.paper", borderRadius: 2, maxWidth: 500 }}
-        >
-          <Alert severity="warning" sx={{ mb: 2 }}>
-            This queues your account for deletion. Once processed, your
-            account and all workout data will be permanently removed and
-            cannot be recovered.
-          </Alert>
-          <Typography variant="body2" sx={{ mb: 2, color: "text.secondary" }}>
-            Deletion is handled manually and may take a few days. Re-submitting
-            is safe — duplicate requests are ignored.
+      {step === "list" && (
+        <>
+          <Typography variant="body2" sx={{ color: "text.secondary" }}>
+            {workouts.length} workout{workouts.length !== 1 ? "s" : ""} found.
+            Downloads are in Garmin FIT format.
           </Typography>
-          <Typography variant="body2" sx={{ mb: 2 }}>
-            To confirm, retype your email address:{" "}
-            <Box component="span" sx={{ fontWeight: 600 }}>{email}</Box>
-          </Typography>
-          <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-            <TextField
-              label="Confirm email"
-              type="email"
-              value={confirmEmail}
-              onChange={(e) => setConfirmEmail(e.target.value)}
-              size="small"
-              fullWidth
-              onKeyDown={(e) =>
-                e.key === "Enter" && !loading && confirmMatches && handleRequestDelete()
-              }
-            />
-            <Button
-              variant="contained"
-              color="error"
-              onClick={handleRequestDelete}
-              disabled={loading || !confirmMatches}
+          {workouts.length === 0 ? (
+            <Typography variant="body2">No workouts recorded yet.</Typography>
+          ) : (
+            <TableContainer
+              component={Paper}
+              elevation={0}
+              sx={{
+                bgcolor: "background.paper",
+                borderRadius: 2,
+                flex: 1,
+                minHeight: 0,
+                overflow: "auto",
+              }}
             >
-              {loading ? (
-                <CircularProgress size={20} color="inherit" />
-              ) : (
-                "Request deletion"
-              )}
-            </Button>
-          </Box>
-        </Paper>
-      )}
-
-      {step === "done" && (
-        <Alert severity="success" sx={{ maxWidth: 500 }}>
-          Your deletion request has been queued. Your account and workout data
-          will be removed once the request is processed. You can safely close
-          this page.
-        </Alert>
+              <Table size="small">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Workout</TableCell>
+                    <TableCell>Date</TableCell>
+                    <TableCell>Duration</TableCell>
+                    <TableCell align="right">Download</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {workouts.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((w) => (
+                    <TableRow key={w.id}>
+                      <TableCell>{w.title || "Untitled"}</TableCell>
+                      <TableCell>{formatDate(w.started_at)}</TableCell>
+                      <TableCell>{formatDuration(w.duration_secs)}</TableCell>
+                      <TableCell align="right">
+                        <Button
+                          variant="outlined"
+                          size="small"
+                          onClick={() => handleDownload(w)}
+                          disabled={downloading.has(w.id)}
+                          sx={{ minWidth: 56 }}
+                        >
+                          {downloading.has(w.id) ? (
+                            <CircularProgress size={16} />
+                          ) : (
+                            ".FIT"
+                          )}
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          )}
+          {workouts.length > 0 && (
+            <TablePagination
+              component="div"
+              count={workouts.length}
+              page={page}
+              onPageChange={(_, newPage) => setPage(newPage)}
+              rowsPerPage={rowsPerPage}
+              onRowsPerPageChange={(e) => {
+                setRowsPerPage(parseInt(e.target.value, 10));
+                setPage(0);
+              }}
+              rowsPerPageOptions={[10, 20, 50]}
+              sx={{ flexShrink: 0 }}
+            />
+          )}
+        </>
       )}
     </Box>
   );
