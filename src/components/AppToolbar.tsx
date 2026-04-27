@@ -85,8 +85,8 @@ export default function AppToolbar(props: AppToolbarProps) {
               <ListItemButton sx={{ pl: 4 }} component={Link} to="/gym-junkie" onClick={closeDrawer}>
                 <ListItemText primary="Overview" />
               </ListItemButton>
-              <ListItemButton sx={{ pl: 4 }} component={Link} to="/gym-junkie/functionality" onClick={closeDrawer}>
-                <ListItemText primary="Functionality" />
+              <ListItemButton sx={{ pl: 4 }} component={Link} to="/gym-junkie/details" onClick={closeDrawer}>
+                <ListItemText primary="Details" />
               </ListItemButton>
               <ListItemButton sx={{ pl: 4 }} component={Link} to="/gym-junkie/changes" onClick={closeDrawer}>
                 <ListItemText primary="Changes" />
@@ -224,10 +224,10 @@ export default function AppToolbar(props: AppToolbarProps) {
           </MenuItem>
           <MenuItem
             component={Link}
-            to="/gym-junkie/functionality"
+            to="/gym-junkie/details"
             onClick={() => setGymAnchor(null)}
           >
-            Functionality
+            Details
           </MenuItem>
           <MenuItem
             component={Link}

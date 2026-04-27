@@ -111,8 +111,8 @@ export default function GymJunkieOverview() {
       </Box>
       {BottomNavigation({
         right:  {
-          text: 'Functionality',
-          link: '/gym-junkie/functionality'
+          text: 'Details',
+          link: '/gym-junkie/details'
         }
       })}
     </Box>

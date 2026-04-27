@@ -10,7 +10,17 @@ import { lightTheme, darkTheme } from "./styles/theme";
 import FinksaOverview from './pages/finska/Overview';
 import FinksaDesign from './pages/finska/Design';
 import GymJunkieOverview from './pages/gym_junkie/Overview';
-import GymJunkieFunctionality from './pages/gym_junkie/Functionality';
+import GymJunkieDetails from './pages/gym_junkie/Details';
+import GymJunkieWorkoutLogging from './pages/gym_junkie/details/WorkoutLogging';
+import GymJunkieExerciseLibrary from './pages/gym_junkie/details/ExerciseLibrary';
+import GymJunkieRestTimerHeartRate from './pages/gym_junkie/details/RestTimerHeartRate';
+import GymJunkieMuscleTargets from './pages/gym_junkie/details/MuscleTargets';
+import GymJunkieMuscleHeatmap from './pages/gym_junkie/details/MuscleHeatmap';
+import GymJunkieExerciseStats from './pages/gym_junkie/details/ExerciseStats';
+import GymJunkieDistributions from './pages/gym_junkie/details/Distributions';
+import GymJunkieHistoryCalendar from './pages/gym_junkie/details/HistoryCalendar';
+import GymJunkieFriends from './pages/gym_junkie/details/Friends';
+import GymJunkieStrava from './pages/gym_junkie/details/Strava';
 import OtherAll from './pages/other/All';
 import OtherDownerHelper from './pages/other/DownerHelper';
 import OtherCellularTracking from './pages/other/CellularTracking';
@@ -65,7 +75,19 @@ function App() {
               </Route>
               <Route path="/gym-junkie">
                 <Route index element={<GymJunkieOverview />} />
-                <Route path="functionality" element={<GymJunkieFunctionality />} />
+                <Route path="details">
+                  <Route index element={<GymJunkieDetails />} />
+                  <Route path="workout-logging" element={<GymJunkieWorkoutLogging />} />
+                  <Route path="exercise-library" element={<GymJunkieExerciseLibrary />} />
+                  <Route path="rest-timer-heart-rate" element={<GymJunkieRestTimerHeartRate />} />
+                  <Route path="muscle-targets" element={<GymJunkieMuscleTargets />} />
+                  <Route path="muscle-heatmap" element={<GymJunkieMuscleHeatmap />} />
+                  <Route path="exercise-stats" element={<GymJunkieExerciseStats />} />
+                  <Route path="distributions" element={<GymJunkieDistributions />} />
+                  <Route path="history-calendar" element={<GymJunkieHistoryCalendar />} />
+                  <Route path="friends" element={<GymJunkieFriends />} />
+                  <Route path="strava" element={<GymJunkieStrava />} />
+                </Route>
                 <Route path="changes" element={<GymJunkieChanges />} />
                 <Route path="privacy" element={<GymJunkiePrivacyPolicy />} />
                 <Route path="delete-me" element={<DeleteMe />} />

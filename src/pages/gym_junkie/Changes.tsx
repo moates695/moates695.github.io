@@ -22,8 +22,8 @@ export default function GymJunkieChanges() {
       {buildProjectChange('gym_junkie')}
       {BottomNavigation({
         left:  {
-          text: 'Functionality',
-          link: '/gym-junkie/functionality'
+          text: 'Details',
+          link: '/gym-junkie/details'
         }
       })}
     </Box>
