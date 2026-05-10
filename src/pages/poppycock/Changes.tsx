@@ -1,9 +1,9 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import PageLinks from "../../components/PageLinks";
 import BottomNavigation from "../../components/BottomNavigation";
 import { buildProjectChange } from "../../components/Changes";
 
-export default function FinksaChanges() {
+export default function PoppycockChanges() {
   return (
     <Box
       component="section"
@@ -19,11 +19,11 @@ export default function FinksaChanges() {
       <Typography variant="h5">
         Changes
       </Typography>
-      {buildProjectChange('finska')}
+      {buildProjectChange('balderdash')}
       {BottomNavigation({
-        left:  {
+        left: {
           text: 'Design',
-          link: '/woodchuck/design'
+          link: '/poppycock/design'
         }
       })}
     </Box>

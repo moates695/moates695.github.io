@@ -32,7 +32,7 @@ export default function FinksaOverview() {
         Not ideal.
       </Typography>
       <Typography>
-        So I whipped up this Finska Tracker app,
+        So I whipped up Woodchuck,
       </Typography>
       {buildBulletPoints([
         'Download and go, no sign in required',
@@ -148,7 +148,7 @@ export default function FinksaOverview() {
       {BottomNavigation({
         right: {
           text: 'Design',
-          link: '/finska/design'
+          link: '/woodchuck/design'
         }
       })}
     </Box>

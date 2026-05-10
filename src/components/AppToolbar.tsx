@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 
+const SHOWCASE_COLOR = '#82b1ff';
+
 export interface AppToolbarProps {
   isDark: boolean
   setIsDark: Dispatch<SetStateAction<boolean>>
@@ -22,6 +24,9 @@ export default function AppToolbar(props: AppToolbarProps) {
   const [gymAnchor, setGymAnchor] = useState<null | HTMLElement>(null);
   const gymOpen = Boolean(gymAnchor);
 
+  const [poppycockAnchor, setPoppycockAnchor] = useState<null | HTMLElement>(null);
+  const poppycockOpen = Boolean(poppycockAnchor);
+
   const [codeAnchor, setCodeAnchor] = useState<null | HTMLElement>(null);
   const codeOpen = Boolean(codeAnchor);
 
@@ -29,12 +34,14 @@ export default function AppToolbar(props: AppToolbarProps) {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [finskaExpanded, setFinskaExpanded] = useState(false);
   const [gymExpanded, setGymExpanded] = useState(false);
+  const [poppycockExpanded, setPoppycockExpanded] = useState(false);
   const [otherExpanded, setOtherExpanded] = useState(false);
 
   const closeDrawer = () => {
     setDrawerOpen(false);
     setFinskaExpanded(false);
     setGymExpanded(false);
+    setPoppycockExpanded(false);
     setOtherExpanded(false);
   };
 
@@ -58,18 +65,21 @@ export default function AppToolbar(props: AppToolbarProps) {
           <Divider />
 
           <ListItemButton onClick={() => setFinskaExpanded(!finskaExpanded)}>
-            <ListItemText primary="Finska" />
+            <ListItemText
+              primary="Woodchuck"
+              primaryTypographyProps={{ sx: { color: SHOWCASE_COLOR } }}
+            />
             {finskaExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
           </ListItemButton>
           <Collapse in={finskaExpanded}>
             <List disablePadding>
-              <ListItemButton sx={{ pl: 4 }} component={Link} to="/finska" onClick={closeDrawer}>
+              <ListItemButton sx={{ pl: 4 }} component={Link} to="/woodchuck" onClick={closeDrawer}>
                 <ListItemText primary="Overview" />
               </ListItemButton>
-              <ListItemButton sx={{ pl: 4 }} component={Link} to="/finska/design" onClick={closeDrawer}>
+              <ListItemButton sx={{ pl: 4 }} component={Link} to="/woodchuck/design" onClick={closeDrawer}>
                 <ListItemText primary="Design" />
               </ListItemButton>
-              <ListItemButton sx={{ pl: 4 }} component={Link} to="/finska/changes" onClick={closeDrawer}>
+              <ListItemButton sx={{ pl: 4 }} component={Link} to="/woodchuck/changes" onClick={closeDrawer}>
                 <ListItemText primary="Changes" />
               </ListItemButton>
             </List>
@@ -77,7 +87,12 @@ export default function AppToolbar(props: AppToolbarProps) {
           <Divider />
 
           <ListItemButton onClick={() => setGymExpanded(!gymExpanded)}>
-            <ListItemText primary="Gym Junkie" />
+            <ListItemText
+              primary="Gym Junkie"
+              primaryTypographyProps={{
+                sx: { color: 'secondary.main', fontWeight: 700 },
+              }}
+            />
             {gymExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
           </ListItemButton>
           <Collapse in={gymExpanded}>
@@ -96,6 +111,28 @@ export default function AppToolbar(props: AppToolbarProps) {
               </ListItemButton>
               <ListItemButton sx={{ pl: 4 }} component={Link} to="/gym-junkie/delete-me" onClick={closeDrawer}>
                 <ListItemText primary="Delete Account" />
+              </ListItemButton>
+            </List>
+          </Collapse>
+          <Divider />
+
+          <ListItemButton onClick={() => setPoppycockExpanded(!poppycockExpanded)}>
+            <ListItemText
+              primary="Poppycock"
+              primaryTypographyProps={{ sx: { color: SHOWCASE_COLOR } }}
+            />
+            {poppycockExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+          </ListItemButton>
+          <Collapse in={poppycockExpanded}>
+            <List disablePadding>
+              <ListItemButton sx={{ pl: 4 }} component={Link} to="/poppycock" onClick={closeDrawer}>
+                <ListItemText primary="Overview" />
+              </ListItemButton>
+              <ListItemButton sx={{ pl: 4 }} component={Link} to="/poppycock/design" onClick={closeDrawer}>
+                <ListItemText primary="Design" />
+              </ListItemButton>
+              <ListItemButton sx={{ pl: 4 }} component={Link} to="/poppycock/changes" onClick={closeDrawer}>
+                <ListItemText primary="Changes" />
               </ListItemButton>
             </List>
           </Collapse>
@@ -155,16 +192,22 @@ export default function AppToolbar(props: AppToolbarProps) {
               <Button color="inherit" component={Link} to="/">Home</Button>
               <Button color="inherit" component={Link} to="/about">About</Button>
               <Button
-                color="inherit"
                 onClick={(e) => setFinskaAnchor(e.currentTarget)}
+                sx={{ color: SHOWCASE_COLOR }}
               >
-                Finska
+                Woodchuck
               </Button>
               <Button
-                color="inherit"
                 onClick={(e) => setGymAnchor(e.currentTarget)}
+                sx={{ color: 'secondary.main', fontWeight: 700 }}
               >
                 Gym Junkie
+              </Button>
+              <Button
+                onClick={(e) => setPoppycockAnchor(e.currentTarget)}
+                sx={{ color: SHOWCASE_COLOR }}
+              >
+                Poppycock
               </Button>
               <Button
                 color="inherit"
@@ -189,21 +232,21 @@ export default function AppToolbar(props: AppToolbarProps) {
         >
           <MenuItem
             component={Link}
-            to="/finska"
+            to="/woodchuck"
             onClick={() => setFinskaAnchor(null)}
           >
             Overview
           </MenuItem>
           <MenuItem
             component={Link}
-            to="/finska/design"
+            to="/woodchuck/design"
             onClick={() => setFinskaAnchor(null)}
           >
             Design
           </MenuItem>
           <MenuItem
             component={Link}
-            to="/finska/changes"
+            to="/woodchuck/changes"
             onClick={() => setFinskaAnchor(null)}
           >
             Changes
@@ -249,6 +292,34 @@ export default function AppToolbar(props: AppToolbarProps) {
             onClick={() => setGymAnchor(null)}
           >
             Delete Account
+          </MenuItem>
+        </Menu>
+
+        <Menu
+          anchorEl={poppycockAnchor}
+          open={poppycockOpen}
+          onClose={() => setPoppycockAnchor(null)}
+        >
+          <MenuItem
+            component={Link}
+            to="/poppycock"
+            onClick={() => setPoppycockAnchor(null)}
+          >
+            Overview
+          </MenuItem>
+          <MenuItem
+            component={Link}
+            to="/poppycock/design"
+            onClick={() => setPoppycockAnchor(null)}
+          >
+            Design
+          </MenuItem>
+          <MenuItem
+            component={Link}
+            to="/poppycock/changes"
+            onClick={() => setPoppycockAnchor(null)}
+          >
+            Changes
           </MenuItem>
         </Menu>
 

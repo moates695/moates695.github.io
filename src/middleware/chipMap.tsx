@@ -75,6 +75,24 @@ const chipData = {
     borderColor: '#b39ddb',
     textColor: '#9575cd',
   },
+  fastapi: {
+    label: 'FastAPI',
+    color: 'transparent',
+    borderColor: '#4db6ac',
+    textColor: '#26a69a',
+  },
+  websocket: {
+    label: 'WebSocket',
+    color: 'transparent',
+    borderColor: '#ba68c8',
+    textColor: '#ab47bc',
+  },
+  expo: {
+    label: 'Expo',
+    color: 'transparent',
+    borderColor: '#90a4ae',
+    textColor: '#78909c',
+  },
 } satisfies Record<string, ChipData>;
 
 export type ChipKey = keyof typeof chipData;

@@ -25,6 +25,10 @@ import OtherAll from './pages/other/All';
 import OtherDownerHelper from './pages/other/DownerHelper';
 import OtherCellularTracking from './pages/other/CellularTracking';
 import FinksaChanges from './pages/finska/Changes';
+import PoppycockOverview from './pages/poppycock/Overview';
+import PoppycockDesign from './pages/poppycock/Design';
+import PoppycockChanges from './pages/poppycock/Changes';
+import PoppycockPrivacyPolicy from './pages/poppycock/PrivacyPolicy';
 import GymJunkieChanges from './pages/gym_junkie/Changes';
 import OtherPostgresDeploy from './pages/other/PostgresDeploy';
 import FinskaPrivacyPolicy from './pages/finska/PrivacyPolicy';
@@ -67,11 +71,17 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
-              <Route path="/finska">
+              <Route path="/woodchuck">
                 <Route index element={<FinksaOverview />} />
                 <Route path="design" element={<FinksaDesign />} />
                 <Route path="changes" element={<FinksaChanges />} />
                 <Route path="privacy" element={<FinskaPrivacyPolicy />} />
+              </Route>
+              <Route path="/poppycock">
+                <Route index element={<PoppycockOverview />} />
+                <Route path="design" element={<PoppycockDesign />} />
+                <Route path="changes" element={<PoppycockChanges />} />
+                <Route path="privacy" element={<PoppycockPrivacyPolicy />} />
               </Route>
               <Route path="/gym-junkie">
                 <Route index element={<GymJunkieOverview />} />

@@ -20,7 +20,7 @@ export default function FinksaDesign() {
         Design
       </Typography>
       <Typography>
-        The Finska Tracker has to be easy to use, since players will likely be
+        Woodchuck has to be easy to use, since players will likely be
         downloading and setting up their games on the fly.
         <br/>
         The app has 3 main screens; setup, game and settings.
@@ -117,11 +117,11 @@ export default function FinksaDesign() {
       {BottomNavigation({
         left:  {
           text: 'Overview',
-          link: '/finska'
+          link: '/woodchuck'
         },
         right: {
           text: 'Changes',
-          link: '/finska/changes'
+          link: '/woodchuck/changes'
         }
       })}
     </Box>

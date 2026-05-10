@@ -16,11 +16,12 @@ import { buildBulletPoints } from "../middleware/helpers";
 import { buildAllChange } from "../components/Changes";
 import { contactButtons } from "./Contact";
 
-export type Project = 'finska' | 'gym_junkie' | 'downer_helper' | 'cellular_tracking' | 'postgres_deploy';
+export type Project = 'finska' | 'gym_junkie' | 'balderdash' | 'downer_helper' | 'cellular_tracking' | 'postgres_deploy';
 
 export const iconMap: Record<Project, string> = {
   finska: '/finska-icon.png',
   gym_junkie: '/gym-junkie-icon.png',
+  balderdash: '/poppycock-icon.png',
   downer_helper: '/pypi-logo.png',
   cellular_tracking: '/cells-logo.png',
   postgres_deploy: '/pypi-logo.png',
@@ -38,10 +39,10 @@ interface ProjectInfo {
 const projectData: ProjectInfo[] = [
   {
     icon: iconMap.finska,
-    name: 'Finska',
+    name: 'Woodchuck',
     description: 'A simple, lightweight client side app to track a game of Finska.\
     \nDownload and go, no sign in required!',
-    link: '/finska',
+    link: '/woodchuck',
     chipKeys: ['client_side', 'react_ts'],
     highlight: '/finska-highlight.png'
   },
@@ -53,6 +54,15 @@ const projectData: ProjectInfo[] = [
     link: '/gym-junkie',
     chipKeys: ['full_stack', 'react_ts', 'express', 'python', 'postgres', 'ai_ml'],
     highlight: '/gym-junkie-highlight.png'
+  },
+  {
+    icon: iconMap.balderdash,
+    name: 'Poppycock',
+    description: 'A real-time companion app for the physical Balderdash card game.\
+    \nHost a room to handle bluffs, voting and scoring while you play with the cards.',
+    link: '/poppycock',
+    chipKeys: ['full_stack', 'expo', 'react_ts', 'python', 'fastapi', 'websocket', 'postgres'],
+    highlight: ''
   },
   {
     icon: iconMap.cellular_tracking,

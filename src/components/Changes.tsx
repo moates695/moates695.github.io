@@ -7,7 +7,7 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 type Subset<T, U extends T> = U;
-export type ChangeProject = Subset<Project, 'finska' | 'gym_junkie' | 'downer_helper'>
+export type ChangeProject = Subset<Project, 'finska' | 'gym_junkie' | 'balderdash' | 'downer_helper'>
 
 export interface ChangeData {
   header: string
@@ -71,6 +71,32 @@ export const roadmapMap: RoadmapMap = {
       ],
     },
   ],
+  balderdash: [
+    {
+      header: 'persistent round recovery',
+      chipKey: 'feature',
+      points: [
+        'currently round state is in-memory only — a restart mid-round drops the round',
+        'persist real/fake answers, votes and score deltas so a restart can resume',
+      ],
+    },
+    {
+      header: 'multi-worker support',
+      chipKey: 'improvement',
+      points: [
+        'today the in-memory rooms dict assumes a single uvicorn worker',
+        'add Redis pub/sub so multiple workers can share room state and broadcasts',
+      ],
+    },
+    {
+      header: 'public play store release',
+      chipKey: 'feature',
+      points: [
+        'currently distributed as an Expo internal build',
+        'polish onboarding and ship to the Play Store',
+      ],
+    },
+  ],
   downer_helper: []
 }
 
@@ -127,6 +153,18 @@ export const releaseMap: ReleaseMap = {
       link: 'https://expo.dev/accounts/moates/projects/gym-junkie/builds/a3a24607-c9df-445c-bc24-e3c91ae4c19b',
       points: [
         'internal dev release',
+      ],
+    },
+  ],
+  balderdash: [
+    {
+      header: 'poppycock internal',
+      version: '0.0.1',
+      link: 'https://expo.dev/accounts/moates',
+      points: [
+        'real-time rooms with host, dasher and player roles',
+        'collecting → voting → scored round phases',
+        'in-memory round state with Postgres-persisted shell',
       ],
     },
   ],
