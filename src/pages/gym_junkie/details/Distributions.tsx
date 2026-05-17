@@ -3,7 +3,7 @@ import PageLinks from "../../../components/PageLinks";
 import BottomNavigation from "../../../components/BottomNavigation";
 
 const screenshots = [
-  { src: "/gymJunkieMuscleChart.png", label: "Muscle distributions" },
+  { src: "/gym_junkie/distributions_radar.png", label: "Muscle distributions" },
 ];
 
 export default function Distributions() {
@@ -31,7 +31,7 @@ export default function Distributions() {
       <Typography>
         You can switch the metric between total volume, number of working sets and total
         reps, and adjust the time window to match your training cycle. Each gives a
-        slightly different picture — volume biases towards heavier compounds, set count
+        slightly different picture - volume biases towards heavier compounds, set count
         rewards spread, rep count surfaces high-rep accessory work.
       </Typography>
       <Typography>

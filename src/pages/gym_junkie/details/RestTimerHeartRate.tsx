@@ -2,6 +2,10 @@ import { Box, Typography } from "@mui/material";
 import PageLinks from "../../../components/PageLinks";
 import BottomNavigation from "../../../components/BottomNavigation";
 
+const screenshots = [
+  { src: "/gym_junkie/heartrate_settings.png", label: "Heart rate settings" },
+];
+
 export default function RestTimerHeartRate() {
   return (
     <Box
@@ -32,23 +36,43 @@ export default function RestTimerHeartRate() {
         look back at how hard you actually pushed each session.
       </Typography>
       <Typography>
-        Pairing is "set and forget" — the app remembers your device and reconnects on its
+        Pairing is "set and forget" - the app remembers your device and reconnects on its
         own when you start your next workout.
       </Typography>
-      <Typography
-        variant="caption"
-        color="text.secondary"
+      <Box
         sx={{
-          mt: 2,
-          p: 2,
-          border: '1px dashed',
-          borderColor: 'divider',
-          borderRadius: 1,
-          textAlign: 'center',
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: { xs: 2, sm: 4 },
+          width: '100%',
+          justifyContent: 'center',
+          mt: 1,
         }}
       >
-        Screenshots coming: rest timer running mid-workout, heart-rate device pairing
-        screen, live heart-rate readout during a workout.
+        {screenshots.map(({ src, label }) => (
+          <Box
+            key={src}
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            <Box
+              component="img"
+              src={src}
+              alt={label}
+              sx={{ width: { xs: 140, sm: 200 }, maxWidth: '42vw', height: 'auto' }}
+            />
+            <Typography variant="body2" sx={{ textAlign: 'center', mt: 0.5 }}>
+              {label}
+            </Typography>
+          </Box>
+        ))}
+      </Box>
+      <Typography variant="caption" color="text.secondary" sx={{ mt: 1 }}>
+        More screenshots coming: rest timer running mid-workout, live heart-rate readout
+        during a workout.
       </Typography>
       {BottomNavigation({
         left: { text: 'Details', link: '/gym-junkie/details' },

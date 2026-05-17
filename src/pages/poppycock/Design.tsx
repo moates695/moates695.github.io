@@ -20,7 +20,7 @@ export default function PoppycockDesign() {
         Design
       </Typography>
       <Typography>
-        Poppycock is split across two repos that share a single hand-mirrored protocol &mdash; a FastAPI backend and an Expo / React Native mobile client.
+        Poppycock is split across two repos that share a single hand-mirrored protocol - a FastAPI backend and an Expo / React Native mobile client.
       </Typography>
       <Paper sx={{ p: 2, mb: 2, bgcolor: 'background.paper', borderRadius: 2 }}>
         <Typography variant="h6">
@@ -41,7 +41,7 @@ export default function PoppycockDesign() {
           Persistence Model
         </Typography>
         <Typography>
-          Postgres stores the persistent shell only &mdash; rooms, players, scores, dasher order, round metadata, submissions, votes and score deltas.
+          Postgres stores the persistent shell only - rooms, players, scores, dasher order, round metadata, submissions, votes and score deltas.
           <br/>
           Active round state (the real answer, fake answers, the shuffled list, votes, score deltas) lives only in memory on the Round dataclass.
           <br/>
@@ -73,7 +73,7 @@ export default function PoppycockDesign() {
           'LobbyScreen: roster, host controls and optional dasher rotation',
           'GameScreen: phase-driven internally for collecting, voting and scored',
           'GameProvider uses a useReducer-based context; useGameSocket owns the WebSocket lifecycle and reconnect',
-          'protocol.ts is a hand-mirrored copy of the backend pydantic models &mdash; both update in the same change',
+          'protocol.ts is a hand-mirrored copy of the backend pydantic models - both update in the same change',
         ])}
       </Paper>
       {BottomNavigation({

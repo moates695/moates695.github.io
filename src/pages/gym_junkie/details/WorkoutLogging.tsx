@@ -3,9 +3,8 @@ import PageLinks from "../../../components/PageLinks";
 import BottomNavigation from "../../../components/BottomNavigation";
 
 const screenshots = [
-  { src: "/gymJunkieWorkout.png", label: "Workout screen" },
-  { src: "/gymJunkieEditWorkoutExercise.png", label: "Edit exercise" },
-  { src: "/gymJunkieOverviewCurrent.png", label: "Current workout overview" },
+  { src: "/gym_junkie/workout_screen.png", label: "Workout screen" },
+  { src: "/gym_junkie/workout_overview_current.png", label: "Current workout overview" },
 ];
 
 export default function WorkoutLogging() {
@@ -26,20 +25,22 @@ export default function WorkoutLogging() {
       </Typography>
       <Typography>
         Logging is the heart of Gym Junkie, and it's been built to stay out of your way.
-        Tap the workout tab, pick an exercise and start punching in numbers — the keyboard
+        Tap the workout tab, pick an exercise and start punching in numbers - the keyboard
         you see is tuned for sets, reps and weight, with sensible defaults pulled from your
         last session so you usually only need to tap once or twice per set.
       </Typography>
       <Typography>
-        Mid-workout you can rearrange the order of exercises, swap one out for something
-        else, add notes, mark a set as a drop set, or jump back to a previous set to fix a
-        typo. Every change is reflected immediately in your overview so you always know
-        where you're up to.
+        Mid-workout, the workout screen handles set-by-set actions: mark a set as a drop
+        set, or jump back to a previous set to fix a typo. Each exercise card has a notes
+        button on its title for quick reminders. Hit "edit exercise" and you get the
+        deeper controls — rearrange the order of exercises, copy an exercise, or delete
+        one outright. Every change is reflected immediately in your overview so you
+        always know where you're up to.
       </Typography>
       <Typography>
         If your phone dies or you accidentally close the app, your workout is safe. Drafts
-        autosave continuously and sync to the cloud, so picking up on another device — or
-        just relaunching the app — drops you right back where you left off.
+        autosave continuously and sync to the cloud, so picking up on another device - or
+        just relaunching the app - drops you right back where you left off.
       </Typography>
       <Box
         sx={{
@@ -73,7 +74,8 @@ export default function WorkoutLogging() {
         ))}
       </Box>
       <Typography variant="caption" color="text.secondary" sx={{ mt: 1 }}>
-        More screenshots coming: rest timer mid-workout, drop-set entry.
+        More screenshots coming: edit-exercise sheet (rearrange / copy / delete), exercise
+        notes dialog, rest timer mid-workout, drop-set entry.
       </Typography>
       {BottomNavigation({
         left: { text: 'Details', link: '/gym-junkie/details' },

@@ -2,7 +2,7 @@ import { Box, Paper, Typography } from "@mui/material";
 import ReactMarkdown from "react-markdown";
 import PageLinks from "../../components/PageLinks";
 
-export default function PrivacyPolicy() {
+export default function WoodchuckPrivacyPolicy() {
   return (
     <Box
       component="section"

@@ -3,7 +3,7 @@ import PageLinks from "../../components/PageLinks";
 import BottomNavigation from "../../components/BottomNavigation";
 import { buildProjectChange } from "../../components/Changes";
 
-export default function FinksaChanges() {
+export default function WoodchuckChanges() {
   return (
     <Box
       component="section"

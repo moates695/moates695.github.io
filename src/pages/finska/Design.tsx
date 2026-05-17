@@ -3,7 +3,7 @@ import PageLinks from "../../components/PageLinks";
 import BottomNavigation from "../../components/BottomNavigation";
 import { buildBulletPoints } from "../../middleware/helpers";
 
-export default function FinksaDesign() {
+export default function WoodchuckDesign() {
   return (
     <Box
       component="section"
@@ -20,100 +20,192 @@ export default function FinksaDesign() {
         Design
       </Typography>
       <Typography>
-        Woodchuck has to be easy to use, since players will likely be
-        downloading and setting up their games on the fly.
-        <br/>
-        The app has 3 main screens; setup, game and settings.
+        Woodchuck is an Expo / React Native app that runs entirely on-device. The whole game - participants, scores, turn order, rules - is modelled as one XState v5 machine. Everything around it is either a pure function, a validator, or a dumb component that reads state and dispatches events.
       </Typography>
+
       <Paper sx={{ p: 2, mb: 2, bgcolor: 'background.paper', borderRadius: 2 }}>
         <Typography variant="h6">
-          Game Setup
+          State Machine
         </Typography>
         <Typography>
-          When launching for the first time, users will first see the game setup screen.
-          Here they can add players or teams to the new game.
+          A single machine owns the full game context and decides which screen renders - there is no navigation library.
+        </Typography>
+        {buildBulletPoints([
+          'idle → setup → playing (awaitingTurn / won / gameOver / finishing) → settings',
+          'settings is reachable from both setup and playing; a return_to context value sends the user back to where they came from',
+          'snapshot is persisted to AsyncStorage on every transition, then restored to idle on launch so the user chooses to continue or start fresh',
+          'guards (hasEnoughParticipants, isWinningScore, removalInvalidates, …) defer all branching logic to pure helpers - the machine never inlines game rules',
+        ])}
+      </Paper>
+
+      <Paper sx={{ p: 2, mb: 2, bgcolor: 'background.paper', borderRadius: 2 }}>
+        <Typography variant="h6">
+          Pure Game Logic
+        </Typography>
+        <Typography>
+          All state transformations live in <code>game_logic.ts</code> as pure functions - <code>submitTurn</code>, <code>missTurn</code>, <code>editScore</code>, <code>cycleStanding</code>, <code>swapTeamMember</code> and so on. Each returns a partial context update that the machine feeds into an <code>assign</code> action.
           <br/>
-          Both player and team names are checked for case insensitive collisions.
-          Teams can have a single member, in case members want to join later.
-          <br/>
-          Players and teams can be removed by clicking on the edit icon.
-          <br/>
-          Clicking continue will take you to the main game screen.
+          Because there is no XState or React in the file, the rules are trivial to unit test - the suite currently covers them with ~130 cases against jest.
         </Typography>
       </Paper>
+
       <Paper sx={{ p: 2, mb: 2, bgcolor: 'background.paper', borderRadius: 2 }}>
         <Typography variant="h6">
-          Main Screen
+          Centralised Validation
         </Typography>
         <Typography>
-          The main screen is comprised of 3 main components; scoreboard, up next card and score input.
+          One module exposes every predicate the rest of the app needs: <code>isNameTaken</code>, <code>validateNewPlayer</code>, <code>validateNewTeam</code>, <code>validateMemberName</code>, <code>validateRules</code>, <code>isGameValid</code>, <code>canWinThisTurn</code>.
+          <br/>
+          Components call them directly to drive real-time form feedback (disabled buttons, inline errors); the machine reuses the same functions inside its guards. There is no second source of truth for what counts as a valid name, team or rule set.
+        </Typography>
+      </Paper>
+
+      <Paper sx={{ p: 2, mb: 2, bgcolor: 'background.paper', borderRadius: 2 }}>
+        <Typography variant="h6">
+          Idle Screen
+        </Typography>
+        <Typography>
+          The launch screen. If a saved game is present (started, two or more participants), the user can continue it; otherwise the only choice is a new game. Snapshot restoration handles the rest.
+        </Typography>
+      </Paper>
+
+      <Paper sx={{ p: 2, mb: 2, bgcolor: 'background.paper', borderRadius: 2 }}>
+        <Typography variant="h6">
+          Setup Screen
+        </Typography>
+        <Typography>
+          Where players and teams are added.
+        </Typography>
+        {buildBulletPoints([
+          'player and team names are checked for case-insensitive collisions across the whole game',
+          'teams can hold a single member at first, so people can join part-way through',
+          'edit mode reveals remove buttons and rename inputs',
+          'continue is only enabled once isGameValid passes',
+        ])}
+      </Paper>
+
+      <Paper sx={{ p: 2, mb: 2, bgcolor: 'background.paper', borderRadius: 2 }}>
+        <Typography variant="h6">
+          Play Screen
+        </Typography>
+        <Typography>
+          Three components stacked in priority order: scoreboard, up-next card, score input.
         </Typography>
         <Typography variant="subtitle1" sx={{ fontStyle: "italic", mt: 1 }}>
           Scoreboard
         </Typography>
         <Typography>
-          The scoreboard shows critical game data, with participants ordered by descending
-          score, and alphabetically for ties.
+          Participants are ordered by descending score, then alphabetically for ties. The current player has a highlighted border.
           <br/>
-          The current player has a highlighted border.
+          A white divider, if shown, marks the cutoff for who could win on their next throw. A red divider, if shown, marks everyone currently eliminated.
           <br/>
-          If the white divider exists, all players above it can potentially win
-          on their next throw, while players below cannot.
-          <br/>
-          If the red divider exists, all players below it are currently eliminated!
+          Edit mode swaps the row tap target for direct score and miss-count editing - useful for fixing mis-taps without restarting.
         </Typography>
         <Typography variant="subtitle1" sx={{ fontStyle: "italic", mt: 1 }}>
           Up Next Card
         </Typography>
         <Typography>
-          The up next card is pretty simple, it just shows the current player whose turn
-          it is, and the next player in the queue.
+          Shows whose turn it is and who is on deck, with the current player's score and miss count. For teams, the throwing member is also shown - members rotate, and the order can be swapped from a long-press on the card.
           <br/>
-          For the current player, it also shows their game data.
-          <br/>
-          For teams, it shows the member who is up next, where members have rotating turns.
-          <br/>
-          Pressing on the card reveals a modal, which is the complete list of participants
-          who are up next.
+          Tapping the card opens the full upcoming queue as a modal.
         </Typography>
         <Typography variant="subtitle1" sx={{ fontStyle: "italic", mt: 1 }}>
-          Score Input
+          Score Input (Pin Map)
         </Typography>
         <Typography>
-          In Finska, if you knock over a single pin you get that pins value as score, but if you
-          knock over more than one then your score is the number of pins knocked over.
+          In Finska, knocking over one pin scores that pin's value (1&ndash;12); knocking over multiple pins scores the count of pins. Rather than ask players to do that arithmetic, the pin map lets them tap the pins they hit and computes the score live in the corner.
           <br/>
-          So, instead of making users count up their score, they just tap the pins that
-          they knocked over. Score is shown bottom left.
+          This is why the "always use pin value" rule mod is a one-line setting - the input already knows which pins were hit.
           <br/>
-          This opens up an easy rule modification in settings where
-          the pin value is always used.
-          <br/>
-          If a player misses, hitting the X will increase their number of misses, bringing
-          them closer to elimination.
+          The X button registers a miss and ticks the player closer to elimination.
         </Typography>
+        <Box
+          sx={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: { xs: 2, sm: 4 },
+            width: '100%',
+            justifyContent: 'center',
+            mt: 2,
+          }}
+        >
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <Box
+              component="img"
+              src="/woodchuck/game_up_later.png"
+              alt="up next queue"
+              sx={{ width: { xs: 140, sm: 200 }, maxWidth: '42vw', height: 'auto' }}
+            />
+            <Typography variant="caption">Up Next queue</Typography>
+          </Box>
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <Box
+              component="img"
+              src="/woodchuck/game_swap_to.png"
+              alt="team member swap"
+              sx={{ width: { xs: 140, sm: 200 }, maxWidth: '42vw', height: 'auto' }}
+            />
+            <Typography variant="caption">Team member swap</Typography>
+          </Box>
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <Box
+              component="img"
+              src="/woodchuck/game_add_participant.png"
+              alt="mid-game add participant"
+              sx={{ width: { xs: 140, sm: 200 }, maxWidth: '42vw', height: 'auto' }}
+            />
+            <Typography variant="caption">Add participant mid-game</Typography>
+          </Box>
+        </Box>
       </Paper>
+
       <Paper sx={{ p: 2, mb: 2, bgcolor: 'background.paper', borderRadius: 2 }}>
         <Typography variant="h6">
-          Settings
+          Settings Screen
         </Typography>
         <Typography>
-          Up top, users can choose between the light, dark and sand themes.
-          <br/>
-          Users can change the following settings,
-          {buildBulletPoints([
-            'target score: the score players are trying land on',
-            'reset score: players are reset to this if they go over the target score (can be negative)',
-            'miss count: after these many misses, a player is eliminated',
-            'elimination reset: if someone is eliminated, a player is reset to this score (can be negative)',
-            'elimination turns: in not null, a player becomes un-eliminated after sitting out this many turns',
-            'skip counts as miss: if true, a skip counts as a miss',
-            'use pin value: if true and more than one pin is knocked down, sum the pin values'
-          ])}
-          If applying settings would cause a change to game state,
-          then the user is asked to confirm the change.
+          Top of the screen toggles theme between light, dark and sand. Below that, every rule from the validator is exposed:
+        </Typography>
+        {buildBulletPoints([
+          'target score - the number players are trying to land on (default 50)',
+          'reset score - what overshoots collapse to (can be negative)',
+          'miss count - consecutive misses before elimination',
+          'elimination reset - score a returning player comes back on',
+          'elimination turns - null for permanent, otherwise sit out N turns and re-enter',
+          'skip counts as miss - whether skipping a turn ticks the miss counter',
+          'use pin value - when true, multi-pin hits sum the pin values instead of counting pins',
+        ])}
+        <Typography>
+          If new settings would invalidate the in-progress game (e.g. lowering miss count would immediately eliminate too many players), the user is asked to confirm before the rules are applied.
         </Typography>
       </Paper>
+
+      <Paper sx={{ p: 2, mb: 2, bgcolor: 'background.paper', borderRadius: 2 }}>
+        <Typography variant="h6">
+          Theme
+        </Typography>
+        <Typography>
+          Theme lives outside the game machine as two Jotai atoms - one stores the light/dark/sand selection, the other derives the full palette. Components subscribe with <code>useAtomValue</code>, so a theme change re-renders the UI without touching game state.
+        </Typography>
+      </Paper>
+
+      <Paper sx={{ p: 2, mb: 2, bgcolor: 'background.paper', borderRadius: 2 }}>
+        <Typography variant="h6">
+          Testing
+        </Typography>
+        <Typography>
+          Three jest suites under <code>tests/</code>:
+        </Typography>
+        {buildBulletPoints([
+          'game_logic.test.ts - pure function coverage of every rule branch',
+          'validation.test.ts - predicate coverage including edge cases like empty names and duplicate teams',
+          'machine.test.ts - XState transition coverage, using object syntax for nested state matches',
+        ])}
+        <Typography>
+          AsyncStorage and expo-crypto are mocked in <code>jest.setup.js</code> so the suites run without a device.
+        </Typography>
+      </Paper>
+
       {BottomNavigation({
         left:  {
           text: 'Overview',

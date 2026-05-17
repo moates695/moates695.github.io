@@ -3,9 +3,9 @@ import PageLinks from "../../../components/PageLinks";
 import BottomNavigation from "../../../components/BottomNavigation";
 
 const screenshots = [
-  { src: "/gymJunkieNRepMax.png", label: "N-rep max" },
-  { src: "/gymJunkieHistoryData.png", label: "Exercise history" },
-  { src: "/gymJunkieStats.png", label: "Stats overview" },
+  { src: "/gym_junkie/workout_exercise_n_rep_max_graph.png", label: "N-rep max" },
+  { src: "/gym_junkie/workout_exercise_history_graph.png", label: "Exercise history" },
+  { src: "/gym_junkie/exercise_stats.png", label: "Stats overview" },
 ];
 
 export default function ExerciseStats() {
@@ -26,7 +26,7 @@ export default function ExerciseStats() {
       </Typography>
       <Typography>
         Pick any exercise and Gym Junkie shows you a complete history of every set you've
-        ever done — weights, reps, dates, the lot. Sort by anything that matters to you,
+        ever done - weights, reps, dates, the lot. Sort by anything that matters to you,
         scroll back through years if you've got the data, and see exactly how a lift has
         evolved.
       </Typography>

@@ -7,8 +7,8 @@ import Contact from './pages/Contact'
 import About from './pages/About'
 import { Box, ThemeProvider, CssBaseline } from '@mui/material';
 import { lightTheme, darkTheme } from "./styles/theme";
-import FinksaOverview from './pages/finska/Overview';
-import FinksaDesign from './pages/finska/Design';
+import WoodchuckOverview from './pages/finska/Overview';
+import WoodchuckDesign from './pages/finska/Design';
 import GymJunkieOverview from './pages/gym_junkie/Overview';
 import GymJunkieDetails from './pages/gym_junkie/Details';
 import GymJunkieWorkoutLogging from './pages/gym_junkie/details/WorkoutLogging';
@@ -24,14 +24,14 @@ import GymJunkieStrava from './pages/gym_junkie/details/Strava';
 import OtherAll from './pages/other/All';
 import OtherDownerHelper from './pages/other/DownerHelper';
 import OtherCellularTracking from './pages/other/CellularTracking';
-import FinksaChanges from './pages/finska/Changes';
+import WoodchuckChanges from './pages/finska/Changes';
 import PoppycockOverview from './pages/poppycock/Overview';
 import PoppycockDesign from './pages/poppycock/Design';
 import PoppycockChanges from './pages/poppycock/Changes';
 import PoppycockPrivacyPolicy from './pages/poppycock/PrivacyPolicy';
 import GymJunkieChanges from './pages/gym_junkie/Changes';
 import OtherPostgresDeploy from './pages/other/PostgresDeploy';
-import FinskaPrivacyPolicy from './pages/finska/PrivacyPolicy';
+import WoodchuckPrivacyPolicy from './pages/finska/PrivacyPolicy';
 import GymJunkiePrivacyPolicy from './pages/gym_junkie/PrivacyPolicy';
 import DeleteMe from './pages/gym_junkie/DeleteMe';
 import DataExport from './pages/gym_junkie/DataExport';
@@ -72,10 +72,10 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/woodchuck">
-                <Route index element={<FinksaOverview />} />
-                <Route path="design" element={<FinksaDesign />} />
-                <Route path="changes" element={<FinksaChanges />} />
-                <Route path="privacy" element={<FinskaPrivacyPolicy />} />
+                <Route index element={<WoodchuckOverview />} />
+                <Route path="design" element={<WoodchuckDesign />} />
+                <Route path="changes" element={<WoodchuckChanges />} />
+                <Route path="privacy" element={<WoodchuckPrivacyPolicy />} />
               </Route>
               <Route path="/poppycock">
                 <Route index element={<PoppycockOverview />} />

@@ -20,7 +20,7 @@ export default function About() {
       <Typography variant="h6">Current Work</Typography>
       <Paper sx={{ p: 2, bgcolor: 'background.paper', borderRadius: 2 }}>
         <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-          Senior Software Engineer &mdash; AI &amp; Backend
+          Senior Software Engineer - AI &amp; Backend
         </Typography>
         <Link
           href="https://voxworks.ai/"
@@ -36,7 +36,7 @@ export default function About() {
       <Typography variant="h6">Previous Experience</Typography>
       <Paper sx={{ p: 2, bgcolor: 'background.paper', borderRadius: 2 }}>
         <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-          Automation Software Engineer &mdash; Downer Group
+          Automation Software Engineer - Downer Group
         </Typography>
         <Typography variant="body2" sx={{ color: 'text.secondary', mb: 1 }}>
           May 2023 &ndash; 2025
@@ -62,7 +62,7 @@ export default function About() {
       </Paper>
       <Paper sx={{ p: 2, bgcolor: 'background.paper', borderRadius: 2 }}>
         <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-          Engineering Intern &mdash; Incat Crowther
+          Engineering Intern - Incat Crowther
         </Typography>
         <Typography variant="body2" sx={{ color: 'text.secondary', mb: 1 }}>
           Feb 2023 &ndash; May 2023

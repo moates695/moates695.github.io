@@ -22,7 +22,7 @@ export default function PoppycockOverview() {
         Overview
       </Typography>
       <Typography>
-        Poppycock is a real-time companion app for the physical <Link href="https://en.wikipedia.org/wiki/Balderdash" target="_blank" rel="noopener">Balderdash</Link> card game. The cards still drive the prompts &mdash; the app just handles the fiddly bits the score pad and slips of paper used to.
+        Poppycock is a real-time companion app for the physical <Link href="https://en.wikipedia.org/wiki/Balderdash" target="_blank" rel="noopener">Balderdash</Link> card game. The cards still drive the prompts - the app just handles the fiddly bits the score pad and slips of paper used to.
       </Typography>
       <Typography>
         The dasher reads a card, types in the real answer, and everyone else submits their bluff from their phone. The app shuffles them, runs the vote anonymously, and tallies the score deltas at the end of the round.

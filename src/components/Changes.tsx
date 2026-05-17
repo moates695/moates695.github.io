@@ -76,7 +76,7 @@ export const roadmapMap: RoadmapMap = {
       header: 'persistent round recovery',
       chipKey: 'feature',
       points: [
-        'currently round state is in-memory only — a restart mid-round drops the round',
+        'currently round state is in-memory only - a restart mid-round drops the round',
         'persist real/fake answers, votes and score deltas so a restart can resume',
       ],
     },
@@ -114,18 +114,19 @@ type ReleaseMap = Record<ChangeProject, ReleaseBareData[]>
 export const releaseMap: ReleaseMap = {
   finska: [
     {
-      header: 'finska internal testing',
-      version: '0.0.3',
+      header: 'woodchuck internal testing',
+      version: '0.0.5',
       link: 'https://expo.dev/accounts/moates/projects/finska/builds/ff39d715-c47a-4e03-9e7b-67beb5ebae5c',
       points: [
-        'edit leaderboard with score editing and player management',
-        'save and continue games',
-        'colour themes and game rule customisation',
-        'team support with member swapping',
+        'edit-mode scoreboard with score and miss-count corrections',
+        'save and continue games via AsyncStorage snapshots',
+        'light, dark and sand themes (Jotai-backed)',
+        'team support with rotating throws and mid-game member swap',
+        'rule customisation guarded against invalidating the in-progress game',
       ],
     },
     {
-      header: 'finska internal',
+      header: 'woodchuck internal',
       version: '0.0.1',
       link: 'https://expo.dev/accounts/moates/projects/finska/builds/ff39d715-c47a-4e03-9e7b-67beb5ebae5c',
       points: [
@@ -139,7 +140,7 @@ export const releaseMap: ReleaseMap = {
       version: '0.0.4',
       link: 'https://expo.dev/accounts/moates/projects/gym-junkie/builds/a3a24607-c9df-445c-bc24-e3c91ae4c19b',
       points: [
-        'leaderboards — global and per exercise',
+        'leaderboards - global and per exercise',
         'frequency tracking calendar',
         'improved home screen with stats and targets',
         'Strava integration with TCX upload',

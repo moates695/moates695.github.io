@@ -3,8 +3,8 @@ import PageLinks from "../../../components/PageLinks";
 import BottomNavigation from "../../../components/BottomNavigation";
 
 const screenshots = [
-  { src: "/gymJunkieHistory.png", label: "Workout history" },
-  { src: "/gymJunkieOverviewHistory.png", label: "Past workout overview" },
+  { src: "/gym_junkie/workout_history.png", label: "Workout history" },
+  { src: "/gym_junkie/wokrout_overview_history.png", label: "Past workout overview" },
 ];
 
 export default function HistoryCalendar() {
@@ -25,14 +25,14 @@ export default function HistoryCalendar() {
       </Typography>
       <Typography>
         Every workout you've ever logged lives in your history. Tap any session and you
-        get the full breakdown — exercises, sets, weights, notes, the muscle groups you
+        get the full breakdown - exercises, sets, weights, notes, the muscle groups you
         hit, the duration and your heart rate if you were wearing a strap. It's the same
         layout as the live workout overview, so nothing has to be re-learned.
       </Typography>
       <Typography>
         On top of the list view, the yearly frequency calendar paints every day of the
         year green if you trained, with the shade scaling to how hard the session was.
-        It's a nice motivator — and a brutally honest record of any holes in your
+        It's a nice motivator - and a brutally honest record of any holes in your
         consistency.
       </Typography>
       <Typography>

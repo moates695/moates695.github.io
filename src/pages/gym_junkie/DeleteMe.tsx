@@ -250,7 +250,7 @@ export default function DeleteMe() {
           </Alert>
           <Typography variant="body2" sx={{ mb: 2, color: "text.secondary" }}>
             Deletion is handled manually and may take a few days. Re-submitting
-            is safe — duplicate requests are ignored.
+            is safe - duplicate requests are ignored.
           </Typography>
           <Typography variant="body2" sx={{ mb: 2 }}>
             To confirm, retype your email address:{" "}

@@ -40,10 +40,10 @@ const projectData: ProjectInfo[] = [
   {
     icon: iconMap.finska,
     name: 'Woodchuck',
-    description: 'A simple, lightweight client side app to track a game of Finska.\
-    \nDownload and go, no sign in required!',
+    description: 'An on-device mobile scorer for the lawn game Finska (Mölkky).\
+    \nDownload and go - no sign in, no backend, no tracking.',
     link: '/woodchuck',
-    chipKeys: ['client_side', 'react_ts'],
+    chipKeys: ['client_side', 'expo', 'react_ts'],
     highlight: '/finska-highlight.png'
   },
   {
@@ -240,7 +240,7 @@ export default function HomePage(this: any) {
               mt: 0.5,
             }}
           >
-            Full stack developer &mdash; check out some of my projects below.
+            Full stack developer - check out some of my projects below.
           </Typography>
         </Box>
         <Box>

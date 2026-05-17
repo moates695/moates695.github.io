@@ -4,6 +4,7 @@ export const balderdashGithubLink = "https://github.com/moates695/balderdash";
 export const expoLink = "https://expo.dev/accounts/moates";
 export const finskaExpoLink = "https://expo.dev/accounts/moates/projects/finska";
 export const gymJunkiePlayStoreLink = "https://play.google.com/store/apps/details?id=au.com.moates.gymjunkie&hl=en";
+export const woodchuckPlayStoreLink = "https://play.google.com/store/apps/details?id=au.com.moates.woodchuck&hl=en";
 export const pypiLink = "https://pypi.org/user/moates/";
 export const downerhelperLink = "https://pypi.org/project/downerhelper/"
 export const stravaLink = "https://www.strava.com/athletes/46665081"

@@ -2,6 +2,10 @@ import { Box, Typography } from "@mui/material";
 import PageLinks from "../../../components/PageLinks";
 import BottomNavigation from "../../../components/BottomNavigation";
 
+const screenshots = [
+  { src: "/gym_junkie/home_screen.png", label: "Home screen with targets" },
+];
+
 export default function MuscleTargets() {
   return (
     <Box
@@ -22,7 +26,7 @@ export default function MuscleTargets() {
         Targets let you turn vague intentions ("hit chest twice this week") into something
         you can actually track. Pick a muscle group, decide whether you're targeting sets,
         total volume or total reps, set the number you want to hit and over what window
-        — for example, ten sets of back work over a rolling seven days.
+        - for example, ten sets of back work over a rolling seven days.
       </Typography>
       <Typography>
         On the home screen, every target you've created shows up as a progress card. As
@@ -30,23 +34,43 @@ export default function MuscleTargets() {
         already done, what's behind, and where to put your effort next session.
       </Typography>
       <Typography>
-        You can run as many targets as you like in parallel — you might have a high
+        You can run as many targets as you like in parallel - you might have a high
         priority on legs, a maintenance target for arms and a "don't forget" target for
         rear delts, all running at different volumes.
       </Typography>
-      <Typography
-        variant="caption"
-        color="text.secondary"
+      <Box
         sx={{
-          mt: 2,
-          p: 2,
-          border: '1px dashed',
-          borderColor: 'divider',
-          borderRadius: 1,
-          textAlign: 'center',
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: { xs: 2, sm: 4 },
+          width: '100%',
+          justifyContent: 'center',
+          mt: 1,
         }}
       >
-        Screenshots coming: home target tracking card, create / edit target screens.
+        {screenshots.map(({ src, label }) => (
+          <Box
+            key={src}
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            <Box
+              component="img"
+              src={src}
+              alt={label}
+              sx={{ width: { xs: 140, sm: 200 }, maxWidth: '42vw', height: 'auto' }}
+            />
+            <Typography variant="body2" sx={{ textAlign: 'center', mt: 0.5 }}>
+              {label}
+            </Typography>
+          </Box>
+        ))}
+      </Box>
+      <Typography variant="caption" color="text.secondary" sx={{ mt: 1 }}>
+        More screenshots coming: create / edit target screens.
       </Typography>
       {BottomNavigation({
         left: { text: 'Details', link: '/gym-junkie/details' },

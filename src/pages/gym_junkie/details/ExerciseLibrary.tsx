@@ -3,8 +3,7 @@ import PageLinks from "../../../components/PageLinks";
 import BottomNavigation from "../../../components/BottomNavigation";
 
 const screenshots = [
-  { src: "/gymJunkieChooseExercise.png", label: "Choose exercise" },
-  { src: "/gymJunkieFavourites.png", label: "Favourite exercises" },
+  { src: "/gym_junkie/choose_workout_exercise.png", label: "Choose exercise" },
 ];
 
 export default function ExerciseLibrary() {
@@ -31,7 +30,7 @@ export default function ExerciseLibrary() {
       </Typography>
       <Typography>
         If your gym has something niche, or you've got a movement of your own, you can
-        create a custom exercise from scratch — name it, tag the muscles it works, and it
+        create a custom exercise from scratch - name it, tag the muscles it works, and it
         slots straight into your library alongside the built-ins. You can also create
         variations of existing exercises (think "incline DB press, neutral grip") without
         polluting the catalogue.
@@ -72,7 +71,7 @@ export default function ExerciseLibrary() {
         ))}
       </Box>
       <Typography variant="caption" color="text.secondary" sx={{ mt: 1 }}>
-        More screenshots coming: My Exercises list, create-variation / edit-exercise screens.
+        More screenshots coming: favourites view, My Exercises list, create-variation / edit-exercise screens.
       </Typography>
       {BottomNavigation({
         left: { text: 'Details', link: '/gym-junkie/details' },

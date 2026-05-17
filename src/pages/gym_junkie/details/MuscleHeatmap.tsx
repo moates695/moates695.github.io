@@ -3,7 +3,7 @@ import PageLinks from "../../../components/PageLinks";
 import BottomNavigation from "../../../components/BottomNavigation";
 
 const screenshots = [
-  { src: "/gymJunkieMuscleHeat.png", label: "Muscle heatmap" },
+  { src: "/gym_junkie/distributions_heatmap.png", label: "Muscle heatmap" },
 ];
 
 export default function MuscleHeatmap() {
@@ -29,13 +29,13 @@ export default function MuscleHeatmap() {
       </Typography>
       <Typography>
         On the home screen you also get a frequency view that shows training counts per
-        muscle group over your chosen window — past 7 days, 14 days, however long your
+        muscle group over your chosen window - past 7 days, 14 days, however long your
         rotation tends to run. Pair it with the heatmap and you can answer "have I done
         enough back this week?" without scrolling through a single workout log.
       </Typography>
       <Typography>
         The colour scale and the time window are both adjustable, so you can tune it to
-        your training style — whether that's a tight push-pull-legs split or a more
+        your training style - whether that's a tight push-pull-legs split or a more
         ad-hoc approach.
       </Typography>
       <Box

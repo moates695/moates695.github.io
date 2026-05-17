@@ -5,9 +5,9 @@ import BottomNavigation from "../../components/BottomNavigation";
 import { gymJunkiePlayStoreLink } from "../../middleware/links";
 
 const screenshots = [
-  { src: "/gymJunkieWorkout.png", label: "Workout Screen" },
-  { src: "/gymJunkieHistoryData.png", label: "Exercise History Data" },
-  { src: "/gymJunkieOverviewCurrent.png", label: "Current Workout Overview" },
+  { src: "/gym_junkie/workout_screen.png", label: "Workout Screen" },
+  { src: "/gym_junkie/workout_exercise_history_graph.png", label: "Exercise History Data" },
+  { src: "/gym_junkie/workout_overview_current.png", label: "Current Workout Overview" },
 ];
 
 export default function GymJunkieOverview() {

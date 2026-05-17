@@ -2,10 +2,6 @@ import { Box, Typography } from "@mui/material";
 import PageLinks from "../../../components/PageLinks";
 import BottomNavigation from "../../../components/BottomNavigation";
 
-const screenshots = [
-  { src: "/gymJunkieLeaderboard.png", label: "Leaderboards" },
-];
-
 export default function Friends() {
   return (
     <Box
@@ -23,13 +19,13 @@ export default function Friends() {
         Friends & Leaderboards
       </Typography>
       <Typography>
-        Add your gym mates and you'll see their workouts in a feed — what they trained,
+        Add your gym mates and you'll see their workouts in a feed - what they trained,
         how heavy and how long it took. There are no likes, no comments, no streaks
         guilting you into pretending you trained. The point is to see what your friends
         are up to and feed off that energy, not to scroll a social network.
       </Typography>
       <Typography>
-        Tap into a friend's profile and you can compare directly — same exercise, same
+        Tap into a friend's profile and you can compare directly - same exercise, same
         rep range, side by side. It's a lightweight way to keep yourself honest without
         feeling like you're being measured all the time.
       </Typography>
@@ -39,39 +35,20 @@ export default function Friends() {
         if you want a fairer comparison. Whether that motivates you to push harder or
         gently roast a mate is up to you.
       </Typography>
-      <Box
+      <Typography
+        variant="caption"
+        color="text.secondary"
         sx={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: { xs: 2, sm: 4 },
-          width: '100%',
-          justifyContent: 'center',
-          mt: 1,
+          mt: 2,
+          p: 2,
+          border: '1px dashed',
+          borderColor: 'divider',
+          borderRadius: 1,
+          textAlign: 'center',
         }}
       >
-        {screenshots.map(({ src, label }) => (
-          <Box
-            key={src}
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
-          >
-            <Box
-              component="img"
-              src={src}
-              alt={label}
-              sx={{ width: { xs: 140, sm: 200 }, maxWidth: '42vw', height: 'auto' }}
-            />
-            <Typography variant="body2" sx={{ textAlign: 'center', mt: 0.5 }}>
-              {label}
-            </Typography>
-          </Box>
-        ))}
-      </Box>
-      <Typography variant="caption" color="text.secondary" sx={{ mt: 1 }}>
-        More screenshots coming: friend feed, friend profile view, add-friends screen.
+        Screenshots coming: friend feed, friend profile view, add-friends screen,
+        leaderboard view.
       </Typography>
       {BottomNavigation({
         left: { text: 'Details', link: '/gym-junkie/details' },

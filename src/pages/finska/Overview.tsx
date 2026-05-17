@@ -1,12 +1,11 @@
-import { Avatar, Box, Button, Link, Typography } from "@mui/material";
+import { Box, Button, Link, Typography } from "@mui/material";
+import ShopIcon from "@mui/icons-material/Shop";
 import PageLinks from "../../components/PageLinks";
-import githubLogo from "../../assets/github-logo.png";
-import { finskaGithubLink } from "../../middleware/links";
+import { woodchuckPlayStoreLink } from "../../middleware/links";
 import { buildBulletPoints } from "../../middleware/helpers";
 import BottomNavigation from "../../components/BottomNavigation";
-import DownloadIcon from '@mui/icons-material/Download';
 
-export default function FinksaOverview() {
+export default function WoodchuckOverview() {
   return (
     <Box
       component="section"
@@ -23,21 +22,21 @@ export default function FinksaOverview() {
         Overview
       </Typography>
       <Typography>
-        When the sun is out and the weather is good, <Link href="https://www.finska.com.au/" target="_blank" rel="noopener">Finska</Link> is the game of choice for my family to play.
+        When the sun is out and the weather is good, <Link href="https://en.wikipedia.org/wiki/M%C3%B6lkky" target="_blank" rel="noopener">Finska</Link> (a.k.a. Mölkky) is the game of choice for my family to play.
       </Typography>
       <Typography>
-        But after we exhausted the included score cards, we had to use the notes app to keep score.
+        Throw the log, knock over the numbered pins, land on exactly 50. Easy game - awkward to score once the included cards run out and the notes app takes over.
       </Typography>
       <Typography>
-        Not ideal.
-      </Typography>
-      <Typography>
-        So I whipped up Woodchuck,
+        So I built Woodchuck: a download-and-go mobile scorer for Finska.
       </Typography>
       {buildBulletPoints([
-        'Download and go, no sign in required',
-        'Edit game rules and play your way',
-        'Lightweight React TS',
+        'On-device only - no sign in, no backend, no tracking',
+        'Players or teams, with rotating member throws',
+        'Tap the pins you knocked over instead of counting yourself',
+        'Tweak target score, reset score, miss limit and more in settings',
+        'Light, dark and sand themes',
+        'Auto-saves after every throw so you can pick up where you left off',
       ])}
       <Box
         sx={{
@@ -57,7 +56,7 @@ export default function FinksaOverview() {
         >
           <Box
             component="img"
-            src="/finskaSetup.png"
+            src="/woodchuck/setup.png"
             alt="setup screen"
             sx={{ width: { xs: 140, sm: 200 }, maxWidth: '42vw', height: 'auto' }}
           />
@@ -74,12 +73,12 @@ export default function FinksaOverview() {
         >
           <Box
             component="img"
-            src="/finskaGame.png"
+            src="/woodchuck/game.png"
             alt="game screen"
             sx={{ width: { xs: 140, sm: 200 }, maxWidth: '42vw', height: 'auto' }}
           />
           <Typography>
-            Game Screen
+            Play Screen
           </Typography>
         </Box>
         <Box
@@ -91,7 +90,7 @@ export default function FinksaOverview() {
         >
           <Box
             component="img"
-            src="/finskaSettings.png"
+            src="/woodchuck/settings.png"
             alt="settings screen"
             sx={{ width: { xs: 140, sm: 200 }, maxWidth: '42vw', height: 'auto' }}
           />
@@ -105,45 +104,28 @@ export default function FinksaOverview() {
           display: 'flex',
           flexDirection: 'row',
           gap: 1,
-          justifyContent: 'center',
           flexWrap: 'wrap',
         }}
       >
-        <Button
-          variant="contained"
-          href="finska_internal.apk"
-          download
-          startIcon={
-            <DownloadIcon
-              sx={{
-                width: 32,
-                height: 32,
-                marginRight: '10px'
-              }}
-            />
-          }
-        >
-          Android APK
-        </Button>
-        <Button
-          variant="outlined"
-          href={finskaGithubLink}
-          target="_blank"
-          rel="noopener"
-          startIcon={
-            <Avatar
-              alt="github icon"
-              src={githubLogo}
-              sx={{
-                width: 32,
-                height: 32,
-                marginRight: '10px'
-              }}
-            />
-          }
-        >
-          GitHub
-        </Button>
+        <Box>
+          <Button
+            variant="contained"
+            href={woodchuckPlayStoreLink}
+            target="_blank"
+            rel="noopener"
+            startIcon={
+              <ShopIcon
+                sx={{
+                  width: 32,
+                  height: 32,
+                  marginRight: '10px'
+                }}
+              />
+            }
+          >
+            Play Store
+          </Button>
+        </Box>
       </Box>
       {BottomNavigation({
         right: {
