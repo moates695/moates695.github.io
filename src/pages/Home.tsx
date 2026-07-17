@@ -34,6 +34,7 @@ interface ProjectInfo {
   link: string
   chipKeys: ChipKey[],
   highlight: string
+  nameColor?: string
 }
 
 const projectData: ProjectInfo[] = [
@@ -53,16 +54,8 @@ const projectData: ProjectInfo[] = [
     Compare lifts with previous sessions or climb the leaderboards.',
     link: '/gym-junkie',
     chipKeys: ['full_stack', 'react_ts', 'express', 'python', 'postgres', 'ai_ml'],
-    highlight: '/gym-junkie-highlight.png'
-  },
-  {
-    icon: iconMap.balderdash,
-    name: 'Poppycock',
-    description: 'A real-time companion app for the physical Balderdash card game.\
-    \nHost a room to handle bluffs, voting and scoring while you play with the cards.',
-    link: '/poppycock',
-    chipKeys: ['full_stack', 'expo', 'react_ts', 'python', 'fastapi', 'websocket', 'postgres'],
-    highlight: ''
+    highlight: '/gym-junkie-highlight.png',
+    nameColor: 'secondary.main'
   },
   {
     icon: iconMap.cellular_tracking,
@@ -89,6 +82,15 @@ const projectData: ProjectInfo[] = [
     set of configuration files. Helps projects with different db environments.',
     link: '/other/postgres-deploy',
     chipKeys: ['python', 'package'],
+    highlight: ''
+  },
+  {
+    icon: iconMap.balderdash,
+    name: 'Poppycock',
+    description: 'A real-time companion app for the physical Balderdash card game.\
+    \nHost a room to handle bluffs, voting and scoring while you play with the cards.',
+    link: '/poppycock',
+    chipKeys: ['full_stack', 'expo', 'react_ts', 'python', 'fastapi', 'websocket', 'postgres'],
     highlight: ''
   },
 ]
@@ -164,7 +166,7 @@ export default function HomePage(this: any) {
                   marginRight: '10px'
                 }}
               />
-              <Typography variant="h6">
+              <Typography variant="h6" sx={{ color: data.nameColor }}>
                 {data.name}
               </Typography>
               {hovered[i] && (

@@ -24,9 +24,6 @@ export default function AppToolbar(props: AppToolbarProps) {
   const [gymAnchor, setGymAnchor] = useState<null | HTMLElement>(null);
   const gymOpen = Boolean(gymAnchor);
 
-  const [poppycockAnchor, setPoppycockAnchor] = useState<null | HTMLElement>(null);
-  const poppycockOpen = Boolean(poppycockAnchor);
-
   const [codeAnchor, setCodeAnchor] = useState<null | HTMLElement>(null);
   const codeOpen = Boolean(codeAnchor);
 
@@ -34,14 +31,12 @@ export default function AppToolbar(props: AppToolbarProps) {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [finskaExpanded, setFinskaExpanded] = useState(false);
   const [gymExpanded, setGymExpanded] = useState(false);
-  const [poppycockExpanded, setPoppycockExpanded] = useState(false);
   const [otherExpanded, setOtherExpanded] = useState(false);
 
   const closeDrawer = () => {
     setDrawerOpen(false);
     setFinskaExpanded(false);
     setGymExpanded(false);
-    setPoppycockExpanded(false);
     setOtherExpanded(false);
   };
 
@@ -116,28 +111,6 @@ export default function AppToolbar(props: AppToolbarProps) {
           </Collapse>
           <Divider />
 
-          <ListItemButton onClick={() => setPoppycockExpanded(!poppycockExpanded)}>
-            <ListItemText
-              primary="Poppycock"
-              primaryTypographyProps={{ sx: { color: SHOWCASE_COLOR } }}
-            />
-            {poppycockExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-          </ListItemButton>
-          <Collapse in={poppycockExpanded}>
-            <List disablePadding>
-              <ListItemButton sx={{ pl: 4 }} component={Link} to="/poppycock" onClick={closeDrawer}>
-                <ListItemText primary="Overview" />
-              </ListItemButton>
-              <ListItemButton sx={{ pl: 4 }} component={Link} to="/poppycock/design" onClick={closeDrawer}>
-                <ListItemText primary="Design" />
-              </ListItemButton>
-              <ListItemButton sx={{ pl: 4 }} component={Link} to="/poppycock/changes" onClick={closeDrawer}>
-                <ListItemText primary="Changes" />
-              </ListItemButton>
-            </List>
-          </Collapse>
-          <Divider />
-
           <ListItemButton onClick={() => setOtherExpanded(!otherExpanded)}>
             <ListItemText primary="Other" />
             {otherExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
@@ -155,6 +128,9 @@ export default function AppToolbar(props: AppToolbarProps) {
               </ListItemButton>
               <ListItemButton sx={{ pl: 4 }} component={Link} to="/other/postgres-deploy" onClick={closeDrawer}>
                 <ListItemText primary="Postgres Deploy" />
+              </ListItemButton>
+              <ListItemButton sx={{ pl: 4 }} component={Link} to="/poppycock" onClick={closeDrawer}>
+                <ListItemText primary="Poppycock" />
               </ListItemButton>
             </List>
           </Collapse>
@@ -202,12 +178,6 @@ export default function AppToolbar(props: AppToolbarProps) {
                 sx={{ color: 'secondary.main', fontWeight: 700 }}
               >
                 Gym Junkie
-              </Button>
-              <Button
-                onClick={(e) => setPoppycockAnchor(e.currentTarget)}
-                sx={{ color: SHOWCASE_COLOR }}
-              >
-                Poppycock
               </Button>
               <Button
                 color="inherit"
@@ -296,34 +266,6 @@ export default function AppToolbar(props: AppToolbarProps) {
         </Menu>
 
         <Menu
-          anchorEl={poppycockAnchor}
-          open={poppycockOpen}
-          onClose={() => setPoppycockAnchor(null)}
-        >
-          <MenuItem
-            component={Link}
-            to="/poppycock"
-            onClick={() => setPoppycockAnchor(null)}
-          >
-            Overview
-          </MenuItem>
-          <MenuItem
-            component={Link}
-            to="/poppycock/design"
-            onClick={() => setPoppycockAnchor(null)}
-          >
-            Design
-          </MenuItem>
-          <MenuItem
-            component={Link}
-            to="/poppycock/changes"
-            onClick={() => setPoppycockAnchor(null)}
-          >
-            Changes
-          </MenuItem>
-        </Menu>
-
-        <Menu
           anchorEl={codeAnchor}
           open={codeOpen}
           onClose={() => setCodeAnchor(null)}
@@ -355,6 +297,13 @@ export default function AppToolbar(props: AppToolbarProps) {
             onClick={() => setCodeAnchor(null)}
           >
             Postgres Deploy
+          </MenuItem>
+          <MenuItem
+            component={Link}
+            to="/poppycock"
+            onClick={() => setCodeAnchor(null)}
+          >
+            Poppycock
           </MenuItem>
         </Menu>
 

@@ -21,6 +21,10 @@ export default function OtherAll() {
     {
       label: 'Postgres Deploy',
       href: '/other/postgres-deploy'
+    },
+    {
+      label: 'Poppycock',
+      href: '/poppycock'
     }
   ];
 
