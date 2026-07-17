@@ -11,6 +11,10 @@ export default function OtherAll() {
 
   const links = [
     {
+      label: 'Woodchuck',
+      href: '/other/woodchuck'
+    },
+    {
       label: 'Cellular Tracking',
       href: '/other/cellular-tracking'
     },
