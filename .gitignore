@@ -12,6 +12,7 @@
 /build
 
 # misc
+/public/gym_junkie_ios
 .DS_Store
 .env.local
 .env.development.local

@@ -1,8 +1,9 @@
 import { Box, Button, Typography } from "@mui/material";
 import ShopIcon from "@mui/icons-material/Shop";
+import AppleIcon from "@mui/icons-material/Apple";
 import PageLinks from "../../components/PageLinks";
 import BottomNavigation from "../../components/BottomNavigation";
-import { gymJunkiePlayStoreLink } from "../../middleware/links";
+import { gymJunkiePlayStoreLink, gymJunkieAppStoreLink } from "../../middleware/links";
 
 const screenshots = [
   { src: "/gym_junkie/workout_screen.png", label: "Workout Screen" },
@@ -106,6 +107,25 @@ export default function GymJunkieOverview() {
             }
           >
             Play Store
+          </Button>
+        </Box>
+        <Box>
+          <Button
+            variant="contained"
+            href={gymJunkieAppStoreLink}
+            target="_blank"
+            rel="noopener"
+            startIcon={
+              <AppleIcon
+                sx={{
+                  width: 32,
+                  height: 32,
+                  marginRight: '10px'
+                }}
+              />
+            }
+          >
+            App Store
           </Button>
         </Box>
       </Box>
