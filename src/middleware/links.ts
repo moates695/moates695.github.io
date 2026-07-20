@@ -1,4 +1,4 @@
-export const githubLink = "https://github.com/moates-downer";
+export const githubLink = "https://github.com/moates695";
 export const finskaGithubLink = "https://github.com/moates695/finska";
 export const balderdashGithubLink = "https://github.com/moates695/balderdash";
 export const expoLink = "https://expo.dev/accounts/moates";

@@ -147,7 +147,7 @@ function LogoIcon({ src, alt }: { src: string; alt: string }) {
 }
 
 const channels = [
-  { title: "GitHub", blurb: "moates-downer", href: githubLink, logo: githubLogo },
+  { title: "GitHub", blurb: "moates695 (personal)", href: githubLink, logo: githubLogo },
   { title: "LinkedIn", blurb: "Marcus Oates", href: linkedInLink, logo: linkedInLogo },
   { title: "Strava", blurb: "Follow my training", href: stravaLink, logo: stravaLogo },
   { title: "Discord", blurb: "Join the server", href: discordLink, logo: discordLogo },
