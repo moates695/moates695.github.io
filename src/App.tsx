@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import './App.css';
-import { HashRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import AppToolbar from './components/AppToolbar'
 import Home from './pages/Home'
 import Contact from './pages/Contact'
 import About from './pages/About'
+import Projects from './pages/Projects'
 import { Box, ThemeProvider, CssBaseline } from '@mui/material';
 import { lightTheme, darkTheme } from "./styles/theme";
 import WoodchuckOverview from './pages/finska/Overview';
@@ -21,7 +22,6 @@ import GymJunkieDistributions from './pages/gym_junkie/details/Distributions';
 import GymJunkieHistoryCalendar from './pages/gym_junkie/details/HistoryCalendar';
 import GymJunkieFriends from './pages/gym_junkie/details/Friends';
 import GymJunkieStrava from './pages/gym_junkie/details/Strava';
-import OtherAll from './pages/other/All';
 import OtherDownerHelper from './pages/other/DownerHelper';
 import OtherCellularTracking from './pages/other/CellularTracking';
 import WoodchuckChanges from './pages/finska/Changes';
@@ -70,6 +70,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
+              <Route path="/projects" element={<Projects />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/woodchuck">
                 <Route index element={<WoodchuckOverview />} />
@@ -104,7 +105,7 @@ function App() {
                 <Route path="data-export" element={<DataExport />} />
               </Route>
               <Route path="/other">
-                <Route index element={<OtherAll />} />
+                <Route index element={<Navigate to="/projects" replace />} />
                 <Route path="downer-helper" element={<OtherDownerHelper />} />
                 <Route path="cellular-tracking" element={<OtherCellularTracking />} />
                 <Route path="postgres-deploy" element={<OtherPostgresDeploy />} />

@@ -1,34 +1,10 @@
-import { Box, Paper, Typography } from "@mui/material";
-import ReactMarkdown from "react-markdown";
-import PageLinks from "../../components/PageLinks";
+import { Box } from "@mui/material";
+import { Reveal, GradientText, PageHeader, Panel } from "../../components/design";
+import MarkdownBlock from "../../components/MarkdownBlock";
 
-export default function PrivacyPolicy() {
-  return (
-    <Box
-      component="section"
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100%',
-        width: '100%',
-        gap: '10px',
-      }}
-    >
-      <PageLinks />
-      <Typography variant="h5">
-        Privacy Policy
-      </Typography>
-      <Paper
-        elevation={0}
-        sx={{
-          p: 3,
-          bgcolor: 'background.paper',
-          borderRadius: 2,
-          overflow: 'auto',
-        }}
-      >
-        <ReactMarkdown>
-          {`**Last updated:** 18/12/25
+const ACCENT = "#ffb74d";
+
+const policy = `**Last updated:** 18/12/25
 
 This Privacy Policy explains how **Gym Junkie** ("we", "our", or "us") collects, uses, discloses, and protects your information when you use our mobile application and related services (the "App").
 
@@ -172,9 +148,29 @@ If you have questions, concerns, or requests regarding this Privacy Policy or yo
 
 **Email:** marcusjoates@gmail.com
 
-**Entity name:** Gym Junkie`}
-        </ReactMarkdown>
-      </Paper>
+**Entity name:** Gym Junkie`;
+
+export default function PrivacyPolicy() {
+  return (
+    <Box
+      component="section"
+      sx={{ width: "100%", display: "flex", flexDirection: "column", gap: { xs: 3, sm: 4 }, pb: 4 }}
+    >
+      <PageHeader
+        eyebrow="legal"
+        title={
+          <>
+            Privacy <GradientText>policy</GradientText>
+          </>
+        }
+        subtitle="How Gym Junkie collects, uses and protects your information."
+      />
+
+      <Reveal delay={0.06}>
+        <Panel accent={ACCENT} wash>
+          <MarkdownBlock>{policy}</MarkdownBlock>
+        </Panel>
+      </Reveal>
     </Box>
-  )
+  );
 }

@@ -1,9 +1,10 @@
-import { Brightness4, Brightness7, Menu as MenuIcon } from "@mui/icons-material";
-import { AppBar, Toolbar, Typography, Button, Menu, MenuItem, Box, Switch, IconButton, useMediaQuery, useTheme, Drawer, List, ListItemButton, ListItemText, Collapse, Divider } from "@mui/material";
-import { useState, MouseEvent, Dispatch, SetStateAction } from "react";
+import { Menu as MenuIcon } from "@mui/icons-material";
+import { AppBar, Toolbar, Typography, Button, Menu, MenuItem, Box, IconButton, useMediaQuery, useTheme, Drawer, List, ListItemButton, ListItemText, Collapse, Divider } from "@mui/material";
+import { useState, Dispatch, SetStateAction } from "react";
 import { Link } from "react-router-dom";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 const SHOWCASE_COLOR = '#82b1ff';
 
@@ -12,32 +13,81 @@ export interface AppToolbarProps {
   setIsDark: Dispatch<SetStateAction<boolean>>
 }
 
-// todo look for mui button badges for (alpha) text
+interface NavLink {
+  label: string
+  to: string
+}
+
+interface NavGroup {
+  label: string
+  overview: string
+  color?: string
+  bold?: boolean
+  links: NavLink[]
+}
+
+// Every project menu, grouped under a single "Projects" entry.
+const PROJECT_GROUPS: NavGroup[] = [
+  {
+    label: 'Gym Junkie',
+    overview: '/gym-junkie',
+    color: 'secondary.main',
+    bold: true,
+    links: [
+      { label: 'Overview', to: '/gym-junkie' },
+      { label: 'Details', to: '/gym-junkie/details' },
+      { label: 'Changes', to: '/gym-junkie/changes' },
+      { label: 'Data Export', to: '/gym-junkie/data-export' },
+      { label: 'Delete Account', to: '/gym-junkie/delete-me' },
+    ],
+  },
+  {
+    label: 'Woodchuck',
+    overview: '/woodchuck',
+    color: SHOWCASE_COLOR,
+    links: [
+      { label: 'Overview', to: '/woodchuck' },
+      { label: 'Design', to: '/woodchuck/design' },
+      { label: 'Changes', to: '/woodchuck/changes' },
+    ],
+  },
+  {
+    label: 'Other',
+    overview: '/projects',
+    links: [
+      { label: 'Cellular Tracking', to: '/other/cellular-tracking' },
+      { label: 'Downer Helper', to: '/other/downer-helper' },
+      { label: 'Postgres Deploy', to: '/other/postgres-deploy' },
+      { label: 'Poppycock', to: '/poppycock' },
+    ],
+  },
+];
+
 export default function AppToolbar(props: AppToolbarProps) {
-  const { isDark, setIsDark } = props;
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const [finskaAnchor, setFinskaAnchor] = useState<null | HTMLElement>(null);
-  const finskaOpen = Boolean(finskaAnchor);
-
-  const [gymAnchor, setGymAnchor] = useState<null | HTMLElement>(null);
-  const gymOpen = Boolean(gymAnchor);
-
-  const [codeAnchor, setCodeAnchor] = useState<null | HTMLElement>(null);
-  const codeOpen = Boolean(codeAnchor);
+  // Desktop "Projects" dropdown + hover-flyout submenus
+  const [projectsAnchor, setProjectsAnchor] = useState<null | HTMLElement>(null);
+  const projectsOpen = Boolean(projectsAnchor);
+  const [submenu, setSubmenu] = useState<{ label: string; anchorEl: HTMLElement } | null>(null);
+  const closeAll = () => {
+    setProjectsAnchor(null);
+    setSubmenu(null);
+  };
 
   // Mobile drawer state
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [finskaExpanded, setFinskaExpanded] = useState(false);
-  const [gymExpanded, setGymExpanded] = useState(false);
-  const [otherExpanded, setOtherExpanded] = useState(false);
+  const [projectsExpanded, setProjectsExpanded] = useState(false);
+  const [groupExpanded, setGroupExpanded] = useState<Record<string, boolean>>({});
+
+  const toggleGroup = (label: string) =>
+    setGroupExpanded((prev) => ({ ...prev, [label]: !prev[label] }));
 
   const closeDrawer = () => {
     setDrawerOpen(false);
-    setFinskaExpanded(false);
-    setGymExpanded(false);
-    setOtherExpanded(false);
+    setProjectsExpanded(false);
+    setGroupExpanded({});
   };
 
   const mobileDrawer = (
@@ -46,7 +96,7 @@ export default function AppToolbar(props: AppToolbarProps) {
       open={drawerOpen}
       onClose={closeDrawer}
       PaperProps={{
-        sx: { width: 260, bgcolor: 'background.paper' }
+        sx: { width: 270, bgcolor: 'background.paper' }
       }}
     >
       <Box sx={{ pt: 1 }}>
@@ -55,83 +105,46 @@ export default function AppToolbar(props: AppToolbarProps) {
             <ListItemText primary="Home" />
           </ListItemButton>
           <ListItemButton component={Link} to="/about" onClick={closeDrawer}>
-            <ListItemText primary="About" />
+            <ListItemText primary="Resume" />
           </ListItemButton>
           <Divider />
 
-          <ListItemButton onClick={() => setFinskaExpanded(!finskaExpanded)}>
-            <ListItemText
-              primary="Woodchuck"
-              primaryTypographyProps={{ sx: { color: SHOWCASE_COLOR } }}
-            />
-            {finskaExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+          <ListItemButton onClick={() => setProjectsExpanded((v) => !v)}>
+            <ListItemText primary="Projects" primaryTypographyProps={{ sx: { fontWeight: 600 } }} />
+            {projectsExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
           </ListItemButton>
-          <Collapse in={finskaExpanded}>
+          <Collapse in={projectsExpanded}>
             <List disablePadding>
-              <ListItemButton sx={{ pl: 4 }} component={Link} to="/woodchuck" onClick={closeDrawer}>
-                <ListItemText primary="Overview" />
+              <ListItemButton sx={{ pl: 4 }} component={Link} to="/projects" onClick={closeDrawer}>
+                <ListItemText primary="All projects" />
               </ListItemButton>
-              <ListItemButton sx={{ pl: 4 }} component={Link} to="/woodchuck/design" onClick={closeDrawer}>
-                <ListItemText primary="Design" />
-              </ListItemButton>
-              <ListItemButton sx={{ pl: 4 }} component={Link} to="/woodchuck/changes" onClick={closeDrawer}>
-                <ListItemText primary="Changes" />
-              </ListItemButton>
-            </List>
-          </Collapse>
-          <Divider />
 
-          <ListItemButton onClick={() => setGymExpanded(!gymExpanded)}>
-            <ListItemText
-              primary="Gym Junkie"
-              primaryTypographyProps={{
-                sx: { color: 'secondary.main', fontWeight: 700 },
-              }}
-            />
-            {gymExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-          </ListItemButton>
-          <Collapse in={gymExpanded}>
-            <List disablePadding>
-              <ListItemButton sx={{ pl: 4 }} component={Link} to="/gym-junkie" onClick={closeDrawer}>
-                <ListItemText primary="Overview" />
-              </ListItemButton>
-              <ListItemButton sx={{ pl: 4 }} component={Link} to="/gym-junkie/details" onClick={closeDrawer}>
-                <ListItemText primary="Details" />
-              </ListItemButton>
-              <ListItemButton sx={{ pl: 4 }} component={Link} to="/gym-junkie/changes" onClick={closeDrawer}>
-                <ListItemText primary="Changes" />
-              </ListItemButton>
-              <ListItemButton sx={{ pl: 4 }} component={Link} to="/gym-junkie/data-export" onClick={closeDrawer}>
-                <ListItemText primary="Data Export" />
-              </ListItemButton>
-              <ListItemButton sx={{ pl: 4 }} component={Link} to="/gym-junkie/delete-me" onClick={closeDrawer}>
-                <ListItemText primary="Delete Account" />
-              </ListItemButton>
-            </List>
-          </Collapse>
-          <Divider />
-
-          <ListItemButton onClick={() => setOtherExpanded(!otherExpanded)}>
-            <ListItemText primary="Other" />
-            {otherExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-          </ListItemButton>
-          <Collapse in={otherExpanded}>
-            <List disablePadding>
-              <ListItemButton sx={{ pl: 4 }} component={Link} to="/other" onClick={closeDrawer}>
-                <ListItemText primary="All" />
-              </ListItemButton>
-              <ListItemButton sx={{ pl: 4 }} component={Link} to="/other/cellular-tracking" onClick={closeDrawer}>
-                <ListItemText primary="Cellular Tracking" />
-              </ListItemButton>
-              <ListItemButton sx={{ pl: 4 }} component={Link} to="/other/downer-helper" onClick={closeDrawer}>
-                <ListItemText primary="Downer Helper" />
-              </ListItemButton>
-              <ListItemButton sx={{ pl: 4 }} component={Link} to="/other/postgres-deploy" onClick={closeDrawer}>
-                <ListItemText primary="Postgres Deploy" />
-              </ListItemButton>
-              <ListItemButton sx={{ pl: 4 }} component={Link} to="/poppycock" onClick={closeDrawer}>
-                <ListItemText primary="Poppycock" />
-              </ListItemButton>
+              {PROJECT_GROUPS.map((group) => (
+                <Box key={group.label}>
+                  <ListItemButton sx={{ pl: 4 }} onClick={() => toggleGroup(group.label)}>
+                    <ListItemText
+                      primary={group.label}
+                      primaryTypographyProps={{ sx: { color: group.color, fontWeight: group.bold ? 700 : 400 } }}
+                    />
+                    {groupExpanded[group.label] ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                  </ListItemButton>
+                  <Collapse in={Boolean(groupExpanded[group.label])}>
+                    <List disablePadding>
+                      {group.links.map((link) => (
+                        <ListItemButton
+                          key={link.to}
+                          sx={{ pl: 6 }}
+                          component={Link}
+                          to={link.to}
+                          onClick={closeDrawer}
+                        >
+                          <ListItemText primary={link.label} primaryTypographyProps={{ variant: 'body2' }} />
+                        </ListItemButton>
+                      ))}
+                    </List>
+                  </Collapse>
+                </Box>
+              ))}
             </List>
           </Collapse>
           <Divider />
@@ -163,150 +176,90 @@ export default function AppToolbar(props: AppToolbarProps) {
             {mobileDrawer}
           </>
         ) : (
-          <>
-            <Box sx={{ display: "flex", gap: 3, justifyContent: "center", flexGrow: 1, flexWrap: 'wrap' }}>
-              <Button color="inherit" component={Link} to="/">Home</Button>
-              <Button color="inherit" component={Link} to="/about">About</Button>
-              <Button
-                onClick={(e) => setFinskaAnchor(e.currentTarget)}
-                sx={{ color: SHOWCASE_COLOR }}
-              >
-                Woodchuck
-              </Button>
-              <Button
-                onClick={(e) => setGymAnchor(e.currentTarget)}
-                sx={{ color: 'secondary.main', fontWeight: 700 }}
-              >
-                Gym Junkie
-              </Button>
-              <Button
-                color="inherit"
-                onClick={(e) => setCodeAnchor(e.currentTarget)}
-              >
-                Other
-              </Button>
-              <Button color="inherit" component={Link} to="/contact">Contact</Button>
-            </Box>
-            {/* <Box sx={{ display: 'inline-flex' }}>
-              <IconButton onClick={() => setIsDark(!isDark)} color="inherit">
-                {isDark ? <Brightness7 /> : <Brightness4 />}
-              </IconButton>
-            </Box> */}
-          </>
+          <Box sx={{ display: "flex", gap: 3, justifyContent: "center", flexGrow: 1, flexWrap: 'wrap' }}>
+            <Button color="inherit" component={Link} to="/">Home</Button>
+            <Button color="inherit" component={Link} to="/about">Resume</Button>
+            <Button
+              color="inherit"
+              onClick={(e) => setProjectsAnchor(e.currentTarget)}
+              endIcon={projectsOpen ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+            >
+              Projects
+            </Button>
+            <Button color="inherit" component={Link} to="/contact">Contact</Button>
+          </Box>
         )}
 
+        {/* Top-level Projects menu */}
         <Menu
-          anchorEl={finskaAnchor}
-          open={finskaOpen}
-          onClose={() => setFinskaAnchor(null)}
+          anchorEl={projectsAnchor}
+          open={projectsOpen}
+          onClose={closeAll}
+          slotProps={{ list: { sx: { minWidth: 200, py: 0.5 } } }}
         >
           <MenuItem
             component={Link}
-            to="/woodchuck"
-            onClick={() => setFinskaAnchor(null)}
+            to="/projects"
+            onClick={closeAll}
+            onMouseEnter={() => setSubmenu(null)}
+            sx={{ fontWeight: 600 }}
           >
-            Overview
+            All projects
           </MenuItem>
-          <MenuItem
-            component={Link}
-            to="/woodchuck/design"
-            onClick={() => setFinskaAnchor(null)}
-          >
-            Design
-          </MenuItem>
-          <MenuItem
-            component={Link}
-            to="/woodchuck/changes"
-            onClick={() => setFinskaAnchor(null)}
-          >
-            Changes
-          </MenuItem>
+          <Divider sx={{ my: 0.5 }} />
+          {PROJECT_GROUPS.map((group) => (
+            <MenuItem
+              key={group.label}
+              component={Link}
+              to={group.overview}
+              onClick={closeAll}
+              onMouseEnter={(e) => setSubmenu({ label: group.label, anchorEl: e.currentTarget })}
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                gap: 3,
+                color: group.color,
+                fontWeight: group.bold ? 700 : 400,
+              }}
+            >
+              {group.label}
+              <ChevronRightIcon fontSize="small" sx={{ opacity: 0.6, mr: -0.5 }} />
+            </MenuItem>
+          ))}
         </Menu>
 
-        <Menu
-          anchorEl={gymAnchor}
-          open={gymOpen}
-          onClose={() => setGymAnchor(null)}
-        >
-          <MenuItem
-            component={Link}
-            to="/gym-junkie"
-            onClick={() => setGymAnchor(null)}
+        {/* Hover flyout submenus, one per group, opening to the side */}
+        {PROJECT_GROUPS.map((group) => (
+          <Menu
+            key={`${group.label}-submenu`}
+            anchorEl={submenu?.label === group.label ? submenu.anchorEl : null}
+            open={submenu?.label === group.label}
+            onClose={closeAll}
+            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            transformOrigin={{ vertical: 'top', horizontal: 'left' }}
+            hideBackdrop
+            disableAutoFocus
+            disableEnforceFocus
+            disableScrollLock
+            sx={{ pointerEvents: 'none' }}
+            slotProps={{
+              paper: { sx: { pointerEvents: 'auto', minWidth: 180 } },
+              list: { sx: { py: 0.5 }, onMouseLeave: () => setSubmenu(null) },
+            }}
           >
-            Overview
-          </MenuItem>
-          <MenuItem
-            component={Link}
-            to="/gym-junkie/details"
-            onClick={() => setGymAnchor(null)}
-          >
-            Details
-          </MenuItem>
-          <MenuItem
-            component={Link}
-            to="/gym-junkie/changes"
-            onClick={() => setGymAnchor(null)}
-          >
-            Changes
-          </MenuItem>
-          <MenuItem
-            component={Link}
-            to="/gym-junkie/data-export"
-            onClick={() => setGymAnchor(null)}
-          >
-            Data Export
-          </MenuItem>
-          <MenuItem
-            component={Link}
-            to="/gym-junkie/delete-me"
-            onClick={() => setGymAnchor(null)}
-          >
-            Delete Account
-          </MenuItem>
-        </Menu>
-
-        <Menu
-          anchorEl={codeAnchor}
-          open={codeOpen}
-          onClose={() => setCodeAnchor(null)}
-        >
-          <MenuItem
-            component={Link}
-            to="/other"
-            onClick={() => setCodeAnchor(null)}
-          >
-            All
-          </MenuItem>
-          <MenuItem
-            component={Link}
-            to="/other/cellular-tracking"
-            onClick={() => setCodeAnchor(null)}
-          >
-            Cellular Tracking
-          </MenuItem>
-          <MenuItem
-            component={Link}
-            to="/other/downer-helper"
-            onClick={() => setCodeAnchor(null)}
-          >
-            Downer Helper
-          </MenuItem>
-          <MenuItem
-            component={Link}
-            to="/other/postgres-deploy"
-            onClick={() => setCodeAnchor(null)}
-          >
-            Postgres Deploy
-          </MenuItem>
-          <MenuItem
-            component={Link}
-            to="/poppycock"
-            onClick={() => setCodeAnchor(null)}
-          >
-            Poppycock
-          </MenuItem>
-        </Menu>
-
+            {group.links.map((link) => (
+              <MenuItem
+                key={link.to}
+                component={Link}
+                to={link.to}
+                onClick={closeAll}
+                sx={{ fontSize: 14 }}
+              >
+                {link.label}
+              </MenuItem>
+            ))}
+          </Menu>
+        ))}
       </Toolbar>
     </AppBar>
   );

@@ -1,141 +1,80 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import ShopIcon from "@mui/icons-material/Shop";
 import AppleIcon from "@mui/icons-material/Apple";
-import PageLinks from "../../components/PageLinks";
-import BottomNavigation from "../../components/BottomNavigation";
+import {
+  Reveal,
+  GradientText,
+  PageHeader,
+  SectionHeading,
+  CheckList,
+  Callout,
+  ScreenshotGallery,
+  ExternalButton,
+  PageNav,
+} from "../../components/design";
 import { gymJunkiePlayStoreLink, gymJunkieAppStoreLink } from "../../middleware/links";
 
+const ACCENT = "#ffb74d";
+
 const screenshots = [
-  { src: "/gym_junkie/workout_screen.png", label: "Workout Screen" },
-  { src: "/gym_junkie/workout_exercise_history_graph.png", label: "Exercise History Data" },
-  { src: "/gym_junkie/workout_overview_current.png", label: "Current Workout Overview" },
+  { src: "/gym_junkie/workout_screen.png", label: "Workout screen" },
+  { src: "/gym_junkie/workout_exercise_history_graph.png", label: "Exercise history data" },
+  { src: "/gym_junkie/workout_overview_current.png", label: "Current workout overview" },
+];
+
+const highlights = [
+  "Fast set, rep and weight entry built for logging mid-workout with no fuss",
+  "Rich analytics and comparisons without pressing through a stack of menus",
+  "Free to use, with the features and customisation usually locked behind a subscription",
+  "Friends without the noise: check in on your mates, but keep the focus on you",
 ];
 
 export default function GymJunkieOverview() {
   return (
     <Box
       component="section"
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100%',
-        width: '100%',
-        gap: '10px',
-      }}
+      sx={{ width: "100%", display: "flex", flexDirection: "column", gap: { xs: 3, sm: 4 }, pb: 4 }}
     >
-      <PageLinks />
-      <Typography variant="h5">
-        Overview
-      </Typography>
-      <Typography>
-        I like to go to the gym, and recording reps and weight per set is essential
-        for progressive overload.
-        <br/>
-        What I don't particularly like is the idea of paying yet another subscription,
-        just for a fitness tracker that doesn't have all the features and customisation
-        that I reckon should be included for the price.
-        <br/>
-        So I am in the process of making Gym Junkie, a free fitness app built on a data
-        analytics and tracking.
-        <br/>
-        Whether your an ego lifter or science based bro, this app should have something
-        for you.
-        <br/><br/>
-        Yes, the frontend is cluttered with buttons and data, and you can tell it was built
-        by a backend engineer, but thats kind of the point. In my workouts I want to just
-        enter data with no fuss, or have the capability to bring up comparisions and
-        analytics without pressing through a bunch of menus.
-        <br/>
-        I am planning on adding friends to this in future, but without likes or comments.
-        You can check up on what your mates are up to if you want, and compare your workouts
-        to theirs, but the focus should be on you and your fitness journey.
-        <br/>
-        Check out the next pages for more detail about the app, and what's coming next.
-      </Typography>
-      <Box
-        sx={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: { xs: 2, sm: 4 },
-          width: '100%',
-          justifyContent: 'center',
-        }}
-      >
-        {screenshots.map(({ src, label }) => (
-          <Box
-            key={src}
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center'
-            }}
-          >
-            <Box
-              component="img"
-              src={src}
-              alt={label}
-              sx={{ width: { xs: 140, sm: 200 }, maxWidth: '42vw', height: 'auto' }}
-            />
-            <Typography variant="body2" sx={{ textAlign: 'center', mt: 0.5 }}>
-              {label}
-            </Typography>
-          </Box>
-        ))}
-      </Box>
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          gap: 1,
-          flexWrap: 'wrap',
-        }}
-      >
-        <Box>
-          <Button
-            variant="contained"
-            href={gymJunkiePlayStoreLink}
-            target="_blank"
-            rel="noopener"
-            startIcon={
-              <ShopIcon
-                sx={{
-                  width: 32,
-                  height: 32,
-                  marginRight: '10px'
-                }}
-              />
-            }
-          >
-            Play Store
-          </Button>
-        </Box>
-        <Box>
-          <Button
-            variant="contained"
-            href={gymJunkieAppStoreLink}
-            target="_blank"
-            rel="noopener"
-            startIcon={
-              <AppleIcon
-                sx={{
-                  width: 32,
-                  height: 32,
-                  marginRight: '10px'
-                }}
-              />
-            }
-          >
-            App Store
-          </Button>
-        </Box>
-      </Box>
-      {BottomNavigation({
-        right:  {
-          text: 'Details',
-          link: '/gym-junkie/details'
+      <PageHeader
+        eyebrow="overview"
+        title={
+          <>
+            Gym <GradientText>Junkie</GradientText>
+          </>
         }
-      })}
-    </Box>
+        subtitle="A free fitness app built on data, analytics and tracking. Record every set for progressive overload, then dig into the numbers, without paying yet another subscription."
+        actions={
+          <>
+            <ExternalButton href={gymJunkiePlayStoreLink} icon={<ShopIcon />}>
+              Play Store
+            </ExternalButton>
+            <ExternalButton href={gymJunkieAppStoreLink} icon={<AppleIcon />}>
+              App Store
+            </ExternalButton>
+          </>
+        }
+      />
 
-  )
+      <Reveal delay={0.06}>
+        <SectionHeading eyebrow="why i built it">The idea</SectionHeading>
+        <CheckList items={highlights} accent={ACCENT} columns={2} />
+      </Reveal>
+
+      <Reveal delay={0.12}>
+        <Callout accent={ACCENT} title="built by a backend engineer">
+          Yes, the frontend is packed with buttons and data, and you can tell who built it. That is
+          kind of the point: in a workout I want to enter data quickly, or pull up comparisons and
+          analytics, without hunting through menus. Whether you are an ego lifter or a science based
+          bro, this app should have something for you.
+        </Callout>
+      </Reveal>
+
+      <Reveal delay={0.18}>
+        <SectionHeading eyebrow="screens">In the app</SectionHeading>
+        <ScreenshotGallery shots={screenshots} accent={ACCENT} />
+      </Reveal>
+
+      <PageNav right={{ text: "Details", link: "/gym-junkie/details" }} />
+    </Box>
+  );
 }

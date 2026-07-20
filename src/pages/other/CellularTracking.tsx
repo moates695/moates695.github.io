@@ -1,212 +1,162 @@
-import { Avatar, Box, Button, Typography } from "@mui/material";
-import PageLinks from "../../components/PageLinks";
-import BottomNavigation from "../../components/BottomNavigation";
-import { buildBulletPoints } from "../../middleware/helpers";
+import { Avatar, Box } from "@mui/material";
 import { cellularTrackingGithubLink } from "../../middleware/links";
 import githubLogo from "../../assets/github-logo.png";
+import {
+  PageHeader,
+  GradientText,
+  Reveal,
+  SectionHeading,
+  Panel,
+  Callout,
+  CheckList,
+  StatRow,
+  ScreenshotGallery,
+  ExternalButton,
+  PageNav,
+} from "../../components/design";
+
+const ACCENT = "#ec407a";
+
+const segmentSteps = [
+  "Apply CLAHE (Contrast Limited Adaptive Histogram Equalisation) preprocessing.",
+  "Calculate a histogram with 257 bins, then iterate to find an intensity threshold where the histogram stops decreasing consistently.",
+  "Scale the selected intensity to form the final pixel threshold for segmentation.",
+  "Create a binary mask of the pixels above the threshold.",
+  "Apply a morphological open with a 5x5 rectangular kernel to remove noise and small artefacts.",
+  "Flush cells touching the image border to prevent erosion from the frame edge.",
+  "Apply watershed to separate touching cells.",
+  "Apply a separate open to each cell within its own image space.",
+  "Label the cells.",
+  'Delete tiny "cells" that are likely background noise or out of focus.',
+  "Compare flushed cells with current cells to decide their inclusion.",
+];
+
+const trackSteps = [
+  "Compute centroids for the first frame of the sequence.",
+  "Initialise tracking: global labels across frames, frame-specific centroid labels, and per-frame centroid displacement.",
+  "For each frame, compute centroids for the current and next frame, plus the distance matrix between consecutive frames.",
+  "Match centroids between frames with nearest neighbour, keeping only matches within a threshold (cells may appear mid-sequence).",
+  "Assign global labels to each cell so it can be tracked between frames.",
+  "Detect cells in the process of splitting and label these events, including in previous frames.",
+  "Filter out small and short-lived cells as potential noise.",
+  "For each frame, outline each cell in a colour based on its label id, highlight splitting events in white, and draw trajectories onto the image.",
+];
+
+const improvements = [
+  "Use curvature based overlap detection instead of separation filtering methods.",
+  "For cells that flash in and out of existence between frames, use a predictive model of their trajectory to link them across non-consecutive frames.",
+  "Use the regions around these flashing cells to run a secondary, more aggressive segmentation in an attempt to locate the faint ones.",
+];
 
 export default function OtherCellularTracking() {
   return (
     <Box
       component="section"
       sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100%',
-        width: '100%',
-        gap: '10px',
+        display: "flex",
+        flexDirection: "column",
+        width: "100%",
+        gap: { xs: 3, sm: 4 },
+        pb: 4,
       }}
     >
-      <PageLinks />
-      <Typography variant="h5">
-        Cellular Tracking
-      </Typography>
-      <Box>
-        <Button
-          variant="outlined"
-          href={cellularTrackingGithubLink}
-          target="_blank"
-          rel="noopener"
-          startIcon={
-            <Avatar
-              alt="github icon"
-              src={githubLogo}
-              sx={{
-                width: 32,
-                height: 32,
-                marginRight: '10px'
-              }}
-            />
-          }
-        >
-          GitHub
-        </Button>
-      </Box>
-      {BottomNavigation({
-        left: {
-          text: 'Other Projects',
-          link: '/other'
-        },
-        right: {
-          text: 'Downer Helper',
-          link: '/other/downer-helper'
+      <PageHeader
+        eyebrow="research"
+        title={<>Cellular <GradientText>Tracking</GradientText></>}
+        subtitle="A UNSW COMP9517 (Computer Vision) group project: segmenting cells and tracking their position, size and divisions across four provided microscopy sequences."
+        actions={
+          <ExternalButton
+            href={cellularTrackingGithubLink}
+            icon={<Avatar alt="github icon" src={githubLogo} sx={{ width: 24, height: 24 }} />}
+          >
+            GitHub
+          </ExternalButton>
         }
-      })}
-      <Typography>
-        This group project for UNSW's COMP9517 (Computer Vision) course set the
-        challenge of segmenting cells and tracking their position, size and divisions
-        in each of the four provided sequences.
-        <br/>
-        I have included this in my personal projects because I happened to do
-        most of the legwork, and I really enjoyed working on this project during lockdown.
-        <br/>
-        The solution leverages included Python ML libraries like OpenCV, scikit-image, matplotlib and SciPy,
-        and additional custom functions to better suit the problem.
-        <br/>
-        While we were allowed to transfer learn using existing neural networks,
-        because this was a CV course the project mark would have been capped
-        at a distinction, hence why this solution uses custom methods.
-      </Typography>
-      <Typography variant="h6">
-        Segmenting
-      </Typography>
-      <Typography>
-        To segment the images from the background, for each image in a sequence,
-      </Typography>
-      <Box sx={{marginLeft: 2}}>
-        <Typography>
-          1. Apply CLAHE (Contrast Limited Adaptive Histogram Equalization) preprocessing <br/>
-          2. Calculate histogram with 257 bins, and iterate to find an intensity
-          threshold where the histogram stops decreasing consistently <br/>
-          3. The selected intensity is scaled to form the final pixel
-          threshold value for segmentation <br/>
-          4. Create a binary mask of pixels above the threshold <br/>
-          5. Apply a morphological open with a 5×5 rectangular kernel
-          to remove noise and small artifacts <br/>
-          6. Flush cells that are touching the image border (to prevent erosion from image) <br/>
-          7. Apply watershed to segment cells from each other <br/>
-          8. Apply a seperate open to all cells (morphological open but each cell is treated
-          in its own image space) <br/>
-          9. Apply labels to cells <br/>
-          10. Delete small 'cells' (these are likely background noise or out of focus) <br/>
-          11. Compare flushed cells with current cells to determine their inclusion <br/>
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          display: 'flex',
-          gap: 1,
-          width: '100%',
-          justifyContent: 'center',
-          flexWrap: 'wrap'
-        }}
-      >
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center'
-          }}
-        >
-          <Box
-            component="img"
-            src="/segBefore.png"
-            alt="segment before"
-            sx={{ width: 500, maxWidth: '90vw', height: 'auto' }}
-          />
-          <Typography>
-            Original Image
-          </Typography>
-        </Box>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center'
-          }}
-        >
-          <Box
-            component="img"
-            src="/segAfter.png"
-            alt="segment after"
-            sx={{ width: 500, maxWidth: '90vw', height: 'auto' }}
-          />
-          <Typography>
-            Segmented Image
-          </Typography>
-        </Box>
-      </Box>
-      <Typography variant="h6">
-        Tracking
-      </Typography>
-      <Typography>
-        Now that the cells are segmented and labelled, they can be tracked in a sequence,
-      </Typography>
-      <Box sx={{marginLeft: 2}}>
-        <Typography>
-          1. Compute centroids for the first frame of the sequence <br/>
-          2. Initialise tracking,
-        </Typography>
-        <Box sx={{marginLeft: 2}}>
-          <Typography>
-            a. global label tracking across frames <br/>
-            b. frame-specific centroid labels <br/>
-            c: per-frame centroid displacement tracking <br/>
-          </Typography>
-        </Box>
-        <Typography>
-          3. For each frame, computer centroids for current and next frame, as well as
-          the distance matrix between consecutive frames <br/>
-          4. Match centroids between frames with neareset neighbour, but only those within
-          a threshold (cells may appear in frame) <br/>
-          5. Assign global labels to each cell in the sequence so they can be tracked
-          between frames <br/>
-          6. For each frame, detect a cells that are in the process of "splitting"
-          and label these events (including previous frames) <br/>
-          7. Filter out small cells and short lived cells as potential noise. <br/>
-          8. For each frame,
-        </Typography>
-        <Box sx={{marginLeft: 2}}>
-          <Typography>
-            a. outline each cell with a colour based on its label id <br/>
-            b. highlight cell splitting events in white <br/>
-            c: draw trajectories onto the image <br/>
-          </Typography>
-        </Box>
-      </Box>
-      <Box
-        component="video"
-        src="/videos/output1_encoded.mp4"
-        controls
-        sx={{ width: { xs: '95%', sm: '50%' }, maxWidth: '95vw', height: 'auto', borderRadius: 2, alignSelf: 'center' }}
       />
-      <Typography variant="h6">
-        Improvements
-      </Typography>
-      <Typography>
-        Apparently just being able to segment some of the cells from the background
-        was quite an achievement for this assignment, let alone tracking some of them
-        over time.
-        <br/>
-        That being said, if I could go back in time, this is what I would change,
-        {buildBulletPoints([
-          'use curvature based overlap detection, instead of seperation filtering methods',
-          "for cells that flash in and out of existing between frames, \
-          use a predictive model of their trajectory to link them between non-consecutive frames",
-          'also use the regions around these flashing cells to perform a secondary, \
-          more aggressive segmentation, in an attempt to locate these faint cells'
-        ])}
-      </Typography>
-       {BottomNavigation({
-        left:  {
-          text: 'Other Projects',
-          link: '/other'
-        },
-        right:  {
-          text: 'Downer Helper',
-          link: '/other/downer-helper'
-        }
-      })}
+
+      <Reveal delay={0.06}>
+        <Panel accent={ACCENT} wash>
+          <StatRow
+            items={[
+              { value: "4", label: "image sequences" },
+              { value: "COMP9517", label: "UNSW course" },
+              { value: "Custom", label: "CV methods" },
+            ]}
+          />
+        </Panel>
+      </Reveal>
+
+      <Reveal delay={0.12}>
+        <Box sx={{ color: "text.secondary", lineHeight: 1.7 }}>
+          I have included this in my personal projects because I did most of the legwork,
+          and I really enjoyed working on it during lockdown. The solution leans on the usual
+          Python ML libraries: OpenCV, scikit-image, matplotlib and SciPy, plus custom
+          functions tailored to the problem.
+        </Box>
+        <Box sx={{ mt: 2 }}>
+          <Callout accent={ACCENT} title="constraint">
+            Transfer learning with existing neural networks was allowed, but as a computer
+            vision course the mark would have been capped at a distinction, which is why the
+            solution uses custom methods throughout.
+          </Callout>
+        </Box>
+      </Reveal>
+
+      <Reveal delay={0.18}>
+        <SectionHeading eyebrow="step one">Segmenting</SectionHeading>
+        <Box sx={{ color: "text.secondary", mb: 2 }}>
+          To separate the cells from the background, each image in a sequence runs through:
+        </Box>
+        <CheckList items={segmentSteps} accent={ACCENT} />
+        <Box sx={{ mt: 3 }}>
+          <ScreenshotGallery
+            accent={ACCENT}
+            width={360}
+            shots={[
+              { src: "/segBefore.png", label: "Original image" },
+              { src: "/segAfter.png", label: "Segmented image" },
+            ]}
+          />
+        </Box>
+      </Reveal>
+
+      <Reveal delay={0.24}>
+        <SectionHeading eyebrow="step two">Tracking</SectionHeading>
+        <Box sx={{ color: "text.secondary", mb: 2 }}>
+          With the cells segmented and labelled, they can be tracked across a sequence:
+        </Box>
+        <CheckList items={trackSteps} accent={ACCENT} />
+        <Box
+          component="video"
+          src="/videos/output1_encoded.mp4"
+          controls
+          sx={{
+            mt: 3,
+            width: { xs: "100%", sm: "60%" },
+            maxWidth: "100%",
+            height: "auto",
+            borderRadius: 3,
+            border: "1px solid",
+            borderColor: "divider",
+            alignSelf: "center",
+          }}
+        />
+      </Reveal>
+
+      <Reveal delay={0.3}>
+        <SectionHeading eyebrow="reflection">Improvements</SectionHeading>
+        <Box sx={{ color: "text.secondary", mb: 2 }}>
+          Apparently just segmenting some of the cells from the background was an achievement
+          for this assignment, let alone tracking them over time. That said, with hindsight,
+          here is what I would change:
+        </Box>
+        <CheckList items={improvements} accent={ACCENT} />
+      </Reveal>
+
+      <PageNav
+        left={{ text: "Other Projects", link: "/other" }}
+        right={{ text: "Downer Helper", link: "/other/downer-helper" }}
+      />
     </Box>
-  )
+  );
 }

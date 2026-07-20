@@ -1,6 +1,16 @@
-import { Box, Typography } from "@mui/material";
-import PageLinks from "../../../components/PageLinks";
-import BottomNavigation from "../../../components/BottomNavigation";
+import { Box } from "@mui/material";
+import {
+  PageHeader,
+  GradientText,
+  Reveal,
+  SectionHeading,
+  CheckList,
+  Callout,
+  ScreenshotGallery,
+  PageNav,
+} from "../../../components/design";
+
+const ACCENT = "#ffb74d";
 
 const screenshots = [
   { src: "/gym_junkie/distributions_heatmap.png", label: "Muscle heatmap" },
@@ -10,72 +20,51 @@ export default function MuscleHeatmap() {
   return (
     <Box
       component="section"
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100%',
-        width: '100%',
-        gap: '10px',
-      }}
+      sx={{ width: "100%", display: "flex", flexDirection: "column", gap: { xs: 3, sm: 4 }, pb: 4 }}
     >
-      <PageLinks />
-      <Typography variant="h5">
-        Muscle Heatmap
-      </Typography>
-      <Typography>
-        The heatmap is a body diagram coloured by how recently and how heavily each muscle
-        has been worked. Bright muscles are fresh in the program, faded ones are starting
-        to fall behind. It's the fastest way to spot a gap before it becomes an imbalance.
-      </Typography>
-      <Typography>
-        On the home screen you also get a frequency view that shows training counts per
-        muscle group over your chosen window - past 7 days, 14 days, however long your
-        rotation tends to run. Pair it with the heatmap and you can answer "have I done
-        enough back this week?" without scrolling through a single workout log.
-      </Typography>
-      <Typography>
-        The colour scale and the time window are both adjustable, so you can tune it to
-        your training style - whether that's a tight push-pull-legs split or a more
-        ad-hoc approach.
-      </Typography>
-      <Box
-        sx={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: { xs: 2, sm: 4 },
-          width: '100%',
-          justifyContent: 'center',
-          mt: 1,
-        }}
-      >
-        {screenshots.map(({ src, label }) => (
-          <Box
-            key={src}
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
-          >
-            <Box
-              component="img"
-              src={src}
-              alt={label}
-              sx={{ width: { xs: 140, sm: 200 }, maxWidth: '42vw', height: 'auto' }}
-            />
-            <Typography variant="body2" sx={{ textAlign: 'center', mt: 0.5 }}>
-              {label}
-            </Typography>
-          </Box>
-        ))}
-      </Box>
-      <Typography variant="caption" color="text.secondary" sx={{ mt: 1 }}>
-        More screenshots coming: home Muscle History card, home Frequency card.
-      </Typography>
-      {BottomNavigation({
-        left: { text: 'Details', link: '/gym-junkie/details' },
-        right: { text: 'Exercise Stats', link: '/gym-junkie/details/exercise-stats' },
-      })}
+      <PageHeader
+        eyebrow="gym junkie"
+        title={<>Muscle <GradientText>heatmap</GradientText></>}
+        subtitle="The fastest way to spot a training gap before it becomes an imbalance."
+      />
+
+      <Reveal delay={0.06}>
+        <SectionHeading eyebrow="see the picture">Body diagram at a glance</SectionHeading>
+        <CheckList
+          accent={ACCENT}
+          items={[
+            "A body diagram coloured by how recently and how heavily each muscle has been worked.",
+            "Bright muscles are fresh in the program, faded ones are starting to fall behind.",
+            "A frequency view on the home screen shows training counts per muscle group over your chosen window, from the past 7 days to 14 days or however long your rotation runs.",
+          ]}
+        />
+        <Box sx={{ mt: 2 }}>
+          <Callout accent={ACCENT}>
+            Pair the heatmap with the frequency view and you can answer "have I done enough back
+            this week?" without scrolling through a single workout log.
+          </Callout>
+        </Box>
+      </Reveal>
+
+      <Reveal delay={0.12}>
+        <SectionHeading eyebrow="make it yours">Tune it to your style</SectionHeading>
+        <CheckList
+          accent={ACCENT}
+          items={[
+            "Adjust the colour scale to match how you read intensity.",
+            "Set the time window to suit your split, whether that is a tight push-pull-legs rotation or a more ad-hoc approach.",
+          ]}
+        />
+      </Reveal>
+
+      <Reveal delay={0.18}>
+        <ScreenshotGallery shots={screenshots} accent={ACCENT} />
+      </Reveal>
+
+      <PageNav
+        left={{ text: "Details", link: "/gym-junkie/details" }}
+        right={{ text: "Exercise Stats", link: "/gym-junkie/details/exercise-stats" }}
+      />
     </Box>
   );
 }

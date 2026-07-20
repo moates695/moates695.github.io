@@ -1,86 +1,66 @@
-import { Box, Typography } from "@mui/material";
-import PageLinks from "../../../components/PageLinks";
-import BottomNavigation from "../../../components/BottomNavigation";
+import { Box } from "@mui/material";
+import {
+  PageHeader,
+  GradientText,
+  Reveal,
+  SectionHeading,
+  CheckList,
+  Callout,
+  ScreenshotGallery,
+  PageNav,
+} from "../../../components/design";
+
+const ACCENT = "#ffb74d";
 
 const screenshots = [
   { src: "/gym_junkie/workout_screen.png", label: "Workout screen" },
-  { src: "/gym_junkie/workout_overview_current.png", label: "Current workout overview" },
+  { src: "/gym_junkie/workout_overview_current.png", label: "Current overview" },
+  { src: "/gymJunkieEditWorkoutExercise.png", label: "Edit exercise" },
 ];
 
 export default function WorkoutLogging() {
   return (
     <Box
       component="section"
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100%',
-        width: '100%',
-        gap: '10px',
-      }}
+      sx={{ width: "100%", display: "flex", flexDirection: "column", gap: { xs: 3, sm: 4 }, pb: 4 }}
     >
-      <PageLinks />
-      <Typography variant="h5">
-        Workout Logging
-      </Typography>
-      <Typography>
-        Logging is the heart of Gym Junkie, and it's been built to stay out of your way.
-        Tap the workout tab, pick an exercise and start punching in numbers - the keyboard
-        you see is tuned for sets, reps and weight, with sensible defaults pulled from your
-        last session so you usually only need to tap once or twice per set.
-      </Typography>
-      <Typography>
-        Mid-workout, the workout screen handles set-by-set actions: mark a set as a drop
-        set, or jump back to a previous set to fix a typo. Each exercise card has a notes
-        button on its title for quick reminders. Hit "edit exercise" and you get the
-        deeper controls — rearrange the order of exercises, copy an exercise, or delete
-        one outright. Every change is reflected immediately in your overview so you
-        always know where you're up to.
-      </Typography>
-      <Typography>
-        If your phone dies or you accidentally close the app, your workout is safe. Drafts
-        autosave continuously and sync to the cloud, so picking up on another device - or
-        just relaunching the app - drops you right back where you left off.
-      </Typography>
-      <Box
-        sx={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: { xs: 2, sm: 4 },
-          width: '100%',
-          justifyContent: 'center',
-          mt: 1,
-        }}
-      >
-        {screenshots.map(({ src, label }) => (
-          <Box
-            key={src}
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
-          >
-            <Box
-              component="img"
-              src={src}
-              alt={label}
-              sx={{ width: { xs: 140, sm: 200 }, maxWidth: '42vw', height: 'auto' }}
-            />
-            <Typography variant="body2" sx={{ textAlign: 'center', mt: 0.5 }}>
-              {label}
-            </Typography>
-          </Box>
-        ))}
-      </Box>
-      <Typography variant="caption" color="text.secondary" sx={{ mt: 1 }}>
-        More screenshots coming: edit-exercise sheet (rearrange / copy / delete), exercise
-        notes dialog, rest timer mid-workout, drop-set entry.
-      </Typography>
-      {BottomNavigation({
-        left: { text: 'Details', link: '/gym-junkie/details' },
-        right: { text: 'Exercise Library', link: '/gym-junkie/details/exercise-library' },
-      })}
+      <PageHeader
+        eyebrow="gym junkie"
+        title={<>Workout <GradientText>logging</GradientText></>}
+        subtitle="The heart of Gym Junkie, built to stay out of your way so you can focus on the lift."
+      />
+
+      <Reveal delay={0.06}>
+        <SectionHeading eyebrow="in the moment">Fast set entry</SectionHeading>
+        <CheckList
+          accent={ACCENT}
+          items={[
+            "A keyboard tuned for sets, reps and weight, with sensible defaults pulled from your last session, so you usually only tap once or twice per set.",
+            "Mark a set as a drop set, or jump back to a previous set to fix a typo.",
+            "A notes button on each exercise card title for quick reminders.",
+            'Open "edit exercise" for the deeper controls: rearrange the order of exercises, copy an exercise, or delete one outright.',
+          ]}
+        />
+      </Reveal>
+
+      <Reveal delay={0.12}>
+        <SectionHeading eyebrow="stay oriented">Always know where you are</SectionHeading>
+        <Callout accent={ACCENT} title="autosave and sync">
+          If your phone dies or you accidentally close the app, your workout is safe. Drafts
+          autosave continuously and sync to the cloud, so picking up on another device, or just
+          relaunching the app, drops you right back where you left off. Every change is reflected
+          immediately in your overview.
+        </Callout>
+      </Reveal>
+
+      <Reveal delay={0.18}>
+        <ScreenshotGallery shots={screenshots} accent={ACCENT} />
+      </Reveal>
+
+      <PageNav
+        left={{ text: "Details", link: "/gym-junkie/details" }}
+        right={{ text: "Exercise Library", link: "/gym-junkie/details/exercise-library" }}
+      />
     </Box>
   );
 }

@@ -1,6 +1,6 @@
 import { JSX } from "react"
 import { ChipKey, getChip } from "../middleware/chipMap"
-import { iconMap, Project } from "../pages/Home"
+import { iconMap, Project } from "../middleware/projects"
 import { Accordion, AccordionDetails, AccordionSummary, Avatar, Box, IconButton, Stack, Typography } from "@mui/material"
 import { buildBulletPoints } from "../middleware/helpers"
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
@@ -40,7 +40,15 @@ export const roadmapMap: RoadmapMap = {
       chipKey: 'improvement',
       points: [
         'React component tests for Scoreboard, PinMap, UpNext',
-        'core game logic tests complete (129 tests)',
+        'core game logic tests complete',
+      ],
+    },
+    {
+      header: 'theme selection fix',
+      chipKey: 'bug_fix',
+      points: [
+        'sand theme can load even when an alternate theme is chosen',
+        'respect the saved theme choice on startup',
       ],
     },
   ],
@@ -49,9 +57,9 @@ export const roadmapMap: RoadmapMap = {
       header: 'custom exercises',
       chipKey: 'feature',
       points: [
-        'allow users to create custom exercises',
-        'allow users to create variants of default exercises',
-        'backend complete, frontend in progress',
+        'create custom exercises and variants of the defaults',
+        'backend and merging of custom exercises complete',
+        'frontend in progress',
       ],
     },
     {
@@ -62,29 +70,21 @@ export const roadmapMap: RoadmapMap = {
         'auth-protected export endpoints',
       ],
     },
-    {
-      header: 'heart rate monitor improvements',
-      chipKey: 'improvement',
-      points: [
-        'Bluetooth heart rate monitor pairing and live tracking',
-        'heart rate data integration with workout sessions',
-      ],
-    },
   ],
   balderdash: [
     {
       header: 'persistent round recovery',
       chipKey: 'feature',
       points: [
-        'currently round state is in-memory only - a restart mid-round drops the round',
-        'persist real/fake answers, votes and score deltas so a restart can resume',
+        'active round state is in-memory only, so a restart mid-round drops the round',
+        'persist real and fake answers, votes and score deltas so a restart can resume',
       ],
     },
     {
       header: 'multi-worker support',
       chipKey: 'improvement',
       points: [
-        'today the in-memory rooms dict assumes a single uvicorn worker',
+        'the in-memory rooms dict assumes a single uvicorn worker',
         'add Redis pub/sub so multiple workers can share room state and broadcasts',
       ],
     },
@@ -115,7 +115,7 @@ export const releaseMap: ReleaseMap = {
   finska: [
     {
       header: 'woodchuck internal testing',
-      version: '0.0.5',
+      version: '0.0.4',
       link: 'https://expo.dev/accounts/moates/projects/finska/builds/ff39d715-c47a-4e03-9e7b-67beb5ebae5c',
       points: [
         'edit-mode scoreboard with score and miss-count corrections',
@@ -125,35 +125,19 @@ export const releaseMap: ReleaseMap = {
         'rule customisation guarded against invalidating the in-progress game',
       ],
     },
-    {
-      header: 'woodchuck internal',
-      version: '0.0.1',
-      link: 'https://expo.dev/accounts/moates/projects/finska/builds/ff39d715-c47a-4e03-9e7b-67beb5ebae5c',
-      points: [
-        'internal dev release',
-      ],
-    },
   ],
   gym_junkie: [
     {
       header: 'gym junkie internal',
-      version: '0.0.4',
+      version: '0.0.12',
       link: 'https://expo.dev/accounts/moates/projects/gym-junkie/builds/a3a24607-c9df-445c-bc24-e3c91ae4c19b',
       points: [
-        'leaderboards - global and per exercise',
-        'frequency tracking calendar',
-        'improved home screen with stats and targets',
+        'leaderboards, global and per exercise',
         'Strava integration with TCX upload',
         'friends system with permissions',
         'heart rate monitor support',
-      ],
-    },
-    {
-      header: 'gym junkie internal',
-      version: '0.0.1',
-      link: 'https://expo.dev/accounts/moates/projects/gym-junkie/builds/a3a24607-c9df-445c-bc24-e3c91ae4c19b',
-      points: [
-        'internal dev release',
+        'two-factor auth for external logins',
+        'account deletion with full data cascade',
       ],
     },
   ],
@@ -164,8 +148,9 @@ export const releaseMap: ReleaseMap = {
       link: 'https://expo.dev/accounts/moates',
       points: [
         'real-time rooms with host, dasher and player roles',
-        'collecting → voting → scored round phases',
-        'in-memory round state with Postgres-persisted shell',
+        'collecting to voting to scored round phases',
+        'FastAPI and WebSocket backend with a Postgres-persisted shell',
+        'in-memory active round state',
       ],
     },
   ],

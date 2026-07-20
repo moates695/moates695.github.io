@@ -1,9 +1,17 @@
-import { Avatar, Box, Button, Typography } from "@mui/material";
-import PageLinks from "../../components/PageLinks";
-import BottomNavigation from "../../components/BottomNavigation";
+import { Avatar, Box } from "@mui/material";
 import pypiLogo from "../../assets/pypi-logo.png";
 import { downerhelperLink } from "../../middleware/links";
-import ReactMarkdown from "react-markdown";
+import MarkdownBlock from "../../components/MarkdownBlock";
+import {
+  PageHeader,
+  GradientText,
+  Reveal,
+  Panel,
+  ExternalButton,
+  PageNav,
+} from "../../components/design";
+
+const ACCENT = "#ffca28";
 
 export default function OtherDownerHelper() {
   const markdown = `## Logging
@@ -280,73 +288,49 @@ The following snippet shows incorrect usage. Modules must be declared and import
     <Box
       component="section"
       sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100%',
-        width: '100%',
-        gap: '10px',
+        display: "flex",
+        flexDirection: "column",
+        width: "100%",
+        gap: { xs: 3, sm: 4 },
+        pb: 4,
       }}
     >
-      <PageLinks />
-      <Typography variant="h5">
-        Downer Helper
-      </Typography>
-      <Box>
-        <Button 
-          variant="outlined"
-          href={downerhelperLink}
-          target="_blank"
-          rel="noopener"
-          startIcon={
-            <Avatar
-              alt="pypi icon" 
-              src={pypiLogo}
-              sx={{ 
-                width: 32, 
-                height: 32, 
-                marginRight: '10px'
-              }}
-            />
-          }
-        >
-          PyPi Package
-        </Button>
-      </Box>
-      {BottomNavigation({
-        left:  {
-          text: 'Cellular Tracking',
-          link: '/other/cellular-tracking'
-        },
-        right: {
-          text: 'Postgres Deploy',
-          link: '/other/postgres-deploy'
+      <PageHeader
+        eyebrow="package"
+        title={<>Downer <GradientText>Helper</GradientText></>}
+        subtitle="A Python package that bundles the common wrapper functions I kept copy and pasting between projects: logging, Key Vault secrets, GIS, SharePoint and Logic Apps."
+        actions={
+          <ExternalButton
+            href={downerhelperLink}
+            icon={
+              <Avatar
+                alt="pypi icon"
+                src={pypiLogo}
+                sx={{ width: 24, height: 24 }}
+              />
+            }
+          >
+            PyPI Package
+          </ExternalButton>
         }
-      })}
-      <Typography>
-        This project is a Python module that bundles common wrapper functions I found
-        that I was copy and pasting between each project.
-        <br/>
-        It has significantly reduced the technical debt in my projects, by having a
-        single source of truth for shared logic that can easily be updated or improved,
-        as the package is deployed automatically with GitHub actions.
-        <br/>
-        The following is the usage guide from the package.
-      </Typography>
-      <Box sx={{ overflow: 'auto', maxWidth: '100%' }}>
-        <ReactMarkdown>
-          {markdown}
-        </ReactMarkdown>
-      </Box>
-      {BottomNavigation({
-        left:  {
-          text: 'Cellular Tracking',
-          link: '/other/cellular-tracking'
-        },
-        right: {
-          text: 'Postgres Deploy',
-          link: '/other/postgres-deploy'
-        }
-      })}
+      />
+
+      <Reveal delay={0.06}>
+        <MarkdownBlock>
+          {`Having a single source of truth for shared logic has significantly reduced the technical debt in my projects: it can be updated or improved once, then deployed automatically with GitHub Actions. The reference below is the usage guide bundled with the package.`}
+        </MarkdownBlock>
+      </Reveal>
+
+      <Reveal delay={0.12}>
+        <Panel accent={ACCENT} wash>
+          <MarkdownBlock>{markdown}</MarkdownBlock>
+        </Panel>
+      </Reveal>
+
+      <PageNav
+        left={{ text: "Cellular Tracking", link: "/other/cellular-tracking" }}
+        right={{ text: "Postgres Deploy", link: "/other/postgres-deploy" }}
+      />
     </Box>
-  )
+  );
 }

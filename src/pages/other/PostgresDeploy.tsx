@@ -1,13 +1,22 @@
-import { Avatar, Box, Button, Typography } from "@mui/material";
-import PageLinks from "../../components/PageLinks";
-import BottomNavigation from "../../components/BottomNavigation";
+import { Avatar, Box } from "@mui/material";
 import { postgresDeployLink } from "../../middleware/links";
 import pypiLogo from "../../assets/pypi-logo.png";
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import MarkdownBlock from "../../components/MarkdownBlock";
+import {
+  PageHeader,
+  GradientText,
+  Reveal,
+  SectionHeading,
+  Panel,
+  Callout,
+  ExternalButton,
+  PageNav,
+} from "../../components/design";
+
+const ACCENT = "#5c6bc0";
 
 export default function OtherPostgresDeploy() {
-  const targetFolder = `
+  const targetFolder = `\`\`\`text
 sql/
   <schema name>/
     functions/
@@ -19,9 +28,10 @@ sql/
     triggers/
       <trigger_name>.sql
     views/
-      <view_name>.sql`;
-  
-  const tableJson = `
+      <view_name>.sql
+\`\`\``;
+
+  const tableJson = `\`\`\`json
 {
   "columns": [
     {
@@ -64,9 +74,10 @@ sql/
       ]
     }
   ]
-}`;
+}
+\`\`\``;
 
-  const codeString = `
+  const codeString = `\`\`\`python
 from postgresdeploy import deploy
 from downerhelper.secrets import get_config_dict, get_secret_json
 from dotenv import load_dotenv
@@ -85,117 +96,76 @@ def main():
     deploy("sql", pg_creds)
 
 if __name__ == "__main__":
-    main()`;
-  
+    main()
+\`\`\``;
+
   return (
     <Box
       component="section"
       sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100%',
-        width: '100%',
-        gap: '10px',
-        marginBottom: 2
+        display: "flex",
+        flexDirection: "column",
+        width: "100%",
+        gap: { xs: 3, sm: 4 },
+        pb: 4,
       }}
     >
-      <PageLinks />
-      <Typography variant="h5">
-        Postgres Deploy
-      </Typography>
-      <Box>
-        <Button 
-          variant="outlined"
-          href={postgresDeployLink}
-          target="_blank"
-          rel="noopener"
-          startIcon={
-            <Avatar
-              alt="github icon" 
-              src={pypiLogo}
-              sx={{ 
-                width: 32, 
-                height: 32, 
-                marginRight: '10px'
-              }}
-            />
-          }
-        >
-          pypi package
-        </Button>
-      </Box>
-      {BottomNavigation({
-        left:  {
-          text: 'Downer Helper',
-          link: '/other/downer-helper'
+      <PageHeader
+        eyebrow="package"
+        title={<>Postgres <GradientText>Deploy</GradientText></>}
+        subtitle="A Python package that simplifies deploying Postgres schemas. Point it at a folder and it deploys or updates the schema in the target database, or mirrors an existing database back into files."
+        actions={
+          <ExternalButton
+            href={postgresDeployLink}
+            icon={
+              <Avatar alt="pypi icon" src={pypiLogo} sx={{ width: 24, height: 24 }} />
+            }
+          >
+            PyPI Package
+          </ExternalButton>
         }
-      })}
-      <Typography>
-        This project is meant the simplify the deployment of Postgres schemas.
-        It is currently first release and in progress.
-        <br/>
-        We have all been there, when a bug in our app turns out to be a 
-        column or type we sort of forgot to add when pushing updates to the
-        new environment.
-        <br/>
-        This PyPi package takes a folder and deploys or updates the schema
-        in the target database. It can also take a target folder and mirror
-        the target db schema. 
-        <br/>
-        When setup with pipelines, a developer can be
-        working in dev and updating the schema files from local, but when
-        they push to test or prod, the Postgres schema is automatically updated
-        to reflect these new changes.
-        <br/>
-        Currently the target folder structure looks like
-      </Typography>
-      <SyntaxHighlighter 
-        language="python" 
-        style={oneDark}
-        customStyle={{
-          maxHeight: 'none',
-          overflowX: 'auto',
-          fontSize: '0.85rem',
-        }}
-      >
-        {targetFolder}
-      </SyntaxHighlighter>
-      <Typography>
-        Where functions, views, materialized views and triggers are just sql files.
-        <br/>
-        For the table json the layout is,
-      </Typography>
-      <SyntaxHighlighter 
-        language="python" 
-        style={oneDark}
-        customStyle={{
-          maxHeight: 'none',
-          overflowX: 'auto',
-          fontSize: '0.85rem',
-        }}
-      >
-        {tableJson}
-      </SyntaxHighlighter>
-      <Typography>
-        A developer might invoke the deployment through an action like this,
-      </Typography>
-      <SyntaxHighlighter 
-        language="python" 
-        style={oneDark}
-        customStyle={{
-          maxHeight: 'none',
-          overflowX: 'auto',
-          fontSize: '0.85rem',
-        }}
-      >
-        {codeString}
-      </SyntaxHighlighter>
-       {BottomNavigation({
-        left:  {
-          text: 'Downer Helper',
-          link: '/other/downer-helper'
-        }
-      })}
+      />
+
+      <Reveal delay={0.06}>
+        <MarkdownBlock>
+          {`We have all been there: a bug in the app turns out to be a column or type we forgot to add when pushing updates to a new environment. Wired into pipelines, a developer can work in dev and update the schema files locally, then when they push to test or prod the Postgres schema is automatically updated to reflect the changes.`}
+        </MarkdownBlock>
+        <Callout accent={ACCENT} title="status">
+          Currently on its first release and actively in progress.
+        </Callout>
+      </Reveal>
+
+      <Reveal delay={0.12}>
+        <SectionHeading eyebrow="layout">Target folder structure</SectionHeading>
+        <MarkdownBlock>
+          {`Functions, views, materialized views and triggers are just SQL files, organised by schema:`}
+        </MarkdownBlock>
+        <Panel accent={ACCENT}>
+          <MarkdownBlock>{targetFolder}</MarkdownBlock>
+        </Panel>
+      </Reveal>
+
+      <Reveal delay={0.18}>
+        <SectionHeading eyebrow="tables">Table definition</SectionHeading>
+        <MarkdownBlock>
+          {`Tables are described with JSON, capturing columns, constraints and indexes:`}
+        </MarkdownBlock>
+        <Panel accent={ACCENT}>
+          <MarkdownBlock>{tableJson}</MarkdownBlock>
+        </Panel>
+      </Reveal>
+
+      <Reveal delay={0.24}>
+        <SectionHeading eyebrow="usage">Invoking a deployment</SectionHeading>
+        <MarkdownBlock>
+          {`A developer might invoke the deployment through an action like this:`}
+        </MarkdownBlock>
+        <Panel accent={ACCENT}>
+          <MarkdownBlock>{codeString}</MarkdownBlock>
+        </Panel>
+      </Reveal>
+
+      <PageNav left={{ text: "Downer Helper", link: "/other/downer-helper" }} />
     </Box>
-  )
+  );
 }

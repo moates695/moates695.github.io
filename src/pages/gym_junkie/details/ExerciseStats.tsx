@@ -1,84 +1,69 @@
-import { Box, Typography } from "@mui/material";
-import PageLinks from "../../../components/PageLinks";
-import BottomNavigation from "../../../components/BottomNavigation";
+import { Box } from "@mui/material";
+import {
+  PageHeader,
+  GradientText,
+  Reveal,
+  SectionHeading,
+  CheckList,
+  Callout,
+  ScreenshotGallery,
+  PageNav,
+} from "../../../components/design";
+
+const ACCENT = "#ffb74d";
 
 const screenshots = [
-  { src: "/gym_junkie/workout_exercise_n_rep_max_graph.png", label: "N-rep max" },
-  { src: "/gym_junkie/workout_exercise_history_graph.png", label: "Exercise history" },
-  { src: "/gym_junkie/exercise_stats.png", label: "Stats overview" },
+  { src: "/gym_junkie/stats_screen.png", label: "Stats overview" },
+  { src: "/gym_junkie/exercise_stats.png", label: "Exercise stats" },
+  { src: "/gym_junkie/workout_exercise_history_graph.png", label: "History graph" },
+  { src: "/gym_junkie/workout_exercise_n_rep_max_graph.png", label: "N-rep-max graph" },
 ];
 
 export default function ExerciseStats() {
   return (
     <Box
       component="section"
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100%',
-        width: '100%',
-        gap: '10px',
-      }}
+      sx={{ width: "100%", display: "flex", flexDirection: "column", gap: { xs: 3, sm: 4 }, pb: 4 }}
     >
-      <PageLinks />
-      <Typography variant="h5">
-        Exercise Stats
-      </Typography>
-      <Typography>
-        Pick any exercise and Gym Junkie shows you a complete history of every set you've
-        ever done - weights, reps, dates, the lot. Sort by anything that matters to you,
-        scroll back through years if you've got the data, and see exactly how a lift has
-        evolved.
-      </Typography>
-      <Typography>
-        The n-rep max view is the headline number for most lifters: your best set at 1
-        rep, 3, 5, 8, 10, 12, 15. Hit a new PR mid-workout and the app flags it on the
-        spot. You can also pull up estimated maxes for rep ranges you don't directly
-        train, useful when you're planning a percentage-based program.
-      </Typography>
-      <Typography>
-        On top of raw history, progression charts plot weight (or volume, or estimated 1RM)
-        over time so you can see whether you're actually getting stronger or just
-        spinning your wheels.
-      </Typography>
-      <Box
-        sx={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: { xs: 2, sm: 4 },
-          width: '100%',
-          justifyContent: 'center',
-          mt: 1,
-        }}
-      >
-        {screenshots.map(({ src, label }) => (
-          <Box
-            key={src}
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
-          >
-            <Box
-              component="img"
-              src={src}
-              alt={label}
-              sx={{ width: { xs: 140, sm: 200 }, maxWidth: '42vw', height: 'auto' }}
-            />
-            <Typography variant="body2" sx={{ textAlign: 'center', mt: 0.5 }}>
-              {label}
-            </Typography>
-          </Box>
-        ))}
-      </Box>
-      <Typography variant="caption" color="text.secondary" sx={{ mt: 1 }}>
-        More screenshots coming: progression line graph for a single exercise.
-      </Typography>
-      {BottomNavigation({
-        left: { text: 'Details', link: '/gym-junkie/details' },
-        right: { text: 'Distributions', link: '/gym-junkie/details/distributions' },
-      })}
+      <PageHeader
+        eyebrow="gym junkie"
+        title={
+          <>
+            Exercise <GradientText>stats</GradientText>
+          </>
+        }
+        subtitle="Pick any lift and see its full history, personal records and progression at a glance."
+      />
+
+      <Reveal delay={0.06}>
+        <SectionHeading eyebrow="the record">What you get per exercise</SectionHeading>
+        <CheckList
+          accent={ACCENT}
+          items={[
+            "A complete history of every set you have logged: weights, reps and dates, sortable by whatever matters to you.",
+            "N-rep max view: your best set at 1, 3, 5, 8, 10, 12 and 15 reps, the headline number most lifters chase.",
+            "Estimated maxes for rep ranges you do not directly train, handy when planning a percentage-based program.",
+            "Progression charts plotting weight, volume or estimated 1RM over time so you can tell real gains from spinning your wheels.",
+          ]}
+        />
+      </Reveal>
+
+      <Reveal delay={0.12}>
+        <Callout accent={ACCENT} title="Live PR flags">
+          Hit a new personal record mid-workout and Gym Junkie flags it on the spot, so you never
+          miss the moment a lift moves forward.
+        </Callout>
+      </Reveal>
+
+      <Reveal delay={0.18}>
+        <SectionHeading eyebrow="screens">See it in action</SectionHeading>
+        <ScreenshotGallery shots={screenshots} accent={ACCENT} />
+      </Reveal>
+
+      <PageNav
+        left={{ text: "Details", link: "/gym-junkie/details" }}
+        right={{ text: "Distributions", link: "/gym-junkie/details/distributions" }}
+      />
     </Box>
   );
 }

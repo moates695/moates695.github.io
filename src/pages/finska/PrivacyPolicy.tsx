@@ -1,34 +1,35 @@
-import { Box, Paper, Typography } from "@mui/material";
-import ReactMarkdown from "react-markdown";
-import PageLinks from "../../components/PageLinks";
+import { Box } from "@mui/material";
+import MarkdownBlock from "../../components/MarkdownBlock";
+import { Reveal, PageHeader, GradientText, Panel } from "../../components/design";
+
+const ACCENT = "#82b1ff";
 
 export default function WoodchuckPrivacyPolicy() {
   return (
     <Box
       component="section"
       sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100%',
-        width: '100%',
-        gap: '10px',
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        gap: { xs: 3, sm: 4 },
+        pb: 4,
       }}
     >
-      <PageLinks />
-      <Typography variant="h5">
-        Privacy Policy
-      </Typography>
-      <Paper
-        elevation={0}
-        sx={{
-          p: 3,
-          bgcolor: 'background.paper',
-          borderRadius: 2,
-          overflow: 'auto',
-        }}
-      >
-        <ReactMarkdown>
-          {`**Last updated:** 10/05/26
+      <PageHeader
+        eyebrow="legal"
+        title={
+          <>
+            Privacy <GradientText>policy</GradientText>
+          </>
+        }
+        subtitle="Woodchuck runs entirely on your device and collects nothing. The full policy is below."
+      />
+
+      <Reveal delay={0.06}>
+        <Panel accent={ACCENT}>
+          <MarkdownBlock>
+            {`**Last updated:** 10/05/26
 
 This Privacy Policy explains how **Woodchuck** ("we", "our", or "us") handles information when you use our mobile application (the "App").
 
@@ -85,8 +86,9 @@ If you have questions about this Privacy Policy, contact us at:
 **Email:** marcusjoates@gmail.com
 
 **Entity name:** Woodchuck`}
-        </ReactMarkdown>
-      </Paper>
+          </MarkdownBlock>
+        </Panel>
+      </Reveal>
     </Box>
-  )
+  );
 }

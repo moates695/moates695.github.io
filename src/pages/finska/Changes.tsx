@@ -1,31 +1,32 @@
-import { Box, Button, Typography } from "@mui/material";
-import PageLinks from "../../components/PageLinks";
-import BottomNavigation from "../../components/BottomNavigation";
+import { Box } from "@mui/material";
 import { buildProjectChange } from "../../components/Changes";
+import { Reveal, PageHeader, GradientText, PageNav } from "../../components/design";
 
 export default function WoodchuckChanges() {
   return (
     <Box
       component="section"
       sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100%',
-        width: '100%',
-        gap: '10px',
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        gap: { xs: 3, sm: 4 },
+        pb: 4,
       }}
     >
-      <PageLinks />
-      <Typography variant="h5">
-        Changes
-      </Typography>
-      {buildProjectChange('finska')}
-      {BottomNavigation({
-        left:  {
-          text: 'Design',
-          link: '/woodchuck/design'
+      <PageHeader
+        eyebrow="changes"
+        title={
+          <>
+            Roadmap and <GradientText>releases</GradientText>
+          </>
         }
-      })}
+        subtitle="What is shipped and what is planned next for Woodchuck."
+      />
+
+      <Reveal delay={0.06}>{buildProjectChange("finska")}</Reveal>
+
+      <PageNav left={{ text: "Design", link: "/woodchuck/design" }} />
     </Box>
-  )
+  );
 }

@@ -4,12 +4,20 @@ import {
   Box,
   Button,
   CircularProgress,
-  Paper,
   TextField,
   Typography,
 } from "@mui/material";
-import PageLinks from "../../components/PageLinks";
 import { clearSession, loadSession, saveSession } from "../../middleware/gymJunkieSession";
+import {
+  PageHeader,
+  GradientText,
+  Reveal,
+  Panel,
+  Callout,
+  CheckList,
+} from "../../components/design";
+
+const GJ_ACCENT = "#ffb74d";
 
 const API_BASE =
   process.env.REACT_APP_GYM_JUNKIE_API_BASE ??
@@ -144,15 +152,18 @@ export default function DeleteMe() {
     <Box
       component="section"
       sx={{
+        width: "100%",
         display: "flex",
         flexDirection: "column",
-        height: "100%",
-        width: "100%",
-        gap: "10px",
+        gap: { xs: 3, sm: 4 },
+        pb: 4,
       }}
     >
-      <PageLinks />
-      <Typography variant="h5">Delete Account</Typography>
+      <PageHeader
+        eyebrow="gym junkie"
+        title={<>Delete <GradientText gradient={`linear-gradient(90deg, ${GJ_ACCENT}, #ff8a65)`}>account</GradientText></>}
+        subtitle="Request permanent deletion of your Gym Junkie account and all of its data. We verify it's you by email before anything is queued."
+      />
 
       {error && (
         <Alert severity="error" onClose={() => setError(null)}>
@@ -161,52 +172,55 @@ export default function DeleteMe() {
       )}
 
       {step === "login" && (
-        <Paper
-          elevation={0}
-          sx={{ p: 3, bgcolor: "background.paper", borderRadius: 2, maxWidth: 400 }}
-        >
-          <Typography variant="body2" sx={{ mb: 2, color: "text.secondary" }}>
-            Request deletion of your Gym Junkie account. A verification code
-            will be sent to your email to confirm it's you.
-          </Typography>
-          <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-            <TextField
-              label="Email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              size="small"
-              fullWidth
-            />
-            <TextField
-              label="Password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              size="small"
-              fullWidth
-              onKeyDown={(e) => e.key === "Enter" && !loading && handleLogin()}
-            />
-            <Button
-              variant="contained"
-              onClick={handleLogin}
-              disabled={loading || !email || !password}
-            >
-              {loading ? <CircularProgress size={20} color="inherit" /> : "Continue"}
-            </Button>
-          </Box>
-        </Paper>
+        <Reveal delay={0.06}>
+          <Panel accent={GJ_ACCENT} wash sx={{ maxWidth: 460, display: "flex", flexDirection: "column", gap: 2.5 }}>
+            <Box>
+              <Typography sx={{ fontWeight: 700, mb: 1 }}>How it works</Typography>
+              <CheckList
+                accent={GJ_ACCENT}
+                items={[
+                  "Sign in with your Gym Junkie email and password.",
+                  "We email you a 6-digit verification code.",
+                  "Confirm and your account is queued for deletion.",
+                ]}
+              />
+            </Box>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+              <TextField
+                label="Email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                size="small"
+                fullWidth
+              />
+              <TextField
+                label="Password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                size="small"
+                fullWidth
+                onKeyDown={(e) => e.key === "Enter" && !loading && handleLogin()}
+              />
+              <Button
+                variant="contained"
+                onClick={handleLogin}
+                disabled={loading || !email || !password}
+              >
+                {loading ? <CircularProgress size={20} color="inherit" /> : "Continue"}
+              </Button>
+            </Box>
+          </Panel>
+        </Reveal>
       )}
 
       {step === "verify" && (
-        <Paper
-          elevation={0}
-          sx={{ p: 3, bgcolor: "background.paper", borderRadius: 2, maxWidth: 400 }}
-        >
-          <Typography variant="body2" sx={{ mb: 2, color: "text.secondary" }}>
-            A 6-digit code was sent to {email}. Enter it below.
-          </Typography>
-          <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+        <Reveal delay={0.06}>
+          <Panel accent={GJ_ACCENT} wash sx={{ maxWidth: 460, display: "flex", flexDirection: "column", gap: 2 }}>
+            <Typography variant="body2" sx={{ color: "text.secondary" }}>
+              A 6-digit code was sent to {email}. Enter it below.
+            </Typography>
             <TextField
               label="Verification Code"
               value={code}
@@ -234,29 +248,26 @@ export default function DeleteMe() {
             >
               Back
             </Button>
-          </Box>
-        </Paper>
+          </Panel>
+        </Reveal>
       )}
 
       {step === "confirm" && (
-        <Paper
-          elevation={0}
-          sx={{ p: 3, bgcolor: "background.paper", borderRadius: 2, maxWidth: 500 }}
-        >
-          <Alert severity="warning" sx={{ mb: 2 }}>
-            This queues your account for deletion. Once processed, your
-            account and all workout data will be permanently removed and
-            cannot be recovered.
-          </Alert>
-          <Typography variant="body2" sx={{ mb: 2, color: "text.secondary" }}>
-            Deletion is handled manually and may take a few days. Re-submitting
-            is safe - duplicate requests are ignored.
-          </Typography>
-          <Typography variant="body2" sx={{ mb: 2 }}>
-            To confirm, retype your email address:{" "}
-            <Box component="span" sx={{ fontWeight: 600 }}>{email}</Box>
-          </Typography>
-          <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+        <Reveal delay={0.06}>
+          <Panel accent={GJ_ACCENT} wash sx={{ maxWidth: 540, display: "flex", flexDirection: "column", gap: 2 }}>
+            <Callout accent="#ef5350" title="permanent">
+              This queues your account for deletion. Once processed, your account
+              and all workout data will be permanently removed and cannot be
+              recovered.
+            </Callout>
+            <Typography variant="body2" sx={{ color: "text.secondary" }}>
+              Deletion is handled manually and may take a few days. Re-submitting
+              is safe: duplicate requests are ignored.
+            </Typography>
+            <Typography variant="body2">
+              To confirm, retype your email address:{" "}
+              <Box component="span" sx={{ fontWeight: 600 }}>{email}</Box>
+            </Typography>
             <TextField
               label="Confirm email"
               type="email"
@@ -280,16 +291,18 @@ export default function DeleteMe() {
                 "Request deletion"
               )}
             </Button>
-          </Box>
-        </Paper>
+          </Panel>
+        </Reveal>
       )}
 
       {step === "done" && (
-        <Alert severity="success" sx={{ maxWidth: 500 }}>
-          Your deletion request has been queued. Your account and workout data
-          will be removed once the request is processed. You can safely close
-          this page.
-        </Alert>
+        <Reveal delay={0.06}>
+          <Alert severity="success" sx={{ maxWidth: 540 }}>
+            Your deletion request has been queued. Your account and workout data
+            will be removed once the request is processed. You can safely close
+            this page.
+          </Alert>
+        </Reveal>
       )}
     </Box>
   );

@@ -1,82 +1,68 @@
-import { Box, Typography } from "@mui/material";
-import PageLinks from "../../../components/PageLinks";
-import BottomNavigation from "../../../components/BottomNavigation";
+import { Box } from "@mui/material";
+import {
+  PageHeader,
+  GradientText,
+  Reveal,
+  SectionHeading,
+  CheckList,
+  Callout,
+  ScreenshotGallery,
+  PageNav,
+} from "../../../components/design";
+
+const ACCENT = "#ffb74d";
 
 const screenshots = [
   { src: "/gym_junkie/workout_history.png", label: "Workout history" },
-  { src: "/gym_junkie/wokrout_overview_history.png", label: "Past workout overview" },
+  { src: "/gym_junkie/wokrout_overview_history.png", label: "Past workout" },
+  { src: "/gymJunkieHistoryData.png", label: "Workout details" },
 ];
 
 export default function HistoryCalendar() {
   return (
     <Box
       component="section"
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100%',
-        width: '100%',
-        gap: '10px',
-      }}
+      sx={{ width: "100%", display: "flex", flexDirection: "column", gap: { xs: 3, sm: 4 }, pb: 4 }}
     >
-      <PageLinks />
-      <Typography variant="h5">
-        History & Calendar
-      </Typography>
-      <Typography>
-        Every workout you've ever logged lives in your history. Tap any session and you
-        get the full breakdown - exercises, sets, weights, notes, the muscle groups you
-        hit, the duration and your heart rate if you were wearing a strap. It's the same
-        layout as the live workout overview, so nothing has to be re-learned.
-      </Typography>
-      <Typography>
-        On top of the list view, the yearly frequency calendar paints every day of the
-        year green if you trained, with the shade scaling to how hard the session was.
-        It's a nice motivator - and a brutally honest record of any holes in your
-        consistency.
-      </Typography>
-      <Typography>
-        Use the history to copy old workouts as a template for today, compare last
-        month's performance to right now, or just remind yourself how far you've come.
-      </Typography>
-      <Box
-        sx={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: { xs: 2, sm: 4 },
-          width: '100%',
-          justifyContent: 'center',
-          mt: 1,
-        }}
-      >
-        {screenshots.map(({ src, label }) => (
-          <Box
-            key={src}
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
-          >
-            <Box
-              component="img"
-              src={src}
-              alt={label}
-              sx={{ width: { xs: 140, sm: 200 }, maxWidth: '42vw', height: 'auto' }}
-            />
-            <Typography variant="body2" sx={{ textAlign: 'center', mt: 0.5 }}>
-              {label}
-            </Typography>
-          </Box>
-        ))}
-      </Box>
-      <Typography variant="caption" color="text.secondary" sx={{ mt: 1 }}>
-        More screenshots coming: yearly frequency calendar view.
-      </Typography>
-      {BottomNavigation({
-        left: { text: 'Details', link: '/gym-junkie/details' },
-        right: { text: 'Friends & Leaderboards', link: '/gym-junkie/details/friends' },
-      })}
+      <PageHeader
+        eyebrow="gym junkie"
+        title={
+          <>
+            History and <GradientText>calendar</GradientText>
+          </>
+        }
+        subtitle="Every session you have ever logged, kept in one honest record of your consistency."
+      />
+
+      <Reveal delay={0.06}>
+        <SectionHeading eyebrow="the log">Every workout, in full</SectionHeading>
+        <CheckList
+          accent={ACCENT}
+          items={[
+            "Tap any past session for the full breakdown: exercises, sets, weights, notes, muscle groups, duration and heart rate if you wore a strap.",
+            "The same layout as the live workout overview, so there is nothing new to learn.",
+            "A yearly frequency calendar paints every training day green, with the shade scaling to how hard the session was.",
+          ]}
+        />
+      </Reveal>
+
+      <Reveal delay={0.12}>
+        <Callout accent={ACCENT} title="put it to work">
+          Copy an old workout as a template for today, compare last month's performance against right
+          now, or just remind yourself how far you have come. The calendar is a nice motivator and a
+          brutally honest record of any holes in your consistency.
+        </Callout>
+      </Reveal>
+
+      <Reveal delay={0.18}>
+        <SectionHeading eyebrow="screens">See it in action</SectionHeading>
+        <ScreenshotGallery shots={screenshots} accent={ACCENT} />
+      </Reveal>
+
+      <PageNav
+        left={{ text: "Details", link: "/gym-junkie/details" }}
+        right={{ text: "Friends and Leaderboards", link: "/gym-junkie/details/friends" }}
+      />
     </Box>
   );
 }

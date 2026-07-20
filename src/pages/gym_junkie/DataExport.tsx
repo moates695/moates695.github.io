@@ -15,8 +15,17 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import PageLinks from "../../components/PageLinks";
+import DownloadIcon from "@mui/icons-material/Download";
 import { clearSession, loadSession, saveSession } from "../../middleware/gymJunkieSession";
+import {
+  PageHeader,
+  GradientText,
+  Reveal,
+  Panel,
+  CheckList,
+} from "../../components/design";
+
+const GJ_ACCENT = "#ffb74d";
 
 const API_BASE =
   process.env.REACT_APP_GYM_JUNKIE_API_BASE ??
@@ -187,16 +196,18 @@ export default function DataExport() {
     <Box
       component="section"
       sx={{
+        width: "100%",
         display: "flex",
         flexDirection: "column",
-        height: "100%",
-        width: "100%",
-        gap: "10px",
-        pb: 2,
+        gap: { xs: 3, sm: 4 },
+        pb: 4,
       }}
     >
-      <PageLinks />
-      <Typography variant="h5">Data Export</Typography>
+      <PageHeader
+        eyebrow="gym junkie"
+        title={<>Data <GradientText gradient={`linear-gradient(90deg, ${GJ_ACCENT}, #ff8a65)`}>export</GradientText></>}
+        subtitle="Download your Gym Junkie workouts as Garmin FIT files. We verify it's you by email before showing your data."
+      />
 
       {error && (
         <Alert severity="error" onClose={() => setError(null)}>
@@ -205,52 +216,55 @@ export default function DataExport() {
       )}
 
       {step === "login" && (
-        <Paper
-          elevation={0}
-          sx={{ p: 3, bgcolor: "background.paper", borderRadius: 2, maxWidth: 400 }}
-        >
-          <Typography variant="body2" sx={{ mb: 2, color: "text.secondary" }}>
-            Download your Gym Junkie workout data as Garmin FIT files. A
-            verification code will be sent to your email.
-          </Typography>
-          <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-            <TextField
-              label="Email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              size="small"
-              fullWidth
-            />
-            <TextField
-              label="Password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              size="small"
-              fullWidth
-              onKeyDown={(e) => e.key === "Enter" && !loading && handleLogin()}
-            />
-            <Button
-              variant="contained"
-              onClick={handleLogin}
-              disabled={loading || !email || !password}
-            >
-              {loading ? <CircularProgress size={20} color="inherit" /> : "Continue"}
-            </Button>
-          </Box>
-        </Paper>
+        <Reveal delay={0.06}>
+          <Panel accent={GJ_ACCENT} wash sx={{ maxWidth: 460, display: "flex", flexDirection: "column", gap: 2.5 }}>
+            <Box>
+              <Typography sx={{ fontWeight: 700, mb: 1 }}>How it works</Typography>
+              <CheckList
+                accent={GJ_ACCENT}
+                items={[
+                  "Sign in with your Gym Junkie email and password.",
+                  "We email you a 6-digit verification code.",
+                  "Browse your workouts and download any as a FIT file.",
+                ]}
+              />
+            </Box>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+              <TextField
+                label="Email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                size="small"
+                fullWidth
+              />
+              <TextField
+                label="Password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                size="small"
+                fullWidth
+                onKeyDown={(e) => e.key === "Enter" && !loading && handleLogin()}
+              />
+              <Button
+                variant="contained"
+                onClick={handleLogin}
+                disabled={loading || !email || !password}
+              >
+                {loading ? <CircularProgress size={20} color="inherit" /> : "Continue"}
+              </Button>
+            </Box>
+          </Panel>
+        </Reveal>
       )}
 
       {step === "verify" && (
-        <Paper
-          elevation={0}
-          sx={{ p: 3, bgcolor: "background.paper", borderRadius: 2, maxWidth: 400 }}
-        >
-          <Typography variant="body2" sx={{ mb: 2, color: "text.secondary" }}>
-            A 6-digit code was sent to {email}. Enter it below.
-          </Typography>
-          <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+        <Reveal delay={0.06}>
+          <Panel accent={GJ_ACCENT} wash sx={{ maxWidth: 460, display: "flex", flexDirection: "column", gap: 2 }}>
+            <Typography variant="body2" sx={{ color: "text.secondary" }}>
+              A 6-digit code was sent to {email}. Enter it below.
+            </Typography>
             <TextField
               label="Verification Code"
               value={code}
@@ -278,82 +292,85 @@ export default function DataExport() {
             >
               Back
             </Button>
-          </Box>
-        </Paper>
+          </Panel>
+        </Reveal>
       )}
 
       {step === "list" && (
-        <>
-          <Typography variant="body2" sx={{ color: "text.secondary" }}>
+        <Reveal delay={0.06}>
+          <Typography variant="body2" sx={{ color: "text.secondary", mb: 2 }}>
             {workouts.length} workout{workouts.length !== 1 ? "s" : ""} found.
             Downloads are in Garmin FIT format.
           </Typography>
           {workouts.length === 0 ? (
             <Typography variant="body2">No workouts recorded yet.</Typography>
           ) : (
-            <TableContainer
-              component={Paper}
-              elevation={0}
-              sx={{
-                bgcolor: "background.paper",
-                borderRadius: 2,
-                flex: 1,
-                minHeight: 0,
-                overflow: "auto",
-              }}
-            >
-              <Table size="small">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Workout</TableCell>
-                    <TableCell>Date</TableCell>
-                    <TableCell>Duration</TableCell>
-                    <TableCell align="right">Download</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {workouts.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((w) => (
-                    <TableRow key={w.id}>
-                      <TableCell>{w.title || "Untitled"}</TableCell>
-                      <TableCell>{formatDate(w.started_at)}</TableCell>
-                      <TableCell>{formatDuration(w.duration_secs)}</TableCell>
-                      <TableCell align="right">
-                        <Button
-                          variant="outlined"
-                          size="small"
-                          onClick={() => handleDownload(w)}
-                          disabled={downloading.has(w.id)}
-                          sx={{ minWidth: 56 }}
-                        >
-                          {downloading.has(w.id) ? (
-                            <CircularProgress size={16} />
-                          ) : (
-                            ".FIT"
-                          )}
-                        </Button>
-                      </TableCell>
+            <>
+              <TableContainer
+                component={Paper}
+                elevation={0}
+                sx={{
+                  bgcolor: "background.paper",
+                  border: "1px solid",
+                  borderColor: "divider",
+                  borderRadius: 3,
+                  overflowX: "auto",
+                }}
+              >
+                <Table size="small">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Workout</TableCell>
+                      <TableCell>Date</TableCell>
+                      <TableCell>Duration</TableCell>
+                      <TableCell align="right">Download</TableCell>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
+                  </TableHead>
+                  <TableBody>
+                    {workouts.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((w) => (
+                      <TableRow key={w.id} hover>
+                        <TableCell>{w.title || "Untitled"}</TableCell>
+                        <TableCell>{formatDate(w.started_at)}</TableCell>
+                        <TableCell>{formatDuration(w.duration_secs)}</TableCell>
+                        <TableCell align="right">
+                          <Button
+                            variant="outlined"
+                            size="small"
+                            startIcon={
+                              downloading.has(w.id) ? undefined : <DownloadIcon sx={{ fontSize: 16 }} />
+                            }
+                            onClick={() => handleDownload(w)}
+                            disabled={downloading.has(w.id)}
+                            sx={{ minWidth: 72 }}
+                          >
+                            {downloading.has(w.id) ? (
+                              <CircularProgress size={16} />
+                            ) : (
+                              ".FIT"
+                            )}
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+              <TablePagination
+                component="div"
+                count={workouts.length}
+                page={page}
+                onPageChange={(_, newPage) => setPage(newPage)}
+                rowsPerPage={rowsPerPage}
+                onRowsPerPageChange={(e) => {
+                  setRowsPerPage(parseInt(e.target.value, 10));
+                  setPage(0);
+                }}
+                rowsPerPageOptions={[10, 20, 50]}
+                sx={{ flexShrink: 0 }}
+              />
+            </>
           )}
-          {workouts.length > 0 && (
-            <TablePagination
-              component="div"
-              count={workouts.length}
-              page={page}
-              onPageChange={(_, newPage) => setPage(newPage)}
-              rowsPerPage={rowsPerPage}
-              onRowsPerPageChange={(e) => {
-                setRowsPerPage(parseInt(e.target.value, 10));
-                setPage(0);
-              }}
-              rowsPerPageOptions={[10, 20, 50]}
-              sx={{ flexShrink: 0 }}
-            />
-          )}
-        </>
+        </Reveal>
       )}
     </Box>
   );

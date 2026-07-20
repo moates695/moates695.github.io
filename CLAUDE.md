@@ -29,6 +29,8 @@ GitHub Actions workflow (`.github/workflows/deploy.yml`) triggers on push to `ma
 
 ## Conventions
 
+- Never use em-dashes (—) in site text/copy. Use commas, colons, "to" for ranges, or hyphens instead. This applies to all user-facing strings; it does not restrict code comments.
+- Do not use accented characters like "é" in site text; use the plain letter (e.g. "resume", not "résumé").
 - HashRouter is required for GitHub Pages SPA routing — do not switch to BrowserRouter
 - Homepage field in `package.json` must stay as `https://moates.com.au`
 - Static assets (icons, screenshots, APKs) go in `public/`; source assets (images used in components) go in `src/assets/`

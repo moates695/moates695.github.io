@@ -1,6 +1,5 @@
 import { ReactElement } from "react";
-import { Box, Card, CardActionArea, CardContent, Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Box } from "@mui/material";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
 import TimerIcon from "@mui/icons-material/Timer";
@@ -11,8 +10,18 @@ import DonutLargeIcon from "@mui/icons-material/DonutLarge";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import GroupIcon from "@mui/icons-material/Group";
 import ShareIcon from "@mui/icons-material/Share";
-import PageLinks from "../../components/PageLinks";
-import BottomNavigation from "../../components/BottomNavigation";
+import {
+  Reveal,
+  GradientText,
+  PageHeader,
+  SectionHeading,
+  FeatureCard,
+  CardGrid,
+  PageNav,
+} from "../../components/design";
+
+const ACCENT = "#ffb74d";
+const iconSx = { fontSize: 22 };
 
 type Feature = {
   icon: ReactElement;
@@ -21,33 +30,33 @@ type Feature = {
   link: string;
 };
 
-const iconSx = { fontSize: 36 };
-
-const sections: { heading: string; features: Feature[] }[] = [
+const sections: { eyebrow: string; heading: string; features: Feature[] }[] = [
   {
+    eyebrow: "log",
     heading: "Logging your workouts",
     features: [
       {
         icon: <FitnessCenterIcon sx={iconSx} />,
         title: "Workout Logging",
-        blurb: "Fast set, rep and weight entry. Reorder, swap and tweak exercises mid-workout. Drafts autosave so you never lose a session.",
+        blurb: "Fast set, rep and weight entry. Reorder, swap and tweak exercises mid-workout, with drafts autosaving so you never lose a session.",
         link: "/gym-junkie/details/workout-logging",
       },
       {
         icon: <LibraryBooksIcon sx={iconSx} />,
         title: "Exercise Library",
-        blurb: "A built-in catalogue of exercises with filters, plus your own custom exercises, variations and favourites.",
+        blurb: "A built-in catalogue with filters, plus your own custom exercises, variations and favourites.",
         link: "/gym-junkie/details/exercise-library",
       },
       {
         icon: <TimerIcon sx={iconSx} />,
         title: "Rest Timer & Heart Rate",
-        blurb: "Built-in rest timer between sets and Bluetooth heart-rate strap support so you can see your effort live.",
+        blurb: "A rest timer between sets and Bluetooth heart-rate strap support so you can see your effort live.",
         link: "/gym-junkie/details/rest-timer-heart-rate",
       },
     ],
   },
   {
+    eyebrow: "analyse",
     heading: "Tracking & insights",
     features: [
       {
@@ -59,7 +68,7 @@ const sections: { heading: string; features: Feature[] }[] = [
       {
         icon: <WhatshotIcon sx={iconSx} />,
         title: "Muscle Heatmap",
-        blurb: "A body map that shows which muscles you've trained recently, and how often, so nothing falls through the cracks.",
+        blurb: "A body map of which muscles you have trained recently, and how often, so nothing slips through the cracks.",
         link: "/gym-junkie/details/muscle-heatmap",
       },
       {
@@ -83,12 +92,13 @@ const sections: { heading: string; features: Feature[] }[] = [
     ],
   },
   {
+    eyebrow: "share",
     heading: "Social",
     features: [
       {
         icon: <GroupIcon sx={iconSx} />,
         title: "Friends & Leaderboards",
-        blurb: "Add your mates, follow what they're up to and compete on lift-based leaderboards. No likes, no comments.",
+        blurb: "Add your mates, follow what they are up to and compete on lift-based leaderboards. No likes, no comments.",
         link: "/gym-junkie/details/friends",
       },
       {
@@ -102,75 +112,43 @@ const sections: { heading: string; features: Feature[] }[] = [
 ];
 
 export default function GymJunkieDetails() {
-  const navigate = useNavigate();
-
   return (
     <Box
       component="section"
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100%',
-        width: '100%',
-        gap: '10px',
-      }}
+      sx={{ width: "100%", display: "flex", flexDirection: "column", gap: { xs: 3, sm: 4 }, pb: 4 }}
     >
-      <PageLinks />
-      <Typography variant="h5">
-        Details
-      </Typography>
-      <Typography>
-        Gym Junkie packs a lot in. Pick a feature below to read about how it works
-        from a user's point of view.
-      </Typography>
+      <PageHeader
+        eyebrow="details"
+        title={
+          <>
+            Feature <GradientText>hub</GradientText>
+          </>
+        }
+        subtitle="Gym Junkie packs a lot in. Pick a feature below to read how it works from a user's point of view."
+      />
 
-      {sections.map(({ heading, features }) => (
-        <Box key={heading} sx={{ display: 'flex', flexDirection: 'column', gap: 1.5, mt: 2 }}>
-          <Typography variant="h6">{heading}</Typography>
-          <Box
-            sx={{
-              display: 'grid',
-              gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr', md: '1fr 1fr 1fr' },
-              gap: 2,
-              width: '100%',
-            }}
-          >
+      {sections.map(({ eyebrow, heading, features }, i) => (
+        <Reveal key={heading} delay={0.06 + i * 0.06}>
+          <SectionHeading eyebrow={eyebrow}>{heading}</SectionHeading>
+          <CardGrid>
             {features.map((feature) => (
-              <Card key={feature.link} variant="outlined" sx={{ height: '100%' }}>
-                <CardActionArea
-                  onClick={() => navigate(feature.link)}
-                  sx={{ height: '100%', alignItems: 'stretch' }}
-                >
-                  <CardContent sx={{ display: 'flex', flexDirection: 'column', gap: 1, height: '100%' }}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                      {feature.icon}
-                      <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-                        {feature.title}
-                      </Typography>
-                    </Box>
-                    <Typography variant="body2" color="text.secondary">
-                      {feature.blurb}
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
+              <FeatureCard
+                key={feature.link}
+                icon={feature.icon}
+                title={feature.title}
+                blurb={feature.blurb}
+                to={feature.link}
+                accent={ACCENT}
+              />
             ))}
-          </Box>
-        </Box>
+          </CardGrid>
+        </Reveal>
       ))}
 
-      <Box sx={{ mt: 2 }}>
-        {BottomNavigation({
-          left: {
-            text: 'Overview',
-            link: '/gym-junkie',
-          },
-          right: {
-            text: 'Changes',
-            link: '/gym-junkie/changes',
-          },
-        })}
-      </Box>
+      <PageNav
+        left={{ text: "Overview", link: "/gym-junkie" }}
+        right={{ text: "Changes", link: "/gym-junkie/changes" }}
+      />
     </Box>
   );
 }

@@ -1,29 +1,8 @@
-import * as React from 'react';
 import Box from '@mui/material/Box';
-import List from '@mui/material/List';
-import Link, { LinkProps } from '@mui/material/Link';
-import { ListItemProps } from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import Collapse from '@mui/material/Collapse';
-import ListItemText from '@mui/material/ListItemText';
-import Typography from '@mui/material/Typography';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
-import Breadcrumbs from '@mui/material/Breadcrumbs';
-import {
-  Link as RouterLink,
-  Route,
-  Routes,
-  MemoryRouter,
-  useLocation,
-} from 'react-router';
+import { Link as RouterLink, useLocation } from 'react-router';
+import { MONO } from '../styles/tokens';
 
-interface ListItemLinkProps extends ListItemProps {
-  to: string;
-  open?: boolean;
-}
-
-const breadcrumbNameMap: { [key: string]: string } = {
+export const breadcrumbNameMap: { [key: string]: string } = {
   '/woodchuck': 'Woodchuck',
   '/woodchuck/design': 'Design',
   '/woodchuck/changes': 'Changes',
@@ -58,61 +37,90 @@ const breadcrumbNameMap: { [key: string]: string } = {
   '/other/downer-helper': 'Downer Helper',
   '/other/cellular-tracking': 'Cellular Tracking',
   '/other/postgres-deploy': 'Postgres Deploy',
-  '/about': 'About',
-  '/contact': 'Contact'
+  '/about': 'Resume',
+  '/projects': 'Projects',
+  '/contact': 'Contact',
 };
 
-function ListItemLink(props: ListItemLinkProps) {
-  const { to, open, ...other } = props;
-  const primary = breadcrumbNameMap[to];
-
-  let icon = null;
-  if (open != null) {
-    icon = open ? <ExpandLess /> : <ExpandMore />;
-  }
-
-  return (
-    <li>
-      <ListItemButton component={RouterLink as any} to={to} {...other}>
-        <ListItemText primary={primary} />
-        {icon}
-      </ListItemButton>
-    </li>
-  );
+/** Label of the final breadcrumb crumb for a path (the current page's name). */
+export function lastCrumbLabel(pathname: string): string {
+  const pathnames = pathname.split('/').filter((x) => x);
+  if (pathnames.length === 0) return 'home';
+  const to = `/${pathnames.join('/')}`;
+  return breadcrumbNameMap[to] ?? pathnames[pathnames.length - 1];
 }
 
-interface LinkRouterProps extends LinkProps {
-  to: string;
-  replace?: boolean;
-}
-
-function LinkRouter(props: LinkRouterProps) {
-  return <Link {...props} component={RouterLink as any} />;
-}
+// A navigation trail, deliberately styled apart from the `// LABEL` section
+// eyebrows: natural label case + tight tracking + no leading `//`, so a path
+// (Home / Woodchuck / Changes) never reads like a section marker (// FEATURES).
+const crumbSx = {
+  fontFamily: MONO,
+  fontSize: 12,
+  letterSpacing: '0.02em',
+  lineHeight: 1.6,
+};
 
 export default function PageLinks() {
   const location = useLocation();
   const pathnames = location.pathname.split('/').filter((x) => x);
-  
-  return (
-    <Breadcrumbs aria-label="breadcrumb">
-      <LinkRouter underline="hover" color="inherit" to="/">
-        Home
-      </LinkRouter>
-      {pathnames.map((value, index) => {
-        const last = index === pathnames.length - 1;
-        const to = `/${pathnames.slice(0, index + 1).join('/')}`;
 
-        return last ? (
-          <Typography key={to} sx={{ color: 'text.primary' }}>
-            {breadcrumbNameMap[to]}
-          </Typography>
-        ) : (
-          <LinkRouter underline="hover" color="inherit" to={to} key={to}>
-            {breadcrumbNameMap[to]}
-          </LinkRouter>
+  const crumbs = [
+    { label: 'Home', to: '/' },
+    ...pathnames.map((_, index) => {
+      const to = `/${pathnames.slice(0, index + 1).join('/')}`;
+      return { label: breadcrumbNameMap[to] ?? pathnames[index], to };
+    }),
+  ];
+
+  return (
+    <Box
+      component="nav"
+      aria-label="breadcrumb"
+      sx={{
+        ...crumbSx,
+        display: 'flex',
+        alignItems: 'center',
+        flexWrap: 'nowrap',
+        whiteSpace: 'nowrap',
+        columnGap: 0.75,
+        maxWidth: '100%',
+        overflowX: 'auto',
+        // keep the trail on one line without pushing the page wider
+        scrollbarWidth: 'none',
+        '&::-webkit-scrollbar': { display: 'none' },
+      }}
+    >
+      {crumbs.map((crumb, index) => {
+        const last = index === crumbs.length - 1;
+        return (
+          <Box key={crumb.to} sx={{ display: 'flex', alignItems: 'center', columnGap: 0.75, flexShrink: 0 }}>
+            {last ? (
+              <Box component="span" sx={{ color: 'text.secondary', fontWeight: 600 }}>
+                {crumb.label}
+              </Box>
+            ) : (
+              <Box
+                component={RouterLink}
+                to={crumb.to}
+                sx={{
+                  ...crumbSx,
+                  color: 'text.disabled',
+                  textDecoration: 'none',
+                  transition: 'color 0.15s ease',
+                  '&:hover': { color: 'primary.main' },
+                }}
+              >
+                {crumb.label}
+              </Box>
+            )}
+            {!last && (
+              <Box component="span" sx={{ color: 'text.disabled' }}>
+                /
+              </Box>
+            )}
+          </Box>
         );
       })}
-    </Breadcrumbs>
+    </Box>
   );
 }

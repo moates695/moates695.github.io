@@ -1,59 +1,65 @@
-import { Box, Typography } from "@mui/material";
-import PageLinks from "../../../components/PageLinks";
-import BottomNavigation from "../../../components/BottomNavigation";
+import { Box } from "@mui/material";
+import {
+  PageHeader,
+  GradientText,
+  Reveal,
+  SectionHeading,
+  CheckList,
+  Callout,
+  ScreenshotGallery,
+  PageNav,
+} from "../../../components/design";
+
+const ACCENT = "#ffb74d";
 
 export default function Friends() {
   return (
     <Box
       component="section"
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100%',
-        width: '100%',
-        gap: '10px',
-      }}
+      sx={{ width: "100%", display: "flex", flexDirection: "column", gap: { xs: 3, sm: 4 }, pb: 4 }}
     >
-      <PageLinks />
-      <Typography variant="h5">
-        Friends & Leaderboards
-      </Typography>
-      <Typography>
-        Add your gym mates and you'll see their workouts in a feed - what they trained,
-        how heavy and how long it took. There are no likes, no comments, no streaks
-        guilting you into pretending you trained. The point is to see what your friends
-        are up to and feed off that energy, not to scroll a social network.
-      </Typography>
-      <Typography>
-        Tap into a friend's profile and you can compare directly - same exercise, same
-        rep range, side by side. It's a lightweight way to keep yourself honest without
-        feeling like you're being measured all the time.
-      </Typography>
-      <Typography>
-        Leaderboards close the loop. Pick a lift, pick a rep range and see where you
-        stack up against your friends. Filter by age bracket, body weight or experience
-        if you want a fairer comparison. Whether that motivates you to push harder or
-        gently roast a mate is up to you.
-      </Typography>
-      <Typography
-        variant="caption"
-        color="text.secondary"
-        sx={{
-          mt: 2,
-          p: 2,
-          border: '1px dashed',
-          borderColor: 'divider',
-          borderRadius: 1,
-          textAlign: 'center',
-        }}
-      >
-        Screenshots coming: friend feed, friend profile view, add-friends screen,
-        leaderboard view.
-      </Typography>
-      {BottomNavigation({
-        left: { text: 'Details', link: '/gym-junkie/details' },
-        right: { text: 'Strava Sharing', link: '/gym-junkie/details/strava' },
-      })}
+      <PageHeader
+        eyebrow="gym junkie"
+        title={
+          <>
+            Friends and <GradientText>leaderboards</GradientText>
+          </>
+        }
+        subtitle="See what your gym mates are training and where you stack up, without the social-network noise."
+      />
+
+      <Reveal delay={0.06}>
+        <SectionHeading eyebrow="the feed">Train alongside your mates</SectionHeading>
+        <CheckList
+          accent={ACCENT}
+          items={[
+            "Add gym mates and see their workouts in a feed: what they trained, how heavy and how long it took.",
+            "Tap into a friend's profile to compare directly, same exercise and same rep range, side by side.",
+            "Leaderboards let you pick a lift and rep range and see where you rank against your friends.",
+            "Filter leaderboards by age bracket, body weight or experience for a fairer comparison.",
+          ]}
+        />
+      </Reveal>
+
+      <Reveal delay={0.12}>
+        <Callout accent={ACCENT} title="no social-network guilt">
+          There are no likes, no comments and no streaks guilting you into pretending you trained. The
+          point is to feed off your friends' energy and keep yourself honest, whether that means
+          pushing harder or gently roasting a mate.
+        </Callout>
+      </Reveal>
+
+      <Reveal delay={0.18}>
+        <ScreenshotGallery
+          accent={ACCENT}
+          shots={[{ src: "/gymJunkieLeaderboard.png", label: "Leaderboards" }]}
+        />
+      </Reveal>
+
+      <PageNav
+        left={{ text: "Details", link: "/gym-junkie/details" }}
+        right={{ text: "Strava Sharing", link: "/gym-junkie/details/strava" }}
+      />
     </Box>
   );
 }
