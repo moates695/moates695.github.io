@@ -33,36 +33,39 @@ const EXPERIENCE: Experience[] = [
     role: 'Senior Software Engineer, AI & Backend',
     company: 'Voxworks',
     companyHref: 'https://voxworks.ai/',
-    dates: '2025 to present',
+    dates: 'Jan 2026 to present',
     current: true,
     summary:
-      'Building AI-driven backend systems and the services around them.',
-    highlights: [],
+      'First employee at a voice AI startup, leading a ground-up restructure of the core voice ' +
+      'agent backend and scaling call concurrency by 400%.',
+    highlights: [
+      'As the startup’s first employee, took operational control of the voice agent’s backend architecture and led a ground-up restructure of the codebase, the company’s core product, owning its reliability and ongoing development in production',
+      'Developed agentic AI development workflows and custom Model Context Protocol (MCP) tooling that dramatically accelerated development and enabled rapid prototyping, under heavy human oversight with disciplined review to keep code quality high',
+      'Rebuilt the core conversation logic while maintaining interoperability with the existing live system, so clients continued to be served without interruption',
+      'Extended reliable call handling from ~2-minute calls to consistently sustaining 10 to 20 minute conversations that stay on script and complete their objectives',
+      'Increased call concurrency by 400% through system optimisations, managing concurrency and cost-effectiveness across the pipeline to balance throughput against infrastructure spend',
+      'Architected the agent’s conversational dynamics for a ~10% improvement in average response latency, prioritising accuracy so the agent does not stray from its call objectives',
+      'Built automated testing for the voice system, from unit and integration tests to concurrent automated call runs, using AI agents to analyse call dynamics and debug conversational issues across a large sample space',
+      'Established automated CI/CD deployment pipelines with real-time observability and monitoring in Grafana, giving instant visibility into call performance and system health',
+      'Converted the voice agent to a chat agent while maintaining the core integrations, primarily used for client testing',
+    ],
   },
   {
     role: 'Automation Software Engineer',
     company: 'Downer Group',
-    dates: 'May 2023 to 2025',
+    dates: 'May 2023 to Dec 2025',
     summary:
       'Designed and shipped automation across cloud and on-prem systems, turning manual workflows ' +
       'into monitored, cost-efficient services.',
     highlights: [
-      'Automated data extraction from spreadsheets using Azure Function Apps, stored in a database with a PowerBI connection, saving ~$175k a year per business-unit implementation and eliminating manual transcribing errors',
-      'Built a custom internal Azure dashboard for monitoring project resources across subscriptions, with resource actions and deployment monitoring',
-      'Reduced Azure operating costs by ~60% by scheduling startup/shutdown events with a centralised tagging policy driven from the dashboard',
-      'Extracted text with OCR from CAD drawing PDFs and generated project report spreadsheets, a ~95% time saving',
-      'Built custom sFTP file routing to applications with remote configuration from trusted actors, removing the need for developer intervention on config updates',
-      'Wrote project setup shell scripts that deploy environments and resources in Azure, linked to custom GitHub branch environments with rules and protections for consistent IaC deployments using Bicep',
-      'Automated Konect API queries for critical field work, notifying requisite authorities to consistently meet SLAs and avoid total penalties of ~$450k',
-      'Identified and designed automation between existing cloud and on-prem systems, leveraging Azure microservices to eliminate manual workflows',
-      'Enhanced security through daily storage account key rotation and SAS generation via Azure Key Vault, reducing 80–100 points of failure to a centralised point',
-      'Created a custom PyPI module wrapping the Azure SDK with common commands, cutting ~200 lines of replicated code per project',
-      'Developed a React frontend so non-technical staff can submit data and run automated jobs',
-      'Implemented bespoke deep-learning and computer-vision solutions for real-time artefact recognition with ~94% accuracy',
-      'Combined ML and classical analysis to read a variety of analogue meters from a limited dataset, at ~85% accuracy',
-      'Deployed and monitored new Esri ArcGIS Enterprise servers',
-      'Configured Azure DevOps for integration with external tracking',
-      'Liaised with management to find opportunities for automation adoption across divisions',
+      'Automated data extraction from spreadsheets using Azure Function Apps, stored in a database with a Power BI connection, saving ~$175k a year per business-unit implementation and eliminating manual transcription errors',
+      'Created a custom internal Azure dashboard for monitoring project resources across subscriptions, with resource actions and deployment monitoring',
+      'Reduced operating costs of Azure resources by ~60% by scheduling startup and shutdown events through a centralised tagging policy enacted via the dashboard',
+      'Automated Konect API queries for critical field work, notifying the requisite authorities to consistently meet SLAs and avoid total penalties of ~$450k',
+      'Enhanced security through daily storage account key rotation and SAS generation via Azure Key Vault, reducing 80–100 points of failure to a single centralised point',
+      'Extracted text with OCR from CAD drawing PDFs and generated project report spreadsheets, a time saving of ~95%',
+      'Wrote project setup shell scripts that deploy environments and resources in Azure, linked to custom GitHub branch environments with rules and protections to enable consistent IaC deployments using Bicep',
+      'Implemented bespoke deep learning and computer vision solutions for real-time artefact recognition with ~94% accuracy',
     ],
   },
   {
@@ -82,10 +85,11 @@ const EXPERIENCE: Experience[] = [
 
 const SKILLS: { group: string; items: string[] }[] = [
   { group: 'Languages', items: ['Python', 'TypeScript', 'JavaScript', 'SQL'] },
-  { group: 'Frontend', items: ['React', 'React Native', 'Expo', 'MUI'] },
+  { group: 'Frontend', items: ['React', 'React Native', 'Expo', 'Jotai', 'MUI'] },
   { group: 'Backend', items: ['Node / Express', 'FastAPI', 'WebSockets', 'REST APIs'] },
-  { group: 'Data', items: ['Postgres', 'PowerBI', 'Data analytics'] },
-  { group: 'Cloud & DevOps', items: ['Azure', 'Bicep (IaC)', 'GitHub Actions', 'Docker'] },
+  { group: 'Data', items: ['Postgres', 'Redis', 'PowerBI', 'Data analytics'] },
+  { group: 'Cloud & DevOps', items: ['Azure', 'AWS', 'Bicep (IaC)', 'GitHub Actions', 'Docker', 'Cloudflare'] },
+  { group: 'AI / LLMs', items: ['Voice agents', 'LLM fine-tuning', 'Prompt engineering', 'MCP tooling', 'RAG', 'LLM evals'] },
   { group: 'AI / ML', items: ['Deep learning', 'Computer vision', 'OCR', 'Applied ML'] },
 ];
 
@@ -200,8 +204,8 @@ export default function About() {
           </Box>
         </Typography>
         <Typography variant="subtitle1" sx={{ color: 'text.secondary', mt: 0.5, fontWeight: 400 }}>
-          Senior Software Engineer, AI &amp; Backend. Full-stack developer shipping apps, services
-          and the data/ML behind them.
+          Senior Software Engineer, AI &amp; Backend. Building voice AI and the backend systems
+          behind it, plus the apps, services and data around them.
         </Typography>
 
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, mt: 1.5, color: 'text.secondary' }}>

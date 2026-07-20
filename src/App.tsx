@@ -8,6 +8,7 @@ import About from './pages/About'
 import Projects from './pages/Projects'
 import { Box, ThemeProvider, CssBaseline } from '@mui/material';
 import { lightTheme, darkTheme } from "./styles/theme";
+import FlowBackground from './components/FlowBackground';
 import WoodchuckOverview from './pages/finska/Overview';
 import WoodchuckDesign from './pages/finska/Design';
 import GymJunkieOverview from './pages/gym_junkie/Overview';
@@ -42,14 +43,17 @@ function App() {
   return (
     <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
       <CssBaseline />
+      <FlowBackground />
       <Router>
-        <Box 
-          sx={{ 
-            display: "flex", 
-            flexDirection: "column", 
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
             height: "100vh",
             alignItems: 'center',
             justifyContent: 'flex-start',
+            position: 'relative',
+            zIndex: 1,
           }}
         >
           <AppToolbar isDark={isDark} setIsDark={setIsDark}/>
