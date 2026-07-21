@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type ReactElement } from "react";
 import {
   Box,
   Button,
@@ -17,11 +17,26 @@ import CheckIcon from '@mui/icons-material/Check';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
+import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
+import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
+import TerrainIcon from '@mui/icons-material/Terrain';
+import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike';
+import SportsTennisIcon from '@mui/icons-material/SportsTennis';
+import SportsIcon from '@mui/icons-material/Sports';
+import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
+import ParkOutlinedIcon from '@mui/icons-material/ParkOutlined';
 import { useNavigate } from 'react-router-dom';
 import PageLinks from "../components/PageLinks";
 import { buildBulletPoints } from "../middleware/helpers";
 import { MONO } from "../styles/tokens";
 import { GradientText } from "../components/design";
+import { SectionNavLayout, Section } from "../components/SectionNav";
+
+const SECTIONS: Section[] = [
+  { id: "experience", label: "Experience" },
+  { id: "skills", label: "Skills & tools" },
+  { id: "beyond-work", label: "Beyond work" },
+];
 
 interface Experience {
   role: string
@@ -96,6 +111,17 @@ const SKILLS: { group: string; items: string[] }[] = [
   { group: 'Cloud & DevOps', items: ['Azure', 'AWS', 'Bicep (IaC)', 'GitHub Actions', 'Docker', 'Cloudflare'] },
   { group: 'AI / LLMs', items: ['Voice agents', 'LLM fine-tuning', 'Prompt engineering', 'MCP tooling', 'RAG', 'LLM evals'] },
   { group: 'AI / ML', items: ['Deep learning', 'Computer vision', 'OCR', 'Applied ML'] },
+];
+
+const INTERESTS: { label: string; icon: ReactElement }[] = [
+  { label: 'Strength training', icon: <FitnessCenterIcon sx={{ fontSize: 18 }} /> },
+  { label: 'Ironman training', icon: <DirectionsRunIcon sx={{ fontSize: 18 }} /> },
+  { label: 'Bouldering', icon: <TerrainIcon sx={{ fontSize: 18 }} /> },
+  { label: 'Mountain biking', icon: <DirectionsBikeIcon sx={{ fontSize: 18 }} /> },
+  { label: 'Tennis', icon: <SportsTennisIcon sx={{ fontSize: 18 }} /> },
+  { label: 'Ultimate frisbee', icon: <SportsIcon sx={{ fontSize: 18 }} /> },
+  { label: 'Soccer', icon: <SportsSoccerIcon sx={{ fontSize: 18 }} /> },
+  { label: 'Time outdoors', icon: <ParkOutlinedIcon sx={{ fontSize: 18 }} /> },
 ];
 
 function ExperienceEntry({ exp, last }: { exp: Experience; last: boolean }) {
@@ -199,6 +225,7 @@ export default function About() {
   };
 
   return (
+    <SectionNavLayout sections={SECTIONS}>
     <Box
       component="section"
       sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 3, pb: 4 }}
@@ -269,7 +296,7 @@ export default function About() {
       <Divider sx={{ borderColor: 'divider' }} />
 
       {/* Experience */}
-      <Box className="reveal" sx={{ animationDelay: '0.06s' }}>
+      <Box id="experience" className="reveal" sx={{ animationDelay: '0.06s' }}>
         <Typography variant="h5" sx={{ fontWeight: 700, mb: 2.5 }}>
           Experience
         </Typography>
@@ -281,7 +308,7 @@ export default function About() {
       <Divider sx={{ borderColor: 'divider' }} />
 
       {/* Skills */}
-      <Box className="reveal" sx={{ animationDelay: '0.12s' }}>
+      <Box id="skills" className="reveal" sx={{ animationDelay: '0.12s' }}>
         <Typography variant="h5" sx={{ fontWeight: 700, mb: 2 }}>
           Skills &amp; tools
         </Typography>
@@ -314,6 +341,39 @@ export default function About() {
           ))}
         </Box>
       </Box>
+
+      <Divider sx={{ borderColor: 'divider' }} />
+
+      {/* Beyond work */}
+      <Box id="beyond-work" className="reveal" sx={{ animationDelay: '0.18s' }}>
+        <Typography variant="h5" sx={{ fontWeight: 700, mb: 2 }}>
+          Beyond work
+        </Typography>
+        <Typography variant="body2" sx={{ color: 'text.secondary', mb: 2, maxWidth: 620 }}>
+          Away from the keyboard I stay active and spend as much time outdoors as I can. I train
+          regularly at the gym and am currently working towards an Ironman, and I like the mix of
+          endurance and team sport, from bouldering and mountain biking with friends to tennis,
+          ultimate frisbee and soccer. The same drive that keeps me chasing a hard problem at work
+          is what keeps me chasing the next goal outside it.
+        </Typography>
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+          {INTERESTS.map(({ label, icon }) => (
+            <Chip
+              key={label}
+              icon={icon}
+              label={label}
+              variant="outlined"
+              sx={{
+                borderColor: 'divider',
+                color: 'text.secondary',
+                fontWeight: 500,
+                '& .MuiChip-icon': { color: 'primary.main' },
+              }}
+            />
+          ))}
+        </Box>
+      </Box>
     </Box>
+    </SectionNavLayout>
   );
 }

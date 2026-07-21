@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Box, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { githubLink, pypiLink, stravaLink, expoLink } from "../middleware/links";
+import imaxLogo from "../assets/imax_logo.jpeg";
 import {
   SAND,
   SPACE,
@@ -25,6 +26,15 @@ const discordLink = "https://discord.gg/uUd8hJNvzM";
 const featuredTags = ["FastAPI", "React Native", "PostgreSQL", "Python", "AWS"];
 
 const moreProjects: SandProject[] = [
+  {
+    title: "IMAX Watch Agent",
+    status: "TEST",
+    blurb: "Watches Event Cinemas IMAX Sydney and pings you on Telegram the moment films or tickets go live.",
+    tags: ["Python", "Telegram", "Automation"],
+    icon: imaxLogo,
+    initials: "IX",
+    link: "/other/imax-bot",
+  },
   {
     title: "Woodchuck",
     status: "TEST",

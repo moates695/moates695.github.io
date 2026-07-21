@@ -1,4 +1,5 @@
 import { ChipKey } from "./chipMap";
+import imaxLogo from "../assets/imax_logo.jpeg";
 import {
   gymJunkiePlayStoreLink,
   gymJunkieAppStoreLink,
@@ -6,6 +7,7 @@ import {
   downerhelperLink,
   postgresDeployLink,
   cellularTrackingGithubLink,
+  imaxBotGithubLink,
 } from "./links";
 
 export type Project =
@@ -14,7 +16,8 @@ export type Project =
   | 'balderdash'
   | 'downer_helper'
   | 'cellular_tracking'
-  | 'postgres_deploy';
+  | 'postgres_deploy'
+  | 'imax_bot';
 
 export const iconMap: Record<Project, string> = {
   finska: '/finska-icon.png',
@@ -23,6 +26,7 @@ export const iconMap: Record<Project, string> = {
   downer_helper: '/pypi-logo.png',
   cellular_tracking: '/cells-logo.png',
   postgres_deploy: '/pypi-logo.png',
+  imax_bot: imaxLogo,
 };
 
 export type ProjectStatus = 'prod' | 'test' | 'poc';
@@ -123,6 +127,23 @@ export const otherProjects: ProjectInfo[] = [
     chipKeys: ['full_stack', 'expo', 'react_ts', 'python', 'fastapi', 'websocket', 'postgres'],
     status: 'poc',
     accent: '#d8aa78',
+  },
+  {
+    key: 'imax_bot',
+    icon: iconMap.imax_bot,
+    initials: 'IX',
+    name: 'IMAX Watch Agent',
+    blurb: 'Watches Event Cinemas IMAX Sydney and pings you on Telegram the moment films or tickets appear.',
+    description:
+      'A Python agent that scans Event Cinemas IMAX Sydney on a schedule and alerts you on Telegram when ' +
+      'films appear, tickets open, or a watchlisted title becomes bookable, with a per-session seat ' +
+      'breakdown and a daily digest. State lives in a local file so each alert fires once and never ' +
+      'repeats; deployed as a plain cron job.',
+    link: '/other/imax-bot',
+    chipKeys: ['python', 'telegram', 'automation'],
+    status: 'test',
+    accent: '#d8aa78',
+    external: [{ label: 'Source', href: imaxBotGithubLink, external: true }],
   },
   {
     key: 'cellular_tracking',

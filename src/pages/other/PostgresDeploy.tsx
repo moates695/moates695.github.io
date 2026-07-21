@@ -12,8 +12,15 @@ import {
   ExternalButton,
   PageNav,
 } from "../../components/design";
+import { SectionNavLayout, Section } from "../../components/SectionNav";
 
 const ACCENT = "#d8aa78";
+
+const SECTIONS: Section[] = [
+  { id: "layout", label: "Folder structure" },
+  { id: "tables", label: "Table definition" },
+  { id: "usage", label: "Invoking a deploy" },
+];
 
 export default function OtherPostgresDeploy() {
   const targetFolder = `\`\`\`text
@@ -100,6 +107,7 @@ if __name__ == "__main__":
 \`\`\``;
 
   return (
+    <SectionNavLayout sections={SECTIONS}>
     <Box
       component="section"
       sx={{
@@ -135,7 +143,7 @@ if __name__ == "__main__":
         </Callout>
       </Reveal>
 
-      <Reveal delay={0.12}>
+      <Reveal delay={0.12} id="layout">
         <SectionHeading eyebrow="layout">Target folder structure</SectionHeading>
         <MarkdownBlock>
           {`Functions, views, materialized views and triggers are just SQL files, organised by schema:`}
@@ -145,7 +153,7 @@ if __name__ == "__main__":
         </Panel>
       </Reveal>
 
-      <Reveal delay={0.18}>
+      <Reveal delay={0.18} id="tables">
         <SectionHeading eyebrow="tables">Table definition</SectionHeading>
         <MarkdownBlock>
           {`Tables are described with JSON, capturing columns, constraints and indexes:`}
@@ -155,7 +163,7 @@ if __name__ == "__main__":
         </Panel>
       </Reveal>
 
-      <Reveal delay={0.24}>
+      <Reveal delay={0.24} id="usage">
         <SectionHeading eyebrow="usage">Invoking a deployment</SectionHeading>
         <MarkdownBlock>
           {`A developer might invoke the deployment through an action like this:`}
@@ -167,5 +175,6 @@ if __name__ == "__main__":
 
       <PageNav left={{ text: "Downer Helper", link: "/other/downer-helper" }} />
     </Box>
+    </SectionNavLayout>
   );
 }

@@ -69,6 +69,7 @@ const PROJECT_GROUPS: NavGroup[] = [
     label: 'Other',
     overview: '/projects',
     links: [
+      { label: 'IMAX Watch Agent', to: '/other/imax-bot' },
       { label: 'Cellular Tracking', to: '/other/cellular-tracking' },
       { label: 'Downer Helper', to: '/other/downer-helper' },
       { label: 'Postgres Deploy', to: '/other/postgres-deploy' },
@@ -173,9 +174,11 @@ export default function AppToolbar() {
 
   return (
     <AppBar
-      position="static"
+      position="sticky"
       elevation={0}
       sx={{
+        top: 0,
+        zIndex: (theme) => theme.zIndex.appBar,
         background: 'rgba(11,9,8,.82)',
         backdropFilter: 'blur(10px)',
         WebkitBackdropFilter: 'blur(10px)',

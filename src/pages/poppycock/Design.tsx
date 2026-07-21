@@ -16,11 +16,20 @@ import {
   Callout,
   PageNav,
 } from "../../components/design";
+import { SectionNavLayout, Section } from "../../components/SectionNav";
 
 const ACCENT = "#d8aa78";
 
+const SECTIONS: Section[] = [
+  { id: "backend", label: "Backend process" },
+  { id: "persistence", label: "Persistence" },
+  { id: "round-phases", label: "Round phases" },
+  { id: "mobile-client", label: "Mobile client" },
+];
+
 export default function PoppycockDesign() {
   return (
+    <SectionNavLayout sections={SECTIONS}>
     <Box
       component="section"
       sx={{
@@ -51,7 +60,7 @@ export default function PoppycockDesign() {
         />
       </Reveal>
 
-      <Reveal delay={0.12}>
+      <Reveal delay={0.12} id="backend">
         <SectionHeading eyebrow="backend">A single uvicorn process</SectionHeading>
         <Typography variant="body1" sx={{ color: "text.secondary", mb: 2, maxWidth: 720 }}>
           One process, layered into transport, dispatch and domain so each
@@ -85,7 +94,7 @@ export default function PoppycockDesign() {
         </Box>
       </Reveal>
 
-      <Reveal delay={0.18}>
+      <Reveal delay={0.18} id="persistence">
         <SectionHeading eyebrow="persistence">A durable shell, live rounds in memory</SectionHeading>
         <Panel accent={ACCENT} wash>
           <Typography variant="body1" sx={{ color: "text.secondary", mb: 2 }}>
@@ -101,7 +110,7 @@ export default function PoppycockDesign() {
         </Panel>
       </Reveal>
 
-      <Reveal delay={0.24}>
+      <Reveal delay={0.24} id="round-phases">
         <SectionHeading eyebrow="round phases">Three phases per round</SectionHeading>
         <CheckList
           accent={ACCENT}
@@ -113,7 +122,7 @@ export default function PoppycockDesign() {
         />
       </Reveal>
 
-      <Reveal delay={0.3}>
+      <Reveal delay={0.3} id="mobile-client">
         <SectionHeading eyebrow="mobile client">Three screens, one conditional</SectionHeading>
         <Typography variant="body1" sx={{ color: "text.secondary", mb: 2, maxWidth: 720 }}>
           Three logical screens are swapped by a single conditional in App.tsx
@@ -155,5 +164,6 @@ export default function PoppycockDesign() {
         right={{ text: "Changes", link: "/poppycock/changes" }}
       />
     </Box>
+    </SectionNavLayout>
   );
 }

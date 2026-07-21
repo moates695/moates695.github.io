@@ -14,8 +14,15 @@ import {
   ExternalButton,
   PageNav,
 } from "../../components/design";
+import { SectionNavLayout, Section } from "../../components/SectionNav";
 
 const ACCENT = "#d8aa78";
+
+const SECTIONS: Section[] = [
+  { id: "segmenting", label: "Segmenting" },
+  { id: "tracking", label: "Tracking" },
+  { id: "improvements", label: "Improvements" },
+];
 
 const segmentSteps = [
   "Apply CLAHE (Contrast Limited Adaptive Histogram Equalisation) preprocessing.",
@@ -50,6 +57,7 @@ const improvements = [
 
 export default function OtherCellularTracking() {
   return (
+    <SectionNavLayout sections={SECTIONS}>
     <Box
       component="section"
       sx={{
@@ -102,7 +110,7 @@ export default function OtherCellularTracking() {
         </Box>
       </Reveal>
 
-      <Reveal delay={0.18}>
+      <Reveal delay={0.18} id="segmenting">
         <SectionHeading eyebrow="step one">Segmenting</SectionHeading>
         <Box sx={{ color: "text.secondary", mb: 2 }}>
           To separate the cells from the background, each image in a sequence runs through:
@@ -120,7 +128,7 @@ export default function OtherCellularTracking() {
         </Box>
       </Reveal>
 
-      <Reveal delay={0.24}>
+      <Reveal delay={0.24} id="tracking">
         <SectionHeading eyebrow="step two">Tracking</SectionHeading>
         <Box sx={{ color: "text.secondary", mb: 2 }}>
           With the cells segmented and labelled, they can be tracked across a sequence:
@@ -143,7 +151,7 @@ export default function OtherCellularTracking() {
         />
       </Reveal>
 
-      <Reveal delay={0.3}>
+      <Reveal delay={0.3} id="improvements">
         <SectionHeading eyebrow="reflection">Improvements</SectionHeading>
         <Box sx={{ color: "text.secondary", mb: 2 }}>
           Apparently just segmenting some of the cells from the background was an achievement
@@ -158,5 +166,6 @@ export default function OtherCellularTracking() {
         right={{ text: "Downer Helper", link: "/other/downer-helper" }}
       />
     </Box>
+    </SectionNavLayout>
   );
 }

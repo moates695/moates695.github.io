@@ -33,6 +33,7 @@ import PoppycockChanges from './pages/poppycock/Changes';
 import PoppycockPrivacyPolicy from './pages/poppycock/PrivacyPolicy';
 import GymJunkieChanges from './pages/gym_junkie/Changes';
 import OtherPostgresDeploy from './pages/other/PostgresDeploy';
+import OtherImaxBot from './pages/other/ImaxBot';
 import WoodchuckPrivacyPolicy from './pages/finska/PrivacyPolicy';
 import GymJunkiePrivacyPolicy from './pages/gym_junkie/PrivacyPolicy';
 import DeleteMe from './pages/gym_junkie/DeleteMe';
@@ -60,7 +61,7 @@ function AppShell() {
         sx={{
           display: "flex",
           flexDirection: "column",
-          height: "100vh",
+          minHeight: "100vh",
           alignItems: 'center',
           justifyContent: 'flex-start',
           position: 'relative',
@@ -75,7 +76,7 @@ function AppShell() {
             paddingTop: isHome ? 0 : '10px',
             paddingLeft: isHome ? 0 : { xs: '12px', sm: '20px' },
             paddingRight: isHome ? 0 : { xs: '12px', sm: '20px' },
-            height: '100%',
+            flex: '1 0 auto',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -123,6 +124,7 @@ function AppShell() {
               <Route path="downer-helper" element={<OtherDownerHelper />} />
               <Route path="cellular-tracking" element={<OtherCellularTracking />} />
               <Route path="postgres-deploy" element={<OtherPostgresDeploy />} />
+              <Route path="imax-bot" element={<OtherImaxBot />} />
             </Route>
           </Routes>
         </Box>

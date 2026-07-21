@@ -10,8 +10,17 @@ import {
   ScreenshotGallery,
   PageNav,
 } from "../../components/design";
+import { SectionNavLayout, Section } from "../../components/SectionNav";
 
 const ACCENT = "#d8aa78";
+
+const SECTIONS: Section[] = [
+  { id: "architecture", label: "Core building blocks" },
+  { id: "screens", label: "Idle & setup" },
+  { id: "gameplay", label: "Play screen" },
+  { id: "rules", label: "Settings" },
+  { id: "internals", label: "Theme & testing" },
+];
 
 /** Inline monospace code token. */
 function Code({ children }: { children: React.ReactNode }) {
@@ -34,6 +43,7 @@ function Code({ children }: { children: React.ReactNode }) {
 
 export default function WoodchuckDesign() {
   return (
+    <SectionNavLayout sections={SECTIONS}>
     <Box
       component="section"
       sx={{
@@ -54,7 +64,7 @@ export default function WoodchuckDesign() {
         subtitle="An Expo / React Native app that runs entirely on-device. The whole game (participants, scores, turn order, rules) is one XState v5 machine; everything around it is a pure function, a validator, or a dumb component that reads state and dispatches events."
       />
 
-      <Reveal delay={0.06}>
+      <Reveal delay={0.06} id="architecture">
         <SectionHeading eyebrow="architecture">Core building blocks</SectionHeading>
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
           <Panel accent={ACCENT} wash>
@@ -104,7 +114,7 @@ export default function WoodchuckDesign() {
         </Box>
       </Reveal>
 
-      <Reveal delay={0.12}>
+      <Reveal delay={0.12} id="screens">
         <SectionHeading eyebrow="screens">Idle and setup</SectionHeading>
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
           <Panel accent={ACCENT}>
@@ -134,7 +144,7 @@ export default function WoodchuckDesign() {
         </Box>
       </Reveal>
 
-      <Reveal delay={0.18}>
+      <Reveal delay={0.18} id="gameplay">
         <SectionHeading eyebrow="gameplay">Play screen</SectionHeading>
         <Panel accent={ACCENT} wash>
           <Typography variant="body1" sx={{ color: "text.secondary", mb: 2 }}>
@@ -191,7 +201,7 @@ export default function WoodchuckDesign() {
         </Panel>
       </Reveal>
 
-      <Reveal delay={0.24}>
+      <Reveal delay={0.24} id="rules">
         <SectionHeading eyebrow="rules">Settings</SectionHeading>
         <Panel accent={ACCENT}>
           <Typography variant="body1" sx={{ color: "text.secondary", mb: 1.5 }}>
@@ -221,7 +231,7 @@ export default function WoodchuckDesign() {
         </Panel>
       </Reveal>
 
-      <Reveal delay={0.3}>
+      <Reveal delay={0.3} id="internals">
         <SectionHeading eyebrow="internals">Theme and testing</SectionHeading>
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
           <Panel accent={ACCENT}>
@@ -260,5 +270,6 @@ export default function WoodchuckDesign() {
         right={{ text: "Changes", link: "/woodchuck/changes" }}
       />
     </Box>
+    </SectionNavLayout>
   );
 }

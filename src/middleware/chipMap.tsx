@@ -95,6 +95,18 @@ const chipData = {
     borderColor: '#9aa6b8',
     textColor: '#9aa6b8',
   },
+  telegram: {
+    label: 'Telegram',
+    color: 'transparent',
+    borderColor: '#63c7b0',
+    textColor: '#63c7b0',
+  },
+  automation: {
+    label: 'Automation',
+    color: 'transparent',
+    borderColor: '#c7b191',
+    textColor: '#c7b191',
+  },
 } satisfies Record<string, ChipData>;
 
 export type ChipKey = keyof typeof chipData;
