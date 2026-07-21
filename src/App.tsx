@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './App.css';
-import { HashRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { HashRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import AppToolbar from './components/AppToolbar'
 import Home from './pages/Home'
 import Contact from './pages/Contact'
@@ -9,6 +9,7 @@ import Projects from './pages/Projects'
 import { Box, ThemeProvider, CssBaseline } from '@mui/material';
 import { lightTheme, darkTheme } from "./styles/theme";
 import FlowBackground from './components/FlowBackground';
+import SandBackground from './components/SandBackground';
 import WoodchuckOverview from './pages/finska/Overview';
 import WoodchuckDesign from './pages/finska/Design';
 import GymJunkieOverview from './pages/gym_junkie/Overview';
@@ -37,86 +38,106 @@ import GymJunkiePrivacyPolicy from './pages/gym_junkie/PrivacyPolicy';
 import DeleteMe from './pages/gym_junkie/DeleteMe';
 import DataExport from './pages/gym_junkie/DataExport';
 
+interface AppShellProps {
+  isDark: boolean;
+  setIsDark: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+/**
+ * Inner shell (inside the Router so it can read the route). The Tech Sand home
+ * page renders full-bleed up to a 1440px cap over a solid sand backdrop; every
+ * other page keeps the current 1220px content column over the flow background.
+ */
+function AppShell({ isDark, setIsDark }: AppShellProps) {
+  const { pathname } = useLocation();
+  const isHome = pathname === '/';
+
+  return (
+    <>
+      {isHome ? <SandBackground /> : <FlowBackground />}
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          height: "100vh",
+          alignItems: 'center',
+          justifyContent: 'flex-start',
+          position: 'relative',
+          zIndex: 1,
+        }}
+      >
+        <AppToolbar isDark={isDark} setIsDark={setIsDark} />
+        <Box
+          sx={{
+            width: '100%',
+            maxWidth: isHome ? 1440 : 1220,
+            paddingTop: isHome ? 0 : '10px',
+            paddingLeft: isHome ? 0 : { xs: '12px', sm: '20px' },
+            paddingRight: isHome ? 0 : { xs: '12px', sm: '20px' },
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/woodchuck">
+              <Route index element={<WoodchuckOverview />} />
+              <Route path="design" element={<WoodchuckDesign />} />
+              <Route path="changes" element={<WoodchuckChanges />} />
+              <Route path="privacy" element={<WoodchuckPrivacyPolicy />} />
+            </Route>
+            <Route path="/poppycock">
+              <Route index element={<PoppycockOverview />} />
+              <Route path="design" element={<PoppycockDesign />} />
+              <Route path="changes" element={<PoppycockChanges />} />
+              <Route path="privacy" element={<PoppycockPrivacyPolicy />} />
+            </Route>
+            <Route path="/gym-junkie">
+              <Route index element={<GymJunkieOverview />} />
+              <Route path="details">
+                <Route index element={<GymJunkieDetails />} />
+                <Route path="workout-logging" element={<GymJunkieWorkoutLogging />} />
+                <Route path="exercise-library" element={<GymJunkieExerciseLibrary />} />
+                <Route path="rest-timer-heart-rate" element={<GymJunkieRestTimerHeartRate />} />
+                <Route path="muscle-targets" element={<GymJunkieMuscleTargets />} />
+                <Route path="muscle-heatmap" element={<GymJunkieMuscleHeatmap />} />
+                <Route path="exercise-stats" element={<GymJunkieExerciseStats />} />
+                <Route path="distributions" element={<GymJunkieDistributions />} />
+                <Route path="history-calendar" element={<GymJunkieHistoryCalendar />} />
+                <Route path="friends" element={<GymJunkieFriends />} />
+                <Route path="strava" element={<GymJunkieStrava />} />
+              </Route>
+              <Route path="changes" element={<GymJunkieChanges />} />
+              <Route path="privacy" element={<GymJunkiePrivacyPolicy />} />
+              <Route path="delete-me" element={<DeleteMe />} />
+              <Route path="data-export" element={<DataExport />} />
+            </Route>
+            <Route path="/other">
+              <Route index element={<Navigate to="/projects" replace />} />
+              <Route path="downer-helper" element={<OtherDownerHelper />} />
+              <Route path="cellular-tracking" element={<OtherCellularTracking />} />
+              <Route path="postgres-deploy" element={<OtherPostgresDeploy />} />
+            </Route>
+          </Routes>
+        </Box>
+      </Box>
+    </>
+  );
+}
+
 function App() {
   const [isDark, setIsDark] = useState(true);
 
   return (
     <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
       <CssBaseline />
-      <FlowBackground />
       <Router>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            height: "100vh",
-            alignItems: 'center',
-            justifyContent: 'flex-start',
-            position: 'relative',
-            zIndex: 1,
-          }}
-        >
-          <AppToolbar isDark={isDark} setIsDark={setIsDark}/>
-          <Box
-            sx={{
-              width: '100%',
-              maxWidth: 1220,
-              paddingTop: '10px',
-              paddingLeft: { xs: '12px', sm: '20px' },
-              paddingRight: { xs: '12px', sm: '20px' },
-              height: '100%',
-              display: 'flex',
-              flexDirection: 'column',
-              // justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/projects" element={<Projects />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/woodchuck">
-                <Route index element={<WoodchuckOverview />} />
-                <Route path="design" element={<WoodchuckDesign />} />
-                <Route path="changes" element={<WoodchuckChanges />} />
-                <Route path="privacy" element={<WoodchuckPrivacyPolicy />} />
-              </Route>
-              <Route path="/poppycock">
-                <Route index element={<PoppycockOverview />} />
-                <Route path="design" element={<PoppycockDesign />} />
-                <Route path="changes" element={<PoppycockChanges />} />
-                <Route path="privacy" element={<PoppycockPrivacyPolicy />} />
-              </Route>
-              <Route path="/gym-junkie">
-                <Route index element={<GymJunkieOverview />} />
-                <Route path="details">
-                  <Route index element={<GymJunkieDetails />} />
-                  <Route path="workout-logging" element={<GymJunkieWorkoutLogging />} />
-                  <Route path="exercise-library" element={<GymJunkieExerciseLibrary />} />
-                  <Route path="rest-timer-heart-rate" element={<GymJunkieRestTimerHeartRate />} />
-                  <Route path="muscle-targets" element={<GymJunkieMuscleTargets />} />
-                  <Route path="muscle-heatmap" element={<GymJunkieMuscleHeatmap />} />
-                  <Route path="exercise-stats" element={<GymJunkieExerciseStats />} />
-                  <Route path="distributions" element={<GymJunkieDistributions />} />
-                  <Route path="history-calendar" element={<GymJunkieHistoryCalendar />} />
-                  <Route path="friends" element={<GymJunkieFriends />} />
-                  <Route path="strava" element={<GymJunkieStrava />} />
-                </Route>
-                <Route path="changes" element={<GymJunkieChanges />} />
-                <Route path="privacy" element={<GymJunkiePrivacyPolicy />} />
-                <Route path="delete-me" element={<DeleteMe />} />
-                <Route path="data-export" element={<DataExport />} />
-              </Route>
-              <Route path="/other">
-                <Route index element={<Navigate to="/projects" replace />} />
-                <Route path="downer-helper" element={<OtherDownerHelper />} />
-                <Route path="cellular-tracking" element={<OtherCellularTracking />} />
-                <Route path="postgres-deploy" element={<OtherPostgresDeploy />} />
-              </Route>
-            </Routes>
-          </Box>
-        </Box>
+        <AppShell isDark={isDark} setIsDark={setIsDark} />
       </Router>
     </ThemeProvider>
   );

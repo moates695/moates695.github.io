@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<div style="width:340px;box-sizing:border-box;background:#100d08;border:1px solid rgba(216,170,120,.14);border-radius:11px;padding:22px 22px 20px;display:flex;flex-direction:column;gap:12px">
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
+    <h3 style="margin:0;font:600 19px/1.15 'Space Grotesk',sans-serif;color:#ece5d9;letter-spacing:-.01em">{{ title }}</h3>
+    <sc-if value="{{ isProd }}" hint-placeholder-val="{{ true }}"><span style="flex:none;display:inline-flex;align-items:center;gap:6px;font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#6fcf97;border:1px solid rgba(111,207,151,.32);border-radius:20px;padding:5px 9px 4px"><span style="width:5px;height:5px;border-radius:50%;background:#6fcf97;box-shadow:0 0 6px #6fcf97"></span>PROD</span></sc-if>
+    <sc-if value="{{ isTest }}"><span style="flex:none;display:inline-flex;align-items:center;gap:6px;font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#e0b24d;border:1px solid rgba(224,178,77,.32);border-radius:20px;padding:5px 9px 4px"><span style="width:5px;height:5px;border-radius:50%;background:#e0b24d;box-shadow:0 0 6px #e0b24d"></span>TEST</span></sc-if>
+    <sc-if value="{{ isPoc }}"><span style="flex:none;display:inline-flex;align-items:center;gap:6px;font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#b18cf0;border:1px solid rgba(177,140,240,.32);border-radius:20px;padding:5px 9px 4px"><span style="width:5px;height:5px;border-radius:50%;background:#b18cf0;box-shadow:0 0 6px #b18cf0"></span>POC</span></sc-if>
+    <sc-if value="{{ isOther }}"><span style="flex:none;display:inline-flex;align-items:center;gap:6px;font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#8fd0d4;border:1px solid rgba(119,199,204,.28);border-radius:20px;padding:5px 9px 4px"><span style="width:5px;height:5px;border-radius:50%;background:#77c7cc;box-shadow:0 0 6px #77c7cc"></span>{{ status }}</span></sc-if>
+  </div>
+  <p style="margin:0;font:400 13.5px/1.55 'IBM Plex Sans',sans-serif;color:#8f8776">{{ blurb }}</p>
+  <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:4px">
+    <sc-for list="{{ tagList }}" as="tag" hint-placeholder-count="3">
+      <span style="font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.02em;border-radius:6px;padding:6px 9px;white-space:nowrap;color:{{ tag.color }};border:1px solid {{ tag.border }}">{{ tag.name }}</span>
+    </sc-for>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:340,&quot;height&quot;:200},&quot;title&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Woodchuck&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;blurb&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;On-device scorer for the lawn game Finska. No sign-in, no backend, gloriously no tracking.&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;status&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;PROD&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;tags&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;React Native, Expo, TypeScript&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const s = String(this.props.status || '').toUpperCase();
+    const known = s === 'PROD' || s === 'TEST' || s === 'POC';
+    const palette = {
+      'Python':'#d8aa78','TypeScript':'#7aa2e3','React TS':'#7aa2e3','React Native':'#63b8e0','Expo':'#9aa6b8',
+      'FastAPI':'#63c7b0','PostgreSQL':'#8fa0e8','Postgres':'#8fa0e8','WebSocket':'#b18cf0','Redis':'#e0897a',
+      'Docker':'#79b8e0','AWS':'#e0a86a','PyTorch':'#e0846a','OpenCV':'#6fcf97','YOLOv8':'#8bcf8f',
+      'Azure':'#79b8e0','PyPI':'#d8aa78','CLI':'#9aa6b8','Package':'#d8aa78','Full Stack':'#d8aa78','Client Side':'#9aa6b8'
+    };
+    const tagList = String(this.props.tags || '').split(',').map(t => t.trim()).filter(Boolean).map(name => {
+      const c = palette[name] || '#c7b191';
+      return { name, color: c, border: c + '3d' };
+    });
+    return { tagList, isProd: s === 'PROD', isTest: s === 'TEST', isPoc: s === 'POC', isOther: !known };
+  }
+}
+</script>
+</body>
+</html>

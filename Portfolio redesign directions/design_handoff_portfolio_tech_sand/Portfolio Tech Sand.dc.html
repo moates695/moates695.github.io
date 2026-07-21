@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+html,body{margin:0}
+body{background:#0b0908;font-family:'IBM Plex Sans',system-ui,sans-serif;color:#ece5d9}
+*{box-sizing:border-box}
+a{color:#ecc79a;text-decoration:none}
+a:hover{color:#f4d9b4}
+@keyframes sandcaret{0%,49%{opacity:1}50%,100%{opacity:0}}
+</style>
+</helmet>
+
+<div style="max-width:1440px;margin:0 auto;position:relative">
+
+  <nav style="position:sticky;top:0;z-index:40;display:flex;align-items:center;justify-content:space-between;padding:20px 48px;background:rgba(11,9,8,.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.05)">
+    <div style="font:500 20px 'Space Grotesk',sans-serif;letter-spacing:.3em;color:#ece5d9">MO</div>
+    <div style="display:flex;align-items:center;gap:28px;font:400 14px 'IBM Plex Sans',sans-serif;color:#97907f">
+      <a href="#" style="color:#ece5d9">Home</a><a href="#projects" style="color:#97907f">Projects</a><a href="#" style="color:#97907f">About</a><a href="#" style="color:#97907f">Writing</a><a href="#tech" style="color:#97907f">Tech</a>
+      <a href="#contact" style="display:inline-flex;align-items:center;gap:8px;color:#ece5d9;border:1px solid rgba(216,170,120,.32);border-radius:8px;padding:9px 15px">Contact <span style="color:#d8aa78">&#8594;</span></a>
+    </div>
+  </nav>
+
+  <!-- ============ HERO ============ -->
+  <header style="position:relative;min-height:88vh;display:flex;align-items:center;overflow:hidden;background-image:url('uploads/ChatGPT Image Jul 21, 2026, 09_46_27 AM-cf4747a8.png');background-size:cover;background-position:60% center">
+    <div style="position:absolute;inset:0;background:linear-gradient(100deg,#0b0908 22%,rgba(11,9,8,.55) 52%,rgba(11,9,8,.12) 78%,rgba(11,9,8,.35) 100%)"></div>
+    <div style="position:absolute;left:0;right:0;bottom:0;height:180px;background:linear-gradient(transparent,#0b0908)"></div>
+
+    <div style="position:absolute;left:0;top:0;bottom:0;width:52px;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:34px 0 30px;border-right:1px solid rgba(255,255,255,.05);z-index:3">
+      <div style="font:500 12px 'JetBrains Mono',monospace;color:#d8aa78">01</div>
+      <div style="display:flex;flex-direction:column;gap:9px;opacity:.35">
+        <div style="width:10px;height:1px;background:#fff"></div><div style="width:6px;height:1px;background:#fff"></div><div style="width:10px;height:1px;background:#fff"></div><div style="width:6px;height:1px;background:#fff"></div><div style="width:10px;height:1px;background:#fff"></div>
+      </div>
+      <div style="font:500 9px 'JetBrains Mono',monospace;letter-spacing:.2em;color:#8f8776;writing-mode:vertical-rl;transform:rotate(180deg)">SCROLL &#8595;</div>
+    </div>
+
+    <div style="position:relative;z-index:2;padding:0 48px 0 108px;max-width:620px">
+      <div style="font:500 12.5px 'JetBrains Mono',monospace;letter-spacing:.16em;color:#d8aa78;text-transform:uppercase;margin-bottom:24px">
+        <span style="opacity:.5">// the </span><span data-typer></span><span style="display:inline-block;width:8px;height:1em;background:#d8aa78;margin-left:2px;vertical-align:-2px;animation:sandcaret 1s steps(1) infinite"></span>
+      </div>
+      <h1 style="margin:0;font:600 76px/0.98 'Space Grotesk',sans-serif;letter-spacing:-.03em;color:#ece5d9">Marcus<br><span style="color:#d8aa78">Oates.</span></h1>
+      <p style="margin:30px 0 0;max-width:440px;font:400 16.5px/1.65 'IBM Plex Sans',sans-serif;color:#b3ab9c;text-wrap:pretty">AI &amp; backend engineer. I turn messy, manual work into automated systems &mdash; the models, the services behind them, and the web &amp; mobile apps that make them a joy to use.</p>
+      <div style="display:flex;align-items:center;gap:22px;margin-top:38px">
+        <a href="#projects" style="display:inline-flex;align-items:center;gap:10px;font:500 14px 'IBM Plex Sans',sans-serif;color:#0b0908;background:#d8aa78;border-radius:9px;padding:13px 24px">View all projects <span>&#8594;</span></a>
+        <a href="#" style="display:inline-flex;align-items:center;gap:8px;font:500 14px 'IBM Plex Sans',sans-serif;color:#ece5d9">About me <span style="color:#d8aa78">&#9673;</span></a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ FEATURED ============ -->
+  <section id="projects" style="padding:20px 48px 0">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin:0 0 18px">
+      <div style="font:500 12px 'JetBrains Mono',monospace;letter-spacing:.18em;color:#8f8776">// FEATURED PROJECT</div>
+      <a href="#projects" style="font:500 12px 'JetBrains Mono',monospace;letter-spacing:.14em;color:#d8aa78">VIEW ALL &#8594;</a>
+    </div>
+    <div style="border:1px solid rgba(216,170,120,.14);border-radius:16px;background:linear-gradient(160deg,#131009,#0d0b07);padding:40px;display:flex;gap:48px;align-items:center">
+      <div style="flex:1;display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;align-items:center;gap:10px"><span style="font:500 10.5px 'JetBrains Mono',monospace;letter-spacing:.2em;color:#8fd0d4">FEATURED PROJECT</span><span style="flex:none;display:inline-flex;align-items:center;gap:6px;font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#6fcf97;border:1px solid rgba(111,207,151,.32);border-radius:20px;padding:5px 9px 4px"><span style="width:5px;height:5px;border-radius:50%;background:#6fcf97;box-shadow:0 0 6px #6fcf97"></span>PROD</span></div>
+        <h2 style="margin:0;font:600 44px 'Space Grotesk',sans-serif;color:#ece5d9;letter-spacing:-.02em">Gym Junkie</h2>
+        <p style="margin:0;max-width:470px;font:400 15px/1.6 'IBM Plex Sans',sans-serif;color:#97907f;text-wrap:pretty">A fitness app built the backend-engineer way: fast set logging over a FastAPI + Postgres core, analytics, progressive-overload graphs, and an ML layer doing the quiet heavy lifting. React Native up front, no subscription in sight.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:2px">
+          <span style="font:500 11px 'JetBrains Mono',monospace;color:#63c7b0;border:1px solid #63c7b03d;border-radius:6px;padding:6px 9px;white-space:nowrap">FastAPI</span>
+          <span style="font:500 11px 'JetBrains Mono',monospace;color:#63b8e0;border:1px solid #63b8e03d;border-radius:6px;padding:6px 9px;white-space:nowrap">React Native</span>
+          <span style="font:500 11px 'JetBrains Mono',monospace;color:#8fa0e8;border:1px solid #8fa0e83d;border-radius:6px;padding:6px 9px;white-space:nowrap">PostgreSQL</span>
+          <span style="font:500 11px 'JetBrains Mono',monospace;color:#d8aa78;border:1px solid #d8aa783d;border-radius:6px;padding:6px 9px;white-space:nowrap">Python</span>
+          <span style="font:500 11px 'JetBrains Mono',monospace;color:#e0a86a;border:1px solid #e0a86a3d;border-radius:6px;padding:6px 9px;white-space:nowrap">AWS</span>
+        </div>
+        <a href="#" style="margin-top:8px;display:inline-flex;align-items:center;gap:9px;font:500 14px 'IBM Plex Sans',sans-serif;color:#ecc79a">View case study <span>&#8594;</span></a>
+      </div>
+      <div style="flex:none;width:220px;height:320px;border-radius:26px;border:1px solid rgba(216,170,120,.25);background:repeating-linear-gradient(135deg,rgba(216,170,120,.055) 0 8px,transparent 8px 16px);display:flex;align-items:center;justify-content:center;position:relative">
+        <span style="position:absolute;top:13px;left:50%;transform:translateX(-50%);width:48px;height:5px;border-radius:3px;background:rgba(216,170,120,.35)"></span>
+        <span style="font:500 10px 'JetBrains Mono',monospace;letter-spacing:.15em;color:#8f8776">PRODUCT SHOT</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MORE PROJECTS ============ -->
+  <section style="padding:40px 48px 0">
+    <div style="font:500 12px 'JetBrains Mono',monospace;letter-spacing:.18em;color:#8f8776;margin-bottom:18px">// MORE PROJECTS</div>
+    <div style="display:flex;flex-wrap:wrap;gap:20px">
+      <dc-import name="SandCard" hint-size="340px,200px" title="Woodchuck" status="TEST" blurb="On-device scorer for the lawn game Finska. No sign-in, no backend, gloriously no tracking." tags="React Native, Expo, TypeScript"></dc-import>
+      <dc-import name="SandCard" hint-size="340px,200px" title="Poppycock" status="POC" blurb="Real-time companion app for the Balderdash card game &mdash; someone had to keep the liars honest." tags="FastAPI, WebSocket, PostgreSQL"></dc-import>
+      <dc-import name="SandCard" hint-size="340px,200px" title="Cellular Tracking" status="PROD" blurb="Computer-vision pipeline that segments and tracks dividing cells so researchers don't have to squint." tags="Python, OpenCV, YOLOv8"></dc-import>
+      <dc-import name="SandCard" hint-size="340px,200px" title="Downer Helper" status="PROD" blurb="A tidy Python package that wraps the Azure SDK and cuts the copy-paste out of every project." tags="Python, Azure, PyPI"></dc-import>
+      <dc-import name="SandCard" hint-size="340px,200px" title="Postgres Deploy" status="PROD" blurb="Deploys and updates Postgres schemas straight from config files, so nobody hand-runs migrations." tags="Python, PostgreSQL, CLI"></dc-import>
+    </div>
+  </section>
+
+  <!-- ============ TECH STACK ============ -->
+  <section id="tech" style="padding:52px 48px 0">
+    <div style="font:500 12px 'JetBrains Mono',monospace;letter-spacing:.18em;color:#8f8776;margin-bottom:18px">// TECH STACK</div>
+    <div style="display:flex;flex-wrap:wrap;gap:12px">
+      <span style="font:500 13px 'JetBrains Mono',monospace;color:#d8aa78;border:1px solid #d8aa783d;border-radius:9px;padding:11px 16px;background:#100d08;white-space:nowrap">Python</span>
+      <span style="font:500 13px 'JetBrains Mono',monospace;color:#7aa2e3;border:1px solid #7aa2e33d;border-radius:9px;padding:11px 16px;background:#100d08;white-space:nowrap">TypeScript</span>
+      <span style="font:500 13px 'JetBrains Mono',monospace;color:#63c7b0;border:1px solid #63c7b03d;border-radius:9px;padding:11px 16px;background:#100d08;white-space:nowrap">FastAPI</span>
+      <span style="font:500 13px 'JetBrains Mono',monospace;color:#8fa0e8;border:1px solid #8fa0e83d;border-radius:9px;padding:11px 16px;background:#100d08;white-space:nowrap">PostgreSQL</span>
+      <span style="font:500 13px 'JetBrains Mono',monospace;color:#e0897a;border:1px solid #e0897a3d;border-radius:9px;padding:11px 16px;background:#100d08;white-space:nowrap">Redis</span>
+      <span style="font:500 13px 'JetBrains Mono',monospace;color:#79b8e0;border:1px solid #79b8e03d;border-radius:9px;padding:11px 16px;background:#100d08;white-space:nowrap">Docker</span>
+      <span style="font:500 13px 'JetBrains Mono',monospace;color:#e0a86a;border:1px solid #e0a86a3d;border-radius:9px;padding:11px 16px;background:#100d08;white-space:nowrap">AWS</span>
+      <span style="font:500 13px 'JetBrains Mono',monospace;color:#e0846a;border:1px solid #e0846a3d;border-radius:9px;padding:11px 16px;background:#100d08;white-space:nowrap">PyTorch</span>
+      <span style="font:500 13px 'JetBrains Mono',monospace;color:#77c7cc;border:1px solid #77c7cc3d;border-radius:9px;padding:11px 16px;background:#100d08;white-space:nowrap">OpenAI API</span>
+      <span style="font:500 13px 'JetBrains Mono',monospace;color:#8bcf8f;border:1px solid #8bcf8f3d;border-radius:9px;padding:11px 16px;background:#100d08;white-space:nowrap">LangChain</span>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer id="contact" style="margin-top:64px;border-top:1px solid rgba(255,255,255,.06);padding:48px 48px 40px">
+    <div style="display:flex;flex-wrap:wrap;gap:48px;justify-content:space-between">
+      <div style="max-width:300px">
+        <div style="font:500 11px 'JetBrains Mono',monospace;letter-spacing:.2em;color:#8f8776;margin-bottom:12px">PHILOSOPHY</div>
+        <p style="margin:0;font:400 14px/1.6 'IBM Plex Sans',sans-serif;color:#97907f;text-wrap:pretty">Build systems that are reliable, observable and easy to evolve. Solve real problems with clean abstractions &mdash; and the occasional bad pun.</p>
+      </div>
+      <div>
+        <div style="font:500 11px 'JetBrains Mono',monospace;letter-spacing:.2em;color:#8f8776;margin-bottom:12px">BASED IN</div>
+        <p style="margin:0;font:500 15px 'Space Grotesk',sans-serif;color:#ece5d9">Australia</p>
+      </div>
+      <div style="max-width:280px">
+        <div style="font:500 11px 'JetBrains Mono',monospace;letter-spacing:.2em;color:#8f8776;margin-bottom:12px">LET'S BUILD SOMETHING</div>
+        <p style="margin:0 0 14px;font:400 14px/1.6 'IBM Plex Sans',sans-serif;color:#97907f">Open to interesting projects and ambitious ideas.</p>
+        <a href="mailto:hello@marcusoates.dev" style="display:inline-flex;align-items:center;gap:9px;font:500 14px 'IBM Plex Sans',sans-serif;color:#ecc79a">Get in touch <span>&#8594;</span></a>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:44px;padding-top:22px;border-top:1px solid rgba(255,255,255,.05)">
+      <div style="display:flex;gap:10px">
+        <a href="#" style="font:500 11px 'JetBrains Mono',monospace;color:#97907f;border:1px solid rgba(255,255,255,.1);border-radius:7px;padding:8px 12px">GitHub</a>
+        <a href="#" style="font:500 11px 'JetBrains Mono',monospace;color:#97907f;border:1px solid rgba(255,255,255,.1);border-radius:7px;padding:8px 12px">LinkedIn</a>
+        <a href="#" style="font:500 11px 'JetBrains Mono',monospace;color:#97907f;border:1px solid rgba(255,255,255,.1);border-radius:7px;padding:8px 12px">PyPI</a>
+        <a href="#" style="font:500 11px 'JetBrains Mono',monospace;color:#97907f;border:1px solid rgba(255,255,255,.1);border-radius:7px;padding:8px 12px">Discord</a>
+      </div>
+      <div style="font:500 10px 'JetBrains Mono',monospace;letter-spacing:.16em;color:#5f584d">&copy; 2026 MARCUS OATES</div>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;roles&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;AI specialist, solutions architect, ML wizard, automation engineer, backend nerd&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Hero&quot;}}">
+class Component extends DCLogic {
+  componentDidMount() {
+    this._roles = String(this.props.roles || 'AI specialist, solutions architect, ML wizard, automation engineer, backend nerd')
+      .split(',').map(s => s.trim()).filter(Boolean);
+    this.initTypers();
+  }
+  componentWillUnmount() { clearTimeout(this._typerT); }
+  initTypers() {
+    const els = [...document.querySelectorAll('[data-typer]')];
+    if (!els.length) return;
+    const roles = this._roles;
+    let ri = 0, ci = 0, deleting = false;
+    const tick = () => {
+      const word = roles[ri];
+      ci += deleting ? -1 : 1;
+      els.forEach(e => { e.textContent = word.slice(0, ci); });
+      let delay = deleting ? 45 : 85;
+      if (!deleting && ci === word.length) { delay = 1500; deleting = true; }
+      else if (deleting && ci === 0) { deleting = false; ri = (ri + 1) % roles.length; delay = 380; }
+      this._typerT = setTimeout(tick, delay);
+    };
+    tick();
+  }
+}
+</script>
+</body>
+</html>

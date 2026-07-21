@@ -1,12 +1,31 @@
 import { Menu as MenuIcon } from "@mui/icons-material";
-import { AppBar, Toolbar, Typography, Button, Menu, MenuItem, Box, IconButton, useMediaQuery, useTheme, Drawer, List, ListItemButton, ListItemText, Collapse, Divider } from "@mui/material";
+import { AppBar, Toolbar, Button, Menu, MenuItem, Box, IconButton, useMediaQuery, useTheme, Drawer, List, ListItemButton, ListItemText, Collapse, Divider } from "@mui/material";
 import { useState, Dispatch, SetStateAction } from "react";
 import { Link } from "react-router-dom";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import { SAND, SPACE, PLEX } from './sand';
 
 const SHOWCASE_COLOR = '#82b1ff';
+
+/** Monogram mark on the left of the bar (Space Grotesk, wide tracking). */
+const monogramSx = {
+  font: `500 20px ${SPACE}`,
+  letterSpacing: '.3em',
+  color: SAND.primary,
+  textDecoration: 'none',
+} as const;
+
+/** Sand nav link styling for the desktop bar. */
+const navButtonSx = {
+  textTransform: 'none',
+  minWidth: 0,
+  px: 0,
+  font: `400 14px ${PLEX}`,
+  color: SAND.body,
+  '&:hover': { color: SAND.primary, background: 'transparent' },
+} as const;
 
 export interface AppToolbarProps {
   isDark: boolean
@@ -158,7 +177,18 @@ export default function AppToolbar(props: AppToolbarProps) {
   );
 
   return (
-    <AppBar position="static">
+    <AppBar
+      position="static"
+      elevation={0}
+      sx={{
+        background: 'rgba(11,9,8,.82)',
+        backdropFilter: 'blur(10px)',
+        WebkitBackdropFilter: 'blur(10px)',
+        borderBottom: `1px solid ${SAND.hairline}`,
+        backgroundImage: 'none',
+        color: SAND.primary,
+      }}
+    >
       <Toolbar sx={{ display: "flex", justifyContent: "space-between", maxWidth: 1200, width: '100%', alignSelf: 'center' }}>
         {isMobile ? (
           <>
@@ -170,24 +200,45 @@ export default function AppToolbar(props: AppToolbarProps) {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="subtitle1" sx={{ flexGrow: 1, textAlign: 'center' }}>
-              Portfolio
-            </Typography>
+            <Box sx={{ flexGrow: 1, textAlign: 'center' }}>
+              <Box component={Link} to="/" sx={monogramSx}>MO</Box>
+            </Box>
+            {/* keep the row balanced opposite the hamburger */}
+            <Box sx={{ width: 40 }} />
             {mobileDrawer}
           </>
         ) : (
-          <Box sx={{ display: "flex", gap: 3, justifyContent: "center", flexGrow: 1, flexWrap: 'wrap' }}>
-            <Button color="inherit" component={Link} to="/">Home</Button>
-            <Button color="inherit" component={Link} to="/about">Resume</Button>
-            <Button
-              color="inherit"
-              onClick={(e) => setProjectsAnchor(e.currentTarget)}
-              endIcon={projectsOpen ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-            >
-              Projects
-            </Button>
-            <Button color="inherit" component={Link} to="/contact">Contact</Button>
-          </Box>
+          <>
+            <Box component={Link} to="/" sx={monogramSx}>MO</Box>
+            <Box sx={{ display: "flex", alignItems: 'center', gap: '28px' }}>
+              <Button component={Link} to="/" sx={{ ...navButtonSx, color: SAND.primary }}>Home</Button>
+              <Button component={Link} to="/about" sx={navButtonSx}>Resume</Button>
+              <Button
+                onClick={(e) => setProjectsAnchor(e.currentTarget)}
+                endIcon={projectsOpen ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                sx={navButtonSx}
+              >
+                Projects
+              </Button>
+              <Button
+                component={Link}
+                to="/contact"
+                endIcon={<Box component="span" sx={{ color: SAND.gold }}>&#8594;</Box>}
+                sx={{
+                  textTransform: 'none',
+                  font: `400 14px ${PLEX}`,
+                  color: SAND.primary,
+                  border: '1px solid rgba(216,170,120,.32)',
+                  borderRadius: '8px',
+                  px: '15px',
+                  py: '9px',
+                  '&:hover': { borderColor: 'rgba(216,170,120,.6)', background: 'rgba(216,170,120,.06)' },
+                }}
+              >
+                Contact
+              </Button>
+            </Box>
+          </>
         )}
 
         {/* Top-level Projects menu */}
@@ -195,7 +246,17 @@ export default function AppToolbar(props: AppToolbarProps) {
           anchorEl={projectsAnchor}
           open={projectsOpen}
           onClose={closeAll}
-          slotProps={{ list: { sx: { minWidth: 200, py: 0.5 } } }}
+          slotProps={{
+            list: { sx: { minWidth: 200, py: 0.5 } },
+            paper: {
+              sx: {
+                background: SAND.surface,
+                color: SAND.primary,
+                border: `1px solid ${SAND.goldBorder}`,
+                backgroundImage: 'none',
+              },
+            },
+          }}
         >
           <MenuItem
             component={Link}
@@ -243,7 +304,16 @@ export default function AppToolbar(props: AppToolbarProps) {
             disableScrollLock
             sx={{ pointerEvents: 'none' }}
             slotProps={{
-              paper: { sx: { pointerEvents: 'auto', minWidth: 180 } },
+              paper: {
+                sx: {
+                  pointerEvents: 'auto',
+                  minWidth: 180,
+                  background: SAND.surface,
+                  color: SAND.primary,
+                  border: `1px solid ${SAND.goldBorder}`,
+                  backgroundImage: 'none',
+                },
+              },
               list: { sx: { py: 0.5 }, onMouseLeave: () => setSubmenu(null) },
             }}
           >
