@@ -4,12 +4,16 @@ import {
   Button,
   Chip,
   Divider,
+  IconButton,
   Link,
   Paper,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import DownloadIcon from '@mui/icons-material/Download';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import CheckIcon from '@mui/icons-material/Check';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
@@ -178,8 +182,21 @@ function ExperienceEntry({ exp, last }: { exp: Experience; last: boolean }) {
   );
 }
 
+const CONTACT_EMAIL = "marcusjoates@gmail.com";
+
 export default function About() {
   const navigate = useNavigate();
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(CONTACT_EMAIL);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1500);
+    } catch {
+      /* clipboard unavailable; the mailto link still works */
+    }
+  };
 
   return (
     <Box
@@ -201,16 +218,30 @@ export default function About() {
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, mt: 1.5, color: 'text.secondary' }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75 }}>
             <PlaceOutlinedIcon sx={{ fontSize: 18 }} />
-            <Typography variant="body2">Australia</Typography>
+            <Typography variant="body2">Sydney, Australia</Typography>
           </Box>
-          <Link
-            href="mailto:marcusjoates@gmail.com"
-            underline="hover"
-            sx={{ display: 'flex', alignItems: 'center', gap: 0.75, color: 'text.secondary' }}
-          >
-            <EmailOutlinedIcon sx={{ fontSize: 18 }} />
-            <Typography variant="body2">marcusjoates@gmail.com</Typography>
-          </Link>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.25 }}>
+            <Link
+              href={`mailto:${CONTACT_EMAIL}`}
+              underline="hover"
+              sx={{ display: 'flex', alignItems: 'center', gap: 0.75, color: 'text.secondary' }}
+            >
+              <EmailOutlinedIcon sx={{ fontSize: 18 }} />
+              <Typography variant="body2">{CONTACT_EMAIL}</Typography>
+            </Link>
+            <Tooltip title={copied ? "Copied!" : "Copy email"}>
+              <IconButton
+                onClick={handleCopyEmail}
+                size="small"
+                aria-label="Copy email address"
+                sx={{ color: 'text.secondary', p: 0.5 }}
+              >
+                {copied
+                  ? <CheckIcon sx={{ fontSize: 16 }} />
+                  : <ContentCopyIcon sx={{ fontSize: 16 }} />}
+              </IconButton>
+            </Tooltip>
+          </Box>
         </Box>
 
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1.25, mt: 2 }}>

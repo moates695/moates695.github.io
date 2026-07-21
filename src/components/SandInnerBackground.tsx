@@ -12,7 +12,13 @@ export default function SandInnerBackground() {
       aria-hidden
       style={{
         position: "fixed",
-        inset: 0,
+        top: 0,
+        left: 0,
+        // Size to the largest viewport height (lvh) rather than inset:0 so the
+        // mobile address bar hiding/showing on scroll doesn't resize the layer
+        // and shift the gradient wash.
+        width: "100%",
+        height: "100lvh",
         zIndex: 0,
         pointerEvents: "none",
         backgroundColor: SAND.bg,

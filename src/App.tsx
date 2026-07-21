@@ -1,5 +1,6 @@
 import './App.css';
 import { HashRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { useEffect } from 'react';
 import AppToolbar from './components/AppToolbar'
 import Home from './pages/Home'
 import Contact from './pages/Contact'
@@ -45,6 +46,12 @@ import DataExport from './pages/gym_junkie/DataExport';
 function AppShell() {
   const { pathname } = useLocation();
   const isHome = pathname === '/';
+
+  // Reset scroll to the top whenever the route changes, otherwise navigating to
+  // a new page keeps the previous page's scroll position.
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   return (
     <>
