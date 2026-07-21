@@ -324,7 +324,7 @@ export default function HomePage() {
               letterSpacing: ".16em",
               color: SAND.gold,
               textTransform: "uppercase",
-              mb: "24px",
+              mb: "14px",
             }}
           >
             <Box component="span" sx={{ opacity: 0.5 }}>{'// your '}</Box>
@@ -351,7 +351,7 @@ export default function HomePage() {
           <Typography
             component="p"
             sx={{
-              m: "30px 0 0",
+              m: "20px 0 0",
               maxWidth: 440,
               font: `400 16.5px/1.65 ${PLEX}`,
               color: SAND.heroBody,
