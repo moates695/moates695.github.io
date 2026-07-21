@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { Box, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import heroImg from "../assets/tech-sand-hero.png";
-import { githubLink, pypiLink } from "../middleware/links";
+import { githubLink, pypiLink, stravaLink, expoLink } from "../middleware/links";
 import {
   SAND,
   SPACE,
@@ -90,6 +89,8 @@ const socials = [
   { label: "GitHub", href: githubLink },
   { label: "LinkedIn", href: linkedInLink },
   { label: "PyPI", href: pypiLink },
+  { label: "Strava", href: stravaLink },
+  { label: "Expo", href: expoLink },
   { label: "Discord", href: discordLink },
 ];
 
@@ -275,7 +276,9 @@ export default function HomePage() {
       sx={{
         width: "100%",
         flexShrink: 0,
-        background: SAND.bg,
+        // Transparent so the fixed dune backdrop (SandBackground) shows through
+        // and stays visible as the content scrolls over it.
+        background: "transparent",
         color: SAND.primary,
         fontFamily: PLEX,
       }}
@@ -291,31 +294,23 @@ export default function HomePage() {
           minHeight: { xs: "70vh", md: "82vh" },
           display: "flex",
           alignItems: "center",
-          overflow: "hidden",
-          backgroundImage: `url(${heroImg})`,
-          backgroundSize: "cover",
-          backgroundPosition: "60% center",
+          // The dune image itself lives in the fixed SandBackground layer so it
+          // stays visible past the hero; here we only darken the left side for
+          // heading legibility.
         }}
       >
-        {/* Scrim overlays for text legibility over the image */}
+        {/* Left scrim for text legibility over the fixed dune. Masked to fade
+            out toward the bottom so it blends into the full-page dune instead
+            of ending in a hard horizontal edge at the hero's base. */}
         <Box
           aria-hidden
           sx={{
             position: "absolute",
             inset: 0,
             background:
-              "linear-gradient(100deg,#0b0908 22%,rgba(11,9,8,.55) 52%,rgba(11,9,8,.12) 78%,rgba(11,9,8,.35) 100%)",
-          }}
-        />
-        <Box
-          aria-hidden
-          sx={{
-            position: "absolute",
-            left: 0,
-            right: 0,
-            bottom: 0,
-            height: "180px",
-            background: "linear-gradient(transparent,#0b0908)",
+              "linear-gradient(100deg,rgba(11,9,8,.92) 0%,rgba(11,9,8,.72) 26%,rgba(11,9,8,.4) 50%,rgba(11,9,8,.12) 68%,rgba(11,9,8,0) 82%)",
+            maskImage: "linear-gradient(to bottom, #000 62%, transparent 100%)",
+            WebkitMaskImage: "linear-gradient(to bottom, #000 62%, transparent 100%)",
           }}
         />
 
@@ -565,7 +560,7 @@ export default function HomePage() {
           <Box>
             <FooterLabel>BASED IN</FooterLabel>
             <Typography component="p" sx={{ m: 0, font: `500 15px ${SPACE}`, color: SAND.primary }}>
-              Australia
+              Sydney, Australia
             </Typography>
           </Box>
           <Box sx={{ maxWidth: 280 }}>
