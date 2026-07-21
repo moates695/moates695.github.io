@@ -6,7 +6,8 @@ import { gymJunkie, otherProjects } from "../middleware/projects";
 import FeaturedProject from "../components/FeaturedProject";
 import ProjectCard from "../components/ProjectCard";
 import { contactButtons } from "./Contact";
-import { MONO, ACCENT_GRADIENT } from "../styles/tokens";
+import { MONO } from "../styles/tokens";
+import { GradientText } from "../components/design";
 
 const Eyebrow = ({ children }: { children: React.ReactNode }) => (
   <Typography
@@ -44,26 +45,16 @@ export default function HomePage() {
             lineHeight: 1.05,
           }}
         >
-          Marcus{' '}
-          <Box
-            component="span"
-            sx={{
-              background: ACCENT_GRADIENT,
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-            }}
-          >
-            Oates
-          </Box>
+          Marcus <GradientText>Oates</GradientText>
         </Typography>
         <Typography
           variant="subtitle1"
           sx={{ color: 'text.secondary', mt: 1.5, maxWidth: 640, fontWeight: 400 }}
         >
-          I build full-stack products end to end: mobile apps, backend services and the data and
-          ML that make them useful. By day I&apos;m a senior engineer working on AI and backend
-          systems; by night I ship my own apps. Here are a few of them.
+          I build automation solutions that take the busywork out of running a business, plus
+          full-stack web and mobile apps end to end: backend services and the data and ML that make
+          them useful. By day I&apos;m a senior engineer working on AI and backend systems; by night
+          I ship my own apps. Here are a few of them.
         </Typography>
 
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1.25, mt: 2.5 }}>

@@ -16,7 +16,8 @@ import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
 import { useNavigate } from 'react-router-dom';
 import PageLinks from "../components/PageLinks";
 import { buildBulletPoints } from "../middleware/helpers";
-import { MONO, ACCENT_GRADIENT } from "../styles/tokens";
+import { MONO } from "../styles/tokens";
+import { GradientText } from "../components/design";
 
 interface Experience {
   role: string
@@ -190,18 +191,7 @@ export default function About() {
       {/* Header */}
       <Box className="reveal">
         <Typography variant="h3" sx={{ fontWeight: 800, letterSpacing: '-0.02em' }}>
-          Marcus{' '}
-          <Box
-            component="span"
-            sx={{
-              background: ACCENT_GRADIENT,
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-            }}
-          >
-            Oates
-          </Box>
+          Marcus <GradientText>Oates</GradientText>
         </Typography>
         <Typography variant="subtitle1" sx={{ color: 'text.secondary', mt: 0.5, fontWeight: 400 }}>
           Senior Software Engineer, AI &amp; Backend. Building voice AI and the backend systems

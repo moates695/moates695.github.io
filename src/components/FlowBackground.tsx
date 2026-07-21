@@ -47,9 +47,11 @@ export default function FlowBackground() {
     // ── Tunables ──────────────────────────────────────────────────────
     const CELL = 22; // sim grid pitch (px)
     const DAMP = 0.977; // wave persistence (higher = ripples travel further)
-    const EDGE_MARGIN = 14; // cells near each edge that absorb (no reflection)
-    const LINE_GAP = 46; // vertical spacing of swell lines
-    const STEP = 11; // horizontal sampling step per line
+    const EDGE_MARGIN = 6; // cells near each edge that absorb (no reflection)
+    const LINE_GAP = 46; // vertical spacing of swell rows
+    const STEP = 15; // horizontal spacing of dots along each row
+    const DOT_R = 1.3; // base dot radius (px)
+    const DOT_R_ENERGY = 2.2; // extra radius on disturbed water
     const SIM_SCALE = 0.5; // px of line bend per unit water height
     const MAX_BEND = 26; // clamp on displacement so a hit never flings a line
     const A1 = 12; // swell amplitudes (bigger = more surface movement)
@@ -88,9 +90,10 @@ export default function FlowBackground() {
         for (let x = 0; x < cols; x++) {
           const dist = Math.min(x, y, cols - 1 - x, rows - 1 - y);
           const ramp = Math.min(1, dist / EDGE_MARGIN);
-          // Strong absorption at the very edge (0.45×) easing up to full DAMP
-          // inside, so a wavefront is soaked up before it can reflect back.
-          dampField[y * cols + x] = DAMP * (0.45 + 0.55 * ramp * ramp);
+          // Absorb at the very edge (0.6×) easing linearly up to full DAMP a
+          // few cells in: enough to soak a wavefront so it doesn't reflect,
+          // narrow enough that clicks near the edge still ripple inward.
+          dampField[y * cols + x] = DAMP * (0.6 + 0.4 * ramp);
         }
       }
     };
@@ -156,18 +159,13 @@ export default function FlowBackground() {
       ctx.fillStyle = bg;
       ctx.fillRect(0, 0, w, h);
       ctx.globalCompositeOperation = composite;
-      ctx.lineCap = 'round';
 
       const mx = mouse.x;
       const my = mouse.y;
       const glow = Math.min(1, mouse.speed / 26);
 
       for (let baseY = -LINE_GAP; baseY < h + LINE_GAP; baseY += LINE_GAP) {
-        let px = -20;
-        let py = 0;
-        let pe = 0;
-        let first = true;
-        for (let x = -20; x <= w + 20; x += STEP) {
+        for (let x = 0; x <= w; x += STEP) {
           const swell =
             A1 * Math.sin(x * 0.008 + t * 0.72 + baseY * 0.02) +
             A2 * Math.sin(x * 0.017 - t * 0.54 + baseY * 0.011) +
@@ -183,21 +181,12 @@ export default function FlowBackground() {
             e = Math.max(e, (1 - dm / CURSOR_R) * (0.28 + glow * 0.72));
           }
 
-          if (!first) {
-            const em = (e + pe) / 2;
-            const c = mix(Math.min(1, em * 1.35));
-            const a = LINE_ALPHA + em * (0.82 - LINE_ALPHA);
-            ctx.strokeStyle = `rgba(${c.r},${c.g},${c.b},${a})`;
-            ctx.lineWidth = 1.1 + em * 1.9;
-            ctx.beginPath();
-            ctx.moveTo(px, py);
-            ctx.lineTo(x, yy);
-            ctx.stroke();
-          }
-          px = x;
-          py = yy;
-          pe = e;
-          first = false;
+          const c = mix(Math.min(1, e * 1.35));
+          const a = LINE_ALPHA + e * (0.82 - LINE_ALPHA);
+          ctx.fillStyle = `rgba(${c.r},${c.g},${c.b},${a})`;
+          ctx.beginPath();
+          ctx.arc(x, yy, DOT_R + e * DOT_R_ENERGY, 0, Math.PI * 2);
+          ctx.fill();
         }
       }
 

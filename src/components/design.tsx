@@ -5,7 +5,7 @@
  * gradient headings, `.reveal` entrance, accent-glow hover cards) so every page
  * reads as one product. Prefer composing these over hand-rolling styles.
  */
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import {
   Box,
   BoxProps,
@@ -68,26 +68,156 @@ export function Eyebrow({ children, sx }: { children: ReactNode; sx?: SxProps<Th
   );
 }
 
-/** Teal→amber gradient text. Give it the word(s) you want to pop. */
+/**
+ * Bright RGB/pink wave used for the accent word's flowing outline. First and
+ * last stops match so the colour loops seamlessly as it travels.
+ */
+const FLOW_COLORS = ["#ff3db4", "#c04bff", "#4d7bff", "#22d3ee", "#ff3db4"];
+
+/** Pull hex colours out of a legacy `linear-gradient(...)` prop, if given. */
+function stopsFrom(gradient?: string): string[] {
+  const found = gradient?.match(/#[0-9a-fA-F]{3,8}\b/g);
+  if (found && found.length >= 2) return [...found, found[0]]; // close the loop
+  return FLOW_COLORS;
+}
+
+type Box = { x: number; y: number; w: number; h: number };
+
+/**
+ * The accent word in a heading. Instead of filling the word with a static
+ * gradient, it renders the glyphs as an outline whose colour flows along the
+ * edges (a looping pink→violet→blue→cyan wave). The SVG measures the inherited
+ * text metrics so it sizes and sits on the baseline like normal inline text.
+ * Honours `prefers-reduced-motion` by holding the wave still.
+ *
+ * `gradient` (a `linear-gradient(...)` string) is still accepted for callers
+ * that want a bespoke palette; its hex stops drive the flow.
+ */
 export function GradientText({
   children,
-  gradient = ACCENT_GRADIENT,
+  gradient,
 }: {
   children: ReactNode;
   gradient?: string;
 }) {
+  const rawId = useId();
+  const id = `gt-${rawId.replace(/[^a-zA-Z0-9]/g, "")}`;
+  const stops = stopsFrom(gradient);
+  const textRef = useRef<SVGTextElement>(null);
+  const [box, setBox] = useState<Box | null>(null);
+  const [reduce, setReduce] = useState(false);
+
+  useLayoutEffect(() => {
+    if (typeof children !== "string") return;
+    const measure = () => {
+      const el = textRef.current;
+      if (!el) return;
+      try {
+        const bb = el.getBBox();
+        if (bb.width) setBox({ x: bb.x, y: bb.y, w: bb.width, h: bb.height });
+      } catch {
+        /* not laid out yet */
+      }
+    };
+    measure();
+    let cancelled = false;
+    const fonts = (document as unknown as { fonts?: { ready?: Promise<unknown> } }).fonts;
+    fonts?.ready?.then(() => !cancelled && measure());
+    window.addEventListener("resize", measure);
+    return () => {
+      cancelled = true;
+      window.removeEventListener("resize", measure);
+    };
+  }, [children]);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const sync = () => setReduce(mq.matches);
+    sync();
+    mq.addEventListener?.("change", sync);
+    return () => mq.removeEventListener?.("change", sync);
+  }, []);
+
+  // Non-string content can't be measured as SVG text; keep the filled gradient.
+  if (typeof children !== "string") {
+    return (
+      <Box
+        component="span"
+        sx={{
+          background: gradient ?? ACCENT_GRADIENT,
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          backgroundClip: "text",
+        }}
+      >
+        {children}
+      </Box>
+    );
+  }
+
+  const stroke = box ? Math.max(0.75, box.h * 0.02) : 1;
+  const pad = stroke * 2;
+  const period = 160; // wavelength of the travelling colour, in px
+
   return (
-    <Box
-      component="span"
-      sx={{
-        background: gradient,
-        WebkitBackgroundClip: "text",
-        WebkitTextFillColor: "transparent",
-        backgroundClip: "text",
+    <svg
+      role="img"
+      aria-label={children}
+      viewBox={
+        box ? `${box.x - pad} ${box.y - pad} ${box.w + pad * 2} ${box.h + pad * 2}` : "0 0 0 0"
+      }
+      style={{
+        overflow: "visible",
+        display: "inline-block",
+        width: box ? box.w + pad * 2 : 0,
+        height: box ? box.h + pad * 2 : "1em",
+        verticalAlign: box ? `${-(box.h + pad + box.y)}px` : "baseline",
       }}
     >
-      {children}
-    </Box>
+      <defs>
+        <linearGradient
+          id={id}
+          gradientUnits="userSpaceOnUse"
+          x1="0"
+          y1="0"
+          x2={period}
+          y2="0"
+          spreadMethod="repeat"
+        >
+          {stops.map((c, i) => (
+            <stop key={i} offset={`${(i / (stops.length - 1)) * 100}%`} stopColor={c} />
+          ))}
+          {!reduce && (
+            <animateTransform
+              attributeName="gradientTransform"
+              type="translate"
+              from="0 0"
+              to={`${period} 0`}
+              dur="4s"
+              repeatCount="indefinite"
+            />
+          )}
+        </linearGradient>
+      </defs>
+      <text
+        ref={textRef}
+        x="0"
+        y="0"
+        fill="none"
+        stroke={`url(#${id})`}
+        strokeWidth={stroke}
+        strokeLinejoin="round"
+        style={{
+          fontFamily: "inherit",
+          fontSize: "inherit",
+          fontWeight: "inherit",
+          fontStyle: "inherit",
+          letterSpacing: "inherit",
+        }}
+      >
+        {children}
+      </text>
+    </svg>
   );
 }
 
