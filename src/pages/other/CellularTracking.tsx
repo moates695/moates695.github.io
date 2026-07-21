@@ -15,7 +15,7 @@ import {
   PageNav,
 } from "../../components/design";
 
-const ACCENT = "#ec407a";
+const ACCENT = "#d8aa78";
 
 const segmentSteps = [
   "Apply CLAHE (Contrast Limited Adaptive Histogram Equalisation) preprocessing.",

@@ -12,7 +12,7 @@ import {
   PageNav,
 } from "../../components/design";
 
-const ACCENT = "#82b1ff";
+const ACCENT = "#d8aa78";
 
 export default function WoodchuckOverview() {
   return (

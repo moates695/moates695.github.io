@@ -17,7 +17,7 @@ import {
   CheckList,
 } from "../../components/design";
 
-const GJ_ACCENT = "#ffb74d";
+const GJ_ACCENT = "#d8aa78";
 
 const API_BASE =
   process.env.REACT_APP_GYM_JUNKIE_API_BASE ??
@@ -161,7 +161,7 @@ export default function DeleteMe() {
     >
       <PageHeader
         eyebrow="gym junkie"
-        title={<>Delete <GradientText gradient={`linear-gradient(90deg, ${GJ_ACCENT}, #ff8a65)`}>account</GradientText></>}
+        title={<>Delete <GradientText>account</GradientText></>}
         subtitle="Request permanent deletion of your Gym Junkie account and all of its data. We verify it's you by email before anything is queued."
       />
 
@@ -255,7 +255,7 @@ export default function DeleteMe() {
       {step === "confirm" && (
         <Reveal delay={0.06}>
           <Panel accent={GJ_ACCENT} wash sx={{ maxWidth: 540, display: "flex", flexDirection: "column", gap: 2 }}>
-            <Callout accent="#ef5350" title="permanent">
+            <Callout accent="#e0897a" title="permanent">
               This queues your account for deletion. Once processed, your account
               and all workout data will be permanently removed and cannot be
               recovered.

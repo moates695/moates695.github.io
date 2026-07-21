@@ -20,7 +20,7 @@ import {
   PageNav,
 } from "../../components/design";
 
-const ACCENT = "#ffb74d";
+const ACCENT = "#d8aa78";
 const iconSx = { fontSize: 22 };
 
 type Feature = {

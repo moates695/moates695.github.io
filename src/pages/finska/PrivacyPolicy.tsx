@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import MarkdownBlock from "../../components/MarkdownBlock";
 import { Reveal, PageHeader, GradientText, Panel } from "../../components/design";
 
-const ACCENT = "#82b1ff";
+const ACCENT = "#d8aa78";
 
 export default function WoodchuckPrivacyPolicy() {
   return (

@@ -10,7 +10,7 @@ import {
   PageNav,
 } from "../../../components/design";
 
-const ACCENT = "#ffb74d";
+const ACCENT = "#d8aa78";
 
 const screenshots = [
   { src: "/gym_junkie/heartrate_settings.png", label: "Heart rate settings" },

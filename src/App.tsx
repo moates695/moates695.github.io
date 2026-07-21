@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import './App.css';
 import { HashRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import AppToolbar from './components/AppToolbar'
@@ -7,9 +6,9 @@ import Contact from './pages/Contact'
 import About from './pages/About'
 import Projects from './pages/Projects'
 import { Box, ThemeProvider, CssBaseline } from '@mui/material';
-import { lightTheme, darkTheme } from "./styles/theme";
-import FlowBackground from './components/FlowBackground';
+import { darkTheme } from "./styles/theme";
 import SandBackground from './components/SandBackground';
+import SandInnerBackground from './components/SandInnerBackground';
 import WoodchuckOverview from './pages/finska/Overview';
 import WoodchuckDesign from './pages/finska/Design';
 import GymJunkieOverview from './pages/gym_junkie/Overview';
@@ -38,23 +37,18 @@ import GymJunkiePrivacyPolicy from './pages/gym_junkie/PrivacyPolicy';
 import DeleteMe from './pages/gym_junkie/DeleteMe';
 import DataExport from './pages/gym_junkie/DataExport';
 
-interface AppShellProps {
-  isDark: boolean;
-  setIsDark: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
 /**
  * Inner shell (inside the Router so it can read the route). The Tech Sand home
- * page renders full-bleed up to a 1440px cap over a solid sand backdrop; every
- * other page keeps the current 1220px content column over the flow background.
+ * page renders full-bleed up to a 1440px cap over the dune backdrop; every other
+ * page keeps the 1220px content column over a calmer sand backdrop.
  */
-function AppShell({ isDark, setIsDark }: AppShellProps) {
+function AppShell() {
   const { pathname } = useLocation();
   const isHome = pathname === '/';
 
   return (
     <>
-      {isHome ? <SandBackground /> : <FlowBackground />}
+      {isHome ? <SandBackground /> : <SandInnerBackground />}
       <Box
         sx={{
           display: "flex",
@@ -66,7 +60,7 @@ function AppShell({ isDark, setIsDark }: AppShellProps) {
           zIndex: 1,
         }}
       >
-        <AppToolbar isDark={isDark} setIsDark={setIsDark} />
+        <AppToolbar />
         <Box
           sx={{
             width: '100%',
@@ -131,13 +125,11 @@ function AppShell({ isDark, setIsDark }: AppShellProps) {
 }
 
 function App() {
-  const [isDark, setIsDark] = useState(true);
-
   return (
-    <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+    <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <Router>
-        <AppShell isDark={isDark} setIsDark={setIsDark} />
+        <AppShell />
       </Router>
     </ThemeProvider>
   );

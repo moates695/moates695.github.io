@@ -10,7 +10,7 @@ import {
   PageNav,
 } from "../../../components/design";
 
-const ACCENT = "#ffb74d";
+const ACCENT = "#d8aa78";
 
 const screenshots = [
   { src: "/gym_junkie/home_screen.png", label: "Muscle targets on home" },

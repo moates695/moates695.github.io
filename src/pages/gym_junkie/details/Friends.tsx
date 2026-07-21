@@ -10,7 +10,7 @@ import {
   PageNav,
 } from "../../../components/design";
 
-const ACCENT = "#ffb74d";
+const ACCENT = "#d8aa78";
 
 export default function Friends() {
   return (

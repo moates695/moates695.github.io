@@ -25,7 +25,7 @@ import {
   CheckList,
 } from "../../components/design";
 
-const GJ_ACCENT = "#ffb74d";
+const GJ_ACCENT = "#d8aa78";
 
 const API_BASE =
   process.env.REACT_APP_GYM_JUNKIE_API_BASE ??
@@ -205,7 +205,7 @@ export default function DataExport() {
     >
       <PageHeader
         eyebrow="gym junkie"
-        title={<>Data <GradientText gradient={`linear-gradient(90deg, ${GJ_ACCENT}, #ff8a65)`}>export</GradientText></>}
+        title={<>Data <GradientText>export</GradientText></>}
         subtitle="Download your Gym Junkie workouts as Garmin FIT files. We verify it's you by email before showing your data."
       />
 

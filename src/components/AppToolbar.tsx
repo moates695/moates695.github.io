@@ -1,13 +1,13 @@
 import { Menu as MenuIcon } from "@mui/icons-material";
 import { AppBar, Toolbar, Button, Menu, MenuItem, Box, IconButton, useMediaQuery, useTheme, Drawer, List, ListItemButton, ListItemText, Collapse, Divider } from "@mui/material";
-import { useState, Dispatch, SetStateAction } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { SAND, SPACE, PLEX } from './sand';
 
-const SHOWCASE_COLOR = '#82b1ff';
+const SHOWCASE_COLOR = SAND.gold;
 
 /** Monogram mark on the left of the bar (Space Grotesk, wide tracking). */
 const monogramSx = {
@@ -26,11 +26,6 @@ const navButtonSx = {
   color: SAND.body,
   '&:hover': { color: SAND.primary, background: 'transparent' },
 } as const;
-
-export interface AppToolbarProps {
-  isDark: boolean
-  setIsDark: Dispatch<SetStateAction<boolean>>
-}
 
 interface NavLink {
   label: string
@@ -82,7 +77,7 @@ const PROJECT_GROUPS: NavGroup[] = [
   },
 ];
 
-export default function AppToolbar(props: AppToolbarProps) {
+export default function AppToolbar() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 

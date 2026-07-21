@@ -43,14 +43,33 @@ export const SAND = {
   goldBorder: "rgba(216,170,120,.14)",
 } as const;
 
-/** Default hero typewriter roles (comma list, mirrors the handoff default). */
+/** Default hero typewriter roles. Each reads after "// your ..." in the hero. */
 export const DEFAULT_ROLES = [
   "AI specialist",
   "solutions architect",
   "ML wizard",
   "automation engineer",
-  "backend nerd",
+  "backend enthusiast",
+  "voice AI engineer",
+  "MCP tool builder",
+  "prompt engineer",
+  "cloud automation guy",
+  "CI/CD pipeline builder",
+  "computer vision engineer",
+  "RAG wrangler",
+  "full-stack builder",
+  "startup first hire",
 ];
+
+/** Fisher-Yates shuffle returning a new array; leaves the input untouched. */
+export function shuffled<T>(items: readonly T[]): T[] {
+  const out = items.slice();
+  for (let i = out.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [out[i], out[j]] = [out[j], out[i]];
+  }
+  return out;
+}
 
 /* ------------------------------------------------------------------ */
 /* Tech tag colours                                                    */
@@ -361,11 +380,13 @@ interface TyperState {
 export function Typewriter({ words = DEFAULT_ROLES }: { words?: string[] }) {
   const [state, setState] = useState<TyperState>({ text: "" });
   const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  // Shuffle once per mount so the roles cycle in a fresh order each page load.
+  const [order] = useState(() => shuffled(words));
 
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce || words.length === 0) {
-      setState({ text: words[0] ?? "" });
+    if (reduce || order.length === 0) {
+      setState({ text: order[0] ?? "" });
       return;
     }
 
@@ -376,7 +397,7 @@ export function Typewriter({ words = DEFAULT_ROLES }: { words?: string[] }) {
 
     const tick = () => {
       if (cancelled) return;
-      const word = words[ri];
+      const word = order[ri];
       ci += deleting ? -1 : 1;
       setState({ text: word.slice(0, ci) });
       let delay = deleting ? 45 : 85;
@@ -385,7 +406,7 @@ export function Typewriter({ words = DEFAULT_ROLES }: { words?: string[] }) {
         deleting = true;
       } else if (deleting && ci === 0) {
         deleting = false;
-        ri = (ri + 1) % words.length;
+        ri = (ri + 1) % order.length;
         delay = 380;
       }
       timer.current = setTimeout(tick, delay);
@@ -396,7 +417,7 @@ export function Typewriter({ words = DEFAULT_ROLES }: { words?: string[] }) {
       cancelled = true;
       if (timer.current) clearTimeout(timer.current);
     };
-  }, [words]);
+  }, [order]);
 
   return (
     <>

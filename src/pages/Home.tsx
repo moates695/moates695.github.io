@@ -299,21 +299,6 @@ export default function HomePage() {
           // heading legibility.
         }}
       >
-        {/* Left scrim for text legibility over the fixed dune. Masked to fade
-            out toward the bottom so it blends into the full-page dune instead
-            of ending in a hard horizontal edge at the hero's base. */}
-        <Box
-          aria-hidden
-          sx={{
-            position: "absolute",
-            inset: 0,
-            background:
-              "linear-gradient(100deg,rgba(11,9,8,.92) 0%,rgba(11,9,8,.72) 26%,rgba(11,9,8,.4) 50%,rgba(11,9,8,.12) 68%,rgba(11,9,8,0) 82%)",
-            maskImage: "linear-gradient(to bottom, #000 62%, transparent 100%)",
-            WebkitMaskImage: "linear-gradient(to bottom, #000 62%, transparent 100%)",
-          }}
-        />
-
         {/* Content block */}
         <Box
           sx={{
@@ -332,7 +317,7 @@ export default function HomePage() {
               mb: "24px",
             }}
           >
-            <Box component="span" sx={{ opacity: 0.5 }}>{'// the '}</Box>
+            <Box component="span" sx={{ opacity: 0.5 }}>{'// your '}</Box>
             <Typewriter />
           </Box>
 
@@ -495,25 +480,36 @@ export default function HomePage() {
             </Box>
           </Box>
 
-          {/* Right column: real product shot in a phone frame (full, uncropped) */}
-          <Box
-            sx={{
-              flex: "none",
-              width: { xs: 170, md: 190 },
-              maxWidth: "100%",
-              borderRadius: "26px",
-              border: "1px solid rgba(216,170,120,.25)",
-              overflow: "hidden",
-              background: SAND.surface,
-            }}
-          >
-            <Box
-              component="img"
-              src="/gymJunkieWorkout.png"
-              alt="Gym Junkie workout logging screen"
-              loading="lazy"
-              sx={{ width: "100%", height: "auto", display: "block" }}
-            />
+          {/* Right column: two real product shots side by side (full, uncropped) */}
+          <Box sx={{ flex: "none", maxWidth: "100%", display: "flex", gap: { xs: "12px", md: "16px" } }}>
+            {[
+              { src: "/gym_junkie_ios/home_screen.png", alt: "Gym Junkie home screen" },
+              {
+                src: "/gym_junkie_ios/workout_exercise_history_graph.png",
+                alt: "Gym Junkie exercise history graph",
+              },
+            ].map((shot) => (
+              <Box
+                key={shot.src}
+                sx={{
+                  flex: "none",
+                  width: { xs: 140, sm: 155, md: 168 },
+                  maxWidth: "100%",
+                  borderRadius: "26px",
+                  border: "1px solid rgba(216,170,120,.25)",
+                  overflow: "hidden",
+                  background: SAND.surface,
+                }}
+              >
+                <Box
+                  component="img"
+                  src={shot.src}
+                  alt={shot.alt}
+                  loading="lazy"
+                  sx={{ width: "100%", height: "auto", display: "block" }}
+                />
+              </Box>
+            ))}
           </Box>
         </Box>
       </Box>

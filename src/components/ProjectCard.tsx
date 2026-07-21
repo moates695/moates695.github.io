@@ -40,18 +40,10 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         },
       }}
     >
-      {/* accent hairline along the top */}
-      <Box
-        sx={{
-          height: 3,
-          width: '100%',
-          background: `linear-gradient(90deg, ${project.accent}, transparent)`,
-        }}
-      />
       <CardActionArea
         onClick={() => navigate(project.link)}
         sx={{
-          height: 'calc(100% - 3px)',
+          height: '100%',
           p: 2,
           display: 'flex',
           flexDirection: 'column',

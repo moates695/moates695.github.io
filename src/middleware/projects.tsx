@@ -35,9 +35,9 @@ interface StatusMeta {
 }
 
 export const statusMeta: Record<ProjectStatus, StatusMeta> = {
-  prod: { label: 'prod', full: 'In production', color: '#42b883' },
-  test: { label: 'test', full: 'In testing', color: '#ffa726' },
-  poc: { label: 'poc', full: 'Proof of concept', color: '#9575cd' },
+  prod: { label: 'prod', full: 'In production', color: '#6fcf97' },
+  test: { label: 'test', full: 'In testing', color: '#e0b24d' },
+  poc: { label: 'poc', full: 'Proof of concept', color: '#b18cf0' },
 };
 
 export interface ProjectLink {
@@ -83,7 +83,7 @@ export const gymJunkie: ProjectInfo = {
   chipKeys: ['full_stack', 'react_ts', 'express', 'python', 'postgres', 'ai_ml'],
   status: 'prod',
   highlight: '/gym-junkie-highlight.png',
-  accent: '#ffb74d',
+  accent: '#d8aa78',
   featureName: true,
   external: [
     { label: 'Play Store', href: gymJunkiePlayStoreLink, external: true },
@@ -107,7 +107,7 @@ export const otherProjects: ProjectInfo[] = [
     chipKeys: ['client_side', 'expo', 'react_ts'],
     status: 'test',
     highlight: '/finska-highlight.png',
-    accent: '#82b1ff',
+    accent: '#d8aa78',
     external: [{ label: 'Play Store', href: woodchuckPlayStoreLink, external: true }],
   },
   {
@@ -122,7 +122,7 @@ export const otherProjects: ProjectInfo[] = [
     link: '/poppycock',
     chipKeys: ['full_stack', 'expo', 'react_ts', 'python', 'fastapi', 'websocket', 'postgres'],
     status: 'poc',
-    accent: '#ab47bc',
+    accent: '#d8aa78',
   },
   {
     key: 'cellular_tracking',
@@ -136,7 +136,7 @@ export const otherProjects: ProjectInfo[] = [
     link: '/other/cellular-tracking',
     chipKeys: ['ai_ml', 'python'],
     status: 'prod',
-    accent: '#ec407a',
+    accent: '#d8aa78',
     external: [{ label: 'Source', href: cellularTrackingGithubLink, external: true }],
   },
   {
@@ -151,7 +151,7 @@ export const otherProjects: ProjectInfo[] = [
     link: '/other/downer-helper',
     chipKeys: ['python', 'package'],
     status: 'prod',
-    accent: '#ffca28',
+    accent: '#d8aa78',
     external: [{ label: 'PyPI', href: downerhelperLink, external: true }],
   },
   {
@@ -166,7 +166,7 @@ export const otherProjects: ProjectInfo[] = [
     link: '/other/postgres-deploy',
     chipKeys: ['python', 'package'],
     status: 'prod',
-    accent: '#5c6bc0',
+    accent: '#d8aa78',
     external: [{ label: 'PyPI', href: postgresDeployLink, external: true }],
   },
 ];

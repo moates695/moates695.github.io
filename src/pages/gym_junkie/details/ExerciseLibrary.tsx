@@ -9,7 +9,7 @@ import {
   PageNav,
 } from "../../../components/design";
 
-const ACCENT = "#ffb74d";
+const ACCENT = "#d8aa78";
 
 const screenshots = [
   { src: "/gym_junkie/choose_workout_exercise.png", label: "Exercise picker" },

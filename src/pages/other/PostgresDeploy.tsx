@@ -13,7 +13,7 @@ import {
   PageNav,
 } from "../../components/design";
 
-const ACCENT = "#5c6bc0";
+const ACCENT = "#d8aa78";
 
 export default function OtherPostgresDeploy() {
   const targetFolder = `\`\`\`text

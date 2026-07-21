@@ -11,7 +11,7 @@ import {
   PageNav,
 } from "../../components/design";
 
-const ACCENT = "#82b1ff";
+const ACCENT = "#d8aa78";
 
 /** Inline monospace code token. */
 function Code({ children }: { children: React.ReactNode }) {

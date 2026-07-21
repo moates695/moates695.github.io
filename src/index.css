@@ -12,8 +12,9 @@ html {
 
 body {
   margin: 0;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+  font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
     'Helvetica Neue', sans-serif;
+  background-color: #0b0908;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -70,7 +71,7 @@ code {
 }
 
 ::selection {
-  background-color: rgba(77, 208, 225, 0.3);
+  background-color: rgba(216, 170, 120, 0.3);
   color: inherit;
 }
 

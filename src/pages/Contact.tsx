@@ -233,7 +233,7 @@ export default function ContactPage() {
         actions={
           <Button
             variant="contained"
-            color="secondary"
+            color="primary"
             startIcon={<DownloadIcon />}
             href="marcus_oates_resume.pdf"
             download
@@ -317,7 +317,7 @@ export default function ContactPage() {
             <Box>
               <Button
                 variant="contained"
-                color="secondary"
+                color="primary"
                 startIcon={<LocalCafeIcon />}
                 href={paypalLink}
                 target="_blank"

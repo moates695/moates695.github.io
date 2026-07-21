@@ -12,7 +12,7 @@ import {
   PageNav,
 } from "../../components/design";
 
-const ACCENT = "#ab47bc";
+const ACCENT = "#d8aa78";
 
 export default function PoppycockOverview() {
   return (

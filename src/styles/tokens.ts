@@ -3,5 +3,5 @@
 /** Monospace "engineer" utility face — used for eyebrows, labels, stats, badges. */
 export const MONO = "'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace";
 
-/** Signature teal→amber accent, matching the theme's primary/secondary. */
-export const ACCENT_GRADIENT = 'linear-gradient(90deg, #4dd0e1 0%, #ffb74d 100%)';
+/** Signature Tech Sand gold→cyan accent, matching the theme's primary/secondary. */
+export const ACCENT_GRADIENT = 'linear-gradient(90deg, #d8aa78 0%, #8fd0d4 100%)';

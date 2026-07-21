@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import { Reveal, GradientText, PageHeader, Panel } from "../../components/design";
 import MarkdownBlock from "../../components/MarkdownBlock";
 
-const ACCENT = "#ffb74d";
+const ACCENT = "#d8aa78";
 
 const policy = `**Last updated:** 18/12/25
 

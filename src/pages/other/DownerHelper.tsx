@@ -11,7 +11,7 @@ import {
   PageNav,
 } from "../../components/design";
 
-const ACCENT = "#ffca28";
+const ACCENT = "#d8aa78";
 
 export default function OtherDownerHelper() {
   const markdown = `## Logging
