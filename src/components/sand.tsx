@@ -370,15 +370,18 @@ export function SandLabel({ children, sx }: { children: ReactNode; sx?: SxProps<
 
 interface TyperState {
   text: string;
+  /** True only while the word is static (held or paused) — the cursor blinks. */
+  blink: boolean;
 }
 
 /**
  * Cycling typewriter word used in the hero eyebrow. Types forward at ~85ms/char,
- * holds a completed word 1500ms, deletes at ~45ms/char, pauses 380ms between
- * words. Honours `prefers-reduced-motion` by holding the first word still.
+ * holds a completed word 2200ms, deletes at ~45ms/char, pauses 380ms between
+ * words. The cursor stays solid while typing/deleting and only blinks while the
+ * word is static. Honours `prefers-reduced-motion` by holding the first word still.
  */
 export function Typewriter({ words = DEFAULT_ROLES }: { words?: string[] }) {
-  const [state, setState] = useState<TyperState>({ text: "" });
+  const [state, setState] = useState<TyperState>({ text: "", blink: true });
   const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   // Shuffle once per mount so the roles cycle in a fresh order each page load.
   const [order] = useState(() => shuffled(words));
@@ -386,7 +389,7 @@ export function Typewriter({ words = DEFAULT_ROLES }: { words?: string[] }) {
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce || order.length === 0) {
-      setState({ text: order[0] ?? "" });
+      setState({ text: order[0] ?? "", blink: true });
       return;
     }
 
@@ -399,16 +402,20 @@ export function Typewriter({ words = DEFAULT_ROLES }: { words?: string[] }) {
       if (cancelled) return;
       const word = order[ri];
       ci += deleting ? -1 : 1;
-      setState({ text: word.slice(0, ci) });
+      // Solid cursor while writing/deleting; blinks only during the static pauses.
       let delay = deleting ? 45 : 85;
+      let blink = false;
       if (!deleting && ci === word.length) {
-        delay = 1500;
+        delay = 2200;
         deleting = true;
+        blink = true;
       } else if (deleting && ci === 0) {
         deleting = false;
         ri = (ri + 1) % order.length;
         delay = 380;
+        blink = true;
       }
+      setState({ text: word.slice(0, ci), blink });
       timer.current = setTimeout(tick, delay);
     };
     tick();
@@ -432,7 +439,9 @@ export function Typewriter({ words = DEFAULT_ROLES }: { words?: string[] }) {
           background: SAND.gold,
           marginLeft: "2px",
           verticalAlign: "-2px",
-          animation: "sandcaret 1s steps(1) infinite",
+          // Blink only while the word is static; solid while typing/deleting.
+          animation: state.blink ? "sandcaret 1s steps(1) infinite" : "none",
+          opacity: 1,
         }}
       />
     </>

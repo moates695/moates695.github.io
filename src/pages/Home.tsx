@@ -89,10 +89,11 @@ const techStack = [
   "PostgreSQL",
   "Redis",
   "Docker",
+  "Azure",
   "AWS",
-  "PyTorch",
+  "React Native",
+  "MCP",
   "OpenAI API",
-  "LangChain",
 ];
 
 const socials = [

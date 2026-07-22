@@ -104,12 +104,15 @@ const EXPERIENCE: Experience[] = [
 ];
 
 const SKILLS: { group: string; items: string[] }[] = [
-  { group: 'Languages', items: ['Python', 'TypeScript', 'JavaScript', 'SQL'] },
+  { group: 'Languages', items: ['Python', 'TypeScript', 'JavaScript', 'Java', 'C', 'C++', 'SQL', 'PL/pgSQL', 'MATLAB'] },
   { group: 'Frontend', items: ['React', 'React Native', 'Expo', 'Jotai', 'MUI'] },
   { group: 'Backend', items: ['Node / Express', 'FastAPI', 'WebSockets', 'REST APIs'] },
   { group: 'Data', items: ['Postgres', 'Redis', 'PowerBI', 'Data analytics'] },
-  { group: 'Cloud & DevOps', items: ['Azure', 'AWS', 'Bicep (IaC)', 'GitHub Actions', 'Docker', 'Cloudflare'] },
+  { group: 'Azure', items: ['Function Apps', 'Container Registry', 'Container Instances', 'Managed Identity', 'Key Vault', 'Storage Accounts', 'Event Grid', 'Logic Apps'] },
+  { group: 'AWS', items: ['ECS', 'Lambda', 'RDS Postgres', 'ElastiCache (Redis)', 'Secrets Manager', 'NLB', 'CloudFormation'] },
+  { group: 'DevOps', items: ['Bicep (IaC)', 'GitHub Actions', 'Docker', 'Cloudflare', 'az / aws CLI'] },
   { group: 'AI / LLMs', items: ['Voice agents', 'LLM fine-tuning', 'Prompt engineering', 'MCP tooling', 'RAG', 'LLM evals'] },
+  { group: 'AI coding agents', items: ['Claude Code', 'Codex', 'OpenCode'] },
   { group: 'AI / ML', items: ['Deep learning', 'Computer vision', 'OCR', 'Applied ML'] },
 ];
 
