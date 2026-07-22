@@ -23,6 +23,7 @@ const ACCENT = "#d8aa78";
 const SECTIONS: Section[] = [
   { id: "streams", label: "What it watches" },
   { id: "examples", label: "The alerts" },
+  { id: "commands", label: "Ask on demand" },
   { id: "how", label: "How it works" },
   { id: "deploy", label: "Deploy" },
 ];
@@ -69,11 +70,49 @@ const streams = [
   "Daily digest: once a day (08:00 Sydney by default), the full coming-soon and on-sale lists.",
 ];
 
+const commands = [
+  "/seats <film> lists every bookable session with its available Standard and Full Recliner counts and a booking link. Sold-out sessions are left off, and you can ask for several films at once with commas.",
+  "/seats on its own runs that same check across every film on your watchlist.",
+  "/nowshowing returns every film on sale now, with its session count and earliest start.",
+  "/comingsoon returns the films listed as coming soon.",
+  "/help prints the command overview.",
+];
+
+const commandMessages: ChatMessage[] = [
+  { text: "/seats The Odyssey", time: "21:03", outgoing: true },
+  {
+    text:
+      "🎫 'The Odyssey' - IMAX Sydney (2 session(s) with seats):\n" +
+      "• Fri 17 Jul 19:30 - Standard 142, Full Recliner 24\n" +
+      "• Sat 18 Jul 14:00 - Standard 88, Full Recliner 12\n" +
+      "Book: https://www.eventcinemas.com.au/Cinema/imax-sydney",
+    time: "21:03",
+  },
+  { text: "/nowshowing", time: "21:05", outgoing: true },
+  {
+    text:
+      "🎫 Now showing at IMAX Sydney (2):\n" +
+      "• Dune: Part Three - 6 session(s), earliest Wed 22 Jul 18:45\n" +
+      "• Superman - 4 session(s), earliest Tue 21 Jul 20:00\n\n" +
+      "https://www.eventcinemas.com.au/Cinema/imax-sydney",
+    time: "21:05",
+  },
+  { text: "/comingsoon", time: "21:06", outgoing: true },
+  {
+    text:
+      "🎬 Coming soon at IMAX Sydney (3):\n" +
+      "• The Odyssey\n• Avatar: Fire and Ash\n• Wicked: For Good\n\n" +
+      "https://www.eventcinemas.com.au/Cinema/imax-sydney",
+    time: "21:06",
+  },
+];
+
 const mechanics = [
   "One run does a single site scan and drives all four streams.",
   "The first run seeds state silently, so there is no alert burst on setup.",
   "Every run after that only messages you on a genuine change.",
   "State lives in a local agent_state.json, so each alert fires once per transition and never repeats.",
+  "A separate always-on listener answers the chat commands, long-polling Telegram so it needs no public endpoint.",
   "Title matching is case, punctuation and accent insensitive, so \"dune part two\" matches \"Dune: Part Two\".",
 ];
 
@@ -98,7 +137,7 @@ export default function OtherImaxBot() {
       <PageHeader
         eyebrow="agent"
         title={<>IMAX <GradientText>Watch Agent</GradientText></>}
-        subtitle="A Python agent that watches Event Cinemas IMAX Sydney and pings you on Telegram when films appear or tickets open, so you never miss a release or an on-sale window."
+        subtitle="A Python agent that watches Event Cinemas IMAX Sydney and pings you on Telegram when films appear or tickets open, so you never miss a release or an on-sale window. You can also message the bot to check seats, now showing and coming soon on demand."
         actions={
           <ExternalButton
             href={imaxBotGithubLink}
@@ -114,6 +153,7 @@ export default function OtherImaxBot() {
           <StatRow
             items={[
               { value: "4", label: "alert streams" },
+              { value: "4", label: "chat commands" },
               { value: "15 min", label: "scan cadence" },
               { value: "Telegram", label: "delivery" },
             ]}
@@ -155,7 +195,25 @@ export default function OtherImaxBot() {
         </Box>
       </Reveal>
 
-      <Reveal delay={0.3} id="how">
+      <Reveal delay={0.3} id="commands">
+        <SectionHeading eyebrow="on demand">Ask on demand</SectionHeading>
+        <Box sx={{ color: "text.secondary", mb: 2 }}>
+          The four streams push alerts to you. The bot also answers when you message it: a handful of
+          commands run a fresh scan and reply in seconds, so you can pull the current picture without
+          waiting for a transition.
+        </Box>
+        <CheckList items={commands} accent={ACCENT} />
+        <Box sx={{ display: "flex", justifyContent: { xs: "stretch", sm: "flex-start" }, mt: 2.5 }}>
+          <TelegramChat
+            messages={commandMessages}
+            avatar={imaxLogo}
+            name="IMAX Watch Agent"
+            accent={ACCENT}
+          />
+        </Box>
+      </Reveal>
+
+      <Reveal delay={0.36} id="how">
         <SectionHeading eyebrow="design">How it works</SectionHeading>
         <Box sx={{ color: "text.secondary", mb: 2 }}>
           The agent is stateless per invocation: it reads its config, scans once, diffs against saved
@@ -164,10 +222,10 @@ export default function OtherImaxBot() {
         <CheckList items={mechanics} accent={ACCENT} />
       </Reveal>
 
-      <Reveal delay={0.36} id="deploy">
+      <Reveal delay={0.42} id="deploy">
         <SectionHeading eyebrow="ops">Deploy</SectionHeading>
         <MarkdownBlock>
-          {`Because each run is self-contained, deployment is just a cron job on a droplet: no runner, no state-commit dance. A \`flock\` guard stops a slow scan overlapping the next tick, and \`uv\` provisions the Python 3.12 toolchain from a lockfile.`}
+          {`Because each run is self-contained, deployment is just a cron job on a droplet: no runner, no state-commit dance. A \`flock\` guard stops a slow scan overlapping the next tick, and \`uv\` provisions the Python 3.12 toolchain from a lockfile. The on-demand listener runs alongside it as a \`systemd\` service, so the two halves stay independent.`}
         </MarkdownBlock>
         <Panel accent={ACCENT}>
           <MarkdownBlock>{cronString}</MarkdownBlock>

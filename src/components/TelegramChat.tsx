@@ -7,6 +7,11 @@ export interface ChatMessage {
   text: string;
   /** Small time stamp shown in the bubble's corner, e.g. "19:32". */
   time: string;
+  /**
+   * A message you sent the bot (e.g. a `/seats` command), rendered right-aligned
+   * in an accent bubble. Omitted/false = an incoming bot message (left-aligned).
+   */
+  outgoing?: boolean;
 }
 
 interface TelegramChatProps {
@@ -99,12 +104,12 @@ export default function TelegramChat({ messages, avatar, name, accent = "#d8aa78
           <Box
             key={i}
             sx={{
-              alignSelf: "flex-start",
+              alignSelf: m.outgoing ? "flex-end" : "flex-start",
               maxWidth: "92%",
-              bgcolor: "rgba(255,255,255,0.06)",
+              bgcolor: m.outgoing ? `${accent}22` : "rgba(255,255,255,0.06)",
               border: "1px solid",
-              borderColor: "divider",
-              borderRadius: "4px 14px 14px 14px",
+              borderColor: m.outgoing ? `${accent}55` : "divider",
+              borderRadius: m.outgoing ? "14px 4px 14px 14px" : "4px 14px 14px 14px",
               px: 1.5,
               py: 1,
             }}
@@ -117,6 +122,7 @@ export default function TelegramChat({ messages, avatar, name, accent = "#d8aa78
                 color: "text.primary",
                 whiteSpace: "pre-wrap",
                 overflowWrap: "anywhere",
+                fontFamily: m.outgoing ? MONO : undefined,
               }}
             >
               {linkify(m.text)}

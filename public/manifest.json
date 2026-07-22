@@ -1,6 +1,6 @@
 {
-  "short_name": "Marcus Oates: Projects",
-  "name": "Projects Homepage",
+  "short_name": "Marcus Oates",
+  "name": "Marcus Oates",
   "icons": [
     {
       "src": "favicon.ico",
@@ -20,6 +20,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#120f0a",
+  "background_color": "#0b0908"
 }
