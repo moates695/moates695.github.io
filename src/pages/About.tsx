@@ -63,7 +63,7 @@ const EXPERIENCE: Experience[] = [
       'Developed agentic AI development workflows and custom Model Context Protocol (MCP) tooling that dramatically accelerated development and enabled rapid prototyping, under heavy human oversight with disciplined review to keep code quality high',
       'Rebuilt the core conversation logic while maintaining interoperability with the existing live system, so clients continued to be served without interruption',
       'Extended reliable call handling from ~2-minute calls to consistently sustaining 10 to 20 minute conversations that stay on script and complete their objectives',
-      'Increased call concurrency by 400% through system optimisations, managing concurrency and cost-effectiveness across the pipeline to balance throughput against infrastructure spend',
+      'Migrated the voice agent from third-party telephony integrations to a fully self-hosted AWS stack, gaining full control of SIP connections and increasing call concurrency by 400% while balancing throughput against infrastructure cost',
       'Architected the agent’s conversational dynamics for a ~10% improvement in average response latency, prioritising accuracy so the agent does not stray from its call objectives',
       'Built automated testing for the voice system, from unit and integration tests to concurrent automated call runs, using AI agents to analyse call dynamics and debug conversational issues across a large sample space',
       'Established automated CI/CD deployment pipelines with real-time observability and monitoring in Grafana, giving instant visibility into call performance and system health',
@@ -111,7 +111,8 @@ const SKILLS: { group: string; items: string[] }[] = [
   { group: 'Azure', items: ['Function Apps', 'Container Registry', 'Container Instances', 'Managed Identity', 'Key Vault', 'Storage Accounts', 'Event Grid', 'Logic Apps'] },
   { group: 'AWS', items: ['ECS', 'Lambda', 'RDS Postgres', 'ElastiCache (Redis)', 'Secrets Manager', 'NLB', 'CloudFormation'] },
   { group: 'DevOps', items: ['Bicep (IaC)', 'GitHub Actions', 'Docker', 'Cloudflare', 'az / aws CLI'] },
-  { group: 'AI / LLMs', items: ['Voice agents', 'LLM fine-tuning', 'Prompt engineering', 'MCP tooling', 'RAG', 'LLM evals'] },
+  { group: 'AI / LLMs', items: ['Voice agents', 'LLM fine-tuning', 'Prompt engineering', 'MCP tooling', 'RAG', 'LLM evals', 'Deepgram (STT)', 'Cartesia (TTS)'] },
+  { group: 'Telephony / Networking', items: ['SIP', 'RTP', 'WebRTC', 'FreeSWITCH', 'Real-time voice media'] },
   { group: 'AI coding agents', items: ['Claude Code', 'Codex', 'OpenCode'] },
   { group: 'AI / ML', items: ['Deep learning', 'Computer vision', 'OCR', 'Applied ML'] },
 ];

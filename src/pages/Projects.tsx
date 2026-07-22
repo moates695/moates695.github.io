@@ -4,7 +4,7 @@ import ProjectCard from "../components/ProjectCard";
 import StatusBadge from "../components/StatusBadge";
 import { allProjects, ProjectStatus, statusMeta } from "../middleware/projects";
 
-const LEGEND: ProjectStatus[] = ['prod', 'test', 'poc'];
+const LEGEND: ProjectStatus[] = ['prod', 'test', 'poc', 'collection'];
 
 export default function Projects() {
   return (

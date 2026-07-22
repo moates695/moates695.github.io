@@ -45,6 +45,14 @@ const moreProjects: SandProject[] = [
     link: "/woodchuck",
   },
   {
+    title: "Small Projects",
+    status: "COLLECTION",
+    blurb: "A running collection of smaller builds and self-hosted infrastructure, gathered on one page. First up: a self-hosted password vault for the family.",
+    tags: ["Docker", "Self-Hosted", "Backups"],
+    initials: "SP",
+    link: "/small-projects",
+  },
+  {
     title: "Poppycock",
     status: "POC",
     blurb: "Real-time companion app for the Balderdash card game, someone had to keep the liars honest.",

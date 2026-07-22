@@ -38,6 +38,7 @@ export const breadcrumbNameMap: { [key: string]: string } = {
   '/other/cellular-tracking': 'Cellular Tracking',
   '/other/postgres-deploy': 'Postgres Deploy',
   '/other/mcp-server': 'Marcus MCP Server',
+  '/small-projects': 'Small Projects',
   '/about': 'Resume',
   '/projects': 'Projects',
   '/contact': 'Contact',
@@ -67,7 +68,7 @@ const crumbSx = {
 // the breadcrumb inserts the Projects crumb. `/other/*` pages fold straight into
 // Projects (the bare "Other Projects" crumb is dropped) since /other redirects
 // to /projects anyway.
-const PROJECT_ROOTS = new Set(['woodchuck', 'poppycock', 'gym-junkie']);
+const PROJECT_ROOTS = new Set(['woodchuck', 'poppycock', 'gym-junkie', 'small-projects']);
 
 export default function PageLinks() {
   const location = useLocation();

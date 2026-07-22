@@ -19,7 +19,8 @@ export type Project =
   | 'cellular_tracking'
   | 'postgres_deploy'
   | 'imax_bot'
-  | 'mcp_server';
+  | 'mcp_server'
+  | 'small_projects';
 
 export const iconMap: Record<Project, string> = {
   finska: '/finska-icon.png',
@@ -31,9 +32,11 @@ export const iconMap: Record<Project, string> = {
   imax_bot: imaxLogo,
   // No logo asset: the card/avatar falls back to the "M" initial.
   mcp_server: '',
+  // No logo asset: the card/avatar falls back to the "SP" initials.
+  small_projects: '',
 };
 
-export type ProjectStatus = 'prod' | 'test' | 'poc';
+export type ProjectStatus = 'prod' | 'test' | 'poc' | 'collection';
 
 interface StatusMeta {
   label: string
@@ -46,6 +49,7 @@ export const statusMeta: Record<ProjectStatus, StatusMeta> = {
   prod: { label: 'prod', full: 'In production', color: '#6fcf97' },
   test: { label: 'test', full: 'In testing', color: '#e0b24d' },
   poc: { label: 'poc', full: 'Proof of concept', color: '#b18cf0' },
+  collection: { label: 'collection', full: 'A collection of smaller projects', color: '#8fd0d4' },
 };
 
 export interface ProjectLink {
@@ -117,6 +121,22 @@ export const otherProjects: ProjectInfo[] = [
     highlight: '/finska-highlight.png',
     accent: '#d8aa78',
     external: [{ label: 'Play Store', href: woodchuckPlayStoreLink, external: true }],
+  },
+  {
+    key: 'small_projects',
+    icon: iconMap.small_projects,
+    initials: 'SP',
+    name: 'Small Projects',
+    blurb: 'A collection of smaller builds and self-hosted infrastructure, gathered on one page.',
+    description:
+      'A running collection of the smaller builds that are too compact for a case study of their own, ' +
+      'gathered on a single page with quick links to each. First up is Secrets Vault: a self-hosted ' +
+      'Vaultwarden password manager for the family, running on a DigitalOcean droplet with shared ' +
+      'collections and encrypted off-site backups.',
+    link: '/small-projects',
+    chipKeys: ['docker', 'self_hosted'],
+    status: 'collection',
+    accent: '#d8aa78',
   },
   {
     key: 'balderdash',

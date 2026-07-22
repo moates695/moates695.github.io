@@ -119,6 +119,18 @@ const chipData = {
     borderColor: '#a88be0',
     textColor: '#a88be0',
   },
+  docker: {
+    label: 'Docker',
+    color: 'transparent',
+    borderColor: '#79b8e0',
+    textColor: '#79b8e0',
+  },
+  self_hosted: {
+    label: 'Self-Hosted',
+    color: 'transparent',
+    borderColor: '#c7b191',
+    textColor: '#c7b191',
+  },
 } satisfies Record<string, ChipData>;
 
 export type ChipKey = keyof typeof chipData;
