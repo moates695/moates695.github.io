@@ -12,4 +12,6 @@ export const stravaLink = "https://www.strava.com/athletes/46665081"
 export const cellularTrackingGithubLink = "https://github.com/moates695/cs9517_Group_Project"
 export const postgresDeployLink = "https://pypi.org/project/postgresdeploy/"
 export const imaxBotGithubLink = "https://github.com/moates695/imax_bot"
+export const mcpServerGithubLink = "https://github.com/moates695/moates_mcp"
+export const mcpServerEndpoint = "https://mcp.moates.com.au/mcp"
 export const paypalLink = "https://paypal.me/moates695";

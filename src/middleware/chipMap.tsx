@@ -107,6 +107,18 @@ const chipData = {
     borderColor: '#c7b191',
     textColor: '#c7b191',
   },
+  mcp: {
+    label: 'MCP',
+    color: 'transparent',
+    borderColor: '#8fd0d4',
+    textColor: '#8fd0d4',
+  },
+  llm: {
+    label: 'LLM',
+    color: 'transparent',
+    borderColor: '#a88be0',
+    textColor: '#a88be0',
+  },
 } satisfies Record<string, ChipData>;
 
 export type ChipKey = keyof typeof chipData;

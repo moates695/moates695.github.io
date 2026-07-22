@@ -54,6 +54,14 @@ const moreProjects: SandProject[] = [
     link: "/poppycock",
   },
   {
+    title: "Marcus MCP Server",
+    status: "POC",
+    blurb: "A public MCP server that lets Claude and OpenAI models answer questions about Marcus from real, structured data.",
+    tags: ["Python", "MCP", "LLM"],
+    initials: "M",
+    link: "/other/mcp-server",
+  },
+  {
     title: "Cellular Tracking",
     status: "PROD",
     blurb: "Computer-vision pipeline that segments and tracks dividing cells so researchers don't have to squint.",

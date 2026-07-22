@@ -10,6 +10,7 @@ import { Box, ThemeProvider, CssBaseline } from '@mui/material';
 import { darkTheme } from "./styles/theme";
 import SandBackground from './components/SandBackground';
 import SandInnerBackground from './components/SandInnerBackground';
+import ChatWidget from './components/ChatWidget';
 import WoodchuckOverview from './pages/finska/Overview';
 import WoodchuckDesign from './pages/finska/Design';
 import GymJunkieOverview from './pages/gym_junkie/Overview';
@@ -34,6 +35,7 @@ import PoppycockPrivacyPolicy from './pages/poppycock/PrivacyPolicy';
 import GymJunkieChanges from './pages/gym_junkie/Changes';
 import OtherPostgresDeploy from './pages/other/PostgresDeploy';
 import OtherImaxBot from './pages/other/ImaxBot';
+import OtherMcpServer from './pages/other/McpServer';
 import WoodchuckPrivacyPolicy from './pages/finska/PrivacyPolicy';
 import GymJunkiePrivacyPolicy from './pages/gym_junkie/PrivacyPolicy';
 import DeleteMe from './pages/gym_junkie/DeleteMe';
@@ -125,10 +127,12 @@ function AppShell() {
               <Route path="cellular-tracking" element={<OtherCellularTracking />} />
               <Route path="postgres-deploy" element={<OtherPostgresDeploy />} />
               <Route path="imax-bot" element={<OtherImaxBot />} />
+              <Route path="mcp-server" element={<OtherMcpServer />} />
             </Route>
           </Routes>
         </Box>
       </Box>
+      <ChatWidget />
     </>
   );
 }
