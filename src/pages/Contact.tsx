@@ -273,9 +273,9 @@ export default function ContactPage() {
             <DetailRow
               icon={<EmailIcon fontSize="small" />}
               label="Email"
-              value="marcusjoates@gmail.com"
-              href="mailto:marcusjoates@gmail.com"
-              copy="marcusjoates@gmail.com"
+              value="marcus@moates.com.au"
+              href="mailto:marcus@moates.com.au"
+              copy="marcus@moates.com.au"
             />
             <DetailRow
               icon={<PhoneIcon fontSize="small" />}

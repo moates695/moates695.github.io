@@ -211,7 +211,7 @@ function ExperienceEntry({ exp, last }: { exp: Experience; last: boolean }) {
   );
 }
 
-const CONTACT_EMAIL = "marcusjoates@gmail.com";
+const CONTACT_EMAIL = "marcus@moates.com.au";
 
 export default function About() {
   const navigate = useNavigate();

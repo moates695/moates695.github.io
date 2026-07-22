@@ -146,7 +146,7 @@ Your continued use of the App after changes become effective constitutes accepta
 
 If you have questions, concerns, or requests regarding this Privacy Policy or your data, contact us at:
 
-**Email:** marcusjoates@gmail.com
+**Email:** marcus@moates.com.au
 
 **Entity name:** Gym Junkie`;
 
