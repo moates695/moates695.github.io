@@ -8,6 +8,11 @@
 
 html {
   scroll-behavior: smooth;
+  /* Always reserve the scrollbar gutter so the viewport width stays constant
+     between scrolling and non-scrolling pages. Without this, fixed-position
+     elements (e.g. the chat Fab) shift horizontally when the scrollbar appears
+     or disappears from one page to the next. */
+  scrollbar-gutter: stable;
 }
 
 body {

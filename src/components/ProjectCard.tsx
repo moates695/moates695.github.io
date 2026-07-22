@@ -53,7 +53,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       >
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.25, width: '100%' }}>
           <Avatar
-            src={project.icon}
+            src={project.icon || undefined}
             alt=""
             variant="rounded"
             sx={{

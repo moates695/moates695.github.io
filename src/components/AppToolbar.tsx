@@ -74,6 +74,7 @@ const PROJECT_GROUPS: NavGroup[] = [
       { label: 'Downer Helper', to: '/other/downer-helper' },
       { label: 'Postgres Deploy', to: '/other/postgres-deploy' },
       { label: 'Poppycock', to: '/poppycock' },
+      { label: 'Marcus MCP Server', to: '/other/mcp-server' },
     ],
   },
 ];

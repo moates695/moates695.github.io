@@ -37,6 +37,7 @@ export const breadcrumbNameMap: { [key: string]: string } = {
   '/other/downer-helper': 'Downer Helper',
   '/other/cellular-tracking': 'Cellular Tracking',
   '/other/postgres-deploy': 'Postgres Deploy',
+  '/other/mcp-server': 'Marcus MCP Server',
   '/about': 'Resume',
   '/projects': 'Projects',
   '/contact': 'Contact',
@@ -60,17 +61,33 @@ const crumbSx = {
   lineHeight: 1.6,
 };
 
+// Every project detail page lives under the Projects page in the trail, so a
+// user can always step back to the full project list. The URL roots stay flat
+// (/woodchuck, /gym-junkie, /other/mcp-server) for stable external links; only
+// the breadcrumb inserts the Projects crumb. `/other/*` pages fold straight into
+// Projects (the bare "Other Projects" crumb is dropped) since /other redirects
+// to /projects anyway.
+const PROJECT_ROOTS = new Set(['woodchuck', 'poppycock', 'gym-junkie']);
+
 export default function PageLinks() {
   const location = useLocation();
   const pathnames = location.pathname.split('/').filter((x) => x);
 
-  const crumbs = [
-    { label: 'Home', to: '/' },
-    ...pathnames.map((_, index) => {
-      const to = `/${pathnames.slice(0, index + 1).join('/')}`;
-      return { label: breadcrumbNameMap[to] ?? pathnames[index], to };
-    }),
-  ];
+  const crumb = (index: number) => {
+    const to = `/${pathnames.slice(0, index + 1).join('/')}`;
+    return { label: breadcrumbNameMap[to] ?? pathnames[index], to };
+  };
+
+  const crumbs = [{ label: 'Home', to: '/' }];
+  const first = pathnames[0];
+  if (first === 'other') {
+    // Fold /other/* into Projects, skipping the "Other Projects" crumb itself.
+    crumbs.push({ label: 'Projects', to: '/projects' });
+    for (let i = 1; i < pathnames.length; i++) crumbs.push(crumb(i));
+  } else {
+    if (PROJECT_ROOTS.has(first)) crumbs.push({ label: 'Projects', to: '/projects' });
+    for (let i = 0; i < pathnames.length; i++) crumbs.push(crumb(i));
+  }
 
   return (
     <Box

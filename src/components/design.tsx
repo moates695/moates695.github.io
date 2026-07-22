@@ -477,7 +477,7 @@ export function ScreenshotGallery({
               width: { xs: 140, sm: width },
               maxWidth: "42vw",
               height: "auto",
-              borderRadius: 3,
+              borderRadius: 1.5,
               border: "1px solid",
               borderColor: "divider",
               transition: "transform 0.3s ease, filter 0.3s ease, border-color 0.3s ease",

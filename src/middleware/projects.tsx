@@ -8,6 +8,7 @@ import {
   postgresDeployLink,
   cellularTrackingGithubLink,
   imaxBotGithubLink,
+  mcpServerGithubLink,
 } from "./links";
 
 export type Project =
@@ -17,7 +18,8 @@ export type Project =
   | 'downer_helper'
   | 'cellular_tracking'
   | 'postgres_deploy'
-  | 'imax_bot';
+  | 'imax_bot'
+  | 'mcp_server';
 
 export const iconMap: Record<Project, string> = {
   finska: '/finska-icon.png',
@@ -27,6 +29,8 @@ export const iconMap: Record<Project, string> = {
   cellular_tracking: '/cells-logo.png',
   postgres_deploy: '/pypi-logo.png',
   imax_bot: imaxLogo,
+  // No logo asset: the card/avatar falls back to the "M" initial.
+  mcp_server: '',
 };
 
 export type ProjectStatus = 'prod' | 'test' | 'poc';
@@ -127,6 +131,23 @@ export const otherProjects: ProjectInfo[] = [
     chipKeys: ['full_stack', 'expo', 'react_ts', 'python', 'fastapi', 'websocket', 'postgres'],
     status: 'poc',
     accent: '#d8aa78',
+  },
+  {
+    key: 'mcp_server',
+    icon: iconMap.mcp_server,
+    initials: 'M',
+    name: 'Marcus MCP Server',
+    blurb: 'A public MCP server that lets Claude and OpenAI models answer questions about Marcus from structured, accurate data.',
+    description:
+      'A Model Context Protocol server that exposes my resume, projects and experience as structured ' +
+      'tools. Any MCP client, such as Claude Code, Claude Desktop or an OpenAI agent, connects over ' +
+      'Streamable HTTP and answers from real data instead of guessing. Built with Python and the MCP ' +
+      'SDK, deployed as a Docker container behind nginx on a DigitalOcean droplet.',
+    link: '/other/mcp-server',
+    chipKeys: ['python', 'mcp', 'llm'],
+    status: 'poc',
+    accent: '#d8aa78',
+    external: [{ label: 'Source', href: mcpServerGithubLink, external: true }],
   },
   {
     key: 'imax_bot',
