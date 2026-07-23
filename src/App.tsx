@@ -36,6 +36,8 @@ import GymJunkieChanges from './pages/gym_junkie/Changes';
 import OtherPostgresDeploy from './pages/other/PostgresDeploy';
 import OtherImaxBot from './pages/other/ImaxBot';
 import OtherMcpServer from './pages/other/McpServer';
+import OtherSmartTrainer from './pages/other/SmartTrainer';
+import OtherArbitrage from './pages/other/Arbitrage';
 import WoodchuckPrivacyPolicy from './pages/finska/PrivacyPolicy';
 import GymJunkiePrivacyPolicy from './pages/gym_junkie/PrivacyPolicy';
 import DeleteMe from './pages/gym_junkie/DeleteMe';
@@ -130,6 +132,8 @@ function AppShell() {
               <Route path="postgres-deploy" element={<OtherPostgresDeploy />} />
               <Route path="imax-bot" element={<OtherImaxBot />} />
               <Route path="mcp-server" element={<OtherMcpServer />} />
+              <Route path="smart-trainer" element={<OtherSmartTrainer />} />
+              <Route path="arbitrage" element={<OtherArbitrage />} />
             </Route>
           </Routes>
         </Box>

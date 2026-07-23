@@ -70,6 +70,22 @@ const moreProjects: SandProject[] = [
     link: "/other/mcp-server",
   },
   {
+    title: "Smart Trainer",
+    status: "POC",
+    blurb: "Structured cycling workouts in the browser, straight over Web Bluetooth. My fork of Auuki adds a drag-to-build workout designer.",
+    tags: ["JavaScript", "Web Bluetooth", "PWA"],
+    initials: "ST",
+    link: "/other/smart-trainer",
+  },
+  {
+    title: "Arbitrage Engine",
+    status: "POC",
+    blurb: "Scans horse racing odds across bookmakers and flags guaranteed-profit arbitrage. Read-only, it never places a bet.",
+    tags: ["Python", "Automation", "Vision LLM"],
+    initials: "AB",
+    link: "/other/arbitrage",
+  },
+  {
     title: "Cellular Tracking",
     status: "PROD",
     blurb: "Computer-vision pipeline that segments and tracks dividing cells so researchers don't have to squint.",

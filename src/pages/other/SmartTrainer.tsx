@@ -1,0 +1,169 @@
+import { Avatar, Box } from "@mui/material";
+import { smartTrainerGithubLink, auukiLink } from "../../middleware/links";
+import githubLogo from "../../assets/github-logo.png";
+import MarkdownBlock from "../../components/MarkdownBlock";
+import {
+  PageHeader,
+  GradientText,
+  Reveal,
+  SectionHeading,
+  Panel,
+  Callout,
+  CheckList,
+  StatRow,
+  ExternalButton,
+  PageNav,
+} from "../../components/design";
+import { SectionNavLayout, Section } from "../../components/SectionNav";
+
+const ACCENT = "#d8aa78";
+
+const SECTIONS: Section[] = [
+  { id: "fork", label: "The fork" },
+  { id: "designer", label: "Workout designer" },
+  { id: "app", label: "The app" },
+  { id: "how", label: "How it's wired" },
+  { id: "pwa", label: "Browser-based" },
+];
+
+const forkAdds = [
+  "A visual editor: drag out warmups, steady blocks, intervals and cooldowns, each with its own duration and power target, instead of hand-writing Zwift XML.",
+  "The finished session drops straight into the app's workout list and runs in ERG mode like any built-in workout.",
+];
+
+const designerPoints = [
+  "The conversion between draggable blocks and Zwift .ZWO is a pure, DOM-free module, so it is unit-tested in isolation with no browser needed.",
+  "It emits standard ZWO the app already understands: <SteadyState> for flat blocks and <Warmup> / <Cooldown> for rising and falling ramps.",
+  "Because the output is plain ZWO, the existing parser runs the generated workout unchanged, no special-casing for designed sessions.",
+];
+
+const appFeatures = [
+  "Connects over Web Bluetooth to smart trainers (FTMS and Tacx FE-C over BLE), power meters, heart-rate straps and more, with no dongle or install.",
+  "Runs workouts in ERG, resistance and slope modes, holding your target power while the trainer supplies the resistance.",
+  "Plays standard Zwift .ZWO workouts and ships with a built-in library to get started.",
+  "Records rides as cross-industry .FIT activities and syncs them to Intervals.icu and Strava.",
+];
+
+const architecture = [
+  "State lives in one reactive store: assigning a field automatically fires a DOM event and subscribed views re-render off it. Roughly 60 lines stand in for a whole framework.",
+  "Every screen is a native Web Component that subscribes to the fields it cares about and tears those subscriptions down when it disconnects.",
+  "The Bluetooth layer wraps each device role (trainer, power, heart rate) and pushes live measurements into the same store, so the UI reacts to hardware the same way it reacts to clicks.",
+];
+
+const zwoSnippet = `\`\`\`xml
+<workout>
+  <Warmup     Duration="600" PowerLow="0.50" PowerHigh="0.75"/>
+  <SteadyState Duration="300" Power="1.05"/>
+  <SteadyState Duration="300" Power="0.55"/>
+  <SteadyState Duration="300" Power="1.05"/>
+  <SteadyState Duration="300" Power="0.55"/>
+  <Cooldown   Duration="600" PowerLow="0.75" PowerHigh="0.50"/>
+</workout>
+\`\`\``;
+
+export default function OtherSmartTrainer() {
+  return (
+    <SectionNavLayout sections={SECTIONS}>
+      <Box
+        component="section"
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          width: "100%",
+          gap: { xs: 3, sm: 4 },
+          pb: 4,
+        }}
+      >
+        <PageHeader
+          eyebrow="cycling"
+          title={<>Smart <GradientText>Trainer</GradientText></>}
+          subtitle="A browser-based app for running structured cycling workouts on a smart trainer. It connects straight to the hardware over Web Bluetooth, drives ERG, resistance and slope modes, and records standard .FIT activities. I forked it to add a graphical workout designer, so you can build a session by dragging blocks instead of hand-writing XML."
+          actions={
+            <ExternalButton
+              href={smartTrainerGithubLink}
+              icon={<Avatar alt="github icon" src={githubLogo} sx={{ width: 24, height: 24 }} />}
+            >
+              Source
+            </ExternalButton>
+          }
+        />
+
+        <Reveal delay={0.06}>
+          <Panel accent={ACCENT} wash>
+            <StatRow
+              items={[
+                { value: "Web BLE", label: "trainer link" },
+                { value: ".ZWO", label: "workout format" },
+                { value: ".FIT", label: "activity export" },
+                { value: "PWA", label: "no install" },
+              ]}
+            />
+          </Panel>
+          <Box sx={{ mt: 2 }}>
+            <Callout accent={ACCENT} title="status">
+              A personal fork in proof-of-concept. The upstream app is mature and running in
+              production; the workout designer is the part I built.
+            </Callout>
+          </Box>
+        </Reveal>
+
+        <Reveal delay={0.12} id="fork">
+          <SectionHeading eyebrow="credit">Where it started</SectionHeading>
+          <MarkdownBlock>
+            {`This builds on [Auuki](${auukiLink}), an open-source, browser-based training app. Auuki already does the hard part: it speaks the Bluetooth Fitness Machine Service and Tacx FE-C, controls the trainer, and records rides. I forked it to scratch one itch of my own, building structured workouts without touching XML:`}
+          </MarkdownBlock>
+          <Box sx={{ mt: 2 }}>
+            <CheckList items={forkAdds} accent={ACCENT} />
+          </Box>
+        </Reveal>
+
+        <Reveal delay={0.18} id="designer">
+          <SectionHeading eyebrow="my contribution">The workout designer</SectionHeading>
+          <Box sx={{ color: "text.secondary", mb: 2 }}>
+            A workout is a list of segments, each a duration and a power target as a fraction of your
+            FTP. The designer lets you build that list by hand on a canvas, then compiles it to a
+            Zwift .ZWO file the app can run:
+          </Box>
+          <CheckList items={designerPoints} accent={ACCENT} />
+          <Box sx={{ mt: 2.5 }}>
+            <Panel accent={ACCENT}>
+              <MarkdownBlock>{zwoSnippet}</MarkdownBlock>
+            </Panel>
+          </Box>
+        </Reveal>
+
+        <Reveal delay={0.24} id="app">
+          <SectionHeading eyebrow="the app">What it does</SectionHeading>
+          <CheckList items={appFeatures} accent={ACCENT} />
+        </Reveal>
+
+        <Reveal delay={0.3} id="how">
+          <SectionHeading eyebrow="architecture">How it's wired</SectionHeading>
+          <Box sx={{ color: "text.secondary", mb: 2 }}>
+            There is no framework. The whole app hangs off a tiny reactive core, which is what made
+            slotting a new tab in tractable in the first place:
+          </Box>
+          <CheckList items={architecture} accent={ACCENT} />
+        </Reveal>
+
+        <Reveal delay={0.36} id="pwa">
+          <SectionHeading eyebrow="delivery">Just a browser tab</SectionHeading>
+          <MarkdownBlock>
+            {`It is a progressive web app built with Parcel: no install, no app store, no backend. It leans on modern browser APIs (Web Bluetooth, Web Serial, Web Components), so everything, including the ride you just recorded, stays on your device.`}
+          </MarkdownBlock>
+          <Box sx={{ mt: 2 }}>
+            <Callout accent={ACCENT} title="one catch">
+              Web Bluetooth means a Chromium browser (Chrome, Edge, Brave). Safari and Firefox do not
+              expose the API, so they are not supported.
+            </Callout>
+          </Box>
+        </Reveal>
+
+        <PageNav
+          left={{ text: "Other Projects", link: "/other" }}
+          right={{ text: "Arbitrage Engine", link: "/other/arbitrage" }}
+        />
+      </Box>
+    </SectionNavLayout>
+  );
+}

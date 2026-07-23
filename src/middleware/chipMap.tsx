@@ -131,6 +131,24 @@ const chipData = {
     borderColor: '#c7b191',
     textColor: '#c7b191',
   },
+  javascript: {
+    label: 'JavaScript',
+    color: 'transparent',
+    borderColor: '#d9b45a',
+    textColor: '#d9b45a',
+  },
+  bluetooth: {
+    label: 'Web Bluetooth',
+    color: 'transparent',
+    borderColor: '#5a8fd9',
+    textColor: '#5a8fd9',
+  },
+  pwa: {
+    label: 'PWA',
+    color: 'transparent',
+    borderColor: '#9a86e0',
+    textColor: '#9a86e0',
+  },
 } satisfies Record<string, ChipData>;
 
 export type ChipKey = keyof typeof chipData;
