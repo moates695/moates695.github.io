@@ -1,0 +1,20 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="watts_bg" x1="512" y1="0" x2="512" y2="1024" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#313131"/>
+      <stop offset="1" stop-color="#141414"/>
+    </linearGradient>
+    <filter id="watts_glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="24" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="1024" height="1024" rx="228" fill="url(#watts_bg)"/>
+  <!-- Lightning bolt: path "M13 2 L4 13 h6 l-1 9 l9-12 h-6 z" scaled from a 24x24 viewBox -->
+  <g transform="translate(512 512) scale(29.257) translate(-11 -12)" filter="url(#watts_glow)">
+    <path d="M13 2 L4 13 h6 l-1 9 l9-12 h-6 z" fill="#c8f651"/>
+  </g>
+</svg>

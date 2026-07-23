@@ -76,7 +76,7 @@ export default function OtherSmartTrainer() {
       >
         <PageHeader
           eyebrow="cycling"
-          title={<>Smart <GradientText>Trainer</GradientText></>}
+          title={<>Wa<GradientText>tts</GradientText></>}
           subtitle="A browser-based app for running structured cycling workouts on a smart trainer. It connects straight to the hardware over Web Bluetooth, drives ERG, resistance and slope modes, and records standard .FIT activities. I forked it to add a graphical workout designer, so you can build a session by dragging blocks instead of hand-writing XML."
           actions={
             <ExternalButton

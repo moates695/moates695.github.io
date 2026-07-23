@@ -166,7 +166,7 @@ export default function OtherImaxBot() {
           {`Chasing IMAX tickets in Sydney means refreshing the same page for weeks and still missing the moment a film goes on sale. This agent does the watching instead: it scans the site on a schedule and only reaches out when something actually changes, straight to Telegram.`}
         </MarkdownBlock>
         <Callout accent={ACCENT} title="status">
-          Currently in testing, running against the live IMAX Sydney site.
+          In production, running against the live IMAX Sydney site.
         </Callout>
       </Reveal>
 

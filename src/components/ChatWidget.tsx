@@ -10,6 +10,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
+import { keyframes } from "@mui/system";
 import CloseIcon from "@mui/icons-material/Close";
 import SendIcon from "@mui/icons-material/Send";
 import { MONO } from "../styles/tokens";
@@ -45,6 +46,36 @@ const WELCOME: Msg = {
   role: "bot",
   text: "Hi, I'm Marcus's assistant. Ask me anything about his work, projects, skills or background.",
 };
+
+// Attention animation played once on page load so a returning visitor notices
+// the assistant. A short bounce + wiggle on the button, and a ring that pulses
+// outward from behind it. Both are suppressed under prefers-reduced-motion.
+const ARRIVE_MS = 2600;
+
+const wiggle = keyframes`
+  0%   { transform: scale(0.6); }
+  35%  { transform: scale(1.12) rotate(0deg); }
+  50%  { transform: scale(1) rotate(-14deg); }
+  62%  { transform: scale(1) rotate(11deg); }
+  74%  { transform: scale(1) rotate(-7deg); }
+  85%  { transform: scale(1) rotate(4deg); }
+  100% { transform: scale(1) rotate(0deg); }
+`;
+
+const ringPulse = keyframes`
+  0%   { transform: scale(1);   opacity: 0.55; }
+  70%  { transform: scale(2.1);  opacity: 0; }
+  100% { transform: scale(2.1);  opacity: 0; }
+`;
+
+// Quick springy pop played each time the button is clicked.
+const pop = keyframes`
+  0%   { transform: scale(1); }
+  30%  { transform: scale(0.86); }
+  55%  { transform: scale(1.14); }
+  75%  { transform: scale(0.96); }
+  100% { transform: scale(1); }
+`;
 
 const URL_RE = /(https?:\/\/[^\s]+)/g;
 
@@ -158,8 +189,42 @@ export default function ChatWidget() {
   const [smiling, setSmiling] = useState(false);
   const grinTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
+  // Play the arrival animation once on mount (i.e. on page load/reload), unless
+  // the visitor prefers reduced motion.
+  const prefersReducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
+  const [arriving, setArriving] = useState(!prefersReducedMotion);
+  useEffect(() => {
+    if (!arriving) return;
+    const t = setTimeout(() => setArriving(false), ARRIVE_MS);
+    return () => clearTimeout(t);
+  }, [arriving]);
+
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // On mobile the panel is full-screen (position: fixed, inset: 0), which is
+  // sized against the layout viewport. That viewport does not shrink when the
+  // on-screen keyboard opens, so the composer ends up hidden behind the keyboard
+  // and the browser scrolls the whole panel up, pushing the messages off-screen.
+  // Track the visual viewport (which does shrink for the keyboard) and size the
+  // panel to it so the composer sits on top of the keyboard and messages stay
+  // visible above it.
+  const [viewport, setViewport] = useState<{ height: number; offsetTop: number } | null>(null);
+  useEffect(() => {
+    const vv = window.visualViewport;
+    if (!open || !fullScreen || !vv) {
+      setViewport(null);
+      return;
+    }
+    const update = () => setViewport({ height: vv.height, offsetTop: vv.offsetTop });
+    update();
+    vv.addEventListener("resize", update);
+    vv.addEventListener("scroll", update);
+    return () => {
+      vv.removeEventListener("resize", update);
+      vv.removeEventListener("scroll", update);
+    };
+  }, [open, fullScreen]);
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
@@ -179,17 +244,51 @@ export default function ChatWidget() {
     grinTimer.current = setTimeout(() => setSmiling(false), 900);
   }
 
-  // Grin whenever a button or link elsewhere on the page is pressed. The robot's
-  // own controls (Fab + panel, tagged data-chat-widget) are excluded.
+  // Springy pop played on each click of the button. Retriggered by toggling the
+  // key off for a frame so the animation restarts on every rapid click.
+  const [popping, setPopping] = useState(false);
+  const popTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  useEffect(() => () => clearTimeout(popTimer.current), []);
+  function pokeAnimation() {
+    if (prefersReducedMotion) return;
+    setPopping(false);
+    requestAnimationFrame(() => setPopping(true));
+    clearTimeout(popTimer.current);
+    popTimer.current = setTimeout(() => setPopping(false), 420);
+  }
+
+  // Once the visitor has opened the widget, it has served its introduction, so
+  // the page-wide attention grins stop firing until the next page reload.
+  const hasOpenedRef = useRef(false);
+
+  // Fired when the visitor clicks the robot Fab: toggle the panel, smile, and pop.
+  function onFabClick() {
+    setOpen((o) => {
+      if (!o) hasOpenedRef.current = true;
+      return !o;
+    });
+    setArriving(false);
+    grin();
+    pokeAnimation();
+  }
+
+  // Grin and jiggle whenever a button or link elsewhere on the page is pressed.
+  // The robot's own controls (Fab + panel, tagged data-chat-widget) are excluded.
   useEffect(() => {
     const onPointerDown = (e: PointerEvent) => {
+      // Stop drawing attention once the visitor has opened the widget at least once.
+      if (hasOpenedRef.current) return;
       const el = (e.target as Element | null)?.closest?.(
         'button, a, [role="button"], [role="link"]'
       );
-      if (el && !el.closest("[data-chat-widget]")) grin();
+      if (el && !el.closest("[data-chat-widget]")) {
+        grin();
+        pokeAnimation();
+      }
     };
     document.addEventListener("pointerdown", onPointerDown);
     return () => document.removeEventListener("pointerdown", onPointerDown);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function send(question: string) {
@@ -239,7 +338,15 @@ export default function ChatWidget() {
         bgcolor: "background.paper",
         boxShadow: "0 20px 60px -20px rgba(0,0,0,0.85)",
         ...(fullScreen
-          ? { inset: 0, borderRadius: 0 }
+          ? {
+              top: viewport ? viewport.offsetTop : 0,
+              left: 0,
+              right: 0,
+              // Size to the visual viewport so the composer stays above the
+              // keyboard rather than scrolling the messages out of view.
+              height: viewport ? viewport.height : "100%",
+              borderRadius: 0,
+            }
           : {
               bottom: 96,
               right: 24,
@@ -408,10 +515,35 @@ export default function ChatWidget() {
         <Fab
           color="primary"
           size={fullScreen ? "small" : "medium"}
-          onClick={() => setOpen((o) => !o)}
+          onClick={onFabClick}
           aria-label={open ? "Close chat" : "Ask about Marcus"}
           data-chat-widget
-          sx={{ position: "fixed", bottom: 24, right: 24, zIndex: (t) => t.zIndex.modal }}
+          sx={{
+            position: "fixed",
+            bottom: 24,
+            right: 24,
+            zIndex: (t) => t.zIndex.modal,
+            // Bounce + wiggle the button on arrival to draw the eye.
+            ...(arriving && !open
+              ? { animation: `${wiggle} 1.3s ease-in-out 0.15s 1 both` }
+              : {}),
+            // Springy pop on each click.
+            ...(popping ? { animation: `${pop} 0.4s ease-out both` } : {}),
+            // Ring that pulses outward from behind the button on arrival.
+            ...(arriving && !open
+              ? {
+                  "&::before": {
+                    content: '""',
+                    position: "absolute",
+                    inset: 0,
+                    borderRadius: "50%",
+                    border: `2px solid ${ACCENT}`,
+                    animation: `${ringPulse} 1.3s ease-out 0.15s 1 both`,
+                    pointerEvents: "none",
+                  },
+                }
+              : {}),
+          }}
         >
           {open ? <CloseIcon /> : <RobotFace size={fullScreen ? 26 : 32} smiling={smiling} />}
         </Fab>

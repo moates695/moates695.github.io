@@ -3,6 +3,9 @@ import { Box, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { githubLink, pypiLink, stravaLink, expoLink } from "../middleware/links";
 import imaxLogo from "../assets/imax_logo.jpeg";
+import pokerChips from "../assets/poker-chips.png";
+import mcpIcon from "../assets/mcp-icon.png";
+import wattsLogo from "../assets/watts-logo.svg";
 import {
   SAND,
   SPACE,
@@ -28,7 +31,7 @@ const featuredTags = ["FastAPI", "React Native", "PostgreSQL", "Python", "AWS"];
 const moreProjects: SandProject[] = [
   {
     title: "IMAX Watch Agent",
-    status: "TEST",
+    status: "PROD",
     blurb: "Watches Event Cinemas IMAX Sydney and pings you on Telegram the moment films or tickets go live.",
     tags: ["Python", "Telegram", "Automation"],
     icon: imaxLogo,
@@ -63,18 +66,20 @@ const moreProjects: SandProject[] = [
   },
   {
     title: "Marcus MCP Server",
-    status: "POC",
+    status: "PROD",
     blurb: "A public MCP server that lets Claude and OpenAI models answer questions about Marcus from real, structured data.",
     tags: ["Python", "MCP", "LLM"],
+    icon: mcpIcon,
     initials: "M",
     link: "/other/mcp-server",
   },
   {
-    title: "Smart Trainer",
+    title: "Watts",
     status: "POC",
     blurb: "Structured cycling workouts in the browser, straight over Web Bluetooth. My fork of Auuki adds a drag-to-build workout designer.",
     tags: ["JavaScript", "Web Bluetooth", "PWA"],
-    initials: "ST",
+    icon: wattsLogo,
+    initials: "W",
     link: "/other/smart-trainer",
   },
   {
@@ -82,6 +87,7 @@ const moreProjects: SandProject[] = [
     status: "POC",
     blurb: "Scans horse racing odds across bookmakers and flags guaranteed-profit arbitrage. Read-only, it never places a bet.",
     tags: ["Python", "Automation", "Vision LLM"],
+    icon: pokerChips,
     initials: "AB",
     link: "/other/arbitrage",
   },

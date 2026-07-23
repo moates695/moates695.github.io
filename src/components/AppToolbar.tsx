@@ -69,7 +69,7 @@ const PROJECT_GROUPS: NavGroup[] = [
     label: 'Other',
     overview: '/projects',
     links: [
-      { label: 'Smart Trainer', to: '/other/smart-trainer' },
+      { label: 'Watts', to: '/other/smart-trainer' },
       { label: 'Arbitrage Engine', to: '/other/arbitrage' },
       { label: 'IMAX Watch Agent', to: '/other/imax-bot' },
       { label: 'Cellular Tracking', to: '/other/cellular-tracking' },

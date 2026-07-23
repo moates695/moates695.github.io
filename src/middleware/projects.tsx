@@ -1,5 +1,8 @@
 import { ChipKey } from "./chipMap";
 import imaxLogo from "../assets/imax_logo.jpeg";
+import pokerChips from "../assets/poker-chips.png";
+import mcpIcon from "../assets/mcp-icon.png";
+import wattsLogo from "../assets/watts-logo.svg";
 import {
   gymJunkiePlayStoreLink,
   gymJunkieAppStoreLink,
@@ -33,12 +36,9 @@ export const iconMap: Record<Project, string> = {
   cellular_tracking: '/cells-logo.png',
   postgres_deploy: '/pypi-logo.png',
   imax_bot: imaxLogo,
-  // No logo asset: the card/avatar falls back to the "M" initial.
-  mcp_server: '',
-  // No logo asset: the card/avatar falls back to the "ST" initials.
-  smart_trainer: '',
-  // No logo asset: the card/avatar falls back to the "AB" initials.
-  arbitrage: '',
+  mcp_server: mcpIcon,
+  smart_trainer: wattsLogo,
+  arbitrage: pokerChips,
   // No logo asset: the card/avatar falls back to the "SP" initials.
   small_projects: '',
 };
@@ -172,7 +172,7 @@ export const otherProjects: ProjectInfo[] = [
       'SDK, deployed as a Docker container behind nginx on a DigitalOcean droplet.',
     link: '/other/mcp-server',
     chipKeys: ['python', 'mcp', 'llm'],
-    status: 'poc',
+    status: 'prod',
     accent: '#d8aa78',
     external: [{ label: 'Source', href: mcpServerGithubLink, external: true }],
   },
@@ -189,15 +189,15 @@ export const otherProjects: ProjectInfo[] = [
       'repeats; deployed as a plain cron job.',
     link: '/other/imax-bot',
     chipKeys: ['python', 'telegram', 'automation'],
-    status: 'test',
+    status: 'prod',
     accent: '#d8aa78',
     external: [{ label: 'Source', href: imaxBotGithubLink, external: true }],
   },
   {
     key: 'smart_trainer',
     icon: iconMap.smart_trainer,
-    initials: 'ST',
-    name: 'Smart Trainer',
+    initials: 'W',
+    name: 'Watts',
     blurb: 'A browser-based app for structured cycling workouts on a smart trainer. My fork adds a drag-to-build workout designer.',
     description:
       'A browser-based app for running structured cycling workouts on a smart trainer, talking to the ' +

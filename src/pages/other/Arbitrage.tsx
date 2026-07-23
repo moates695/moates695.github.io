@@ -154,7 +154,7 @@ export default function OtherArbitrage() {
         </Reveal>
 
         <PageNav
-          left={{ text: "Smart Trainer", link: "/other/smart-trainer" }}
+          left={{ text: "Watts", link: "/other/smart-trainer" }}
           right={{ text: "IMAX Watch Agent", link: "/other/imax-bot" }}
         />
       </Box>
