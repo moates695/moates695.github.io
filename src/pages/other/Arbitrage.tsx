@@ -17,46 +17,62 @@ const ACCENT = "#d8aa78";
 
 const SECTIONS: Section[] = [
   { id: "idea", label: "The idea" },
+  { id: "coverage", label: "Books & sports" },
   { id: "pipeline", label: "The pipeline" },
   { id: "maths", label: "The maths" },
+  { id: "output", label: "The output" },
   { id: "safeguards", label: "Guardrails" },
 ];
 
 const ideaPoints = [
-  "Every bookmaker prices the same race a little differently, and each builds in a margin (the overround) so the book tilts in its favour.",
-  "Take just the single best price on each runner across every book, and that combined margin can, occasionally, tip the other way.",
-  "When it does, a stake split across the runners returns more than it cost, whatever the result. That gap is the arbitrage.",
+  "Every bookmaker prices the same event a little differently, and each builds in a margin (the overround) so the book tilts in its favour.",
+  "Take just the single best price on each outcome across every book, and that combined margin can, occasionally, tip the other way.",
+  "When it does, a stake split across the outcomes returns more than it cost, whatever the result. That gap is the arbitrage.",
   "These windows are small and short-lived, so the whole point is to spot them fast, automatically, before the prices move.",
 ];
 
+const coveragePoints = [
+  "Seven Australian bookmakers: TAB, Sportsbet, Ladbrokes, PointsBet, Palmerbet, Unibet and betr.",
+  "Racing across all three codes in a single run: thoroughbred, harness and greyhound, each aligned and stored on its own.",
+  "Tennis as a second sport, matched on the two players rather than a venue and field, reusing the same align to detect to output spine unchanged.",
+  "Each bookmaker's endpoints are captured as a documented per-book recipe, so wiring up the next book stays a contained job.",
+];
+
 const pipelinePoints = [
-  "Discovery and scraping: a browser agent navigates each bookmaker to the right meeting and races, driven by on-page vision rather than brittle hard-coded selectors.",
-  "Extraction: each race page is read by a local vision model into structured odds, runner by runner, so nothing leaves the machine and there is no per-call cost.",
-  "Reconciliation: runners are matched across books despite naming differences (case, country suffixes like (NZ), barrier numbers in names), with a confidence score on each match.",
-  "Arbitrage maths: pure Python finds the best price per runner, tests the arbitrage condition, and outputs ranked opportunities with a stake split for a given bankroll.",
+  "Fetching: each bookmaker's own JSON API is read directly with an HTTP client, no screenshots and no OCR. Six of the seven books answer cold; only TAB needs a real browser driven over the debugging protocol, and the engine falls back to the other six if it is unavailable.",
+  "Alignment: runners are matched across books deterministically, on venue, race number and saddlecloth for racing or on the unordered player pair for tennis, so the same runner lands in one row with a price column per book despite naming differences.",
+  "Detection: pure Python picks the best price per runner, tests the arbitrage condition against the full live field, and only confirms an edge when at least two books price every runner.",
+  "Output: every run is written to a timestamped folder as machine-readable JSON and a human-first markdown report, alongside a rolling latest digest and a colour-coded terminal verdict.",
+];
+
+const outputPoints = [
+  "summary.json: the verdict, counts and the legs of any confirmed arbitrage, ready for another script to read.",
+  "aligned.json: the full cross-book table, every runner with a price column per bookmaker.",
+  "odds.md: an opportunity-first report that leads with confirmed arbitrage and names which book to back each leg with, then unverified candidates, then the tightest remaining markets.",
+  "A combined digest that overwrites a stable latest file and keeps a timestamped history, scoped per sport so racing and tennis never collide, with old runs pruned automatically.",
 ];
 
 const safeguards = [
   "It never places a bet. The output is a set of instructions: which runner, which bookmaker, what stake, and the expected return.",
-  "Everything runs locally. The vision model is on-device, so odds and results never go to a third-party API.",
-  "Low-confidence runner matches are surfaced as warnings, not silently traded on, because a wrong match is a wrong bet.",
+  "Everything runs locally against public endpoints, with no vision model, no LLM and no API keys anywhere in the loop.",
+  "A confirmed arbitrage needs at least two books pricing the full live field; a single-book runner or a missing price files the market as an unverified candidate rather than a trade.",
   "Odds are timestamped, since an opportunity is only real for as long as the prices behind it hold.",
 ];
 
 const pipelineDiagram = `\`\`\`text
-bookmaker sites
-     |  browser agent navigates each book
-     v
-page screenshots
-     |  local vision model reads the odds
+bookmaker JSON APIs
+     |  direct HTTP fetch (TAB via a real browser)
      v
 raw odds, per bookmaker
-     |  reconcile runners across books
+     |  align runners across books
      v
 best price per runner
-     |  arbitrage maths
+     |  arbitrage maths + coverage gate
      v
 ranked opportunities + per-runner stake split
+     |  write JSON + markdown + digest
+     v
+timestamped run folder
 \`\`\``;
 
 const mathsBlock = `\`\`\`text
@@ -84,24 +100,24 @@ export default function OtherArbitrage() {
         <PageHeader
           eyebrow="engine"
           title={<>Arbitrage <GradientText>Engine</GradientText></>}
-          subtitle="A read-only engine that scans horse racing odds across multiple Australian bookmakers and flags arbitrage: the rare moments when backing every runner at the best price on offer locks in a profit no matter which horse wins. It works out exactly what to stake where, and never places a bet itself."
+          subtitle="A read-only engine that scans betting odds across seven Australian bookmakers, over both racing and tennis, and flags arbitrage: the rare moments when backing every outcome at the best price on offer locks in a profit no matter the result. It works out exactly what to stake where, and never places a bet itself."
         />
 
         <Reveal delay={0.06}>
           <Panel accent={ACCENT} wash>
             <StatRow
               items={[
-                { value: "Multi", label: "bookmakers" },
-                { value: "Vision", label: "odds extraction" },
-                { value: "Sum < 1", label: "arb condition" },
+                { value: "7", label: "bookmakers" },
+                { value: "2", label: "sports" },
+                { value: "JSON APIs", label: "odds source" },
                 { value: "Read-only", label: "never bets" },
               ]}
             />
           </Panel>
           <Box sx={{ mt: 2 }}>
             <Callout accent={ACCENT} title="status">
-              In proof-of-concept, running against live markets. Real numbers will land here once
-              testing wraps up, and the source is kept private for now.
+              In proof-of-concept, running against live markets. It recently moved off screen-reading
+              onto the bookmakers' own JSON feeds, and the source is kept private for now.
             </Callout>
           </Box>
         </Reveal>
@@ -109,18 +125,27 @@ export default function OtherArbitrage() {
         <Reveal delay={0.12} id="idea">
           <SectionHeading eyebrow="the idea">What arbitrage is</SectionHeading>
           <Box sx={{ color: "text.secondary", mb: 2 }}>
-            Bookmakers compete, and they do not all agree on what a horse is worth. Now and then the
-            best price on each runner, taken across the whole market, is generous enough to guarantee a
+            Bookmakers compete, and they do not all agree on what an outcome is worth. Now and then the
+            best price on each outcome, taken across the whole market, is generous enough to guarantee a
             profit:
           </Box>
           <CheckList items={ideaPoints} accent={ACCENT} />
         </Reveal>
 
-        <Reveal delay={0.18} id="pipeline">
+        <Reveal delay={0.18} id="coverage">
+          <SectionHeading eyebrow="what it scans">Books and sports</SectionHeading>
+          <Box sx={{ color: "text.secondary", mb: 2 }}>
+            The more books and markets it watches, the more often the prices line up into an edge. It
+            started on three racing books and has grown from there:
+          </Box>
+          <CheckList items={coveragePoints} accent={ACCENT} />
+        </Reveal>
+
+        <Reveal delay={0.24} id="pipeline">
           <SectionHeading eyebrow="how it works">The pipeline</SectionHeading>
           <Box sx={{ color: "text.secondary", mb: 2 }}>
-            Four stages take it from a bookmaker's website to a ranked list of opportunities, with the
-            odds never leaving the machine:
+            Four stages take it from a bookmaker's API to a ranked list of opportunities, with the odds
+            never leaving the machine:
           </Box>
           <CheckList items={pipelinePoints} accent={ACCENT} />
           <Box sx={{ mt: 2.5 }}>
@@ -130,7 +155,7 @@ export default function OtherArbitrage() {
           </Box>
         </Reveal>
 
-        <Reveal delay={0.24} id="maths">
+        <Reveal delay={0.3} id="maths">
           <SectionHeading eyebrow="the maths">Finding the edge</SectionHeading>
           <Box sx={{ color: "text.secondary", mb: 2 }}>
             The detection itself is textbook and needs no model. Turn each best price into an implied
@@ -148,7 +173,16 @@ export default function OtherArbitrage() {
           </Box>
         </Reveal>
 
-        <Reveal delay={0.3} id="safeguards">
+        <Reveal delay={0.36} id="output">
+          <SectionHeading eyebrow="the output">What it hands back</SectionHeading>
+          <Box sx={{ color: "text.secondary", mb: 2 }}>
+            Each run drops a timestamped folder with both machine-readable data and a report you can
+            actually read, so an opportunity is easy to act on and easy to diff against the last run:
+          </Box>
+          <CheckList items={outputPoints} accent={ACCENT} />
+        </Reveal>
+
+        <Reveal delay={0.42} id="safeguards">
           <SectionHeading eyebrow="guardrails">Read-only by design</SectionHeading>
           <CheckList items={safeguards} accent={ACCENT} />
         </Reveal>

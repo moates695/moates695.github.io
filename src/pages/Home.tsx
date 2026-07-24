@@ -76,7 +76,7 @@ const moreProjects: SandProject[] = [
   {
     title: "Watts",
     status: "POC",
-    blurb: "Structured cycling workouts in the browser, straight over Web Bluetooth. My fork of Auuki adds a drag-to-build workout designer.",
+    blurb: "Structured cycling workouts in the browser, straight over Web Bluetooth. My fork of Auuki adds a dark, data-first redesign and a drag-to-build workout designer.",
     tags: ["JavaScript", "Web Bluetooth", "PWA"],
     icon: wattsLogo,
     initials: "W",
@@ -85,8 +85,8 @@ const moreProjects: SandProject[] = [
   {
     title: "Arbitrage Engine",
     status: "POC",
-    blurb: "Scans horse racing odds across bookmakers and flags guaranteed-profit arbitrage. Read-only, it never places a bet.",
-    tags: ["Python", "Automation", "Vision LLM"],
+    blurb: "Scans racing and tennis odds across seven bookmakers and flags guaranteed-profit arbitrage. Read-only, it never places a bet.",
+    tags: ["Python", "Automation", "REST APIs"],
     icon: pokerChips,
     initials: "AB",
     link: "/other/arbitrage",
