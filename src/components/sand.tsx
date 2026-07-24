@@ -50,15 +50,15 @@ export const DEFAULT_ROLES = [
   "ML wizard",
   "automation engineer",
   "backend enthusiast",
-  "voice AI developer",
-  "MCP tool maker",
+  "voice AI professional",
+  "MCP tool creator",
   "prompt whisperer",
   "cloud automation guy",
   "CI/CD pipeline plumber",
-  "computer vision creator",
+  "computer vision enabler",
   "RAG wrangler",
   "full-stack guru",
-  "startup contributor",
+  "startups initial member",
 ];
 
 /** Fisher-Yates shuffle returning a new array; leaves the input untouched. */
