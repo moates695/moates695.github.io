@@ -113,6 +113,23 @@ export const gymJunkie: ProjectInfo = {
 /** Everything except the featured Gym Junkie, in homepage/projects order. */
 export const otherProjects: ProjectInfo[] = [
   {
+    key: 'imax_bot',
+    icon: iconMap.imax_bot,
+    initials: 'IX',
+    name: 'IMAX Watch Agent',
+    blurb: 'Watches Event Cinemas IMAX Sydney and pings you on Telegram the moment films or tickets appear.',
+    description:
+      'A Python agent that scans Event Cinemas IMAX Sydney on a schedule and alerts you on Telegram when ' +
+      'films appear, tickets open, or a watchlisted title becomes bookable, with a per-session seat ' +
+      'breakdown and a daily digest. State lives in a local file so each alert fires once and never ' +
+      'repeats; deployed as a plain cron job.',
+    link: '/other/imax-bot',
+    chipKeys: ['python', 'telegram', 'automation'],
+    status: 'prod',
+    accent: '#d8aa78',
+    external: [{ label: 'Source', href: imaxBotGithubLink, external: true }],
+  },
+  {
     key: 'finska',
     icon: iconMap.finska,
     initials: 'W',
@@ -130,19 +147,37 @@ export const otherProjects: ProjectInfo[] = [
     external: [{ label: 'Play Store', href: woodchuckPlayStoreLink, external: true }],
   },
   {
-    key: 'small_projects',
-    icon: iconMap.small_projects,
-    initials: 'SP',
-    name: 'Small Projects',
-    blurb: 'A collection of smaller builds and self-hosted infrastructure, gathered on one page.',
+    key: 'smart_trainer',
+    icon: iconMap.smart_trainer,
+    initials: 'W',
+    name: 'Watts',
+    blurb: 'A browser-based app for structured cycling workouts on a smart trainer. My fork adds a drag-to-build workout designer.',
     description:
-      'A running collection of the smaller builds that are too compact for a case study of their own, ' +
-      'gathered on a single page with quick links to each. First up is Secrets Vault: a self-hosted ' +
-      'Vaultwarden password manager for the family, running on a DigitalOcean droplet with shared ' +
-      'collections and encrypted off-site backups.',
-    link: '/small-projects',
-    chipKeys: ['docker', 'self_hosted'],
-    status: 'collection',
+      'A browser-based app for running structured cycling workouts on a smart trainer, talking to the ' +
+      'hardware directly over Web Bluetooth and recording standard .FIT activities. Built on the ' +
+      'open-source Auuki project; my fork adds a graphical workout designer so you can build a session ' +
+      'by dragging blocks instead of hand-writing ZWO XML. Vanilla JavaScript Web Components, no framework.',
+    link: '/other/smart-trainer',
+    chipKeys: ['javascript', 'bluetooth', 'pwa', 'client_side'],
+    status: 'poc',
+    accent: '#d8aa78',
+    external: [{ label: 'Source', href: smartTrainerGithubLink, external: true }],
+  },
+  {
+    key: 'arbitrage',
+    icon: iconMap.arbitrage,
+    initials: 'AB',
+    name: 'Arbitrage Engine',
+    blurb: 'Scans horse racing odds across bookmakers and flags guaranteed-profit arbitrage. Read-only, never places a bet.',
+    description:
+      'A read-only engine that scans horse racing odds across multiple Australian bookmakers and flags ' +
+      'arbitrage: cases where backing every runner at the best available price locks in a profit whatever ' +
+      'the result. Uses browser automation and local vision extraction to read the odds, reconciles ' +
+      'runners across books, then runs the arbitrage maths. It finds the opportunity and outputs what to ' +
+      'bet where; it never places a bet.',
+    link: '/other/arbitrage',
+    chipKeys: ['python', 'automation', 'ai_ml', 'llm'],
+    status: 'poc',
     accent: '#d8aa78',
   },
   {
@@ -177,54 +212,19 @@ export const otherProjects: ProjectInfo[] = [
     external: [{ label: 'Source', href: mcpServerGithubLink, external: true }],
   },
   {
-    key: 'imax_bot',
-    icon: iconMap.imax_bot,
-    initials: 'IX',
-    name: 'IMAX Watch Agent',
-    blurb: 'Watches Event Cinemas IMAX Sydney and pings you on Telegram the moment films or tickets appear.',
+    key: 'small_projects',
+    icon: iconMap.small_projects,
+    initials: 'SP',
+    name: 'Small Projects',
+    blurb: 'A collection of smaller builds and self-hosted infrastructure, gathered on one page.',
     description:
-      'A Python agent that scans Event Cinemas IMAX Sydney on a schedule and alerts you on Telegram when ' +
-      'films appear, tickets open, or a watchlisted title becomes bookable, with a per-session seat ' +
-      'breakdown and a daily digest. State lives in a local file so each alert fires once and never ' +
-      'repeats; deployed as a plain cron job.',
-    link: '/other/imax-bot',
-    chipKeys: ['python', 'telegram', 'automation'],
-    status: 'prod',
-    accent: '#d8aa78',
-    external: [{ label: 'Source', href: imaxBotGithubLink, external: true }],
-  },
-  {
-    key: 'smart_trainer',
-    icon: iconMap.smart_trainer,
-    initials: 'W',
-    name: 'Watts',
-    blurb: 'A browser-based app for structured cycling workouts on a smart trainer. My fork adds a drag-to-build workout designer.',
-    description:
-      'A browser-based app for running structured cycling workouts on a smart trainer, talking to the ' +
-      'hardware directly over Web Bluetooth and recording standard .FIT activities. Built on the ' +
-      'open-source Auuki project; my fork adds a graphical workout designer so you can build a session ' +
-      'by dragging blocks instead of hand-writing ZWO XML. Vanilla JavaScript Web Components, no framework.',
-    link: '/other/smart-trainer',
-    chipKeys: ['javascript', 'bluetooth', 'pwa', 'client_side'],
-    status: 'poc',
-    accent: '#d8aa78',
-    external: [{ label: 'Source', href: smartTrainerGithubLink, external: true }],
-  },
-  {
-    key: 'arbitrage',
-    icon: iconMap.arbitrage,
-    initials: 'AB',
-    name: 'Arbitrage Engine',
-    blurb: 'Scans horse racing odds across bookmakers and flags guaranteed-profit arbitrage. Read-only, never places a bet.',
-    description:
-      'A read-only engine that scans horse racing odds across multiple Australian bookmakers and flags ' +
-      'arbitrage: cases where backing every runner at the best available price locks in a profit whatever ' +
-      'the result. Uses browser automation and local vision extraction to read the odds, reconciles ' +
-      'runners across books, then runs the arbitrage maths. It finds the opportunity and outputs what to ' +
-      'bet where; it never places a bet.',
-    link: '/other/arbitrage',
-    chipKeys: ['python', 'automation', 'ai_ml', 'llm'],
-    status: 'poc',
+      'A running collection of the smaller builds that are too compact for a case study of their own, ' +
+      'gathered on a single page with quick links to each. First up is Secrets Vault: a self-hosted ' +
+      'Vaultwarden password manager for the family, running on a DigitalOcean droplet with shared ' +
+      'collections and encrypted off-site backups.',
+    link: '/small-projects',
+    chipKeys: ['docker', 'self_hosted'],
+    status: 'collection',
     accent: '#d8aa78',
   },
   {

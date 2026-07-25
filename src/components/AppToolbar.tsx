@@ -69,14 +69,14 @@ const PROJECT_GROUPS: NavGroup[] = [
     label: 'Other',
     overview: '/projects',
     links: [
+      { label: 'IMAX Watch Agent', to: '/other/imax-bot' },
       { label: 'Watts', to: '/other/smart-trainer' },
       { label: 'Arbitrage Engine', to: '/other/arbitrage' },
-      { label: 'IMAX Watch Agent', to: '/other/imax-bot' },
+      { label: 'Poppycock', to: '/poppycock' },
+      { label: 'Marcus MCP Server', to: '/other/mcp-server' },
       { label: 'Cellular Tracking', to: '/other/cellular-tracking' },
       { label: 'Downer Helper', to: '/other/downer-helper' },
       { label: 'Postgres Deploy', to: '/other/postgres-deploy' },
-      { label: 'Poppycock', to: '/poppycock' },
-      { label: 'Marcus MCP Server', to: '/other/mcp-server' },
     ],
   },
 ];
