@@ -12,7 +12,16 @@
  * no odds at all.
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Box, ButtonBase, CircularProgress, Collapse, IconButton, Tooltip, Typography } from "@mui/material";
+import {
+  Box,
+  ButtonBase,
+  CircularProgress,
+  Collapse,
+  IconButton,
+  InputBase,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { MONO } from "../styles/tokens";
@@ -25,6 +34,14 @@ const INTERVAL_MIN = 15;
 
 /** Arb cards shown before the "show all" toggle appears. */
 const ARB_PREVIEW = 6;
+
+/** Bankroll used per arb until the reader types their own. */
+const DEFAULT_STAKE = 100;
+
+/** One-tap bankrolls beside the stake box. */
+const STAKE_PRESETS = [50, 100, 250, 500, 1000];
+
+const STAKE_KEY = "arb.stake";
 
 const BOOK_LABELS: Record<string, string> = {
   sportsbet: "Sportsbet",
@@ -146,11 +163,33 @@ function localStart(hhmm: string, anchorIso: string, startIso?: string | null): 
   return fmt(guess);
 }
 
-/** Stake per $100 of bankroll, the same split the engine's report prints. */
-function stakeSplit(legs: Leg[]): number[] {
+/**
+ * Split a bankroll across the legs in proportion to each leg's implied
+ * probability, which is the split the engine's own report prints. Because the
+ * stakes are proportional, every leg pays the same `payout`, so the profit is
+ * locked in whichever runner wins.
+ */
+function splitStakes(legs: Leg[], bankroll: number) {
   const implied = legs.map((l) => 1 / l.odds);
   const total = implied.reduce((a, b) => a + b, 0);
-  return implied.map((p) => (100 * p) / total);
+  const stakes = implied.map((p) => (bankroll * p) / total);
+  const payout = total > 0 ? bankroll / total : 0;
+  return { stakes, payout, profit: payout - bankroll };
+}
+
+/** Dollars with cents and thousands separators, sign left to the caller. */
+const money = (n: number) =>
+  `$${n.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+/**
+ * Keep the stake box to a plain positive amount: digits, a single decimal
+ * point, at most two cents, and short enough that the totals still read as
+ * money rather than scientific notation.
+ */
+function sanitiseStake(raw: string): string {
+  const [head, ...rest] = raw.replace(/[^0-9.]/g, "").split(".");
+  const dollars = head.slice(0, 9);
+  return rest.length ? `${dollars}.${rest.join("").slice(0, 2)}` : dollars;
 }
 
 const bookName = (key: string) => BOOK_LABELS[key] ?? key;
@@ -234,12 +273,184 @@ const headSx = {
 };
 
 /* ------------------------------------------------------------------ */
+/* Stake calculator                                                    */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Bankroll box driving every dollar figure on the board. The headline is what
+ * the stake makes on the single best arb, not the sum across all of them: one
+ * bankroll goes on one opportunity, and the arbs are alternatives rather than a
+ * portfolio. Each card below still prices the same stake on its own legs, for
+ * the case where the money is spread.
+ */
+function StakePanel({
+  text,
+  onText,
+  stake,
+  arbs,
+  hasNearMisses,
+}: {
+  text: string;
+  onText: (v: string) => void;
+  stake: number;
+  arbs: Tagged[];
+  hasNearMisses: boolean;
+}) {
+  // Arbs arrive sorted, but pick explicitly so the headline cannot drift from
+  // the best card if that ordering ever changes.
+  const best = arbs.reduce<Tagged | null>(
+    (acc, a) => (acc == null || a.profit_pct > acc.profit_pct ? a : acc),
+    null
+  );
+  // Priced off the legs, not profit_pct, so it matches that arb's card exactly.
+  const profit = best ? splitStakes(best.legs, stake).profit : 0;
+
+  return (
+    <Box
+      sx={{
+        border: "1px solid",
+        borderColor: SAND.goldBorder,
+        borderRadius: 2,
+        bgcolor: "rgba(216,170,120,.035)",
+        p: { xs: 1.5, sm: 2 },
+        mb: 1.5,
+        display: "grid",
+        gap: { xs: 1.5, sm: 2 },
+        gridTemplateColumns: { xs: "1fr", sm: "1fr auto" },
+        alignItems: "center",
+      }}
+    >
+      <Box sx={{ minWidth: 0 }}>
+        <Typography
+          sx={{
+            fontFamily: MONO,
+            fontSize: 10.5,
+            letterSpacing: "0.1em",
+            textTransform: "uppercase",
+            color: SAND.faintest,
+            mb: 0.85,
+          }}
+        >
+          your stake
+        </Typography>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 0.75, flexWrap: "wrap" }}>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 0.5,
+              border: "1px solid",
+              borderColor: SAND.goldBorder,
+              borderRadius: 1.5,
+              bgcolor: "rgba(0,0,0,.25)",
+              px: 1.1,
+              py: 0.5,
+              transition: "border-color .2s",
+              "&:focus-within": { borderColor: `${SAND.gold}66` },
+            }}
+          >
+            <Typography sx={{ fontFamily: MONO, fontSize: 16, color: SAND.gold, lineHeight: 1 }}>$</Typography>
+            <InputBase
+              value={text}
+              onChange={(e) => onText(sanitiseStake(e.target.value))}
+              placeholder={String(DEFAULT_STAKE)}
+              inputProps={{
+                inputMode: "decimal",
+                "aria-label": "Stake, in dollars",
+              }}
+              sx={{
+                width: { xs: 86, sm: 100 },
+                fontFamily: MONO,
+                fontSize: 16,
+                color: SAND.primary,
+                "& input": { p: 0 },
+                "& input::placeholder": { color: SAND.faintest, opacity: 1 },
+              }}
+            />
+          </Box>
+          {STAKE_PRESETS.map((p) => {
+            const active = stake === p;
+            return (
+              <ButtonBase
+                key={p}
+                onClick={() => onText(String(p))}
+                sx={{
+                  fontFamily: MONO,
+                  fontSize: 11.5,
+                  px: 1,
+                  py: 0.6,
+                  borderRadius: 1.5,
+                  border: "1px solid",
+                  borderColor: active ? `${SAND.gold}66` : SAND.hairlineSoft,
+                  bgcolor: active ? `${SAND.gold}14` : "transparent",
+                  color: active ? SAND.gold : SAND.faint,
+                  transition: "border-color .2s, color .2s",
+                  "&:hover": { borderColor: `${SAND.gold}44`, color: SAND.gold },
+                }}
+              >
+                {p >= 1000 ? `${p / 1000}k` : p}
+              </ButtonBase>
+            );
+          })}
+        </Box>
+      </Box>
+
+      <Box sx={{ textAlign: { xs: "left", sm: "right" } }}>
+        {best ? (
+          <>
+            <Typography
+              sx={{
+                fontFamily: MONO,
+                fontWeight: 700,
+                fontSize: { xs: 26, sm: 30 },
+                lineHeight: 1,
+                color: SAND.gold,
+                textShadow: "0 0 24px rgba(216,170,120,.3)",
+              }}
+            >
+              +{money(profit)}
+            </Typography>
+            <Typography sx={{ fontFamily: MONO, fontSize: 10.5, color: SAND.faintest, mt: 0.5 }}>
+              {money(stake)} on {best.venue} R{best.race_number},{" "}
+              {arbs.length === 1
+                ? "the only arb this sweep"
+                : `the best of ${arbs.length} this sweep`}
+            </Typography>
+            {arbs.length > 1 && (
+              <Typography sx={{ fontFamily: MONO, fontSize: 10.5, color: SAND.faintest, mt: 0.25 }}>
+                every card below prices the same stake on its own legs
+              </Typography>
+            )}
+          </>
+        ) : (
+          <Typography sx={{ fontFamily: MONO, fontSize: 11.5, color: SAND.faintest, maxWidth: 260 }}>
+            {hasNearMisses
+              ? "Nothing confirmed to price this sweep. The stake still splits the near misses below."
+              : "Nothing confirmed to price this sweep."}
+          </Typography>
+        )}
+      </Box>
+    </Box>
+  );
+}
+
+/* ------------------------------------------------------------------ */
 /* Arbitrage card                                                      */
 /* ------------------------------------------------------------------ */
 
-function ArbCard({ arb, anchorIso, muted = false }: { arb: Tagged; anchorIso: string; muted?: boolean }) {
+function ArbCard({
+  arb,
+  anchorIso,
+  stake,
+  muted = false,
+}: {
+  arb: Tagged;
+  anchorIso: string;
+  stake: number;
+  muted?: boolean;
+}) {
   const accent = muted ? SAND.faint : SAND.gold;
-  const stakes = stakeSplit(arb.legs);
+  const { stakes, payout, profit } = splitStakes(arb.legs, stake);
 
   return (
     <Box
@@ -287,10 +498,10 @@ function ArbCard({ arb, anchorIso, muted = false }: { arb: Tagged; anchorIso: st
               color: accent,
             }}
           >
-            +{arb.profit_pct.toFixed(2)}%
+            +{money(profit)}
           </Typography>
           <Typography variant="caption" sx={{ color: SAND.faintest, fontFamily: MONO, fontSize: 10.5 }}>
-            margin {arb.overround_pct.toFixed(2)}%
+            +{arb.profit_pct.toFixed(2)}% · margin {arb.overround_pct.toFixed(2)}%
           </Typography>
         </Box>
       </Box>
@@ -314,7 +525,7 @@ function ArbCard({ arb, anchorIso, muted = false }: { arb: Tagged; anchorIso: st
                 odds
               </Box>
               <Box component="th" sx={{ ...headSx, textAlign: "right", width: "16%" }}>
-                per $100
+                stake
               </Box>
             </Box>
           </Box>
@@ -337,13 +548,36 @@ function ArbCard({ arb, anchorIso, muted = false }: { arb: Tagged; anchorIso: st
                   {leg.odds.toFixed(2)}
                 </Box>
                 <Box component="td" sx={{ ...cellSx, textAlign: "right", color: SAND.body }}>
-                  ${stakes[i].toFixed(2)}
+                  {money(stakes[i])}
                 </Box>
               </Box>
             ))}
           </Box>
         </Box>
       </Scroller>
+
+      {/* The point of the split: whichever runner wins, the same amount comes
+          back, so the profit is known before the race is run. */}
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          columnGap: { xs: 0.75, sm: 1.25 },
+          rowGap: 0.25,
+          mt: 1.1,
+          fontFamily: MONO,
+          fontSize: { xs: 10.5, sm: 11.5 },
+          color: SAND.faintest,
+        }}
+      >
+        <Box component="span">{money(stake)} staked</Box>
+        <Box component="span">·</Box>
+        <Box component="span">any winner returns {money(payout)}</Box>
+        <Box component="span">·</Box>
+        <Box component="span" sx={{ color: accent, fontWeight: 700 }}>
+          +{money(profit)} locked in
+        </Box>
+      </Box>
     </Box>
   );
 }
@@ -522,6 +756,15 @@ export default function ArbLiveBoard() {
   const [openVenue, setOpenVenue] = useState<string | null>(null);
   const [showAllArbs, setShowAllArbs] = useState(false);
   const [showUnverified, setShowUnverified] = useState(false);
+  // Kept as text so the box can be cleared while typing; an empty or zero
+  // amount just falls back to the $100 basis the engine's report uses.
+  const [stakeText, setStakeText] = useState(() => {
+    try {
+      return window.localStorage.getItem(STAKE_KEY) ?? "";
+    } catch {
+      return "";
+    }
+  });
   const inFlight = useRef(false);
   const openedFor = useRef<string | null>(null);
 
@@ -608,6 +851,20 @@ export default function ArbLiveBoard() {
         .sort((a, b) => b.profit_pct - a.profit_pct),
     [snap]
   );
+
+  const stake = useMemo(() => {
+    const parsed = Number.parseFloat(stakeText);
+    return Number.isFinite(parsed) && parsed > 0 ? parsed : DEFAULT_STAKE;
+  }, [stakeText]);
+
+  const setStake = useCallback((v: string) => {
+    setStakeText(v);
+    try {
+      window.localStorage.setItem(STAKE_KEY, v);
+    } catch {
+      /* private browsing, or storage full: the stake just resets on reload */
+    }
+  }, []);
 
   const missing = useMemo(() => {
     const books = new Set<string>();
@@ -780,6 +1037,15 @@ export default function ArbLiveBoard() {
         >
           {"// confirmed arbitrage"}
         </Typography>
+        {(arbs.length > 0 || unverified.length > 0) && (
+          <StakePanel
+            text={stakeText}
+            onText={setStake}
+            stake={stake}
+            arbs={arbs}
+            hasNearMisses={unverified.length > 0}
+          />
+        )}
         {arbs.length === 0 ? (
           <Box
             sx={{
@@ -803,6 +1069,7 @@ export default function ArbLiveBoard() {
                   key={`${arb.code}-${arb.venue}-${arb.race_number}`}
                   arb={arb}
                   anchorIso={snap.generated_at}
+                  stake={stake}
                 />
               ))}
             </Box>
@@ -858,6 +1125,7 @@ export default function ArbLiveBoard() {
                   key={`${arb.code}-${arb.venue}-${arb.race_number}`}
                   arb={arb}
                   anchorIso={snap.generated_at}
+                  stake={stake}
                   muted
                 />
               ))}
@@ -987,7 +1255,8 @@ export default function ArbLiveBoard() {
       <Typography variant="caption" sx={{ color: SAND.faintest }}>
         Odds as read at {new Date(snap.generated_at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
         , straight from each bookmaker's public feed. Prices move constantly, so treat everything here as a
-        snapshot rather than a quote. Nothing on this page places a bet.
+        snapshot rather than a quote: the stake figures assume you get on at every leg at the price shown,
+        which real bet limits and price changes will not always allow. Nothing on this page places a bet.
       </Typography>
     </Box>
   );

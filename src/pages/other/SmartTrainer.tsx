@@ -15,8 +15,33 @@ import {
   PageNav,
 } from "../../components/design";
 import { SectionNavLayout, Section } from "../../components/SectionNav";
+import { BeforeAfter, ImageFigure, ComparisonPair } from "../../components/BeforeAfter";
 
 const ACCENT = "#d8aa78";
+
+const comparisons: ComparisonPair[] = [
+  {
+    id: "ride",
+    label: "Ride screen",
+    before: "/watts/old_main_screen.png",
+    after: "/watts/main_screen.png",
+    note: "Before: ten equal-weight readouts strung across the top, most of them dashes, with the workout profile stranded at the bottom. After: power leads at the size you can read mid-effort, tagged with its training zone and watts per kilo, next to target adherence, a rolling power-history trace and an FTP gauge. The profile becomes a zoomable chart with recorded power, heart rate and cadence drawn over the planned blocks.",
+  },
+  {
+    id: "workouts",
+    label: "Workouts",
+    before: "/watts/old_workouts.png",
+    after: "/watts/workouts.png",
+    note: "Before: a flat list of names, with the profile of the selected workout drawn loose on the page. After: each row carries its own thumbnail profile, description, zone tag and duration, expanding in place to a full chart with a start button. Tabs split your own sessions from the read-only built-ins, completed rides and the editor.",
+  },
+  {
+    id: "settings",
+    label: "Settings",
+    before: "/watts/old_settings.png",
+    after: "/watts/settings_trainer.png",
+    note: "Before: FTP and weight as tap-to-edit dials above four rows of unlabelled Bluetooth toggles. After: a rider profile that derives FTP per kilo as you type, app options grouped beside it, and every device role as a card showing its connection state and live values.",
+  },
+];
 
 const SECTIONS: Section[] = [
   { id: "fork", label: "The fork" },
@@ -140,6 +165,9 @@ export default function OtherSmartTrainer() {
             threshold, the screen should read like an instrument panel, not a settings page.
           </Box>
           <CheckList items={redesignPoints} accent={ACCENT} />
+          <Box sx={{ mt: 3 }}>
+            <BeforeAfter pairs={comparisons} accent={ACCENT} />
+          </Box>
         </Reveal>
 
         <Reveal delay={0.24} id="designer">
@@ -150,6 +178,15 @@ export default function OtherSmartTrainer() {
             Zwift .ZWO file the app can run:
           </Box>
           <CheckList items={designerPoints} accent={ACCENT} />
+          <Box sx={{ mt: 3 }}>
+            <ImageFigure
+              src="/watts/workout_editor.png"
+              alt="The Watts workout editor: draggable power blocks above an editable block table"
+              tag="new / workout editor"
+              accent={ACCENT}
+              caption="Blocks are dragged on the canvas or typed into the table, each one showing the watts it works out to at your FTP. The session saves to your library or downloads as a .ZWO like this:"
+            />
+          </Box>
           <Box sx={{ mt: 2.5 }}>
             <Panel accent={ACCENT}>
               <MarkdownBlock>{zwoSnippet}</MarkdownBlock>
