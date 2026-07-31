@@ -159,7 +159,7 @@ export const otherProjects: ProjectInfo[] = [
       'by dragging blocks instead of hand-writing ZWO XML. Vanilla JavaScript Web Components, no framework.',
     link: '/other/smart-trainer',
     chipKeys: ['javascript', 'bluetooth', 'pwa', 'client_side'],
-    status: 'poc',
+    status: 'test',
     accent: '#d8aa78',
     external: [{ label: 'Source', href: smartTrainerGithubLink, external: true }],
   },
@@ -168,16 +168,16 @@ export const otherProjects: ProjectInfo[] = [
     icon: iconMap.arbitrage,
     initials: 'AB',
     name: 'Arbitrage Engine',
-    blurb: 'Scans horse racing odds across bookmakers and flags guaranteed-profit arbitrage. Read-only, never places a bet.',
+    blurb: 'Scans racing and sport odds across bookmakers and flags guaranteed-profit arbitrage. Read-only, never places a bet.',
     description:
-      'A read-only engine that scans horse racing odds across multiple Australian bookmakers and flags ' +
-      'arbitrage: cases where backing every runner at the best available price locks in a profit whatever ' +
-      'the result. Uses browser automation and local vision extraction to read the odds, reconciles ' +
-      'runners across books, then runs the arbitrage maths. It finds the opportunity and outputs what to ' +
-      'bet where; it never places a bet.',
+      'A read-only engine that scans racing and sport odds across seven Australian bookmakers and flags ' +
+      'arbitrage: cases where backing every outcome at the best available price locks in a profit whatever ' +
+      'the result. It reads each bookmaker\'s own JSON feed directly, reconciles runners across books, then ' +
+      'runs the arbitrage maths. A hosted copy sweeps every 15 minutes and publishes the live board on its ' +
+      'project page. It finds the opportunity and outputs what to bet where; it never places a bet.',
     link: '/other/arbitrage',
-    chipKeys: ['python', 'automation', 'ai_ml', 'llm'],
-    status: 'poc',
+    chipKeys: ['python', 'automation', 'fastapi', 'docker'],
+    status: 'test',
     accent: '#d8aa78',
   },
   {

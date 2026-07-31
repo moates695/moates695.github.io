@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import MarkdownBlock from "../../components/MarkdownBlock";
+import ArbLiveBoard from "../../components/ArbLiveBoard";
 import {
   PageHeader,
   GradientText,
@@ -16,6 +17,7 @@ import { SectionNavLayout, Section } from "../../components/SectionNav";
 const ACCENT = "#d8aa78";
 
 const SECTIONS: Section[] = [
+  { id: "live", label: "Live board" },
   { id: "idea", label: "The idea" },
   { id: "coverage", label: "Books & sports" },
   { id: "pipeline", label: "The pipeline" },
@@ -34,7 +36,7 @@ const ideaPoints = [
 const coveragePoints = [
   "Seven Australian bookmakers: TAB, Sportsbet, Ladbrokes, PointsBet, Palmerbet, Unibet and betr.",
   "Racing across all three codes in a single run: thoroughbred, harness and greyhound, each aligned and stored on its own.",
-  "Tennis as a second sport, matched on the two players rather than a venue and field, reusing the same align to detect to output spine unchanged.",
+  "Head-to-head sport as well: tennis, soccer, rugby league, Aussie rules, basketball and baseball, matched on the two teams rather than a venue and field, reusing the same align to detect to output spine unchanged.",
   "Each bookmaker's endpoints are captured as a documented per-book recipe, so wiring up the next book stays a contained job.",
 ];
 
@@ -54,7 +56,7 @@ const outputPoints = [
 
 const safeguards = [
   "It never places a bet. The output is a set of instructions: which runner, which bookmaker, what stake, and the expected return.",
-  "Everything runs locally against public endpoints, with no vision model, no LLM and no API keys anywhere in the loop.",
+  "It only ever reads public endpoints, with no vision model, no LLM and no API keys anywhere in the loop.",
   "A confirmed arbitrage needs at least two books pricing the full live field; a single-book runner or a missing price files the market as an unverified candidate rather than a trade.",
   "Odds are timestamped, since an opportunity is only real for as long as the prices behind it hold.",
 ];
@@ -100,15 +102,20 @@ export default function OtherArbitrage() {
         <PageHeader
           eyebrow="engine"
           title={<>Arbitrage <GradientText>Engine</GradientText></>}
-          subtitle="A read-only engine that scans betting odds across seven Australian bookmakers, over both racing and tennis, and flags arbitrage: the rare moments when backing every outcome at the best price on offer locks in a profit no matter the result. It works out exactly what to stake where, and never places a bet itself."
+          subtitle="A read-only engine that scans betting odds across seven Australian bookmakers, over racing and five other sports, and flags arbitrage: the rare moments when backing every outcome at the best price on offer locks in a profit no matter the result. It works out exactly what to stake where, and never places a bet itself. The board below is its actual output, swept every 15 minutes."
         />
 
-        <Reveal delay={0.06}>
+        <Reveal delay={0.06} id="live">
+          <SectionHeading eyebrow="live">Right now</SectionHeading>
+          <ArbLiveBoard />
+        </Reveal>
+
+        <Reveal delay={0.12}>
           <Panel accent={ACCENT} wash>
             <StatRow
               items={[
-                { value: "7", label: "bookmakers" },
-                { value: "2", label: "sports" },
+                { value: "6", label: "books live" },
+                { value: "15 min", label: "sweep cadence" },
                 { value: "JSON APIs", label: "odds source" },
                 { value: "Read-only", label: "never bets" },
               ]}
@@ -116,13 +123,15 @@ export default function OtherArbitrage() {
           </Panel>
           <Box sx={{ mt: 2 }}>
             <Callout accent={ACCENT} title="status">
-              In proof-of-concept, running against live markets. It recently moved off screen-reading
-              onto the bookmakers' own JSON feeds, and the source is kept private for now.
+              Running against live markets from a small Sydney server, rebuilding the board on a fixed
+              15 minute cycle. Six of the seven bookmakers answer a plain HTTP client and are in the
+              hosted feed; TAB needs a real browser, so it stays on the local runs for now. The source is
+              kept private.
             </Callout>
           </Box>
         </Reveal>
 
-        <Reveal delay={0.12} id="idea">
+        <Reveal delay={0.18} id="idea">
           <SectionHeading eyebrow="the idea">What arbitrage is</SectionHeading>
           <Box sx={{ color: "text.secondary", mb: 2 }}>
             Bookmakers compete, and they do not all agree on what an outcome is worth. Now and then the
@@ -132,7 +141,7 @@ export default function OtherArbitrage() {
           <CheckList items={ideaPoints} accent={ACCENT} />
         </Reveal>
 
-        <Reveal delay={0.18} id="coverage">
+        <Reveal delay={0.24} id="coverage">
           <SectionHeading eyebrow="what it scans">Books and sports</SectionHeading>
           <Box sx={{ color: "text.secondary", mb: 2 }}>
             The more books and markets it watches, the more often the prices line up into an edge. It
@@ -141,7 +150,7 @@ export default function OtherArbitrage() {
           <CheckList items={coveragePoints} accent={ACCENT} />
         </Reveal>
 
-        <Reveal delay={0.24} id="pipeline">
+        <Reveal delay={0.3} id="pipeline">
           <SectionHeading eyebrow="how it works">The pipeline</SectionHeading>
           <Box sx={{ color: "text.secondary", mb: 2 }}>
             Four stages take it from a bookmaker's API to a ranked list of opportunities, with the odds
@@ -155,7 +164,7 @@ export default function OtherArbitrage() {
           </Box>
         </Reveal>
 
-        <Reveal delay={0.3} id="maths">
+        <Reveal delay={0.36} id="maths">
           <SectionHeading eyebrow="the maths">Finding the edge</SectionHeading>
           <Box sx={{ color: "text.secondary", mb: 2 }}>
             The detection itself is textbook and needs no model. Turn each best price into an implied
@@ -173,7 +182,7 @@ export default function OtherArbitrage() {
           </Box>
         </Reveal>
 
-        <Reveal delay={0.36} id="output">
+        <Reveal delay={0.42} id="output">
           <SectionHeading eyebrow="the output">What it hands back</SectionHeading>
           <Box sx={{ color: "text.secondary", mb: 2 }}>
             Each run drops a timestamped folder with both machine-readable data and a report you can
@@ -182,7 +191,7 @@ export default function OtherArbitrage() {
           <CheckList items={outputPoints} accent={ACCENT} />
         </Reveal>
 
-        <Reveal delay={0.42} id="safeguards">
+        <Reveal delay={0.48} id="safeguards">
           <SectionHeading eyebrow="guardrails">Read-only by design</SectionHeading>
           <CheckList items={safeguards} accent={ACCENT} />
         </Reveal>
