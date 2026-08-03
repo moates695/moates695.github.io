@@ -149,6 +149,12 @@ const chipData = {
     borderColor: '#9a86e0',
     textColor: '#9a86e0',
   },
+  data_pipeline: {
+    label: 'Data Pipeline',
+    color: 'transparent',
+    borderColor: '#8fd0d4',
+    textColor: '#8fd0d4',
+  },
 } satisfies Record<string, ChipData>;
 
 export type ChipKey = keyof typeof chipData;

@@ -19,4 +19,6 @@ export const smartTrainerLiveLink = "https://watts.moates.com.au"
 export const auukiLink = "https://auuki.com"
 export const auukiUpstreamLink = "https://github.com/dvmarinoff/Auuki"
 export const mcpServerEndpoint = "https://mcp.moates.com.au/mcp"
+export const authenticatorGithubLink = "https://github.com/moates695/authenticator"
+export const datePickerGithubLink = "https://github.com/moates695/dating_site"
 export const paypalLink = "https://paypal.me/moates695";

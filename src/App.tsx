@@ -38,6 +38,9 @@ import OtherImaxBot from './pages/other/ImaxBot';
 import OtherMcpServer from './pages/other/McpServer';
 import OtherSmartTrainer from './pages/other/SmartTrainer';
 import OtherArbitrage from './pages/other/Arbitrage';
+import OtherTradingStrategies from './pages/other/TradingStrategies';
+import OtherAuthenticator from './pages/other/Authenticator';
+import OtherDatePicker from './pages/other/DatePicker';
 import WoodchuckPrivacyPolicy from './pages/finska/PrivacyPolicy';
 import GymJunkiePrivacyPolicy from './pages/gym_junkie/PrivacyPolicy';
 import DeleteMe from './pages/gym_junkie/DeleteMe';
@@ -134,6 +137,9 @@ function AppShell() {
               <Route path="mcp-server" element={<OtherMcpServer />} />
               <Route path="smart-trainer" element={<OtherSmartTrainer />} />
               <Route path="arbitrage" element={<OtherArbitrage />} />
+              <Route path="trading-strategies" element={<OtherTradingStrategies />} />
+              <Route path="authenticator" element={<OtherAuthenticator />} />
+              <Route path="date-picker" element={<OtherDatePicker />} />
             </Route>
           </Routes>
         </Box>

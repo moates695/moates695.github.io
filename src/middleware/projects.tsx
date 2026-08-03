@@ -13,6 +13,8 @@ import {
   imaxBotGithubLink,
   mcpServerGithubLink,
   smartTrainerGithubLink,
+  authenticatorGithubLink,
+  datePickerGithubLink,
 } from "./links";
 
 export type Project =
@@ -26,6 +28,9 @@ export type Project =
   | 'mcp_server'
   | 'smart_trainer'
   | 'arbitrage'
+  | 'trading_strategies'
+  | 'authenticator'
+  | 'date_picker'
   | 'small_projects';
 
 export const iconMap: Record<Project, string> = {
@@ -39,7 +44,10 @@ export const iconMap: Record<Project, string> = {
   mcp_server: mcpIcon,
   smart_trainer: wattsLogo,
   arbitrage: pokerChips,
-  // No logo asset: the card/avatar falls back to the "SP" initials.
+  // No logo assets yet: these cards/avatars fall back to their initials.
+  trading_strategies: '',
+  authenticator: '',
+  date_picker: '',
   small_projects: '',
 };
 
@@ -179,6 +187,60 @@ export const otherProjects: ProjectInfo[] = [
     chipKeys: ['python', 'automation', 'fastapi', 'docker'],
     status: 'test',
     accent: '#d8aa78',
+  },
+  {
+    key: 'trading_strategies',
+    icon: iconMap.trading_strategies,
+    initials: 'TS',
+    name: 'Trading Strategies',
+    blurb: 'A harness for learning and testing trading strategies across a three phase test, validate and run split.',
+    description:
+      'A proof of concept for learning and testing trading strategies without fooling myself. Every idea ' +
+      'moves through three phases over three separate datasets: tuned freely on the test set, then checked ' +
+      'as many times as needed against validation data the tuning never saw, and finally given a single ' +
+      'pass over a held-back run set, which is the only honest measure of how effective it would have ' +
+      'been. The data foundation is built: a point-in-time S&P 500 universe and 633 million ' +
+      '1-minute bars off the SIP consolidated tape, stored as compressed Parquet. The strategy engine is next.',
+    link: '/other/trading-strategies',
+    chipKeys: ['python', 'data_pipeline', 'automation'],
+    status: 'poc',
+    accent: '#d8aa78',
+  },
+  {
+    key: 'authenticator',
+    icon: iconMap.authenticator,
+    initials: 'AT',
+    name: 'Authenticator',
+    blurb: 'A TOTP and HOTP authenticator that groups codes into folders, which the mainstream apps still will not do.',
+    description:
+      'A mobile authenticator built because Google Authenticator will not let you group codes into folders. ' +
+      'Codes are generated on device from a locally encrypted vault, with one shared countdown at the top of ' +
+      'the screen and nothing leaving the phone. Expo and React Native, with a zero-knowledge encrypted ' +
+      'backup and sync service built server side and the client half still to come.',
+    link: '/other/authenticator',
+    chipKeys: ['expo', 'react_ts', 'client_side'],
+    status: 'poc',
+    accent: '#d8aa78',
+    external: [{ label: 'Source', href: authenticatorGithubLink, external: true }],
+  },
+  {
+    key: 'date_picker',
+    icon: iconMap.date_picker,
+    initials: 'DP',
+    name: 'Date Picker',
+    blurb: 'A fun little alternative to plain texting: a personalised one-page picker for asking someone to choose between options.',
+    description:
+      'A more fun way to ask someone out than a wall of text. Rather than sending a nested list of options ' +
+      'and waiting for a reply of "b, then ii", you send a link to a one-page picker built for them, with ' +
+      'its own wording and animation. Replies land in Postgres and ping Telegram. Each person ' +
+      'gets their own page bundle behind an opaque token, and because the server stores answers verbatim as ' +
+      'JSONB and never interprets them, a new page with its own layout and interactions needs no server ' +
+      'change. FastAPI and Postgres in a container on a DigitalOcean droplet.',
+    link: '/other/date-picker',
+    chipKeys: ['python', 'fastapi', 'postgres', 'telegram', 'docker'],
+    status: 'poc',
+    accent: '#d8aa78',
+    external: [{ label: 'Source', href: datePickerGithubLink, external: true }],
   },
   {
     key: 'balderdash',
