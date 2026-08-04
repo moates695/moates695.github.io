@@ -74,7 +74,6 @@ const PROJECT_GROUPS: NavGroup[] = [
       { label: 'Arbitrage Engine', to: '/other/arbitrage' },
       { label: 'Trading Strategies', to: '/other/trading-strategies' },
       { label: 'Authenticator', to: '/other/authenticator' },
-      { label: 'Date Picker', to: '/other/date-picker' },
       { label: 'Poppycock', to: '/poppycock' },
       { label: 'Marcus MCP Server', to: '/other/mcp-server' },
       { label: 'Cellular Tracking', to: '/other/cellular-tracking' },

@@ -7,7 +7,6 @@ import pokerChips from "../assets/poker-chips.png";
 import mcpIcon from "../assets/mcp-icon.png";
 import wattsLogo from "../assets/watts-logo.svg";
 import tradingStrategiesLogo from "../assets/trading-strategies-logo.svg";
-import datePickerLogo from "../assets/date-picker-logo.svg";
 import smallProjectsLogo from "../assets/small-projects-logo.svg";
 import {
   SAND,
@@ -84,15 +83,6 @@ const moreProjects: SandProject[] = [
     tags: ["React Native", "Expo", "Cryptography"],
     initials: "AT",
     link: "/other/authenticator",
-  },
-  {
-    title: "Date Picker",
-    status: "POC",
-    blurb: "A more fun way to ask someone out than a wall of text: their own one-page picker, so nobody has to reply \"b, then ii\". Answers land in Postgres and ping Telegram.",
-    tags: ["FastAPI", "PostgreSQL", "Telegram"],
-    icon: datePickerLogo,
-    initials: "DP",
-    link: "/other/date-picker",
   },
   {
     title: "Poppycock",

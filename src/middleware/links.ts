@@ -20,8 +20,4 @@ export const auukiLink = "https://auuki.com"
 export const auukiUpstreamLink = "https://github.com/dvmarinoff/Auuki"
 export const mcpServerEndpoint = "https://mcp.moates.com.au/mcp"
 export const authenticatorGithubLink = "https://github.com/moates695/authenticator"
-export const datePickerGithubLink = "https://github.com/moates695/dating_site"
-// The public demo page. A real page on the live app, flagged so it never
-// notifies and never shows one visitor's answer to the next.
-export const datePickerDemoLink = "https://date.moates.com.au/d/trydate/"
 export const paypalLink = "https://paypal.me/moates695";

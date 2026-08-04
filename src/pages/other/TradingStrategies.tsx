@@ -233,7 +233,7 @@ export default function OtherTradingStrategies() {
         </Reveal>
 
         <PageNav
-          left={{ text: "Date Picker", link: "/other/date-picker" }}
+          left={{ text: "Authenticator", link: "/other/authenticator" }}
           right={{ text: "Projects", link: "/projects" }}
         />
       </Box>

@@ -4,7 +4,6 @@ import pokerChips from "../assets/poker-chips.png";
 import mcpIcon from "../assets/mcp-icon.png";
 import wattsLogo from "../assets/watts-logo.svg";
 import tradingStrategiesLogo from "../assets/trading-strategies-logo.svg";
-import datePickerLogo from "../assets/date-picker-logo.svg";
 import smallProjectsLogo from "../assets/small-projects-logo.svg";
 import {
   gymJunkiePlayStoreLink,
@@ -17,8 +16,6 @@ import {
   mcpServerGithubLink,
   smartTrainerGithubLink,
   authenticatorGithubLink,
-  datePickerGithubLink,
-  datePickerDemoLink,
 } from "./links";
 
 export type Project =
@@ -34,7 +31,6 @@ export type Project =
   | 'arbitrage'
   | 'trading_strategies'
   | 'authenticator'
-  | 'date_picker'
   | 'small_projects';
 
 export const iconMap: Record<Project, string> = {
@@ -49,7 +45,6 @@ export const iconMap: Record<Project, string> = {
   smart_trainer: wattsLogo,
   arbitrage: pokerChips,
   trading_strategies: tradingStrategiesLogo,
-  date_picker: datePickerLogo,
   small_projects: smallProjectsLogo,
   // No logo asset yet: this card/avatar falls back to its initials.
   authenticator: '',
@@ -226,29 +221,6 @@ export const otherProjects: ProjectInfo[] = [
     status: 'poc',
     accent: '#d8aa78',
     external: [{ label: 'Source', href: authenticatorGithubLink, external: true }],
-  },
-  {
-    key: 'date_picker',
-    icon: iconMap.date_picker,
-    initials: 'DP',
-    name: 'Date Picker',
-    blurb: 'A fun little alternative to plain texting: a personalised one-page picker for asking someone to choose between options.',
-    description:
-      'A more fun way to ask someone out than a wall of text. Rather than sending a nested list of options ' +
-      'and waiting for a reply of "b, then ii", you send a link to a one-page picker built for them, with ' +
-      'its own wording and animation. Replies land in Postgres and ping Telegram. Each person ' +
-      'gets their own page bundle behind an opaque token, and because the server stores answers verbatim as ' +
-      'JSONB and never interprets them, a new page with its own layout and interactions needs no server ' +
-      'change. There is a public demo page you can answer yourself. FastAPI and Postgres in a container ' +
-      'on a DigitalOcean droplet.',
-    link: '/other/date-picker',
-    chipKeys: ['python', 'fastapi', 'postgres', 'telegram', 'docker'],
-    status: 'poc',
-    accent: '#d8aa78',
-    external: [
-      { label: 'Try it', href: datePickerDemoLink, external: true },
-      { label: 'Source', href: datePickerGithubLink, external: true },
-    ],
   },
   {
     key: 'balderdash',

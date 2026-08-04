@@ -40,7 +40,6 @@ export const breadcrumbNameMap: { [key: string]: string } = {
   '/other/mcp-server': 'Marcus MCP Server',
   '/other/trading-strategies': 'Trading Strategies',
   '/other/authenticator': 'Authenticator',
-  '/other/date-picker': 'Date Picker',
   '/small-projects': 'Small Projects',
   '/about': 'Resume',
   '/projects': 'Projects',

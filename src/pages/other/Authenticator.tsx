@@ -233,7 +233,7 @@ export default function OtherAuthenticator() {
 
         <PageNav
           left={{ text: "Projects", link: "/projects" }}
-          right={{ text: "Date Picker", link: "/other/date-picker" }}
+          right={{ text: "Trading Strategies", link: "/other/trading-strategies" }}
         />
       </Box>
     </SectionNavLayout>
