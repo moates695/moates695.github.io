@@ -185,7 +185,7 @@ page_views (page_id, kind, is_self, ip_hash, notified_at)
         <Panel accent={ACCENT} wash>
           <StatRow
             items={[
-              { value: "0", label: "logins" },
+              { value: "No login", label: "required" },
               { value: "2", label: "view kinds" },
               { value: "JSONB", label: "answers storage" },
               { value: "Telegram", label: "notifications" },
