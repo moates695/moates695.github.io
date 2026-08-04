@@ -3,6 +3,9 @@ import imaxLogo from "../assets/imax_logo.jpeg";
 import pokerChips from "../assets/poker-chips.png";
 import mcpIcon from "../assets/mcp-icon.png";
 import wattsLogo from "../assets/watts-logo.svg";
+import tradingStrategiesLogo from "../assets/trading-strategies-logo.svg";
+import datePickerLogo from "../assets/date-picker-logo.svg";
+import smallProjectsLogo from "../assets/small-projects-logo.svg";
 import {
   gymJunkiePlayStoreLink,
   gymJunkieAppStoreLink,
@@ -15,6 +18,7 @@ import {
   smartTrainerGithubLink,
   authenticatorGithubLink,
   datePickerGithubLink,
+  datePickerDemoLink,
 } from "./links";
 
 export type Project =
@@ -44,11 +48,11 @@ export const iconMap: Record<Project, string> = {
   mcp_server: mcpIcon,
   smart_trainer: wattsLogo,
   arbitrage: pokerChips,
-  // No logo assets yet: these cards/avatars fall back to their initials.
-  trading_strategies: '',
+  trading_strategies: tradingStrategiesLogo,
+  date_picker: datePickerLogo,
+  small_projects: smallProjectsLogo,
+  // No logo asset yet: this card/avatar falls back to its initials.
   authenticator: '',
-  date_picker: '',
-  small_projects: '',
 };
 
 export type ProjectStatus = 'prod' | 'test' | 'poc' | 'collection';
@@ -235,12 +239,16 @@ export const otherProjects: ProjectInfo[] = [
       'its own wording and animation. Replies land in Postgres and ping Telegram. Each person ' +
       'gets their own page bundle behind an opaque token, and because the server stores answers verbatim as ' +
       'JSONB and never interprets them, a new page with its own layout and interactions needs no server ' +
-      'change. FastAPI and Postgres in a container on a DigitalOcean droplet.',
+      'change. There is a public demo page you can answer yourself. FastAPI and Postgres in a container ' +
+      'on a DigitalOcean droplet.',
     link: '/other/date-picker',
     chipKeys: ['python', 'fastapi', 'postgres', 'telegram', 'docker'],
     status: 'poc',
     accent: '#d8aa78',
-    external: [{ label: 'Source', href: datePickerGithubLink, external: true }],
+    external: [
+      { label: 'Try it', href: datePickerDemoLink, external: true },
+      { label: 'Source', href: datePickerGithubLink, external: true },
+    ],
   },
   {
     key: 'balderdash',

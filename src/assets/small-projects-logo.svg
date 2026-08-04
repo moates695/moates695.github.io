@@ -1,0 +1,38 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="small_bg" x1="512" y1="0" x2="512" y2="1024" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#313131"/>
+      <stop offset="1" stop-color="#141414"/>
+    </linearGradient>
+    <filter id="small_glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="18" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="1024" height="1024" rx="228" fill="url(#small_bg)"/>
+  <!-- Three isometric cubes: two on the base and the newest one stacked on
+       top and lit, since the collection is meant to keep growing. Each cube is
+       300 wide with a 2:1 top face, drawn back to front. The top cube is lifted
+       clear of the one under it so the two do not merge into one tall slab, and
+       every face carries a dark edge to keep the corners crisp when the icon is
+       scaled up. -->
+  <g stroke="#151515" stroke-width="9" stroke-linejoin="round">
+    <!-- Base cube, back left. Its top face is covered by the cube above it. -->
+    <polygon points="362,437 512,512 362,587 212,512" fill="#8a6942"/>
+    <polygon points="212,512 362,587 362,737 212,662" fill="#6d5334"/>
+    <polygon points="512,512 362,587 362,737 512,662" fill="#54401f"/>
+    <!-- Base cube, front right. -->
+    <polygon points="662,437 812,512 662,587 512,512" fill="#a8814f"/>
+    <polygon points="512,512 662,587 662,737 512,662" fill="#7f6140"/>
+    <polygon points="812,512 662,587 662,737 812,662" fill="#5f4926"/>
+    <!-- Newest cube, stacked on the back left one. -->
+    <g filter="url(#small_glow)">
+      <polygon points="362,265 512,340 362,415 212,340" fill="#e6b866"/>
+      <polygon points="212,340 362,415 362,565 212,490" fill="#bd914b"/>
+      <polygon points="512,340 362,415 362,565 512,490" fill="#8f6c33"/>
+    </g>
+  </g>
+</svg>

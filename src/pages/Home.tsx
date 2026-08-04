@@ -6,6 +6,9 @@ import imaxLogo from "../assets/imax_logo.jpeg";
 import pokerChips from "../assets/poker-chips.png";
 import mcpIcon from "../assets/mcp-icon.png";
 import wattsLogo from "../assets/watts-logo.svg";
+import tradingStrategiesLogo from "../assets/trading-strategies-logo.svg";
+import datePickerLogo from "../assets/date-picker-logo.svg";
+import smallProjectsLogo from "../assets/small-projects-logo.svg";
 import {
   SAND,
   SPACE,
@@ -70,6 +73,7 @@ const moreProjects: SandProject[] = [
     status: "POC",
     blurb: "A harness for learning trading strategies honestly: tune on the test set, check it on validation data as often as you like, then one single pass over held-back data for the real number. Sitting on 633 million minute bars.",
     tags: ["Python", "Parquet", "Pandas"],
+    icon: tradingStrategiesLogo,
     initials: "TS",
     link: "/other/trading-strategies",
   },
@@ -86,6 +90,7 @@ const moreProjects: SandProject[] = [
     status: "POC",
     blurb: "A more fun way to ask someone out than a wall of text: their own one-page picker, so nobody has to reply \"b, then ii\". Answers land in Postgres and ping Telegram.",
     tags: ["FastAPI", "PostgreSQL", "Telegram"],
+    icon: datePickerLogo,
     initials: "DP",
     link: "/other/date-picker",
   },
@@ -112,6 +117,7 @@ const moreProjects: SandProject[] = [
     status: "COLLECTION",
     blurb: "A running collection of smaller builds and self-hosted infrastructure, gathered on one page. First up: a self-hosted password vault for the family.",
     tags: ["Docker", "Self-Hosted", "Backups"],
+    icon: smallProjectsLogo,
     initials: "SP",
     link: "/small-projects",
   },

@@ -16,10 +16,12 @@ export interface ChatMessage {
 
 interface TelegramChatProps {
   messages: ChatMessage[];
-  /** Bot avatar image (imported asset or public path). */
-  avatar: string;
+  /** Bot avatar image (imported asset or public path). Omit for a project with no logo. */
+  avatar?: string;
   /** Display name shown in the chat header. */
   name: string;
+  /** Shown in place of the avatar when there is no image for it. */
+  initials?: string;
   accent?: string;
 }
 
@@ -51,7 +53,13 @@ function linkify(text: string): ReactNode[] {
  * name, then a column of incoming (left-aligned) message bubbles. Used to show
  * example alerts as they actually arrive on the phone.
  */
-export default function TelegramChat({ messages, avatar, name, accent = "#d8aa78" }: TelegramChatProps) {
+export default function TelegramChat({
+  messages,
+  avatar,
+  name,
+  initials = "IX",
+  accent = "#d8aa78",
+}: TelegramChatProps) {
   return (
     <Box
       sx={{
@@ -79,7 +87,7 @@ export default function TelegramChat({ messages, avatar, name, accent = "#d8aa78
         }}
       >
         <Avatar src={avatar} alt="" variant="rounded" sx={{ width: 34, height: 34 }}>
-          IX
+          {initials}
         </Avatar>
         <Box sx={{ minWidth: 0 }}>
           <Typography sx={{ fontWeight: 700, fontSize: 14, lineHeight: 1.2 }}>{name}</Typography>

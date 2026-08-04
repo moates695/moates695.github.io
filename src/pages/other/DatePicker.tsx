@@ -1,7 +1,8 @@
 import { Avatar, Box } from "@mui/material";
-import { datePickerGithubLink } from "../../middleware/links";
+import { datePickerGithubLink, datePickerDemoLink } from "../../middleware/links";
 import githubLogo from "../../assets/github-logo.png";
 import MarkdownBlock from "../../components/MarkdownBlock";
+import TelegramChat, { ChatMessage } from "../../components/TelegramChat";
 import {
   PageHeader,
   GradientText,
@@ -20,10 +21,54 @@ const ACCENT = "#d8aa78";
 
 const SECTIONS: Section[] = [
   { id: "why", label: "Why not a text" },
+  { id: "alerts", label: "What lands on my phone" },
   { id: "flow", label: "Request flow" },
   { id: "data", label: "Source of truth" },
   { id: "opens", label: "Knowing it was opened" },
   { id: "ops", label: "Local loop and deploy" },
+];
+
+/**
+ * The three messages the app can send, in the order they actually arrive: the
+ * one-off open, the reply, and a revision of that reply. Taken from the
+ * formatter in app/notifications.py, so the emoji, the wording and the sorted,
+ * two-space JSON are what Telegram actually receives; the open is shown as its
+ * headline alone, without the line the real message adds to say it will not
+ * repeat. Plain text with no parse_mode, which is why a note full of
+ * punctuation cannot reformat anything.
+ */
+const exampleMessages: ChatMessage[] = [
+  {
+    text: "👀 User opened the page",
+    time: "19:02",
+  },
+  {
+    text:
+      "💌 User replied\n\n" +
+      "Rooftop cocktails, Friday evening\n\n" +
+      "{\n" +
+      '  "main": "rooftop_cocktails",\n' +
+      '  "note": "yes, though I might be ten minutes late",\n' +
+      '  "when": [\n' +
+      '    "fri_pm"\n' +
+      "  ]\n" +
+      "}",
+    time: "19:07",
+  },
+  {
+    text:
+      "🔄 User changed their answer\n\n" +
+      "Dinner, Italian, then a walk, Saturday\n\n" +
+      "{\n" +
+      '  "dinner_after": "walk",\n' +
+      '  "dinner_food": "italian",\n' +
+      '  "main": "dinner",\n' +
+      '  "when": [\n' +
+      '    "saturday"\n' +
+      "  ]\n" +
+      "}",
+    time: "21:14",
+  },
 ];
 
 /**
@@ -62,7 +107,7 @@ const openPoints = [
   "Messaging apps fetch the page's HTML to build a link preview the instant a URL is sent, which would otherwise notify off the sender's own message. Those requests are recorded as kind = 'fetch' and never trigger a notification.",
   "The page's own JavaScript makes a second call, for context, once it is actually running in a browser. That call is recorded as kind = 'load', and it is the only kind that counts as a real open.",
   "Only the first real load notifies. Coming back to the page later is still recorded, just silently, so the signal stays a single opened / not opened bit rather than a running view count.",
-  "Visiting a link yourself with ?mode=test on the end stores that visit flagged and silent, with nothing written to the browser itself: forget the marker and the cost is a notification you can recognise as your own, not a browser permanently marked as yours.",
+  "Visiting a page yourself means adding -test to the token in the URL, which stores that visit flagged and silent. A suffix rather than a query parameter, so it survives being retyped from memory and so everything the page then asks for is marked by sitting under the same prefix. Nothing is written to the browser itself: forget the marker and the cost is a notification you can recognise as your own, not a browser permanently marked as yours.",
   "Addresses are stored as a salted hash of the token and the IP, never raw, which is enough to tell two visitors apart or spot a forwarded link without ever keeping anyone's actual address.",
 ];
 
@@ -124,12 +169,15 @@ page_views (page_id, kind, is_self, ip_hash, notified_at)
         title={<>Date <GradientText>Picker</GradientText></>}
         subtitle="A fun little alternative to plain texting. Rather than sending someone a nested list of options and waiting on a reply that reads like outline notation, you send them their own one-page picker: they tap what they like, and the answer lands in Postgres and pings my phone on Telegram."
         actions={
-          <ExternalButton
-            href={datePickerGithubLink}
-            icon={<Avatar alt="github icon" src={githubLogo} sx={{ width: 24, height: 24 }} />}
-          >
-            Source
-          </ExternalButton>
+          <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1.5 }}>
+            <ExternalButton href={datePickerDemoLink}>Try it</ExternalButton>
+            <ExternalButton
+              href={datePickerGithubLink}
+              icon={<Avatar alt="github icon" src={githubLogo} sx={{ width: 24, height: 24 }} />}
+            >
+              Source
+            </ExternalButton>
+          </Box>
         }
       />
 
@@ -150,10 +198,33 @@ page_views (page_id, kind, is_self, ip_hash, notified_at)
         <MarkdownBlock>
           {`What exists today is a small FastAPI app, a Postgres schema keyed on people and page versions, and a shared HTML/CSS/JS starter bundle that gets copied and personalised for each new page. That is the whole system: the rest of this page walks through why it works the way it does.`}
         </MarkdownBlock>
-        <Callout accent={ACCENT} title="status">
-          A working proof of concept, deployed on the droplet behind the shared nginx and
-          Cloudflare setup described below, not a polished product.
-        </Callout>
+        {/* Two separate claims, so they get their own boxes and their own air:
+            what state the project is in, and where to go and press the buttons
+            yourself. */}
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+          <Callout accent={ACCENT} title="status">
+            A working proof of concept, deployed on the droplet behind the shared nginx and
+            Cloudflare setup described below, not a polished product.
+          </Callout>
+          {/* The demo is a real page on the live app, not a mock: same endpoints,
+              same table. One flag on its row stops it notifying, meters
+              submissions per visitor rather than per page, and stops one
+              stranger's answer being shown back to the next. */}
+          <Callout accent={ACCENT} title="try it">
+            <Box
+              component="a"
+              href={datePickerDemoLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              sx={{ color: ACCENT }}
+            >
+              date.moates.com.au/d/trydate
+            </Box>{" "}
+            is a public demo of the real thing, running on the same app and storing into the same
+            table. It is flagged as a demo, so it never notifies anyone and never shows your answer
+            to the next person who opens it.
+          </Callout>
+        </Box>
       </Reveal>
 
       <Reveal delay={0.18} id="why">
@@ -167,7 +238,37 @@ page_views (page_id, kind, is_self, ip_hash, notified_at)
         <CheckList items={whyPoints} accent={ACCENT} />
       </Reveal>
 
-      <Reveal delay={0.24} id="flow">
+      {/* Sits second, ahead of the architecture: this is the whole thing
+          working, in the form it is actually experienced, and it costs three
+          bubbles to show. Everything after it explains how those three
+          messages come to be the only three. */}
+      <Reveal delay={0.24} id="alerts">
+        <SectionHeading eyebrow="on my phone">What lands on my phone</SectionHeading>
+        <Box sx={{ color: "text.secondary", mb: 2 }}>
+          Three messages, and no others. The open fires once and never again, so the silence
+          afterwards is the design rather than something broken. A reply
+          carries the page's own summary line above the raw answers object, which is stored
+          verbatim and pasted in untouched, because the server has no idea what any of those keys
+          mean. Revising an answer gets its own headline, so a second buzz is never mistaken for a
+          second person:
+        </Box>
+        <Box sx={{ display: "flex", justifyContent: { xs: "stretch", sm: "flex-start" } }}>
+          <TelegramChat
+            messages={exampleMessages}
+            name="Date Picker"
+            initials="DP"
+            accent={ACCENT}
+          />
+        </Box>
+        <Box sx={{ color: "text.secondary", mt: 2.5 }}>
+          Everything is sent as plain text with no parse mode, so a note full of underscores or
+          asterisks cannot break or reformat the message, and nothing needs escaping on the way
+          out. The public demo above is the exception to all of this: it is flagged so that
+          neither opening it nor answering it sends anything at all.
+        </Box>
+      </Reveal>
+
+      <Reveal delay={0.3} id="flow">
         <SectionHeading eyebrow="request path">Request flow</SectionHeading>
         <Box sx={{ color: "text.secondary", mb: 2 }}>
           Every request for a page walks the same short path, and the server does not know or care
@@ -189,7 +290,7 @@ page_views (page_id, kind, is_self, ip_hash, notified_at)
         </Panel>
       </Reveal>
 
-      <Reveal delay={0.3} id="data">
+      <Reveal delay={0.36} id="data">
         <SectionHeading eyebrow="design decision">Source of truth</SectionHeading>
         <Box sx={{ color: "text.secondary", mb: 2 }}>
           The server is deliberately ignorant of what any page means. The answers object is stored
@@ -204,7 +305,7 @@ page_views (page_id, kind, is_self, ip_hash, notified_at)
         </Panel>
       </Reveal>
 
-      <Reveal delay={0.36} id="opens">
+      <Reveal delay={0.42} id="opens">
         <SectionHeading eyebrow="signal, not noise">Knowing it was opened</SectionHeading>
         <Box sx={{ color: "text.secondary", mb: 2 }}>
           A quieter signal sits alongside the response itself: whether the page was even opened.
@@ -214,7 +315,7 @@ page_views (page_id, kind, is_self, ip_hash, notified_at)
         <CheckList items={openPoints} accent={ACCENT} />
       </Reveal>
 
-      <Reveal delay={0.42} id="ops">
+      <Reveal delay={0.48} id="ops">
         <SectionHeading eyebrow="running it">Local loop and deploy</SectionHeading>
         <Box sx={{ color: "text.secondary", mb: 2 }}>
           Making and shipping a page is a different loop to changing the app itself, and only one
