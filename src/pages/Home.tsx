@@ -7,6 +7,7 @@ import pokerChips from "../assets/poker-chips.png";
 import mcpIcon from "../assets/mcp-icon.png";
 import wattsLogo from "../assets/watts-logo.svg";
 import tradingStrategiesLogo from "../assets/trading-strategies-logo.svg";
+import eventPickerLogo from "../assets/event-picker-logo.svg";
 import smallProjectsLogo from "../assets/small-projects-logo.svg";
 import {
   SAND,
@@ -83,6 +84,15 @@ const moreProjects: SandProject[] = [
     tags: ["React Native", "Expo", "Cryptography"],
     initials: "AT",
     link: "/other/authenticator",
+  },
+  {
+    title: "Event Picker",
+    status: "POC",
+    blurb: "Settling on a meeting without the thread: their own one-page picker, so nobody has to reply \"b, then ii\". Answers land in Postgres and ping Telegram.",
+    tags: ["FastAPI", "PostgreSQL", "Telegram"],
+    icon: eventPickerLogo,
+    initials: "EP",
+    link: "/other/event-picker",
   },
   {
     title: "Poppycock",

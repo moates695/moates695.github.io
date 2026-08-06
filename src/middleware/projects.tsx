@@ -4,6 +4,7 @@ import pokerChips from "../assets/poker-chips.png";
 import mcpIcon from "../assets/mcp-icon.png";
 import wattsLogo from "../assets/watts-logo.svg";
 import tradingStrategiesLogo from "../assets/trading-strategies-logo.svg";
+import eventPickerLogo from "../assets/event-picker-logo.svg";
 import smallProjectsLogo from "../assets/small-projects-logo.svg";
 import {
   gymJunkiePlayStoreLink,
@@ -16,6 +17,8 @@ import {
   mcpServerGithubLink,
   smartTrainerGithubLink,
   authenticatorGithubLink,
+  eventPickerGithubLink,
+  eventPickerDemoLink,
 } from "./links";
 
 export type Project =
@@ -31,6 +34,7 @@ export type Project =
   | 'arbitrage'
   | 'trading_strategies'
   | 'authenticator'
+  | 'event_picker'
   | 'small_projects';
 
 export const iconMap: Record<Project, string> = {
@@ -45,6 +49,7 @@ export const iconMap: Record<Project, string> = {
   smart_trainer: wattsLogo,
   arbitrage: pokerChips,
   trading_strategies: tradingStrategiesLogo,
+  event_picker: eventPickerLogo,
   small_projects: smallProjectsLogo,
   // No logo asset yet: this card/avatar falls back to its initials.
   authenticator: '',
@@ -221,6 +226,30 @@ export const otherProjects: ProjectInfo[] = [
     status: 'poc',
     accent: '#d8aa78',
     external: [{ label: 'Source', href: authenticatorGithubLink, external: true }],
+  },
+  {
+    key: 'event_picker',
+    icon: iconMap.event_picker,
+    initials: 'EP',
+    name: 'Event Picker',
+    blurb: 'Agree on a meeting or an event in one tap: a personalised one-page picker instead of a thread of half-read options.',
+    description:
+      'A quicker way to settle where and when than a thread of half-read options. Rather than sending a ' +
+      'nested list and waiting on a reply of "b, then ii", you send a link to a one-page picker built for ' +
+      'that person, with its own wording and options. They tap, and the answer lands in Postgres and pings ' +
+      'Telegram. Each person gets their own page bundle behind an opaque token, and because the server ' +
+      'stores answers verbatim as JSONB and never interprets them, a new page with its own layout and ' +
+      'interactions needs no server change. It also reports whether the link was opened at all, filtering ' +
+      'out link-preview bots so the signal means something. There is a public demo page you can answer ' +
+      'yourself. FastAPI and Postgres in a container on a DigitalOcean droplet.',
+    link: '/other/event-picker',
+    chipKeys: ['python', 'fastapi', 'postgres', 'telegram', 'docker'],
+    status: 'poc',
+    accent: '#d8aa78',
+    external: [
+      { label: 'Try it', href: eventPickerDemoLink, external: true },
+      { label: 'Source', href: eventPickerGithubLink, external: true },
+    ],
   },
   {
     key: 'balderdash',
