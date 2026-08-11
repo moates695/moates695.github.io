@@ -75,6 +75,8 @@ const commands = [
   "/seats on its own runs that same check across every film on your watchlist.",
   "/nowshowing returns every film on sale now, with its session count and earliest start.",
   "/comingsoon returns the films listed as coming soon.",
+  "/watchlist shows every film you are tracking, its current state (on sale, coming soon, or not listed yet) and whether its alerts are on or muted.",
+  "/mute <film> silences that film's alerts, /unmute turns them back on. Bare /mute and /unmute apply to the whole watchlist.",
   "/help prints the command overview.",
 ];
 
@@ -105,6 +107,23 @@ const commandMessages: ChatMessage[] = [
       "https://www.eventcinemas.com.au/Cinema/imax-sydney",
     time: "21:06",
   },
+  { text: "/mute The Odyssey", time: "21:08", outgoing: true },
+  {
+    text:
+      "🔕 Muted: The Odyssey.\n" +
+      "No alerts until you /unmute. I keep watching quietly, and the daily " +
+      "digest still lists every film.",
+    time: "21:08",
+  },
+  { text: "/watchlist", time: "21:09", outgoing: true },
+  {
+    text:
+      "📋 IMAX Sydney watchlist (2):\n" +
+      "• Dune: Part Three - 🔔 alerts on - on sale now (6 session(s) tracked)\n" +
+      "• The Odyssey - 🔕 muted - coming soon\n\n" +
+      "/mute <film> to silence alerts, /unmute <film> to resume.",
+    time: "21:09",
+  },
 ];
 
 const mechanics = [
@@ -113,6 +132,7 @@ const mechanics = [
   "Every run after that only messages you on a genuine change.",
   "State lives in a local agent_state.json, so each alert fires once per transition and never repeats.",
   "A separate always-on listener answers the chat commands, long-polling Telegram so it needs no public endpoint.",
+  "Mutes get their own file with one-way ownership: the listener writes it when you send a command, the scanner only ever reads it, so a scheduled run and an ad-hoc command can never clobber each other.",
   "Title matching is case, punctuation and accent insensitive, so \"dune part two\" matches \"Dune: Part Two\".",
 ];
 
@@ -137,7 +157,7 @@ export default function OtherImaxBot() {
       <PageHeader
         eyebrow="agent"
         title={<>IMAX <GradientText>Watch Agent</GradientText></>}
-        subtitle="A Python agent that watches Event Cinemas IMAX Sydney and pings you on Telegram when films appear or tickets open, so you never miss a release or an on-sale window. You can also message the bot to check seats, now showing and coming soon on demand."
+        subtitle="A Python agent that watches Event Cinemas IMAX Sydney and pings you on Telegram when films appear or tickets open, so you never miss a release or an on-sale window. You can also message the bot to check seats, now showing and coming soon on demand, and mute any film that gets too chatty."
         actions={
           <ExternalButton
             href={imaxBotGithubLink}
@@ -153,7 +173,7 @@ export default function OtherImaxBot() {
           <StatRow
             items={[
               { value: "4", label: "alert streams" },
-              { value: "4", label: "chat commands" },
+              { value: "7", label: "chat commands" },
               { value: "15 min", label: "scan cadence" },
               { value: "Telegram", label: "delivery" },
             ]}
@@ -203,6 +223,13 @@ export default function OtherImaxBot() {
           waiting for a transition.
         </Box>
         <CheckList items={commands} accent={ACCENT} />
+        <Callout accent={ACCENT} title="muting">
+          A film in its on-sale window can produce a lot of seat alerts. Muting it stops the
+          messages without stopping the watching: the agent still scans it and still moves its
+          seat baselines forward, so unmuting picks up from what is on sale at that moment
+          rather than replaying everything you missed. The daily digest keeps listing it either
+          way, and a mute takes effect on the next scheduled scan.
+        </Callout>
         <Box sx={{ display: "flex", justifyContent: { xs: "stretch", sm: "flex-start" }, mt: 2.5 }}>
           <TelegramChat
             messages={commandMessages}
