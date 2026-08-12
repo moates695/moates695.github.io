@@ -26,6 +26,7 @@ import RefreshIcon from "@mui/icons-material/Refresh";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { MONO } from "../styles/tokens";
 import { SAND } from "./sand";
+import { formatWait, readRateLimit } from "../middleware/rateLimit";
 
 const API_BASE = process.env.REACT_APP_ARB_API_BASE ?? "https://arb.moates.com.au";
 
@@ -775,11 +776,17 @@ export default function ArbLiveBoard() {
     try {
       const resp = await fetch(`${API_BASE}/latest`, fresh ? { cache: "no-store" } : undefined);
       if (!resp.ok) {
-        throw new Error(
-          resp.status === 503
-            ? "The feed is warming up, the first sweep is still running."
-            : `The feed returned ${resp.status}.`
-        );
+        if (resp.status === 503) {
+          throw new Error("The feed is warming up, the first sweep is still running.");
+        }
+        // The feed is rate limited, so say so plainly rather than showing a
+        // bare status code. It rebuilds every 15 minutes; a wait costs nothing.
+        if (resp.status === 429) {
+          const { message, until } = await readRateLimit(resp);
+          const wait = until ? formatWait(Math.ceil((until - Date.now()) / 1000)) : null;
+          throw new Error(wait ? `${message} Try again in ${wait}.` : message);
+        }
+        throw new Error(`The feed returned ${resp.status}.`);
       }
       setSnap((await resp.json()) as Snapshot);
       setError(null);

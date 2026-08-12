@@ -18,6 +18,12 @@ import {
 import DownloadIcon from "@mui/icons-material/Download";
 import { clearSession, loadSession, saveSession } from "../../middleware/gymJunkieSession";
 import {
+  RateLimit,
+  formatWait,
+  readRateLimit,
+  useRateLimitCountdown,
+} from "../../middleware/rateLimit";
+import {
   PageHeader,
   GradientText,
   Reveal,
@@ -68,6 +74,17 @@ export default function DataExport() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [downloading, setDownloading] = useState<Set<string>>(new Set());
+  // Set when the API answers 429. Sign-in is held shut for the stated wait so
+  // the visitor is not left retyping a code into an endpoint that has stopped
+  // listening.
+  const [limit, setLimit] = useState<RateLimit | null>(null);
+
+  const secondsLeft = useRateLimitCountdown(limit);
+  const limited = limit !== null && (limit.until === null || secondsLeft > 0);
+
+  useEffect(() => {
+    if (limit?.until && secondsLeft === 0) setLimit(null);
+  }, [limit, secondsLeft]);
 
   const fetchWorkouts = async (token: string): Promise<boolean> => {
     const res = await fetch(`${API_BASE}/export/workouts/list`, {
@@ -105,15 +122,19 @@ export default function DataExport() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password, send_email: true }),
       });
+      if (res.status === 429) {
+        setLimit(await readRateLimit(res));
+        return;
+      }
       const data = await res.json();
       if (!res.ok) {
         setError(data.detail || "Login failed.");
         return;
       }
-      if (data.status === "user_not_found") {
-        setError("No account found with that email.");
-      } else if (data.status === "incorrect_password") {
-        setError("Incorrect password.");
+      // The API answers the same way to an unknown email and a wrong password,
+      // so neither can be used to work out who has an account.
+      if (data.status === "invalid_credentials") {
+        setError("That email and password did not match an account.");
       } else if (data.status === "code_sent") {
         setStep("verify");
       } else {
@@ -135,6 +156,14 @@ export default function DataExport() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, code }),
       });
+      // The code is burnt after too many wrong guesses, so send the visitor
+      // back to sign-in for a fresh one rather than leaving them on a dead code.
+      if (res.status === 429) {
+        setLimit(await readRateLimit(res));
+        setStep("login");
+        setCode("");
+        return;
+      }
       const data = await res.json();
       if (!res.ok) {
         setError(data.detail || "Verification failed.");
@@ -145,6 +174,13 @@ export default function DataExport() {
         saveSession({ token: data.export_token, email });
         const ok = await fetchWorkouts(data.export_token);
         if (ok) setStep("list");
+      } else if (data.status === "code_expired") {
+        setError("That code has expired. Please sign in again for a new one.");
+      } else if (typeof data.attempts_remaining === "number") {
+        setError(
+          `Incorrect code. ${data.attempts_remaining} attempt` +
+          `${data.attempts_remaining === 1 ? "" : "s"} left before you need a new one.`
+        );
       } else {
         setError("Invalid or expired code.");
       }
@@ -166,6 +202,10 @@ export default function DataExport() {
         setExportToken("");
         setStep("login");
         setError("Session expired. Please log in again.");
+        return;
+      }
+      if (res.status === 429) {
+        setLimit(await readRateLimit(res));
         return;
       }
       if (!res.ok) {
@@ -215,6 +255,13 @@ export default function DataExport() {
         </Alert>
       )}
 
+      {limited && (
+        <Alert severity="warning">
+          {limit?.message}
+          {secondsLeft > 0 && ` You can try again in ${formatWait(secondsLeft)}.`}
+        </Alert>
+      )}
+
       {step === "login" && (
         <Reveal delay={0.06}>
           <Panel accent={GJ_ACCENT} wash sx={{ maxWidth: 460, display: "flex", flexDirection: "column", gap: 2.5 }}>
@@ -245,12 +292,12 @@ export default function DataExport() {
                 onChange={(e) => setPassword(e.target.value)}
                 size="small"
                 fullWidth
-                onKeyDown={(e) => e.key === "Enter" && !loading && handleLogin()}
+                onKeyDown={(e) => e.key === "Enter" && !loading && !limited && handleLogin()}
               />
               <Button
                 variant="contained"
                 onClick={handleLogin}
-                disabled={loading || !email || !password}
+                disabled={loading || limited || !email || !password}
               >
                 {loading ? <CircularProgress size={20} color="inherit" /> : "Continue"}
               </Button>
@@ -272,12 +319,12 @@ export default function DataExport() {
               size="small"
               fullWidth
               inputProps={{ inputMode: "numeric" }}
-              onKeyDown={(e) => e.key === "Enter" && !loading && handleVerify()}
+              onKeyDown={(e) => e.key === "Enter" && !loading && !limited && handleVerify()}
             />
             <Button
               variant="contained"
               onClick={handleVerify}
-              disabled={loading || code.length < 6}
+              disabled={loading || limited || code.length < 6}
             >
               {loading ? <CircularProgress size={20} color="inherit" /> : "Verify"}
             </Button>

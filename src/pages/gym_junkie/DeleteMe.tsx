@@ -9,6 +9,12 @@ import {
 } from "@mui/material";
 import { clearSession, loadSession, saveSession } from "../../middleware/gymJunkieSession";
 import {
+  RateLimit,
+  formatWait,
+  readRateLimit,
+  useRateLimitCountdown,
+} from "../../middleware/rateLimit";
+import {
   PageHeader,
   GradientText,
   Reveal,
@@ -36,6 +42,15 @@ export default function DeleteMe() {
   const [confirmEmail, setConfirmEmail] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  // Set when the API answers 429, holding the flow shut for the stated wait.
+  const [limit, setLimit] = useState<RateLimit | null>(null);
+
+  const secondsLeft = useRateLimitCountdown(limit);
+  const limited = limit !== null && (limit.until === null || secondsLeft > 0);
+
+  useEffect(() => {
+    if (limit?.until && secondsLeft === 0) setLimit(null);
+  }, [limit, secondsLeft]);
 
   useEffect(() => {
     const saved = loadSession();
@@ -68,15 +83,19 @@ export default function DeleteMe() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password, send_email: true }),
       });
+      if (res.status === 429) {
+        setLimit(await readRateLimit(res));
+        return;
+      }
       const data = await res.json();
       if (!res.ok) {
         setError(data.detail || "Login failed.");
         return;
       }
-      if (data.status === "user_not_found") {
-        setError("No account found with that email.");
-      } else if (data.status === "incorrect_password") {
-        setError("Incorrect password.");
+      // One answer covers both an unknown email and a wrong password, so the
+      // page cannot be used to find out who has an account.
+      if (data.status === "invalid_credentials") {
+        setError("That email and password did not match an account.");
       } else if (data.status === "code_sent") {
         setStep("verify");
       } else {
@@ -98,6 +117,13 @@ export default function DeleteMe() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, code }),
       });
+      // Too many wrong guesses burns the code, so go back for a fresh one.
+      if (res.status === 429) {
+        setLimit(await readRateLimit(res));
+        setStep("login");
+        setCode("");
+        return;
+      }
       const data = await res.json();
       if (!res.ok) {
         setError(data.detail || "Verification failed.");
@@ -107,6 +133,13 @@ export default function DeleteMe() {
         setExportToken(data.export_token);
         saveSession({ token: data.export_token, email });
         setStep("confirm");
+      } else if (data.status === "code_expired") {
+        setError("That code has expired. Please sign in again for a new one.");
+      } else if (typeof data.attempts_remaining === "number") {
+        setError(
+          `Incorrect code. ${data.attempts_remaining} attempt` +
+          `${data.attempts_remaining === 1 ? "" : "s"} left before you need a new one.`
+        );
       } else {
         setError("Invalid or expired code.");
       }
@@ -130,6 +163,12 @@ export default function DeleteMe() {
         setExportToken("");
         setStep("login");
         setError("Session expired. Please log in again.");
+        return;
+      }
+      // The request is capped at one an hour per session; a repeat almost
+      // always means the first one already went through.
+      if (res.status === 429) {
+        setLimit(await readRateLimit(res));
         return;
       }
       if (!res.ok) {
@@ -171,6 +210,13 @@ export default function DeleteMe() {
         </Alert>
       )}
 
+      {limited && (
+        <Alert severity="warning">
+          {limit?.message}
+          {secondsLeft > 0 && ` You can try again in ${formatWait(secondsLeft)}.`}
+        </Alert>
+      )}
+
       {step === "login" && (
         <Reveal delay={0.06}>
           <Panel accent={GJ_ACCENT} wash sx={{ maxWidth: 460, display: "flex", flexDirection: "column", gap: 2.5 }}>
@@ -201,12 +247,12 @@ export default function DeleteMe() {
                 onChange={(e) => setPassword(e.target.value)}
                 size="small"
                 fullWidth
-                onKeyDown={(e) => e.key === "Enter" && !loading && handleLogin()}
+                onKeyDown={(e) => e.key === "Enter" && !loading && !limited && handleLogin()}
               />
               <Button
                 variant="contained"
                 onClick={handleLogin}
-                disabled={loading || !email || !password}
+                disabled={loading || limited || !email || !password}
               >
                 {loading ? <CircularProgress size={20} color="inherit" /> : "Continue"}
               </Button>
@@ -228,12 +274,12 @@ export default function DeleteMe() {
               size="small"
               fullWidth
               inputProps={{ inputMode: "numeric" }}
-              onKeyDown={(e) => e.key === "Enter" && !loading && handleVerify()}
+              onKeyDown={(e) => e.key === "Enter" && !loading && !limited && handleVerify()}
             />
             <Button
               variant="contained"
               onClick={handleVerify}
-              disabled={loading || code.length < 6}
+              disabled={loading || limited || code.length < 6}
             >
               {loading ? <CircularProgress size={20} color="inherit" /> : "Verify"}
             </Button>
@@ -283,7 +329,7 @@ export default function DeleteMe() {
               variant="contained"
               color="error"
               onClick={handleRequestDelete}
-              disabled={loading || !confirmMatches}
+              disabled={loading || limited || !confirmMatches}
             >
               {loading ? (
                 <CircularProgress size={20} color="inherit" />

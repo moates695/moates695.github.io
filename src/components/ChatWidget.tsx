@@ -14,6 +14,12 @@ import { keyframes } from "@mui/system";
 import CloseIcon from "@mui/icons-material/Close";
 import SendIcon from "@mui/icons-material/Send";
 import { MONO } from "../styles/tokens";
+import {
+  RateLimit,
+  formatWait,
+  readRateLimit,
+  useRateLimitCountdown,
+} from "../middleware/rateLimit";
 
 /**
  * Floating "Ask about Marcus" chat widget. Posts a single question to the chat
@@ -186,8 +192,21 @@ export default function ChatWidget() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // Set when the proxy answers 429. The composer stays shut until it lapses, so
+  // the visitor is told the assistant is done for now rather than watching
+  // question after question fail.
+  const [limit, setLimit] = useState<RateLimit | null>(null);
   const [smiling, setSmiling] = useState(false);
   const grinTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+
+  const secondsLeft = useRateLimitCountdown(limit);
+  // A 429 without a Retry-After has no known end, so it holds for the session.
+  const limited = limit !== null && (limit.until === null || secondsLeft > 0);
+
+  // Reopen the composer the moment the wait lapses.
+  useEffect(() => {
+    if (limit?.until && secondsLeft === 0) setLimit(null);
+  }, [limit, secondsLeft]);
 
   // Play the arrival animation once on mount (i.e. on page load/reload), unless
   // the visitor prefers reduced motion.
@@ -293,7 +312,7 @@ export default function ChatWidget() {
 
   async function send(question: string) {
     const text = question.trim().slice(0, MAX_MESSAGE_CHARS);
-    if (!text || loading) return;
+    if (!text || loading || limited) return;
 
     setError(null);
     setMessages((m) => [...m, { role: "user", text }]);
@@ -308,8 +327,7 @@ export default function ChatWidget() {
       });
 
       if (resp.status === 429) {
-        const body = await resp.json().catch(() => ({}));
-        setError(body.detail ?? "You're sending messages too quickly. Please slow down.");
+        setLimit(await readRateLimit(resp));
         return;
       }
       if (!resp.ok) throw new Error(`status ${resp.status}`);
@@ -428,7 +446,7 @@ export default function ChatWidget() {
         ))}
 
         {/* Suggested prompts (only before the first question) */}
-        {messages.length === 1 && !loading && (
+        {messages.length === 1 && !loading && !limited && (
           <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.75, mt: 0.5 }}>
             {SUGGESTIONS.map((s) => (
               <Box
@@ -466,6 +484,35 @@ export default function ChatWidget() {
             {error}
           </Typography>
         )}
+
+        {limited && (
+          <Box
+            sx={{
+              alignSelf: "stretch",
+              display: "flex",
+              flexDirection: "column",
+              gap: 0.5,
+              px: 1.5,
+              py: 1.25,
+              borderRadius: 1.5,
+              border: "1px solid",
+              borderColor: `${ACCENT}55`,
+              bgcolor: `${ACCENT}14`,
+            }}
+          >
+            <Typography sx={{ fontSize: 12.5, fontWeight: 700, color: "text.primary" }}>
+              Question limit reached
+            </Typography>
+            <Typography sx={{ fontSize: 12.5, color: "text.secondary" }}>
+              {limit?.message}
+            </Typography>
+            {secondsLeft > 0 && (
+              <Typography sx={{ fontSize: 12, color: "text.secondary" }}>
+                You can ask again in {formatWait(secondsLeft)}.
+              </Typography>
+            )}
+          </Box>
+        )}
       </Box>
 
       {/* Composer */}
@@ -488,15 +535,16 @@ export default function ChatWidget() {
           inputRef={inputRef}
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Ask a question..."
+          placeholder={limited ? "Question limit reached" : "Ask a question..."}
           size="small"
           fullWidth
+          disabled={limited}
           inputProps={{ maxLength: MAX_MESSAGE_CHARS, "aria-label": "Your question" }}
           sx={{ "& .MuiOutlinedInput-root": { borderRadius: 999 } }}
         />
         <IconButton
           type="submit"
-          disabled={loading || !input.trim()}
+          disabled={loading || limited || !input.trim()}
           aria-label="Send"
           sx={{ color: ACCENT }}
         >
@@ -518,6 +566,7 @@ export default function ChatWidget() {
           onClick={onFabClick}
           aria-label={open ? "Close chat" : "Ask about Marcus"}
           data-chat-widget
+          data-track={open ? "chat-widget:close" : "chat-widget:open"}
           sx={{
             position: "fixed",
             bottom: 24,
