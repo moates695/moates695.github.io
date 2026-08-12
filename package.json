@@ -44,6 +44,13 @@
       "react-app/jest"
     ]
   },
+  "jest": {
+    "moduleNameMapper": {
+      "^react-router-dom$": "<rootDir>/node_modules/react-router-dom/dist/index.js",
+      "^react-router/dom$": "<rootDir>/node_modules/react-router/dist/development/dom-export.js",
+      "^react-markdown$": "<rootDir>/src/test/reactMarkdownStub.tsx"
+    }
+  },
   "browserslist": {
     "production": [
       ">0.2%",

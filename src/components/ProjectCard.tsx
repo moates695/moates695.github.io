@@ -42,6 +42,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
     >
       <CardActionArea
         onClick={() => navigate(project.link)}
+        data-track={`project-card:${project.link}`}
         sx={{
           height: '100%',
           p: 2,

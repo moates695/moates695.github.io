@@ -101,6 +101,7 @@ export default function FeaturedProject({ project }: FeaturedProjectProps) {
               color="secondary"
               endIcon={<ArrowForwardIcon />}
               onClick={() => navigate(project.link)}
+              data-track={`featured-cta:${project.link}`}
               sx={{ fontWeight: 700 }}
             >
               Explore {project.name}

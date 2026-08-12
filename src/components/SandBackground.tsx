@@ -38,8 +38,7 @@ export default function SandBackground() {
         alt=""
         aria-hidden
         decoding="async"
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        {...({ fetchpriority: "high" } as any)}
+        fetchPriority="high"
         onLoad={() => setLoaded(true)}
         style={{
           width: "100%",

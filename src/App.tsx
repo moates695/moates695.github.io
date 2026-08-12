@@ -11,6 +11,7 @@ import { darkTheme } from "./styles/theme";
 import SandBackground from './components/SandBackground';
 import SandInnerBackground from './components/SandInnerBackground';
 import ChatWidget from './components/ChatWidget';
+import useAnalytics from './middleware/useAnalytics';
 import WoodchuckOverview from './pages/finska/Overview';
 import WoodchuckDesign from './pages/finska/Design';
 import GymJunkieOverview from './pages/gym_junkie/Overview';
@@ -55,6 +56,10 @@ import SmallProjects from './pages/SmallProjects';
 function AppShell() {
   const { pathname } = useLocation();
   const isHome = pathname === '/';
+
+  // Records page views and clicks. Renders nothing, holds no state, and fails
+  // silently: if the collector is blocked or down, the site is unaffected.
+  useAnalytics();
 
   // Reset scroll to the top whenever the route changes, otherwise navigating to
   // a new page keeps the previous page's scroll position.

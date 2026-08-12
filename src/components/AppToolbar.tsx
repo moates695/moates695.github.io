@@ -122,10 +122,10 @@ export default function AppToolbar() {
     >
       <Box sx={{ pt: 1 }}>
         <List disablePadding>
-          <ListItemButton component={Link} to="/" onClick={closeDrawer}>
+          <ListItemButton component={Link} to="/" onClick={closeDrawer} data-track="nav-drawer:home">
             <ListItemText primary="Home" />
           </ListItemButton>
-          <ListItemButton component={Link} to="/about" onClick={closeDrawer}>
+          <ListItemButton component={Link} to="/about" onClick={closeDrawer} data-track="nav-drawer:resume">
             <ListItemText primary="Resume" />
           </ListItemButton>
           <Divider />
@@ -136,7 +136,7 @@ export default function AppToolbar() {
           </ListItemButton>
           <Collapse in={projectsExpanded}>
             <List disablePadding>
-              <ListItemButton sx={{ pl: 4 }} component={Link} to="/projects" onClick={closeDrawer}>
+              <ListItemButton sx={{ pl: 4 }} component={Link} to="/projects" onClick={closeDrawer} data-track="nav-drawer:all-projects">
                 <ListItemText primary="All projects" />
               </ListItemButton>
 
@@ -158,6 +158,7 @@ export default function AppToolbar() {
                           component={Link}
                           to={link.to}
                           onClick={closeDrawer}
+                          data-track={`nav-drawer:${link.to}`}
                         >
                           <ListItemText primary={link.label} primaryTypographyProps={{ variant: 'body2' }} />
                         </ListItemButton>
@@ -170,7 +171,7 @@ export default function AppToolbar() {
           </Collapse>
           <Divider />
 
-          <ListItemButton component={Link} to="/contact" onClick={closeDrawer}>
+          <ListItemButton component={Link} to="/contact" onClick={closeDrawer} data-track="nav-drawer:contact">
             <ListItemText primary="Contact" />
           </ListItemButton>
         </List>
@@ -215,8 +216,8 @@ export default function AppToolbar() {
           <>
             <Box component={Link} to="/" sx={monogramSx}>MO</Box>
             <Box sx={{ display: "flex", alignItems: 'center', gap: '28px' }}>
-              <Button component={Link} to="/" sx={{ ...navButtonSx, color: SAND.primary }}>Home</Button>
-              <Button component={Link} to="/about" sx={navButtonSx}>Resume</Button>
+              <Button component={Link} to="/" sx={{ ...navButtonSx, color: SAND.primary }} data-track="nav:home">Home</Button>
+              <Button component={Link} to="/about" sx={navButtonSx} data-track="nav:resume">Resume</Button>
               <Button
                 onClick={(e) => setProjectsAnchor(e.currentTarget)}
                 endIcon={projectsOpen ? <ExpandLessIcon /> : <ExpandMoreIcon />}
@@ -227,6 +228,7 @@ export default function AppToolbar() {
               <Button
                 component={Link}
                 to="/contact"
+                data-track="nav:contact"
                 endIcon={<Box component="span" sx={{ color: SAND.gold }}>&#8594;</Box>}
                 sx={{
                   textTransform: 'none',
@@ -266,6 +268,7 @@ export default function AppToolbar() {
             component={Link}
             to="/projects"
             onClick={closeAll}
+            data-track="nav-menu:all-projects"
             onMouseEnter={() => setSubmenu(null)}
             sx={{ fontWeight: 600 }}
           >
@@ -278,6 +281,7 @@ export default function AppToolbar() {
               component={Link}
               to={group.overview}
               onClick={closeAll}
+              data-track={`nav-menu:${group.overview}`}
               onMouseEnter={(e) => setSubmenu({ label: group.label, anchorEl: e.currentTarget })}
               sx={{
                 display: 'flex',
@@ -327,6 +331,7 @@ export default function AppToolbar() {
                 component={Link}
                 to={link.to}
                 onClick={closeAll}
+                data-track={`nav-menu:${link.to}`}
                 sx={{ fontSize: 14 }}
               >
                 {link.label}

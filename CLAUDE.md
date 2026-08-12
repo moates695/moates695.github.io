@@ -34,4 +34,5 @@ GitHub Actions workflow (`.github/workflows/deploy.yml`) triggers on push to `ma
 - HashRouter is required for GitHub Pages SPA routing — do not switch to BrowserRouter
 - Homepage field in `package.json` must stay as `https://moates.com.au`
 - Static assets (icons, screenshots, APKs) go in `public/`; source assets (images used in components) go in `src/assets/`
+- Analytics: add a `data-track="<area>:<id>"` attribute to new interactive elements worth measuring (nav items, CTAs, cards). Links to other hosts are recorded automatically and need no attribute. Never `await` or branch on anything in `src/middleware/analytics.ts` — it must stay fire-and-forget.
 - New site changes must work in both desktop and mobile modes. Use MUI responsive props (`{ xs: ..., sm: ... }`) or `useMediaQuery(theme.breakpoints.down('sm'))` rather than hardcoded pixel values. Verify the mobile breakpoint (≤599px) has no horizontal scroll, readable typography, and tappable controls before considering a change complete.
