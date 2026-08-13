@@ -16,11 +16,12 @@ export default function Projects() {
 
       <Box className="reveal">
         <Typography variant="h3" sx={{ fontWeight: 800, letterSpacing: '-0.02em' }}>
-          Everything I&apos;ve built
+          Everything I&apos;ve built on weekends
         </Typography>
         <Typography variant="subtitle1" sx={{ color: 'text.secondary', mt: 1, fontWeight: 400 }}>
-          Shipped apps, published packages and research projects. Each tile links through to the
-          detail pages.
+          Personal projects, every one of them built in my own time on weekends and evenings
+          outside of work hours. Shipped apps, published packages and research projects. Each tile
+          links through to the detail pages.
         </Typography>
       </Box>
 
