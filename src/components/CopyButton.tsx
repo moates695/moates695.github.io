@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, IconButton, Snackbar } from "@mui/material";
+import { IconButton, Snackbar } from "@mui/material";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 
 export interface CopyButtonProps {

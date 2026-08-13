@@ -354,6 +354,7 @@ function findTracked(start: Element | null): { target: string; kind: EventKind }
 
     if (node.tagName === "A") {
       const href = (node as HTMLAnchorElement).href;
+      // eslint-disable-next-line no-script-url -- matching the scheme in order to skip it
       if (href && !href.startsWith("javascript:")) {
         try {
           const url = new URL(href, window.location.href);

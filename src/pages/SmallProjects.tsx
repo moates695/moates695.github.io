@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Avatar, Box, Typography } from "@mui/material";
+import { Avatar, Box } from "@mui/material";
 import { secretsVaultGithubLink } from "../middleware/links";
 import githubLogo from "../assets/github-logo.png";
 import MarkdownBlock from "../components/MarkdownBlock";
