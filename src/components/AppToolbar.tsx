@@ -171,6 +171,9 @@ export default function AppToolbar() {
           </Collapse>
           <Divider />
 
+          <ListItemButton component={Link} to="/stats" onClick={closeDrawer} data-track="nav-drawer:stats">
+            <ListItemText primary="Stats" />
+          </ListItemButton>
           <ListItemButton component={Link} to="/contact" onClick={closeDrawer} data-track="nav-drawer:contact">
             <ListItemText primary="Contact" />
           </ListItemButton>
@@ -225,6 +228,7 @@ export default function AppToolbar() {
               >
                 Projects
               </Button>
+              <Button component={Link} to="/stats" sx={navButtonSx} data-track="nav:stats">Stats</Button>
               <Button
                 component={Link}
                 to="/contact"

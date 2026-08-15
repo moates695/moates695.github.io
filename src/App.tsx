@@ -47,6 +47,7 @@ import GymJunkiePrivacyPolicy from './pages/gym_junkie/PrivacyPolicy';
 import DeleteMe from './pages/gym_junkie/DeleteMe';
 import DataExport from './pages/gym_junkie/DataExport';
 import SmallProjects from './pages/SmallProjects';
+import Stats from './pages/Stats';
 
 /**
  * Inner shell (inside the Router so it can read the route). The Tech Sand home
@@ -101,6 +102,7 @@ function AppShell() {
             <Route path="/about" element={<About />} />
             <Route path="/projects" element={<Projects />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/stats" element={<Stats />} />
             <Route path="/woodchuck">
               <Route index element={<WoodchuckOverview />} />
               <Route path="design" element={<WoodchuckDesign />} />

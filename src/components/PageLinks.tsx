@@ -45,6 +45,7 @@ export const breadcrumbNameMap: { [key: string]: string } = {
   '/about': 'Resume',
   '/projects': 'Projects',
   '/contact': 'Contact',
+  '/stats': 'Site Stats',
 };
 
 /** Label of the final breadcrumb crumb for a path (the current page's name). */
