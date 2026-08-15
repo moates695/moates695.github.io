@@ -108,7 +108,7 @@ export default function OtherAuthenticator() {
         }}
       >
         <PageHeader
-          eyebrow="poc"
+          eyebrow="test"
           title={<>An authenticator with <GradientText>folders</GradientText></>}
           subtitle="A TOTP and HOTP authenticator for Android and iOS, built to fix one specific annoyance: Google Authenticator still will not let you group codes. This one does, in folders one level deep, on top of a vault that is encrypted locally on the phone."
           actions={

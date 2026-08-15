@@ -79,7 +79,7 @@ const moreProjects: SandProject[] = [
   },
   {
     title: "Authenticator",
-    status: "POC",
+    status: "TEST",
     blurb: "A phone authenticator that groups codes into folders, the one thing Google Authenticator still will not do. Vault encrypted on device, one countdown for the lot.",
     tags: ["React Native", "Expo", "Cryptography"],
     initials: "AT",
@@ -87,7 +87,7 @@ const moreProjects: SandProject[] = [
   },
   {
     title: "Event Picker",
-    status: "POC",
+    status: "TEST",
     blurb: "Settling on a meeting without the thread: their own one-page picker, so nobody has to reply \"b, then ii\". Answers land in Postgres and ping Telegram.",
     tags: ["FastAPI", "PostgreSQL", "Telegram"],
     icon: eventPickerLogo,
@@ -115,7 +115,7 @@ const moreProjects: SandProject[] = [
   {
     title: "Small Projects",
     status: "COLLECTION",
-    blurb: "A running collection of smaller builds and self-hosted infrastructure, gathered on one page. First up: a self-hosted password vault for the family.",
+    blurb: "A running collection of smaller builds and self-hosted infrastructure, gathered on one page. So far: a self-hosted password vault for the family, and the collector that measures this site.",
     tags: ["Docker", "Self-Hosted", "Backups"],
     icon: smallProjectsLogo,
     initials: "SP",

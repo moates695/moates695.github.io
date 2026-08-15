@@ -167,7 +167,7 @@ page_views (page_id, kind, is_self, ip_hash, notified_at)
       }}
     >
       <PageHeader
-        eyebrow="poc"
+        eyebrow="test"
         title={<>Event <GradientText>Picker</GradientText></>}
         subtitle="A quicker way to settle a meeting or a catch-up than a thread of half-read options. Rather than sending someone a nested list and waiting on a reply that reads like outline notation, you send them their own one-page picker: they tap what suits, and the answer lands in Postgres and pings my phone on Telegram."
         actions={
@@ -205,8 +205,8 @@ page_views (page_id, kind, is_self, ip_hash, notified_at)
             yourself. */}
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
           <Callout accent={ACCENT} title="status">
-            A working proof of concept, deployed on the droplet behind the shared nginx and
-            Cloudflare setup described below, not a polished product.
+            In testing: deployed on the droplet behind the shared nginx and Cloudflare setup
+            described below, and answering real pages, but not a polished product yet.
           </Callout>
           {/* The demo is a real page on the live app, not a mock: same endpoints,
               same table. One flag on its row stops it notifying, meters

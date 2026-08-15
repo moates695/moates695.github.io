@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import { Avatar, Box } from "@mui/material";
-import { secretsVaultGithubLink } from "../middleware/links";
+import { Avatar, Box, Button } from "@mui/material";
+import { Link } from "react-router-dom";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import { mcpServerGithubLink, secretsVaultGithubLink } from "../middleware/links";
 import githubLogo from "../assets/github-logo.png";
 import MarkdownBlock from "../components/MarkdownBlock";
 import { MONO } from "../styles/tokens";
@@ -35,6 +37,7 @@ interface SmallProject {
 
 const PROJECTS: SmallProject[] = [
   { id: "secrets-vault", label: "Secrets Vault" },
+  { id: "site-analytics", label: "Site Analytics" },
 ];
 
 // Where a clicked link lands: below the sticky app bar plus the sticky nav bar.
@@ -246,6 +249,114 @@ function SecretsVault() {
   );
 }
 
+const analyticsArchitecture = `\`\`\`text
+Browser (moates.com.au, straight off GitHub Pages)
+      |  sendBeacon, text/plain, fire and forget
+      v
+Cloudflare (proxied subdomain)      adds cf-ipcountry / cf-ipcity / cf-region
+      |
+      v
+nginx --> moates-stats  (FastAPI container, POST /e answers 204)
+                 |
+                 v
+          Postgres  (analytics database, host service on the droplet)
+                 |
+   /stats  <-- GET /summary (aggregates only, cached 60s) --'
+\`\`\``;
+
+const analyticsStored = [
+  "No address is ever written down: the beacon's IP is turned into a salted hash the moment it arrives, and the salt rotates the hash daily so it cannot follow anyone from one day to the next.",
+  "No cookie either. A session id lives in sessionStorage and disappears with the tab.",
+  "Country and city come from Cloudflare's edge headers, so the location is known without me holding the address it came from.",
+  "The read endpoint returns counts only: identifying columns appear solely inside a count of distinct values, and a test parses the module's own SQL to make sure that stays true.",
+];
+
+const analyticsDecisions = [
+  "Beacons are sent as text/plain on purpose. A JSON beacon is preflighted, and a preflight fired while the page is unloading often never finishes.",
+  "The collector must never affect the page, so the client side has a circuit breaker, a bounded queue and passive listeners, and nothing on the site ever waits on it.",
+  "Elements opt in with a data-track attribute, and links to other hosts are recorded automatically. Nothing is measured by accident.",
+  "The dashboard's charts are hand-rolled SVG rather than a charting library, which costs about seven kilobytes gzipped instead of a dependency.",
+];
+
+function SiteAnalytics() {
+  return (
+    <Box id="site-analytics" sx={{ display: "flex", flexDirection: "column", gap: { xs: 3, sm: 4 } }}>
+      <Reveal>
+        <SectionHeading eyebrow="self-hosted">
+          Site <GradientText>Analytics</GradientText>
+        </SectionHeading>
+        <MarkdownBlock>
+          {`GitHub Pages keeps no access logs, so this site measures itself. Every page beacons its own views and clicks to a small FastAPI service I run on the same droplet as everything else, which writes them to Postgres and reads them back as aggregates. It replaces a third party tracker with something I own end to end, and the numbers it produces are published rather than kept to myself.`}
+        </MarkdownBlock>
+        <Box sx={{ mt: 1, display: "flex", flexWrap: "wrap", gap: 1.5 }}>
+          <Button
+            component={Link}
+            to="/stats"
+            variant="outlined"
+            color="inherit"
+            data-track="small-projects:stats"
+            sx={{ borderColor: "divider", color: "text.secondary" }}
+          >
+            See the numbers
+          </Button>
+          <Button
+            component="a"
+            href={mcpServerGithubLink}
+            target="_blank"
+            rel="noopener"
+            variant="outlined"
+            color="inherit"
+            startIcon={<Avatar alt="github icon" src={githubLogo} sx={{ width: 24, height: 24 }} />}
+            endIcon={<OpenInNewIcon sx={{ fontSize: 16 }} />}
+            sx={{ borderColor: "divider", color: "text.secondary" }}
+          >
+            Source
+          </Button>
+        </Box>
+      </Reveal>
+
+      <Reveal delay={0.06}>
+        <Panel accent={ACCENT} wash>
+          <StatRow
+            items={[
+              { value: "0", label: "third party trackers" },
+              { value: "0", label: "cookies" },
+              { value: "204", label: "answered before writing" },
+              { value: "5", label: "range windows" },
+            ]}
+          />
+        </Panel>
+        <Callout accent={ACCENT} title="status">
+          Collecting live since August 2026, with the public dashboard reading the same service.
+        </Callout>
+      </Reveal>
+
+      <Reveal delay={0.12}>
+        <SectionHeading eyebrow="architecture">How it is wired</SectionHeading>
+        <Box sx={{ color: "text.secondary", mb: 2 }}>
+          The site itself is served straight from GitHub Pages, which is why the collector sits on a
+          proxied subdomain: Cloudflare is what supplies the visitor's country and city for free. The
+          write path answers immediately and does the database work in the background, and the read
+          path aggregates in Postgres, caches each window for a minute and rate limits per address.
+        </Box>
+        <Panel accent={ACCENT}>
+          <MarkdownBlock>{analyticsArchitecture}</MarkdownBlock>
+        </Panel>
+      </Reveal>
+
+      <Reveal delay={0.18}>
+        <SectionHeading eyebrow="privacy">Measured, not tracked</SectionHeading>
+        <CheckList items={analyticsStored} accent={ACCENT} />
+      </Reveal>
+
+      <Reveal delay={0.24}>
+        <SectionHeading eyebrow="decisions">Details worth calling out</SectionHeading>
+        <CheckList items={analyticsDecisions} accent={ACCENT} />
+      </Reveal>
+    </Box>
+  );
+}
+
 /* ── Page ─────────────────────────────────────────────────────────────── */
 
 export default function SmallProjects() {
@@ -269,6 +380,8 @@ export default function SmallProjects() {
       <OnThisPage items={PROJECTS} />
 
       <SecretsVault />
+
+      <SiteAnalytics />
 
       <PageNav left={{ text: "Projects", link: "/projects" }} />
     </Box>

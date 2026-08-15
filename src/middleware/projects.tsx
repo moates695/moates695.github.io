@@ -223,7 +223,7 @@ export const otherProjects: ProjectInfo[] = [
       'backup and sync service built server side and the client half still to come.',
     link: '/other/authenticator',
     chipKeys: ['expo', 'react_ts', 'client_side'],
-    status: 'poc',
+    status: 'test',
     accent: '#d8aa78',
     external: [{ label: 'Source', href: authenticatorGithubLink, external: true }],
   },
@@ -244,7 +244,7 @@ export const otherProjects: ProjectInfo[] = [
       'yourself. FastAPI and Postgres in a container on a DigitalOcean droplet.',
     link: '/other/event-picker',
     chipKeys: ['python', 'fastapi', 'postgres', 'telegram', 'docker'],
-    status: 'poc',
+    status: 'test',
     accent: '#d8aa78',
     external: [
       { label: 'Try it', href: eventPickerDemoLink, external: true },
@@ -290,11 +290,13 @@ export const otherProjects: ProjectInfo[] = [
     blurb: 'A collection of smaller builds and self-hosted infrastructure, gathered on one page.',
     description:
       'A running collection of the smaller builds that are too compact for a case study of their own, ' +
-      'gathered on a single page with quick links to each. First up is Secrets Vault: a self-hosted ' +
+      'gathered on a single page with quick links to each. Secrets Vault is a self-hosted ' +
       'Vaultwarden password manager for the family, running on a DigitalOcean droplet with shared ' +
-      'collections and encrypted off-site backups.',
+      'collections and encrypted off-site backups. Site Analytics is this site measuring itself: a ' +
+      'small FastAPI and Postgres collector that replaces a third party tracker and publishes what ' +
+      'it finds.',
     link: '/small-projects',
-    chipKeys: ['docker', 'self_hosted'],
+    chipKeys: ['docker', 'self_hosted', 'fastapi', 'postgres'],
     status: 'collection',
     accent: '#d8aa78',
   },
