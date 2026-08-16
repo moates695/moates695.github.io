@@ -163,12 +163,14 @@ export const otherProjects: ProjectInfo[] = [
     icon: iconMap.smart_trainer,
     initials: 'W',
     name: 'Watts',
-    blurb: 'A browser-based app for structured cycling workouts on a smart trainer. My fork adds a drag-to-build workout designer.',
+    blurb: 'A browser-based app for structured cycling workouts on a smart trainer. My fork adds a drag-to-build workout editor and native accounts.',
     description:
       'A browser-based app for running structured cycling workouts on a smart trainer, talking to the ' +
       'hardware directly over Web Bluetooth and recording standard .FIT activities. Built on the ' +
-      'open-source Auuki project; my fork adds a graphical workout designer so you can build a session ' +
-      'by dragging blocks instead of hand-writing ZWO XML. Vanilla JavaScript Web Components, no framework.',
+      'open-source Auuki project; my fork adds a graphical workout editor so you can build a session ' +
+      'by dragging blocks instead of hand-writing ZWO XML, plus native accounts that keep your ' +
+      'workouts, ride history and rider profile across devices. Vanilla JavaScript Web Components ' +
+      'over a FastAPI and Postgres backend.',
     link: '/other/smart-trainer',
     chipKeys: ['javascript', 'bluetooth', 'pwa', 'client_side'],
     status: 'test',
