@@ -94,7 +94,6 @@ interface Summary {
     clicks: number;
     outbound: number;
     avg_events: number;
-    median_seconds: number;
     bounce_pct: number;
     bot_sessions: number;
   };
@@ -123,15 +122,6 @@ class FeedError extends Error {}
 /* ------------------------------------------------------------------ */
 /* Formatting                                                          */
 /* ------------------------------------------------------------------ */
-
-/** "2 min 5 sec" style duration, kept short enough to sit in a stat tile. */
-function duration(seconds: number): string {
-  if (seconds <= 0) return "n/a";
-  if (seconds < 60) return `${seconds}s`;
-  const mins = Math.floor(seconds / 60);
-  const rest = seconds % 60;
-  return rest ? `${mins}m ${rest}s` : `${mins}m`;
-}
 
 function relativeAge(ms: number): string {
   const mins = Math.floor(ms / 60000);
@@ -499,7 +489,6 @@ export default function Stats() {
                   <Tile value={compact(totals.visitors)} label="Visitors" hint="unique per day" />
                   <Tile value={compact(totals.clicks + totals.outbound)} label="Clicks" hint="tracked elements" />
                   <Tile value={totals.avg_events.toFixed(1)} label="Events per session" />
-                  <Tile value={duration(totals.median_seconds)} label="Median time on site" />
                   <Tile value={`${totals.bounce_pct}%`} label="Single page visits" />
                   <Tile value={compact(totals.bot_sessions)} label="Crawler visits" hint="excluded elsewhere" />
                 </Box>

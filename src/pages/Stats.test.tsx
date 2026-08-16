@@ -25,7 +25,6 @@ const SUMMARY = {
     clicks: 5,
     outbound: 1,
     avg_events: 4.5,
-    median_seconds: 70,
     bounce_pct: 12.5,
     bot_sessions: 3,
   },
@@ -81,7 +80,7 @@ test("renders the headline figures and the date collection started", async () =>
   expect(await screen.findByText("24")).toBeInTheDocument(); // page views
   // Named twice on purpose: the stat tile and the traffic chart's legend.
   expect(screen.getAllByText("Page views").length).toBeGreaterThan(0);
-  expect(screen.getByText("1m 10s")).toBeInTheDocument(); // median time on site
+  expect(screen.getByText("4.5")).toBeInTheDocument(); // events per session
   // Date wording follows the reader's locale, so assert on the parts that do not.
   expect(screen.getByText(/Collecting since .*2026, 3 days of data/)).toBeInTheDocument();
 });
