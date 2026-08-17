@@ -6,6 +6,7 @@ import wattsLogo from "../assets/watts-logo.svg";
 import tradingStrategiesLogo from "../assets/trading-strategies-logo.svg";
 import eventPickerLogo from "../assets/event-picker-logo.svg";
 import smallProjectsLogo from "../assets/small-projects-logo.svg";
+import authenticatorLogo from "../assets/authenticator-icon.png";
 import {
   gymJunkiePlayStoreLink,
   gymJunkieAppStoreLink,
@@ -51,8 +52,7 @@ export const iconMap: Record<Project, string> = {
   trading_strategies: tradingStrategiesLogo,
   event_picker: eventPickerLogo,
   small_projects: smallProjectsLogo,
-  // No logo asset yet: this card/avatar falls back to its initials.
-  authenticator: '',
+  authenticator: authenticatorLogo,
 };
 
 export type ProjectStatus = 'prod' | 'test' | 'poc' | 'collection';

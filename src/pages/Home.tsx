@@ -9,6 +9,7 @@ import wattsLogo from "../assets/watts-logo.svg";
 import tradingStrategiesLogo from "../assets/trading-strategies-logo.svg";
 import eventPickerLogo from "../assets/event-picker-logo.svg";
 import smallProjectsLogo from "../assets/small-projects-logo.svg";
+import authenticatorLogo from "../assets/authenticator-icon.png";
 import {
   SAND,
   SPACE,
@@ -82,6 +83,7 @@ const moreProjects: SandProject[] = [
     status: "TEST",
     blurb: "A phone authenticator that groups codes into folders, the one thing Google Authenticator still will not do. Vault encrypted on device, one countdown for the lot.",
     tags: ["React Native", "Expo", "Cryptography"],
+    icon: authenticatorLogo,
     initials: "AT",
     link: "/other/authenticator",
   },
