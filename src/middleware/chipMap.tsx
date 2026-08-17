@@ -155,6 +155,12 @@ const chipData = {
     borderColor: '#8fd0d4',
     textColor: '#8fd0d4',
   },
+  typescript: {
+    label: 'TypeScript',
+    color: 'transparent',
+    borderColor: '#5a9fd9',
+    textColor: '#5a9fd9',
+  },
 } satisfies Record<string, ChipData>;
 
 export type ChipKey = keyof typeof chipData;

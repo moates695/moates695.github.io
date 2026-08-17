@@ -296,9 +296,10 @@ export const otherProjects: ProjectInfo[] = [
       'Vaultwarden password manager for the family, running on a DigitalOcean droplet with shared ' +
       'collections and encrypted off-site backups. Site Analytics is this site measuring itself: a ' +
       'small FastAPI and Postgres collector that replaces a third party tracker and publishes what ' +
-      'it finds.',
+      'it finds. VS Code Extensions is a TypeScript monorepo of editor extensions, the first of ' +
+      'which watches your Git habits and passes judgement.',
     link: '/small-projects',
-    chipKeys: ['docker', 'self_hosted', 'fastapi', 'postgres'],
+    chipKeys: ['docker', 'self_hosted', 'fastapi', 'postgres', 'typescript'],
     status: 'collection',
     accent: '#d8aa78',
   },

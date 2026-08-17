@@ -2,9 +2,14 @@ import { useEffect, useState } from "react";
 import { Avatar, Box, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
-import { mcpServerGithubLink, secretsVaultGithubLink } from "../middleware/links";
+import {
+  mcpServerGithubLink,
+  secretsVaultGithubLink,
+  vsCodeExtensionsGithubLink,
+} from "../middleware/links";
 import githubLogo from "../assets/github-logo.png";
 import MarkdownBlock from "../components/MarkdownBlock";
+import { SectionNavLayout, Section } from "../components/SectionNav";
 import { MONO } from "../styles/tokens";
 import {
   PageHeader,
@@ -24,31 +29,28 @@ const ACCENT = "#d8aa78";
 /**
  * "Small Projects" is a single hub page that collects the smaller builds that
  * do not warrant a full case study of their own. Each project is one section
- * down the page, and the sticky `OnThisPage` bar at the top links straight to
- * each of them. Adding a project is: append to `PROJECTS`, then render a matching
- * `<Box id=...>` section below.
+ * down the page, reachable two ways: the sticky `OnThisPage` pill bar at the
+ * top, which names each project and works at every width, and on `md`+ the
+ * numbered rail on the right that every other project page uses. Adding a
+ * project is: append to `PROJECTS`, then render a matching `<Box id=...>`
+ * section below.
  */
-interface SmallProject {
-  /** Element id of the section wrapper, also the scroll target. */
-  id: string;
-  /** Label shown in the top "on this page" bar. */
-  label: string;
-}
-
-const PROJECTS: SmallProject[] = [
+const PROJECTS: Section[] = [
   { id: "secrets-vault", label: "Secrets Vault" },
   { id: "site-analytics", label: "Site Analytics" },
+  { id: "vscode-extensions", label: "VS Code Extensions" },
 ];
 
 // Where a clicked link lands: below the sticky app bar plus the sticky nav bar.
 const SCROLL_OFFSET = 128;
 
 /**
- * Sticky bar of links to each project on the page. Mirrors the site's numbered
- * rail in spirit (scroll-spy + smooth scroll) but sits at the top as a wrapping
- * row of pills, so it reads well on mobile and scales as projects are added.
+ * Sticky bar of links to each project on the page, shown at every width. Same
+ * scroll-spy and smooth scroll as the right-hand rail, but a wrapping row of
+ * named pills: the rail's numbered nodes only name a section on hover, and on
+ * a hub page the project names are the point, so the two are kept side by side.
  */
-function OnThisPage({ items }: { items: SmallProject[] }) {
+function OnThisPage({ items }: { items: Section[] }) {
   const [active, setActive] = useState(0);
 
   useEffect(() => {
@@ -357,10 +359,63 @@ function SiteAnalytics() {
   );
 }
 
+const extensionsNotes = [
+  "Guilt Trip, the first extension, watches the built-in Git extension's repository state and remarks on what it sees: commits straight onto main, merge commits, a tower of unpushed work, one-character messages, and the small hours. It never blocks anything and never writes to your .git directory.",
+  "Detection is state-based rather than hook-based, so a commit typed into the terminal, made in the Source Control panel or made in another Git client all look the same and all work with nothing extra to implement.",
+  "The interesting part is the edge cases: a fast-forward pull moves HEAD without you committing, a detached HEAD has no branch name, and a freshly discovered repository reports no HEAD at all for the first moment. Each of those is a throwaway Git repo in a generated sandbox rather than a guess.",
+  "Rules and remarks are kept free of any value import of the editor API, so they unit test in plain Node instead of booting a VS Code host.",
+];
+
+function VsCodeExtensions() {
+  return (
+    <Box id="vscode-extensions" sx={{ display: "flex", flexDirection: "column", gap: { xs: 3, sm: 4 } }}>
+      <Reveal>
+        <SectionHeading eyebrow="editor tooling">
+          VS Code <GradientText>Extensions</GradientText>
+        </SectionHeading>
+        <MarkdownBlock>
+          {`A pnpm workspace holding several independent VS Code extensions, each publishable on its own, with the shared, editor-free logic factored out so it can be tested without booting an editor. TypeScript throughout, bundled with esbuild and packaged as a .vsix.`}
+        </MarkdownBlock>
+        <Box sx={{ mt: 1 }}>
+          <ExternalButton
+            href={vsCodeExtensionsGithubLink}
+            icon={<Avatar alt="github icon" src={githubLogo} sx={{ width: 24, height: 24 }} />}
+          >
+            Source
+          </ExternalButton>
+        </Box>
+      </Reveal>
+
+      <Reveal delay={0.06}>
+        <Panel accent={ACCENT} wash>
+          <StatRow
+            items={[
+              { value: "1", label: "extension so far" },
+              { value: "6", label: "commit rules" },
+              { value: "0", label: "git hooks installed" },
+              { value: "7", label: "sandbox repos" },
+            ]}
+          />
+        </Panel>
+        <Callout accent={ACCENT} title="status">
+          Early build. Guilt Trip runs end to end in an Extension Development Host; rate limiting,
+          settings and packaging are still to come.
+        </Callout>
+      </Reveal>
+
+      <Reveal delay={0.12}>
+        <SectionHeading eyebrow="details">Details worth calling out</SectionHeading>
+        <CheckList items={extensionsNotes} accent={ACCENT} />
+      </Reveal>
+    </Box>
+  );
+}
+
 /* ── Page ─────────────────────────────────────────────────────────────── */
 
 export default function SmallProjects() {
   return (
+    <SectionNavLayout sections={PROJECTS}>
     <Box
       component="section"
       sx={{
@@ -374,7 +429,7 @@ export default function SmallProjects() {
       <PageHeader
         eyebrow="collection"
         title={<>Small <GradientText>Projects</GradientText></>}
-        subtitle="A running collection of smaller builds and self-hosted infrastructure, each too compact for a full case study, gathered here on one page. Use the links up top to jump to any of them."
+        subtitle="A running collection of smaller builds and self-hosted infrastructure, each too compact for a full case study, gathered here on one page. Use the section links to jump to any of them."
       />
 
       <OnThisPage items={PROJECTS} />
@@ -383,7 +438,10 @@ export default function SmallProjects() {
 
       <SiteAnalytics />
 
+      <VsCodeExtensions />
+
       <PageNav left={{ text: "Projects", link: "/projects" }} />
     </Box>
+    </SectionNavLayout>
   );
 }
