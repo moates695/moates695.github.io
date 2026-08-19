@@ -7,8 +7,6 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { SAND, SPACE, PLEX } from './sand';
 
-const SHOWCASE_COLOR = SAND.gold;
-
 /** Monogram mark on the left of the bar (Space Grotesk, wide tracking). */
 const monogramSx = {
   font: `500 20px ${SPACE}`,
@@ -56,19 +54,10 @@ const PROJECT_GROUPS: NavGroup[] = [
     ],
   },
   {
-    label: 'Woodchuck',
-    overview: '/woodchuck',
-    color: SHOWCASE_COLOR,
-    links: [
-      { label: 'Overview', to: '/woodchuck' },
-      { label: 'Design', to: '/woodchuck/design' },
-      { label: 'Changes', to: '/woodchuck/changes' },
-    ],
-  },
-  {
     label: 'Other',
     overview: '/projects',
     links: [
+      { label: 'Woodchuck', to: '/woodchuck' },
       { label: 'IMAX Watch Agent', to: '/other/imax-bot' },
       { label: 'Watts', to: '/other/smart-trainer' },
       { label: 'Arbitrage Engine', to: '/other/arbitrage' },

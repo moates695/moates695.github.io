@@ -372,9 +372,12 @@ export default function HomePage() {
         id="s-hero"
         sx={{
           position: "relative",
-          minHeight: { xs: "70vh", md: "82vh" },
+          // Keep the hero short enough that the featured card peeks above the
+          // fold on a typical laptop, rather than filling the whole viewport.
+          minHeight: { xs: "52vh", md: "58vh" },
           display: "flex",
           alignItems: "center",
+          py: { xs: "40px", md: "48px" },
           // The dune image itself lives in the fixed SandBackground layer so it
           // stays visible past the hero; here we only darken the left side for
           // heading legibility.
@@ -408,7 +411,7 @@ export default function HomePage() {
               m: 0,
               fontFamily: SPACE,
               fontWeight: 600,
-              fontSize: { xs: "3rem", sm: "4rem", md: "76px" },
+              fontSize: { xs: "2.75rem", sm: "3.5rem", md: "68px" },
               lineHeight: 0.98,
               letterSpacing: "-.03em",
               color: SAND.primary,
@@ -422,7 +425,7 @@ export default function HomePage() {
           <Typography
             component="p"
             sx={{
-              m: "20px 0 0",
+              m: { xs: "16px 0 0", md: "18px 0 0" },
               maxWidth: 440,
               font: `400 16.5px/1.65 ${PLEX}`,
               color: SAND.heroBody,
@@ -434,7 +437,7 @@ export default function HomePage() {
             to accelerate development.
           </Typography>
 
-          <Box sx={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: "22px", mt: "38px" }}>
+          <Box sx={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: "22px", mt: { xs: "26px", md: "30px" } }}>
             <Box
               component="button"
               onClick={() => navigate("/projects")}
