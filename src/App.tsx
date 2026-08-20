@@ -48,6 +48,7 @@ import GymJunkiePrivacyPolicy from './pages/gym_junkie/PrivacyPolicy';
 import DeleteMe from './pages/gym_junkie/DeleteMe';
 import DataExport from './pages/gym_junkie/DataExport';
 import SmallProjects from './pages/SmallProjects';
+import Kaggle from './pages/Kaggle';
 import Stats from './pages/Stats';
 
 /**
@@ -100,6 +101,7 @@ function AppShell() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/small-projects" element={<SmallProjects />} />
+            <Route path="/kaggle" element={<Kaggle />} />
             <Route path="/about" element={<About />} />
             <Route path="/projects" element={<Projects />} />
             <Route path="/contact" element={<Contact />} />

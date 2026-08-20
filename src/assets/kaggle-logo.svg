@@ -1,0 +1,24 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="kaggle_bg" x1="512" y1="0" x2="512" y2="1024" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#313131"/>
+      <stop offset="1" stop-color="#141414"/>
+    </linearGradient>
+    <filter id="kaggle_glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="16" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="1024" height="1024" rx="228" fill="url(#kaggle_bg)"/>
+  <!-- Kaggle's lowercase "k" mark in the platform's cyan: a tall stem with the
+       arm and leg drawn as one polyline that meets the stem at its middle, so
+       the two diagonals share a clean join at every scale. -->
+  <g stroke="#20beff" stroke-width="100" stroke-linecap="round" stroke-linejoin="round"
+     fill="none" filter="url(#kaggle_glow)">
+    <path d="M338 196 L338 828"/>
+    <path d="M702 288 L432 560 L708 828"/>
+  </g>
+</svg>

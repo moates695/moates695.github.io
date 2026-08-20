@@ -9,6 +9,7 @@ import wattsLogo from "../assets/watts-logo.svg";
 import tradingStrategiesLogo from "../assets/trading-strategies-logo.svg";
 import eventPickerLogo from "../assets/event-picker-logo.svg";
 import smallProjectsLogo from "../assets/small-projects-logo.svg";
+import kaggleLogo from "../assets/kaggle-logo.svg";
 import authenticatorLogo from "../assets/authenticator-icon.png";
 import {
   SAND,
@@ -59,6 +60,15 @@ const moreProjects: SandProject[] = [
     icon: wattsLogo,
     initials: "W",
     link: "/other/smart-trainer",
+  },
+  {
+    title: "Kaggle Competitions",
+    status: "COMP",
+    blurb: "Competition entries tracked from first commit to final submission. First up: following cells through 3D microscopy of a developing embryo, divisions and all.",
+    tags: ["Python", "Computer Vision", "NumPy"],
+    icon: kaggleLogo,
+    initials: "KG",
+    link: "/kaggle",
   },
   {
     title: "Arbitrage Engine",

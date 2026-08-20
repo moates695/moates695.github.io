@@ -6,6 +6,7 @@ import wattsLogo from "../assets/watts-logo.svg";
 import tradingStrategiesLogo from "../assets/trading-strategies-logo.svg";
 import eventPickerLogo from "../assets/event-picker-logo.svg";
 import smallProjectsLogo from "../assets/small-projects-logo.svg";
+import kaggleLogo from "../assets/kaggle-logo.svg";
 import authenticatorLogo from "../assets/authenticator-icon.png";
 import {
   gymJunkiePlayStoreLink,
@@ -20,6 +21,7 @@ import {
   authenticatorGithubLink,
   eventPickerGithubLink,
   eventPickerDemoLink,
+  kaggleCellTrackingLink,
 } from "./links";
 
 export type Project =
@@ -36,7 +38,8 @@ export type Project =
   | 'trading_strategies'
   | 'authenticator'
   | 'event_picker'
-  | 'small_projects';
+  | 'small_projects'
+  | 'kaggle';
 
 export const iconMap: Record<Project, string> = {
   finska: '/finska-icon.png',
@@ -52,10 +55,11 @@ export const iconMap: Record<Project, string> = {
   trading_strategies: tradingStrategiesLogo,
   event_picker: eventPickerLogo,
   small_projects: smallProjectsLogo,
+  kaggle: kaggleLogo,
   authenticator: authenticatorLogo,
 };
 
-export type ProjectStatus = 'prod' | 'test' | 'poc' | 'collection';
+export type ProjectStatus = 'prod' | 'test' | 'poc' | 'collection' | 'comp';
 
 interface StatusMeta {
   label: string
@@ -69,6 +73,7 @@ export const statusMeta: Record<ProjectStatus, StatusMeta> = {
   test: { label: 'test', full: 'In testing', color: '#e0b24d' },
   poc: { label: 'poc', full: 'Proof of concept', color: '#b18cf0' },
   collection: { label: 'collection', full: 'A collection of smaller projects', color: '#8fd0d4' },
+  comp: { label: 'comp', full: 'Competition entries', color: '#7fb2e8' },
 };
 
 export interface ProjectLink {
@@ -176,6 +181,24 @@ export const otherProjects: ProjectInfo[] = [
     status: 'test',
     accent: '#d8aa78',
     external: [{ label: 'Source', href: smartTrainerGithubLink, external: true }],
+  },
+  {
+    key: 'kaggle',
+    icon: iconMap.kaggle,
+    initials: 'KG',
+    name: 'Kaggle Competitions',
+    blurb: 'Machine learning competitions I am entering, each tracked from first commit to final submission.',
+    description:
+      'Kaggle competitions I am entering, each tracked on one page from the first commit through to the '
+      + 'final submission. First up is Biohub Cell Tracking During Development: detecting cells in 3D '
+      + 'time-lapse microscopy of zebrafish embryos, linking them across frames and identifying divisions '
+      + 'so lineages branch correctly. Results and progress go up as they happen, while the working '
+      + 'repository stays private for as long as the competition is running.',
+    link: '/kaggle',
+    chipKeys: ['python', 'ai_ml', 'data_pipeline'],
+    status: 'comp',
+    accent: '#d8aa78',
+    external: [{ label: 'Competition', href: kaggleCellTrackingLink, external: true }],
   },
   {
     key: 'arbitrage',

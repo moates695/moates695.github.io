@@ -17,7 +17,7 @@ import { SectionNavLayout, Section } from "../../components/SectionNav";
 const ACCENT = "#d8aa78";
 
 const SECTIONS: Section[] = [
-  { id: "live", label: "Live board" },
+  { id: "live", label: "Delayed board" },
   { id: "idea", label: "The idea" },
   { id: "coverage", label: "Books & sports" },
   { id: "pipeline", label: "The pipeline" },
@@ -59,6 +59,7 @@ const safeguards = [
   "It only ever reads public endpoints, with no vision model, no LLM and no API keys anywhere in the loop.",
   "A confirmed arbitrage needs at least two books pricing the full live field; a single-book runner or a missing price files the market as an unverified candidate rather than a trade.",
   "Odds are timestamped, since an opportunity is only real for as long as the prices behind it hold.",
+  "Nothing is published as it is found. Every sweep is held for 30 minutes before the feed will serve it, prices and arbitrage together, so the public board is a record of a market that has already moved rather than a live edge.",
 ];
 
 const pipelineDiagram = `\`\`\`text
@@ -102,11 +103,11 @@ export default function OtherArbitrage() {
         <PageHeader
           eyebrow="engine"
           title={<>Arbitrage <GradientText>Engine</GradientText></>}
-          subtitle="A read-only engine that scans betting odds across seven Australian bookmakers, over racing and five other sports, and flags arbitrage: the rare moments when backing every outcome at the best price on offer locks in a profit no matter the result. It works out exactly what to stake where, and never places a bet itself. The board below is its actual output, swept every 15 minutes."
+          subtitle="A read-only engine that scans betting odds across seven Australian bookmakers, over racing and five other sports, and flags arbitrage: the rare moments when backing every outcome at the best price on offer locks in a profit no matter the result. It works out exactly what to stake where, and never places a bet itself. The board below is its actual output, swept every 15 minutes and published half an hour after the fact."
         />
 
         <Reveal delay={0.06} id="live">
-          <SectionHeading eyebrow="live">Right now</SectionHeading>
+          <SectionHeading eyebrow="delayed 30 min">Half an hour ago</SectionHeading>
           <ArbLiveBoard />
         </Reveal>
 
@@ -116,7 +117,7 @@ export default function OtherArbitrage() {
               items={[
                 { value: "6", label: "books live" },
                 { value: "15 min", label: "sweep cadence" },
-                { value: "JSON APIs", label: "odds source" },
+                { value: "30 min", label: "publish delay" },
                 { value: "Read-only", label: "never bets" },
               ]}
             />
@@ -124,9 +125,11 @@ export default function OtherArbitrage() {
           <Box sx={{ mt: 2 }}>
             <Callout accent={ACCENT} title="status">
               Running against live markets from a small Sydney server, rebuilding the board on a fixed
-              15 minute cycle. Six of the seven bookmakers answer a plain HTTP client and are in the
-              hosted feed; TAB needs a real browser, so it stays on the local runs for now. The source is
-              kept private.
+              15 minute cycle. Every sweep is then held for 30 minutes before it is served, board and
+              arbitrage alike, so what is published here is a record of a market that has already moved
+              rather than a tradeable price. Six of the seven bookmakers answer a plain HTTP client and
+              are in the hosted feed; TAB needs a real browser, so it stays on the local runs for now.
+              The source is kept private.
             </Callout>
           </Box>
         </Reveal>

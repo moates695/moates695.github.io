@@ -60,6 +60,7 @@ const PROJECT_GROUPS: NavGroup[] = [
       { label: 'Woodchuck', to: '/woodchuck' },
       { label: 'IMAX Watch Agent', to: '/other/imax-bot' },
       { label: 'Watts', to: '/other/smart-trainer' },
+      { label: 'Kaggle', to: '/kaggle' },
       { label: 'Arbitrage Engine', to: '/other/arbitrage' },
       { label: 'Trading Strategies', to: '/other/trading-strategies' },
       { label: 'Authenticator', to: '/other/authenticator' },

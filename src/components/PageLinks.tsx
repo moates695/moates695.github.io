@@ -43,6 +43,7 @@ export const breadcrumbNameMap: { [key: string]: string } = {
   '/other/authenticator/privacy': 'Privacy Policy',
   '/other/event-picker': 'Event Picker',
   '/small-projects': 'Small Projects',
+  '/kaggle': 'Kaggle',
   '/about': 'Resume',
   '/projects': 'Projects',
   '/contact': 'Contact',
@@ -73,7 +74,7 @@ const crumbSx = {
 // the breadcrumb inserts the Projects crumb. `/other/*` pages fold straight into
 // Projects (the bare "Other Projects" crumb is dropped) since /other redirects
 // to /projects anyway.
-const PROJECT_ROOTS = new Set(['woodchuck', 'poppycock', 'gym-junkie', 'small-projects']);
+const PROJECT_ROOTS = new Set(['woodchuck', 'poppycock', 'gym-junkie', 'small-projects', 'kaggle']);
 
 export default function PageLinks() {
   const location = useLocation();

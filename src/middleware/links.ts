@@ -25,4 +25,9 @@ export const eventPickerGithubLink = "https://github.com/moates695/event_picker"
 // The public demo page. A real page on the live app, flagged so it never
 // notifies and never shows one visitor's answer to the next.
 export const eventPickerDemoLink = "https://events.moates.com.au/e/tryevents/"
+// Kaggle. The competition link is public; the profile link is filled in once
+// the account URL is confirmed, and the page hides the profile button until then.
+export const kaggleProfileLink = "";
+export const kaggleCellTrackingLink =
+  "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development";
 export const paypalLink = "https://paypal.me/moates695";

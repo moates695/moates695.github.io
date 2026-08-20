@@ -107,7 +107,7 @@ export const tagHue = (name: string): string => TAG_HUES[name] ?? "#c7b191";
 /* Status pills                                                        */
 /* ------------------------------------------------------------------ */
 
-export type SandStatus = "PROD" | "TEST" | "POC" | string;
+export type SandStatus = "PROD" | "TEST" | "POC" | "COMP" | string;
 
 interface PillMeta {
   color: string;
@@ -119,6 +119,7 @@ const PILLS: Record<string, PillMeta> = {
   PROD: { color: "#6fcf97", dot: "#6fcf97", border: "rgba(111,207,151,.32)" },
   TEST: { color: "#e0b24d", dot: "#e0b24d", border: "rgba(224,178,77,.32)" },
   POC: { color: "#b18cf0", dot: "#b18cf0", border: "rgba(177,140,240,.32)" },
+  COMP: { color: "#7fb2e8", dot: "#7fb2e8", border: "rgba(127,178,232,.32)" },
 };
 
 const FALLBACK_PILL: PillMeta = {

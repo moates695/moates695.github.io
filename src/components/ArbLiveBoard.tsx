@@ -6,6 +6,12 @@
  * opportunity-first, mirroring the engine's own report order: confirmed
  * arbitrage, then per-market stats, then the whole cross-book price board.
  *
+ * The feed is deliberately behind. The service holds each sweep for
+ * `delay_minutes` before serving it, so everything here (the price board as
+ * much as the arbs computed from it) describes the market as it stood half an
+ * hour ago. That is the point rather than a limitation, so the board labels
+ * itself DELAYED rather than dressing an old snapshot up as a live one.
+ *
  * The feed is best-effort by design. If the service is down, still warming up,
  * or a bookmaker did not answer, the section says so plainly instead of
  * breaking the page around it: stale odds presented as live would be worse than
@@ -24,6 +30,7 @@ import {
 } from "@mui/material";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ScheduleIcon from "@mui/icons-material/Schedule";
 import { MONO } from "../styles/tokens";
 import { SAND } from "./sand";
 import { formatWait, readRateLimit } from "../middleware/rateLimit";
@@ -32,6 +39,12 @@ const API_BASE = process.env.REACT_APP_ARB_API_BASE ?? "https://arb.moates.com.a
 
 /** Matches ARB_INTERVAL_MINUTES on the service; only used to estimate the next sweep. */
 const INTERVAL_MIN = 15;
+
+/**
+ * Fallback for ARB_PUBLISH_DELAY_MINUTES. The payload carries the real figure,
+ * so this only covers a service old enough not to send one.
+ */
+const DELAY_MIN = 30;
 
 /** Arb cards shown before the "show all" toggle appears. */
 const ARB_PREVIEW = 6;
@@ -121,6 +134,10 @@ interface Discipline {
 
 interface Snapshot {
   generated_at: string;
+  /** How long the service held this sweep before serving it. */
+  delay_minutes?: number;
+  /** When it became readable, i.e. generated_at + the delay. */
+  published_at?: string | null;
   duration_seconds: number;
   sweeps: { name: string; ok: boolean; seconds: number }[];
   totals: { disciplines: number; races: number; venues: number; arbitrage: number };
@@ -486,7 +503,7 @@ function ArbCard({
             </Typography>
           </Box>
           <Typography variant="caption" sx={{ color: "text.secondary", display: "block" }}>
-            {arb.race_name} · starts {localStart(arb.scheduled_time, anchorIso)} · {arb.books.length} books
+            {arb.race_name} · scheduled {localStart(arb.scheduled_time, anchorIso)} · {arb.books.length} books
           </Typography>
         </Box>
         <Box sx={{ textAlign: { xs: "left", sm: "right" }, flexShrink: 0 }}>
@@ -751,6 +768,10 @@ function Shell({ children }: { children: React.ReactNode }) {
 export default function ArbLiveBoard() {
   const [snap, setSnap] = useState<Snapshot | null>(null);
   const [error, setError] = useState<string | null>(null);
+  // A 503 because nothing has cleared the delay yet is not an outage, and must
+  // not be dressed as one: the engine is working, the first board is just still
+  // serving out its wait.
+  const [warming, setWarming] = useState(false);
   const [loading, setLoading] = useState(true);
   const [now, setNow] = useState(() => Date.now());
   const [pick, setPick] = useState<string | null>(null);
@@ -773,11 +794,21 @@ export default function ArbLiveBoard() {
     if (inFlight.current) return;
     inFlight.current = true;
     setLoading(true);
+    setWarming(false);
     try {
       const resp = await fetch(`${API_BASE}/latest`, fresh ? { cache: "no-store" } : undefined);
       if (!resp.ok) {
         if (resp.status === 503) {
-          throw new Error("The feed is warming up, the first sweep is still running.");
+          // The service reports both the delay it is enforcing and how long
+          // until the first sweep clears it, so say that rather than "soon".
+          const info = await resp.json().catch(() => null);
+          const delay = info?.delay_minutes ?? DELAY_MIN;
+          const mins = info?.next_publish_in ? Math.ceil(info.next_publish_in / 60) : null;
+          setWarming(true);
+          throw new Error(
+            `Sweeps are published on a ${delay} minute delay, and nothing has cleared it yet` +
+              (mins ? `. The first board is about ${mins} min away.` : "."),
+          );
         }
         // The feed is rate limited, so say so plainly rather than showing a
         // bare status code. It rebuilds every 15 minutes; a wait costs nothing.
@@ -805,12 +836,13 @@ export default function ArbLiveBoard() {
   useEffect(() => {
     const id = window.setInterval(() => {
       setNow(Date.now());
-      // The service rebuilds on a fixed 15 minute period, so pull a fresh copy
-      // once the one on screen has aged past it, and only while the tab is
-      // actually being looked at.
+      // A snapshot is served once it has aged past the delay and is replaced one
+      // sweep interval later, so the copy on screen is due when it passes both.
+      // Only while the tab is actually being looked at.
       if (document.visibilityState !== "visible" || !snap) return;
       const age = Date.now() - Date.parse(snap.generated_at);
-      if (age > (INTERVAL_MIN + 0.5) * 60_000) load(true);
+      const due = (snap.delay_minutes ?? DELAY_MIN) + INTERVAL_MIN + 0.5;
+      if (age > due * 60_000) load(true);
     }, 30_000);
     return () => window.clearInterval(id);
   }, [snap, load]);
@@ -897,12 +929,21 @@ export default function ArbLiveBoard() {
       <Shell>
         <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 2 }}>
           <Box>
-            <Typography sx={{ fontFamily: MONO, fontSize: 12, letterSpacing: "0.1em", color: SAND.faint }}>
-              FEED UNAVAILABLE
+            <Typography
+              sx={{
+                fontFamily: MONO,
+                fontSize: 12,
+                letterSpacing: "0.1em",
+                color: warming ? SAND.tagGold : SAND.faint,
+              }}
+            >
+              {warming ? "WAITING OUT THE DELAY" : "FEED UNAVAILABLE"}
             </Typography>
             <Typography variant="body2" sx={{ color: "text.secondary", mt: 0.5 }}>
-              {error ?? "Could not reach the feed."} The engine itself runs on a schedule, so this is
-              usually a short outage. The rest of this page explains how it works.
+              {error ?? "Could not reach the feed."}{" "}
+              {warming
+                ? "Nothing here is published as it is found, so the engine sweeps for a while before the first board can appear. The rest of this page explains how it works."
+                : "The engine itself runs on a schedule, so this is usually a short outage. The rest of this page explains how it works."}
             </Typography>
           </Box>
           <IconButton onClick={() => load(true)} sx={{ color: SAND.gold }} aria-label="Retry">
@@ -913,9 +954,16 @@ export default function ArbLiveBoard() {
     );
   }
 
+  // Age is measured from the sweep, so a healthy board always reads at least
+  // `delayMin` old: staleness only starts once it has also missed a sweep.
+  const delayMin = snap.delay_minutes ?? DELAY_MIN;
   const age = now - Date.parse(snap.generated_at);
-  const stale = age > (INTERVAL_MIN + 2) * 60_000;
-  const nextIn = Math.max(0, Math.round((INTERVAL_MIN * 60_000 - age) / 60_000));
+  const stale = age > (delayMin + INTERVAL_MIN + 2) * 60_000;
+  const nextIn = Math.max(0, Math.round(((delayMin + INTERVAL_MIN) * 60_000 - age) / 60_000));
+  const sweptAt = new Date(snap.generated_at).toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
   const selected = snap.disciplines.find((d) => d.code === pick) ?? null;
   const shownArbs = showAllArbs ? arbs : arbs.slice(0, ARB_PREVIEW);
 
@@ -929,16 +977,32 @@ export default function ArbLiveBoard() {
             alignItems: "center",
             justifyContent: "space-between",
             gap: 1,
-            flexWrap: "wrap",
+            // Deliberately not wrapping: a flex row wraps before it shrinks, so
+            // letting this one wrap would drop the refresh button onto its own
+            // line at 390px. The status block below wraps internally instead.
+            flexWrap: "nowrap",
             mb: 2,
           }}
         >
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          {/* Grows and wraps internally so the longer DELAYED pill folds the
+              caption onto a second line at 390px instead of pushing the refresh
+              button onto one of its own. */}
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 1,
+              flexWrap: "wrap",
+              flex: "1 1 auto",
+              minWidth: 0,
+            }}
+          >
             <Box
               sx={{
                 width: 8,
                 height: 8,
                 borderRadius: "50%",
+                flexShrink: 0,
                 bgcolor: stale ? SAND.faint : "#7ddba0",
                 boxShadow: stale ? "none" : "0 0 0 4px rgba(125,219,160,.14)",
                 animation: stale ? "none" : "arbPulse 2.4s ease-in-out infinite",
@@ -951,14 +1015,14 @@ export default function ArbLiveBoard() {
             <Typography
               sx={{ fontFamily: MONO, fontSize: 11.5, letterSpacing: "0.12em", color: stale ? SAND.faint : "#7ddba0" }}
             >
-              {stale ? "STALE" : "LIVE"}
+              {stale ? "STALE" : `DELAYED ${delayMin} MIN`}
             </Typography>
             <Typography variant="caption" sx={{ color: SAND.faintest }}>
               swept {relativeAge(age)}
               {!stale && nextIn > 0 ? `, next in ~${nextIn} min` : ""}
             </Typography>
           </Box>
-          <Tooltip title="Fetch the newest sweep">
+          <Tooltip title="Fetch the newest published sweep">
             <span>
               <IconButton
                 onClick={() => load(true)}
@@ -971,6 +1035,39 @@ export default function ArbLiveBoard() {
               </IconButton>
             </span>
           </Tooltip>
+        </Box>
+
+        {/* The delay is the single most important thing to know about this
+            board, so it gets a standing banner and not just the pill above.
+            Reads the figure off the payload rather than a constant: the service
+            owns the delay, and the page should not be able to claim a different
+            one from the one it is actually being served under. */}
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "flex-start",
+            gap: 1.25,
+            p: { xs: 1.25, sm: 1.5 },
+            mb: { xs: 2, sm: 2.5 },
+            borderRadius: 1,
+            border: `1px solid ${SAND.goldBorder}`,
+            borderLeft: `3px solid ${SAND.gold}`,
+            bgcolor: "rgba(216,170,120,.05)",
+          }}
+        >
+          <ScheduleIcon sx={{ fontSize: 17, color: SAND.gold, mt: "2px", flexShrink: 0 }} />
+          <Box sx={{ minWidth: 0 }}>
+            <Typography
+              sx={{ fontFamily: MONO, fontSize: 11, letterSpacing: "0.12em", color: SAND.tagGold }}
+            >
+              DELAYED BY {delayMin} MINUTES
+            </Typography>
+            <Typography variant="body2" sx={{ color: "text.secondary", mt: 0.5 }}>
+              Every sweep is held for {delayMin} minutes before this page will serve it, prices and
+              arbitrage together. What follows is the market as it stood at {sweptAt}, not as it is
+              now: those odds have moved, and any edge in them is long gone.
+            </Typography>
+          </Box>
         </Box>
 
         <Box
@@ -1260,10 +1357,11 @@ export default function ArbLiveBoard() {
       )}
 
       <Typography variant="caption" sx={{ color: SAND.faintest }}>
-        Odds as read at {new Date(snap.generated_at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-        , straight from each bookmaker's public feed. Prices move constantly, so treat everything here as a
-        snapshot rather than a quote: the stake figures assume you get on at every leg at the price shown,
-        which real bet limits and price changes will not always allow. Nothing on this page places a bet.
+        Odds as read at {sweptAt}, straight from each bookmaker's public feed, and published {delayMin}{" "}
+        minutes later. Treat everything here as a record rather than a quote: the stake figures assume you
+        get on at every leg at the price shown, which real bet limits and price changes will not always
+        allow, and on a {delayMin} minute delay they will not still be on offer. Nothing on this page places
+        a bet.
       </Typography>
     </Box>
   );
