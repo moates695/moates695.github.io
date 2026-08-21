@@ -1,6 +1,8 @@
 import { Box } from "@mui/material";
 import ShopIcon from "@mui/icons-material/Shop";
 import AppleIcon from "@mui/icons-material/Apple";
+import ApiIcon from "@mui/icons-material/Api";
+import DownloadIcon from "@mui/icons-material/Download";
 import {
   Reveal,
   GradientText,
@@ -10,6 +12,8 @@ import {
   Callout,
   ScreenshotGallery,
   ExternalButton,
+  CardGrid,
+  FeatureCard,
   PageNav,
 } from "../../components/design";
 import { gymJunkiePlayStoreLink, gymJunkieAppStoreLink } from "../../middleware/links";
@@ -72,6 +76,26 @@ export default function GymJunkieOverview() {
       <Reveal delay={0.18}>
         <SectionHeading eyebrow="screens">In the app</SectionHeading>
         <ScreenshotGallery shots={screenshots} accent={ACCENT} />
+      </Reveal>
+
+      <Reveal delay={0.24}>
+        <SectionHeading eyebrow="your data">Take it with you</SectionHeading>
+        <CardGrid min="240px">
+          <FeatureCard
+            icon={<ApiIcon />}
+            title="Public API"
+            blurb="Sign in with your app credentials and query your own records straight from the browser, or from your own code."
+            to="/gym-junkie/api"
+            accent={ACCENT}
+          />
+          <FeatureCard
+            icon={<DownloadIcon />}
+            title="Data export"
+            blurb="Browse your workouts and download any of them as a Garmin FIT file."
+            to="/gym-junkie/data-export"
+            accent={ACCENT}
+          />
+        </CardGrid>
       </Reveal>
 
       <PageNav right={{ text: "Details", link: "/gym-junkie/details" }} />

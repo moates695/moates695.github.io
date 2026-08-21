@@ -50,6 +50,7 @@ const PROJECT_GROUPS: NavGroup[] = [
       { label: 'Details', to: '/gym-junkie/details' },
       { label: 'Changes', to: '/gym-junkie/changes' },
       { label: 'Data Export', to: '/gym-junkie/data-export' },
+      { label: 'Public API', to: '/gym-junkie/api' },
       { label: 'Delete Account', to: '/gym-junkie/delete-me' },
     ],
   },

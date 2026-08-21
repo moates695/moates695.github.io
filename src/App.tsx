@@ -47,6 +47,7 @@ import WoodchuckPrivacyPolicy from './pages/finska/PrivacyPolicy';
 import GymJunkiePrivacyPolicy from './pages/gym_junkie/PrivacyPolicy';
 import DeleteMe from './pages/gym_junkie/DeleteMe';
 import DataExport from './pages/gym_junkie/DataExport';
+import GymJunkieApi from './pages/gym_junkie/Api';
 import SmallProjects from './pages/SmallProjects';
 import Kaggle from './pages/Kaggle';
 import Stats from './pages/Stats';
@@ -137,6 +138,7 @@ function AppShell() {
               <Route path="privacy" element={<GymJunkiePrivacyPolicy />} />
               <Route path="delete-me" element={<DeleteMe />} />
               <Route path="data-export" element={<DataExport />} />
+              <Route path="api" element={<GymJunkieApi />} />
             </Route>
             <Route path="/other">
               <Route index element={<Navigate to="/projects" replace />} />
