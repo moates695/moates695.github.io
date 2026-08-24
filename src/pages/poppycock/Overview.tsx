@@ -78,9 +78,10 @@ export default function PoppycockOverview() {
       </Reveal>
 
       <Reveal delay={0.18}>
-        <Callout accent={ACCENT} title="status: proof of concept">
-          Poppycock is an early proof of concept. It is playable end to end, but
-          the client is not yet published to an app store.
+        <Callout accent={ACCENT} title="status: in testing">
+          Poppycock is in testing. It is playable end to end, with real games
+          being run against it, but the client is not yet published to an app
+          store.
         </Callout>
       </Reveal>
 

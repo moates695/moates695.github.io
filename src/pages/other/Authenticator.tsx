@@ -1,5 +1,9 @@
 import { Avatar, Box } from "@mui/material";
-import { authenticatorGithubLink } from "../../middleware/links";
+import ShopIcon from "@mui/icons-material/Shop";
+import {
+  authenticatorGithubLink,
+  authenticatorPlayStoreLink,
+} from "../../middleware/links";
 import githubLogo from "../../assets/github-logo.png";
 import MarkdownBlock from "../../components/MarkdownBlock";
 import {
@@ -112,12 +116,17 @@ export default function OtherAuthenticator() {
           title={<>An authenticator with <GradientText>folders</GradientText></>}
           subtitle="A TOTP and HOTP authenticator for Android and iOS, built to fix one specific annoyance: Google Authenticator still will not let you group codes. This one does, in folders one level deep, on top of a vault that is encrypted locally on the phone."
           actions={
-            <ExternalButton
-              href={authenticatorGithubLink}
-              icon={<Avatar alt="github icon" src={githubLogo} sx={{ width: 24, height: 24 }} />}
-            >
-              Source
-            </ExternalButton>
+            <>
+              <ExternalButton href={authenticatorPlayStoreLink} icon={<ShopIcon />}>
+                Play Store
+              </ExternalButton>
+              <ExternalButton
+                href={authenticatorGithubLink}
+                icon={<Avatar alt="github icon" src={githubLogo} sx={{ width: 24, height: 24 }} />}
+              >
+                Source
+              </ExternalButton>
+            </>
           }
         />
 

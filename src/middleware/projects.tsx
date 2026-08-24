@@ -8,6 +8,7 @@ import eventPickerLogo from "../assets/event-picker-logo.svg";
 import smallProjectsLogo from "../assets/small-projects-logo.svg";
 import kaggleLogo from "../assets/kaggle-logo.svg";
 import authenticatorLogo from "../assets/authenticator-icon.png";
+import poppycockIcon from "../assets/poppycock-icon.png";
 import {
   gymJunkiePlayStoreLink,
   gymJunkieAppStoreLink,
@@ -19,6 +20,7 @@ import {
   mcpServerGithubLink,
   smartTrainerGithubLink,
   authenticatorGithubLink,
+  authenticatorPlayStoreLink,
   eventPickerGithubLink,
   eventPickerDemoLink,
   kaggleCellTrackingLink,
@@ -44,7 +46,7 @@ export type Project =
 export const iconMap: Record<Project, string> = {
   finska: '/finska-icon.png',
   gym_junkie: '/gym-junkie-icon.png',
-  balderdash: '/poppycock-icon.png',
+  balderdash: poppycockIcon,
   downer_helper: '/pypi-logo.png',
   cellular_tracking: '/cells-logo.png',
   postgres_deploy: '/pypi-logo.png',
@@ -183,22 +185,18 @@ export const otherProjects: ProjectInfo[] = [
     external: [{ label: 'Source', href: smartTrainerGithubLink, external: true }],
   },
   {
-    key: 'kaggle',
-    icon: iconMap.kaggle,
-    initials: 'KG',
-    name: 'Kaggle Competitions',
-    blurb: 'Machine learning competitions I am entering, each tracked from first commit to final submission.',
+    key: 'balderdash',
+    icon: iconMap.balderdash,
+    initials: 'P',
+    name: 'Poppycock',
+    blurb: 'Real-time companion app for the physical Balderdash card game.',
     description:
-      'Kaggle competitions I am entering, each tracked on one page from the first commit through to the '
-      + 'final submission. First up is Biohub Cell Tracking During Development: detecting cells in 3D '
-      + 'time-lapse microscopy of zebrafish embryos, linking them across frames and identifying divisions '
-      + 'so lineages branch correctly. Results and progress go up as they happen, while the working '
-      + 'repository stays private for as long as the competition is running.',
-    link: '/kaggle',
-    chipKeys: ['python', 'ai_ml', 'data_pipeline'],
-    status: 'comp',
+      'A real-time companion for the physical Balderdash card game. Host a room to run bluffs, voting ' +
+      'and scoring while you play with the cards. Full-stack with FastAPI, WebSockets and Postgres.',
+    link: '/poppycock',
+    chipKeys: ['full_stack', 'expo', 'react_ts', 'python', 'fastapi', 'websocket', 'postgres'],
+    status: 'test',
     accent: '#d8aa78',
-    external: [{ label: 'Competition', href: kaggleCellTrackingLink, external: true }],
   },
   {
     key: 'arbitrage',
@@ -250,7 +248,10 @@ export const otherProjects: ProjectInfo[] = [
     chipKeys: ['expo', 'react_ts', 'client_side'],
     status: 'test',
     accent: '#d8aa78',
-    external: [{ label: 'Source', href: authenticatorGithubLink, external: true }],
+    external: [
+      { label: 'Play Store', href: authenticatorPlayStoreLink, external: true },
+      { label: 'Source', href: authenticatorGithubLink, external: true },
+    ],
   },
   {
     key: 'event_picker',
@@ -277,18 +278,22 @@ export const otherProjects: ProjectInfo[] = [
     ],
   },
   {
-    key: 'balderdash',
-    icon: iconMap.balderdash,
-    initials: 'P',
-    name: 'Poppycock',
-    blurb: 'Real-time companion app for the physical Balderdash card game.',
+    key: 'kaggle',
+    icon: iconMap.kaggle,
+    initials: 'KG',
+    name: 'Kaggle Competitions',
+    blurb: 'Machine learning competitions I am entering, each tracked from first commit to final submission.',
     description:
-      'A real-time companion for the physical Balderdash card game. Host a room to run bluffs, voting ' +
-      'and scoring while you play with the cards. Full-stack with FastAPI, WebSockets and Postgres.',
-    link: '/poppycock',
-    chipKeys: ['full_stack', 'expo', 'react_ts', 'python', 'fastapi', 'websocket', 'postgres'],
-    status: 'poc',
+      'Kaggle competitions I am entering, each tracked on one page from the first commit through to the '
+      + 'final submission. First up is Biohub Cell Tracking During Development: detecting cells in 3D '
+      + 'time-lapse microscopy of zebrafish embryos, linking them across frames and identifying divisions '
+      + 'so lineages branch correctly. Results and progress go up as they happen, while the working '
+      + 'repository stays private for as long as the competition is running.',
+    link: '/kaggle',
+    chipKeys: ['python', 'ai_ml', 'data_pipeline'],
+    status: 'comp',
     accent: '#d8aa78',
+    external: [{ label: 'Competition', href: kaggleCellTrackingLink, external: true }],
   },
   {
     key: 'mcp_server',

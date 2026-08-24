@@ -11,6 +11,7 @@ import eventPickerLogo from "../assets/event-picker-logo.svg";
 import smallProjectsLogo from "../assets/small-projects-logo.svg";
 import kaggleLogo from "../assets/kaggle-logo.svg";
 import authenticatorLogo from "../assets/authenticator-icon.png";
+import poppycockIcon from "../assets/poppycock-icon.png";
 import {
   SAND,
   SPACE,
@@ -62,13 +63,13 @@ const moreProjects: SandProject[] = [
     link: "/other/smart-trainer",
   },
   {
-    title: "Kaggle Competitions",
-    status: "COMP",
-    blurb: "Competition entries tracked from first commit to final submission. First up: following cells through 3D microscopy of a developing embryo, divisions and all.",
-    tags: ["Python", "Computer Vision", "NumPy"],
-    icon: kaggleLogo,
-    initials: "KG",
-    link: "/kaggle",
+    title: "Poppycock",
+    status: "TEST",
+    blurb: "Real-time companion app for the Balderdash card game, someone had to keep the liars honest.",
+    tags: ["FastAPI", "WebSocket", "PostgreSQL"],
+    icon: poppycockIcon,
+    initials: "P",
+    link: "/poppycock",
   },
   {
     title: "Arbitrage Engine",
@@ -107,13 +108,13 @@ const moreProjects: SandProject[] = [
     link: "/other/event-picker",
   },
   {
-    title: "Poppycock",
-    status: "POC",
-    blurb: "Real-time companion app for the Balderdash card game, someone had to keep the liars honest.",
-    tags: ["FastAPI", "WebSocket", "PostgreSQL"],
-    icon: "/poppycock-icon.png",
-    initials: "P",
-    link: "/poppycock",
+    title: "Kaggle Competitions",
+    status: "COMP",
+    blurb: "Competition entries tracked from first commit to final submission. First up: following cells through 3D microscopy of a developing embryo, divisions and all.",
+    tags: ["Python", "Computer Vision", "NumPy"],
+    icon: kaggleLogo,
+    initials: "KG",
+    link: "/kaggle",
   },
   {
     title: "Marcus MCP Server",
