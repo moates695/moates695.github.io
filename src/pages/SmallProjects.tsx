@@ -1,7 +1,8 @@
-import { Avatar, Box, Button } from "@mui/material";
+import { Avatar, Box, Button, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import {
+  garminWatchfaceGithubLink,
   mcpServerGithubLink,
   secretsVaultGithubLink,
   vsCodeExtensionsGithubLink,
@@ -35,12 +36,175 @@ const ACCENT = "#d8aa78";
  * section below.
  */
 const PROJECTS: Section[] = [
+  { id: "garmin-watchface", label: "Garmin Watch Face" },
   { id: "secrets-vault", label: "Secrets Vault" },
   { id: "site-analytics", label: "Site Analytics" },
   { id: "vscode-extensions", label: "VS Code Extensions" },
 ];
 
 /* ── Project sections ─────────────────────────────────────────────────── */
+
+/* ── Garmin watch face ────────────────────────────────────────────────── */
+
+interface FaceShot {
+  id: string;
+  src: string;
+  label: string;
+  alt: string;
+}
+
+// One render per display state, drawn by tools/render_face.py in the
+// watch face repo from the same band geometry, fonts and palette as the
+// Monkey C source. Green is the default accent; red is the night palette.
+const faceShots: FaceShot[] = [
+  {
+    id: "active",
+    src: "/garmin/active.png",
+    label: "Active",
+    alt: "Epix Dense watch face, active, with every reading in range",
+  },
+  {
+    id: "alert",
+    src: "/garmin/alert.png",
+    label: "Threshold alerts",
+    alt: "Epix Dense watch face with body battery, stress, training status and watch battery out of range, each drawn in white",
+  },
+  {
+    id: "always-on",
+    src: "/garmin/always_on.png",
+    label: "Always-on",
+    alt: "Epix Dense always-on face: a dimmed outline clock, the heart rate trace and the Bluetooth glyph",
+  },
+  {
+    id: "sleep",
+    src: "/garmin/night.png",
+    label: "Sleep mode",
+    alt: "Epix Dense sleep face in the red night palette, keeping the clock, the alarm and the heart rate trace",
+  },
+  {
+    id: "night-awake",
+    src: "/garmin/night_awake.png",
+    label: "Night palette, awake",
+    alt: "The full Epix Dense face repainted in the red night palette",
+  },
+];
+
+const faceNotes = [
+  "Accent means live: the clock, the current heart rate, the trace and its now marker, and the Bluetooth glyph. Nothing else takes colour, which is what keeps one bright number legible when it matters.",
+  "Alerts move along the brightness axis, not the hue. Body battery under 30, stress over 60, a watch battery under 15% or a training status off plan steps from off-white to pure white in a heavier cut. Green for good would be lit most days and stop carrying information; every threshold is a setting.",
+  "The heart rate plot bins a six hour window straight into its 340 plot columns as the samples are read, because a watch face gets 128 KB and a day of sample objects does not fit. Hourly ticks are pinned to real clock hours, so the labels hold still while the trace slides under them, and more than five minutes without a reading is drawn as a gap.",
+  "Always-on is not a dimmed copy. Garmin caps the lit pixels and permits one refresh a minute, so the quiet face keeps only the outline clock, the trace and the Bluetooth glyph at 60% brightness, and steps the clock through three positions 26 pixels apart: the smallest offset at which every pixel of the outline rests within three minutes, checked against all 1440 renderings of HH:MM.",
+  "Night mode repaints the whole face as a ramp of reds inside the sleep schedule. The ramp is pushed brighter than a straight luminance match, because red is far darker than grey at the same channel value and the 9 px labels vanish otherwise.",
+  "Chakra Petch is rasterised into bitmap fonts by a small Pillow script, with digits drawn to a common advance so values do not reflow as they tick, and the 70 px clock cut as a two pixel ring rather than a fill, since Connect IQ has no outline text mode.",
+  "The tooling is built for WSL: the SDK simulator runs against a staged WebKitGTK stack Ubuntu no longer ships, screenshots go through PowerShell's PrintWindow because nothing inside WSL can see a WSLg window, and a deploy pushes the build to the watch over MTP through the Windows shell namespace.",
+];
+
+/**
+ * The display states as round renders. Each opens its full-size PNG in a new
+ * tab rather than the BeforeAfter lightbox, which is sized for wide desktop
+ * screenshots and would pan a square face off the edge of a phone.
+ */
+function FaceGallery({ shots, accent }: { shots: FaceShot[]; accent: string }) {
+  return (
+    <Box sx={{ display: "flex", flexWrap: "wrap", gap: { xs: 2, sm: 3 }, justifyContent: "center" }}>
+      {shots.map((shot) => (
+        <Box
+          key={shot.id}
+          component="a"
+          href={shot.src}
+          target="_blank"
+          rel="noopener"
+          data-track={`small-projects:garmin-face:${shot.id}`}
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: 1,
+            textDecoration: "none",
+            "&:hover img": {
+              transform: "translateY(-6px) scale(1.03)",
+              filter: `drop-shadow(0 18px 34px ${accent}66)`,
+            },
+          }}
+        >
+          <Box
+            component="img"
+            src={shot.src}
+            alt={shot.alt}
+            loading="lazy"
+            sx={{
+              width: { xs: 150, sm: 196 },
+              maxWidth: "44vw",
+              height: "auto",
+              borderRadius: "50%",
+              transition: "transform 0.3s ease, filter 0.3s ease",
+            }}
+          />
+          <Typography variant="caption" sx={{ color: "text.secondary", textAlign: "center" }}>
+            {shot.label}
+          </Typography>
+        </Box>
+      ))}
+    </Box>
+  );
+}
+
+function GarminWatchFace() {
+  return (
+    <Box id="garmin-watchface" sx={{ display: "flex", flexDirection: "column", gap: { xs: 3, sm: 4 } }}>
+      <Reveal>
+        <SectionHeading eyebrow="wearable">
+          Epix <GradientText>Dense</GradientText>
+        </SectionHeading>
+        <MarkdownBlock>
+          {`A watch face for the Garmin Epix (Gen 2), written in Monkey C against the Connect IQ SDK. It treats the 416 pixel AMOLED panel as an instrument panel: an outline clock, a six hour heart rate trace drawn against the resting baseline, and 27 readings in labelled rows underneath, from body battery and VO2 max to weekly ride distance and barometric pressure. It is one face with a handful of settings rather than a family of variants: the accent colour, threshold alerting, a night palette and burn-in pixel shift.`}
+        </MarkdownBlock>
+        <Box sx={{ mt: 1 }}>
+          <ExternalButton
+            href={garminWatchfaceGithubLink}
+            icon={<Avatar alt="github icon" src={githubLogo} sx={{ width: 24, height: 24 }} />}
+          >
+            Source
+          </ExternalButton>
+        </Box>
+      </Reveal>
+
+      <Reveal delay={0.06}>
+        <Panel accent={ACCENT} wash>
+          <StatRow
+            items={[
+              { value: "416 px", label: "panel, drawn 1:1" },
+              { value: "6 h", label: "heart rate trace" },
+              { value: "27", label: "readings on the face" },
+              { value: "128 KB", label: "memory for all of it" },
+            ]}
+          />
+        </Panel>
+        <Callout accent={ACCENT} title="status">
+          Built for and side-loaded onto my own Epix (Gen 2). The renders below are drawn by a script
+          from the same band geometry, fonts and palette as the watch code, one per display state,
+          because the simulator only ever shows the state it is in and fabricates its own heart rate
+          record.
+        </Callout>
+      </Reveal>
+
+      <Reveal delay={0.12}>
+        <SectionHeading eyebrow="display states">One face, five states</SectionHeading>
+        <Box sx={{ color: "text.secondary", mb: 2 }}>
+          The accent is the default neon green throughout. Only night mode changes hue: inside the
+          sleep schedule the whole palette becomes a ramp of reds, which is kinder to dark-adapted
+          eyes than the daytime greys.
+        </Box>
+        <FaceGallery shots={faceShots} accent={ACCENT} />
+      </Reveal>
+
+      <Reveal delay={0.18}>
+        <SectionHeading eyebrow="decisions">Details worth calling out</SectionHeading>
+        <CheckList items={faceNotes} accent={ACCENT} />
+      </Reveal>
+    </Box>
+  );
+}
 
 const vaultArchitecture = `\`\`\`text
 Internet -> Cloudflare (proxied) --443--> nginx (existing)
@@ -326,6 +490,8 @@ export default function SmallProjects() {
       />
 
       <OnThisPage items={PROJECTS} />
+
+      <GarminWatchFace />
 
       <SecretsVault />
 

@@ -128,8 +128,8 @@ const moreProjects: SandProject[] = [
   {
     title: "Small Projects",
     status: "COLLECTION",
-    blurb: "A running collection of smaller builds and self-hosted infrastructure, gathered on one page. So far: a self-hosted password vault for the family, and the collector that measures this site.",
-    tags: ["Docker", "Self-Hosted", "Backups"],
+    blurb: "A running collection of smaller builds and self-hosted infrastructure, gathered on one page. So far: a data-dense Garmin watch face, a self-hosted password vault for the family, and the collector that measures this site.",
+    tags: ["Monkey C", "Docker", "Self-Hosted"],
     icon: smallProjectsLogo,
     initials: "SP",
     link: "/small-projects",

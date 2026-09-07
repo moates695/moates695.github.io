@@ -320,14 +320,16 @@ export const otherProjects: ProjectInfo[] = [
     blurb: 'A collection of smaller builds and self-hosted infrastructure, gathered on one page.',
     description:
       'A running collection of the smaller builds that are too compact for a case study of their own, ' +
-      'gathered on a single page with quick links to each. Secrets Vault is a self-hosted ' +
+      'gathered on a single page with quick links to each. Epix Dense is a watch face for the Garmin ' +
+      'Epix (Gen 2) that turns the whole AMOLED panel into an instrument panel, with a six hour heart ' +
+      'rate trace, threshold alerting and a night palette. Secrets Vault is a self-hosted ' +
       'Vaultwarden password manager for the family, running on a DigitalOcean droplet with shared ' +
       'collections and encrypted off-site backups. Site Analytics is this site measuring itself: a ' +
       'small FastAPI and Postgres collector that replaces a third party tracker and publishes what ' +
       'it finds. VS Code Extensions is a TypeScript monorepo of editor extensions, the first of ' +
       'which watches your Git habits and passes judgement.',
     link: '/small-projects',
-    chipKeys: ['docker', 'self_hosted', 'fastapi', 'postgres', 'typescript'],
+    chipKeys: ['monkey_c', 'docker', 'self_hosted', 'fastapi', 'postgres', 'typescript'],
     status: 'collection',
     accent: '#d8aa78',
   },

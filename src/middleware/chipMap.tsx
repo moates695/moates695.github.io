@@ -161,6 +161,12 @@ const chipData = {
     borderColor: '#5a9fd9',
     textColor: '#5a9fd9',
   },
+  monkey_c: {
+    label: 'Monkey C',
+    color: 'transparent',
+    borderColor: '#7fc98f',
+    textColor: '#7fc98f',
+  },
 } satisfies Record<string, ChipData>;
 
 export type ChipKey = keyof typeof chipData;
